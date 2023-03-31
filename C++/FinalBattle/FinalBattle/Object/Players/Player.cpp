@@ -23,7 +23,7 @@ void Player::Attack(shared_ptr<Creature> victim)
 	cout << this->_name << "가(이) " << victim->Getname() << "을 공격하였습니다." << endl;
 	victim->Damaged(_atk * RandomNum(1, 20));
 	SoundManager::GetInstance()->PAsound();
-	_aggravation += _atk;
+	
 }
 
 

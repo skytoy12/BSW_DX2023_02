@@ -31,7 +31,7 @@ void Archer::Attack(shared_ptr<Creature> victim)
 		{
 			victim->Damaged(Damage);
 		}
-		_aggravation += Damage;
+		
 		_concentration += 5;
 		
 	}
@@ -48,7 +48,7 @@ void Archer::Attack(shared_ptr<Creature> victim)
 		SoundManager::GetInstance()->AAsound();
 		victim->Damaged(Damage);
 		victim->Damaged(Damage);
-		_aggravation += (Damage * 2);
+		
 		_concentration -= 10;
 
 	}

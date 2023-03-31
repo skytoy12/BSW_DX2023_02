@@ -9,7 +9,6 @@ public :
 	bool IsAlive();
 	const float& GetHp() { return _hp; }
 	const float& GetAtk() { return _atk; }
-	const int& GetAgr() { return _aggravation; }
 	const string& Getname() { return _name; }
 	const CreatureType& GetType() { return _type; }
 	int RandomNum(int min, int max);
@@ -20,7 +19,6 @@ protected :
 	float _atk;
 	string _name;
 	bool _isAlive;
-	int _aggravation = 0;
 	CreatureType _type;
 };
 

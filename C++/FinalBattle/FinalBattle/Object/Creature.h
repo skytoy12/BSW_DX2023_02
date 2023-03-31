@@ -11,7 +11,7 @@ public :
 	const float GetAtk() { return _atk; }
 	const int GetAgr() { return _aggravation; }
 	const string& Getname() { return _name; }
-	const CreatureType GetType() { return _type; }
+	const CreatureType& GetType() { return _type; }
 	int RandomNum(int min, int max);
 	
 

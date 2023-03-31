@@ -2,16 +2,6 @@
 
 
 
-bool PlayerAllDead(vector<shared_ptr<Creature>> v)
-{
-	
-	for (auto& player : v)
-	{
-		if (player->IsAlive() == true)
-			return false;
-	}
-	return true;
-}
 
 
 

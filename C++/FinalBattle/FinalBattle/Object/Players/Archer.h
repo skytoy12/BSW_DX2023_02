@@ -1,5 +1,5 @@
 #pragma once
-class Archer : public Player
+class Archer : public Player, public enable_shared_from_this<Archer>
 {
 public :
 	Archer(float hp, float atk, string name);

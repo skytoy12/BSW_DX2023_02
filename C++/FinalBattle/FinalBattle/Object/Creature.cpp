@@ -18,7 +18,7 @@ int Creature::RandomNum(int min, int max)
 	return rand() % ((max - min) + 1) + min;
 }
 
-void Creature::Damaged(float amount, shared_ptr<Creature> attacker)
+void Creature::Damaged(float amount, shared_ptr<Creature> attacker = nullptr)
 {
 	if (amount <= 0.0f || _isAlive == false)
 		return;

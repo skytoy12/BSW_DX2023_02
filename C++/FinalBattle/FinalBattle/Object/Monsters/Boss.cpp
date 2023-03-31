@@ -27,25 +27,27 @@ void Boss::Attack(shared_ptr<Creature> victim)
 
 void Boss::Damaged(float amount, shared_ptr<Creature> attacker)
 {
-		Creature::Damaged(amount);
-		string name = attacker->Getname();
-		auto iter = std::find_if(_aggrotable.begin(), _aggrotable.end(), [name](const AggroInfo& info)->bool
-			{
-				if (info.Attacker->Getname() == name)
-					return true;
-				return false;
-			});
-		if (iter != _aggrotable.end())
+	if (attacker == nullptr)
+		return;
+	Creature::Damaged(amount);
+	string name = attacker->Getname();
+	auto iter = std::find_if(_aggrotable.begin(), _aggrotable.end(), [name](const AggroInfo& info)->bool
 		{
-			iter->totalDamage += amount;
-		}
-		else
-		{
-			AggroInfo info;
-			info.Attacker = attacker;
-			info.totalDamage = amount;
-			_aggrotable.push_back(info);
-		}
+			if (info.Attacker->Getname() == name)
+				return true;
+			return false;
+		});
+	if (iter != _aggrotable.end())
+	{
+		iter->totalDamage += amount;
+	}
+	else
+	{
+		AggroInfo info;
+		info.Attacker = attacker;
+		info.totalDamage = amount;
+		_aggrotable.push_back(info);
+	}
 }
 
 

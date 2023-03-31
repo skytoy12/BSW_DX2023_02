@@ -52,6 +52,17 @@ bool World::End()
 			break;
 		}
 	}
+	if (PlayerAllDead == true)
+	{
+		cout << "전멸하였습니다..." << endl;
+		cout << "전투에서 패배하였습니다..." << endl;
+	}
+	if (_boss->IsAlive() == false)
+	{
+		cout << "보스를 쓰러뜨렸습니다!!!" << endl;
+		cout << "전투에서 승리하였습니다!!!" << endl;
+	}
+
 	return PlayerAllDead || (_boss->IsAlive() == false);
 }
 

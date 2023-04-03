@@ -22,3 +22,13 @@
 #include <memory>
 
 using namespace std;
+
+//MAth
+#include "Math/Vector2.h"
+#include "Math/CircleCollider.h"
+
+// Scene
+#include "Scenes/Scene.h"
+
+// Program
+#include "program/Program.h"

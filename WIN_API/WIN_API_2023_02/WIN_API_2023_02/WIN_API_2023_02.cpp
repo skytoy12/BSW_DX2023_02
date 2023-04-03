@@ -131,79 +131,10 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-HPEN bluePen;
-HPEN greenPen;
-HPEN redPen;
-struct Vector2
-{
-    Vector2() : x(0.0f), y(0.0f) {}
-
-    Vector2(float x, float y) : x(x), y(y) {}
-
-    ~Vector2() {}
-
-    Vector2 operator+(const Vector2& other) const
-    {
-        Vector2 result;
-        result.x = this->x + other.x;
-        result.y = this->y + other.y;
-
-        return result;
-    }
-
-    Vector2 operator-(const Vector2& other) const
-    {
-        Vector2 result;
-        result.x = this->x - other.x;
-        result.y = this->y - other.y;
-
-        return result;
-    }
-
-    Vector2 operator*(const float& value) const
-    {
-        Vector2 result;
-        result.x = this->x * value;
-        result.y = this->y * value;
-
-        return result;
-    }
-
-    float Dot(const Vector2& other) const
-    {
-        float result;
-
-        result = (this->x * other.x) + (this->y * other.y);
+shared_ptr<Program> program;
 
 
-        return result;
-    }
 
-    float cross(const Vector2& other) const
-    {
-        float result;
-
-        result = (this->x * other.y) - (other.x * this->y);
-
-        return result;
-    }
-
-    float distance(const Vector2& other) const
-    {
-        Vector2 result1;
-        float result2;
-
-        result1 = *this - other;
-
-        result2 = sqrt((result1.x * result1.x) + (result1.y * result1.y));
-
-        return result2;
-    }
-
-    float x;
-    float y;
-};
-Vector2 mousePos;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
@@ -211,9 +142,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
     case WM_CREATE:
     {
-        bluePen = CreatePen(PS_SOLID, 3, RGB(0, 0, 255));
-        greenPen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
-        redPen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
+        program = make_shared<Program>();
+        SetTimer(hWnd, 1, 10, nullptr); // 0.1초마다 WM_TIME 메시지를 보내겠다
+        break;
+    }
+
+    case WM_TIMER:
+    {
+        program->Updata();
+        InvalidateRect(hWnd, nullptr, true);// WM_PAINT 메시지를 보내주는 얘
         break;
     }
 
@@ -237,42 +174,21 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     case WM_MOUSEMOVE:
     {
-        mousePos.x = static_cast<float>(LOWORD(lParam));
-        mousePos.y = static_cast<float>(HIWORD(lParam));
-        InvalidateRect(hWnd, nullptr, true); // WM_PAINT 메시지를 보내주는 얘
-        
-        break;
-    }
+        // mousePos.x = static_cast<float>(LOWORD(lParam));
+        // mousePos.y = static_cast<float>(HIWORD(lParam));
+     }
     case WM_PAINT:
         {
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-
-            SelectObject(hdc, bluePen); 
-
-
-            // 사각형 그리기
-            float left = mousePos.x - 50;
-            float top = mousePos.y - 50;
-            float right = mousePos.x + 50;
-            float bottom = mousePos.y + 50;
-            Rectangle(hdc, left, top, right, bottom);
-
-            // 원 그리기
-            SelectObject(hdc, greenPen);
-            Ellipse(hdc, 100, 100, 200, 200);
-
-            // 선 그리기
-            SelectObject(hdc, redPen);
-            MoveToEx(hdc, 0, 0, nullptr); // 시작점
-            LineTo(hdc, 200, 200);        // 끝점
-
+            program->Render(hdc);
+            
             EndPaint(hWnd, &ps);
         }
         break;
     case WM_DESTROY:
-        DeleteObject(bluePen);
+        
         PostQuitMessage(0);
         break;
     default:

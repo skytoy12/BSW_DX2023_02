@@ -132,10 +132,76 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 
 HPEN bluePen;
+HPEN greenPen;
+HPEN redPen;
 struct Vector2
 {
-    float x = 0.0f;
-    float y = 0.0f;
+    Vector2() : x(0.0f), y(0.0f) {}
+
+    Vector2(float x, float y) : x(x), y(y) {}
+
+    ~Vector2() {}
+
+    Vector2 operator+(const Vector2& other) const
+    {
+        Vector2 result;
+        result.x = this->x + other.x;
+        result.y = this->y + other.y;
+
+        return result;
+    }
+
+    Vector2 operator-(const Vector2& other) const
+    {
+        Vector2 result;
+        result.x = this->x - other.x;
+        result.y = this->y - other.y;
+
+        return result;
+    }
+
+    Vector2 operator*(const float& value) const
+    {
+        Vector2 result;
+        result.x = this->x * value;
+        result.y = this->y * value;
+
+        return result;
+    }
+
+    float Dot(const Vector2& other) const
+    {
+        float result;
+
+        result = (this->x * other.x) + (this->y * other.y);
+
+
+        return result;
+    }
+
+    float cross(const Vector2& other) const
+    {
+        float result;
+
+        result = (this->x * other.y) - (other.x * this->y);
+
+        return result;
+    }
+
+    float distance(const Vector2& other) const
+    {
+        Vector2 result1;
+        float result2;
+
+        result1 = *this - other;
+
+        result2 = sqrt((result1.x * result1.x) + (result1.y * result1.y));
+
+        return result2;
+    }
+
+    float x;
+    float y;
 };
 Vector2 mousePos;
 
@@ -146,6 +212,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
     {
         bluePen = CreatePen(PS_SOLID, 3, RGB(0, 0, 255));
+        greenPen = CreatePen(PS_SOLID, 3, RGB(0, 255, 0));
+        redPen = CreatePen(PS_SOLID, 3, RGB(255, 0, 0));
         break;
     }
 
@@ -181,7 +249,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
 
-            SelectObject(hdc, bluePen);
+            SelectObject(hdc, bluePen); 
 
 
             // 사각형 그리기
@@ -192,9 +260,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             Rectangle(hdc, left, top, right, bottom);
 
             // 원 그리기
+            SelectObject(hdc, greenPen);
             Ellipse(hdc, 100, 100, 200, 200);
 
             // 선 그리기
+            SelectObject(hdc, redPen);
             MoveToEx(hdc, 0, 0, nullptr); // 시작점
             LineTo(hdc, 200, 200);        // 끝점
 

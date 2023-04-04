@@ -19,10 +19,10 @@ public :
 	void SetGreen() { _curPenIndex = 0; }
 	void SetRed() { _curPenIndex = 1; }
 
-	float Left() const   { _center.x - _halfSize.x; }
-	float Right() const  { _center.x + _halfSize.x; }
-	float Top() const    { _center.y - _halfSize.y; }
-	float Bottom() const { _center.y + _halfSize.y; }
+	float Left() const   { return _center.x - _halfSize.x; }
+	float Right() const  { return _center.x + _halfSize.x; }
+	float Top() const    { return _center.y - _halfSize.y; }
+	float Bottom() const { return _center.y + _halfSize.y; }
 
 	bool IsCollision(Vector2 pos);
 	bool IsCollision(shared_ptr<CircleCollider> other); // 맨 나중에

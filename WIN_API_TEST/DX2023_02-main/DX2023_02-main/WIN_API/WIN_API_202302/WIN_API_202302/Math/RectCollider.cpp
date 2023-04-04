@@ -53,16 +53,27 @@ void RectCollider::SetSize(const Vector2& size)
 	_halfSize = _size * 0.5f;
 }
 
+
 bool RectCollider::IsCollision(Vector2 pos)
 {
-	bool HR = (_center.x - _halfSize.x) < pos.x && pos.x < (_center.x + _halfSize.x);
-	
-	bool VT = (_center.y - _halfSize.y) < pos.y && pos.y < (_center.y + _halfSize.y);
+	if (pos.x < Left() || pos.x > Right())
+		return false;
+	if (pos.y < Top() || pos.y > Bottom())
+		return false;
 
-	return VT && HR;
+	return true;
 }
 
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
 	return false;
+}
+
+bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
+{
+	float HRDistance = abs(_center.x - other->GetCenter().x);
+	float HRSum = _halfSize.x + other->GetHalfSize().x;
+	float VTDistance = abs(_center.y - other->GetCenter().y);
+	float VTSum = _halfSize.y + other->GetHalfSize().y;
+	return HRDistance < HRSum && VTDistance < VTSum;
 }

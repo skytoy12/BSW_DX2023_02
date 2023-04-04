@@ -53,10 +53,20 @@ void RectCollider::SetRadius(const Vector2& size)
 
 bool RectCollider::IsCollision(Vector2 pos)
 {
-	return false;
+	if (pos.x < Left() || pos.x > Right())
+		return false;
+	if (pos.y < Top() || pos.y > Bottom())
+		return false;
+
+	return true;
 }
 
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
+{
+	return false;
+}
+
+bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
 {
 	return false;
 }

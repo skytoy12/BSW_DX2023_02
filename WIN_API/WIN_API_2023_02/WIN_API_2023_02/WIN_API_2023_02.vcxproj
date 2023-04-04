@@ -153,19 +153,20 @@
   <ItemGroup>
     <ClInclude Include="Math\CircleCollider.h" />
     <ClInclude Include="framework.h" />
-    <ClInclude Include="Math\RectengleCollider.h" />
+    <ClInclude Include="Math\RectCollider.h" />
     <ClInclude Include="Scenes\PaintScene.h" />
     <ClInclude Include="program\Program.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scenes\Scene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Math\Vector2.h" />
+    <ClInclude Include="Types.h" />
     <ClInclude Include="WIN_API_2023_02.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Math\CircleCollider.cpp" />
     <ClCompile Include="framework.cpp" />
-    <ClCompile Include="Math\RectengleCollider.cpp" />
+    <ClCompile Include="Math\RectCollider.cpp" />
     <ClCompile Include="Scenes\PaintScene.cpp" />
     <ClCompile Include="program\Program.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />

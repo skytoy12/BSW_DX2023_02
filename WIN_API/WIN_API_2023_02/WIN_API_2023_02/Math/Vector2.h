@@ -57,22 +57,22 @@ public :
         return sqrtf(powf(resultX, 2) + powf(resultY, 2));
     }
 
-    float Distance() const
+    float Length() const
     {
         return sqrtf(powf(this->x, 2) + powf(this->y, 2));
     }
 
     void Nomallize()
     {
-        this->x /= Distance();
-        this->y /= Distance();
+        this->x /= Length();
+        this->y /= Length();
     }
 
     Vector2 NormalVector2() const
     {
         Vector2 result;
-        result.x = this->x / Distance();
-        result.y = this->y / Distance();
+        result.x = this->x / Length();
+        result.y = this->y / Length();
         return result;
     }
 public :

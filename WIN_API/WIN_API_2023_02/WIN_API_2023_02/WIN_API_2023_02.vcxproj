@@ -153,6 +153,7 @@
   <ItemGroup>
     <ClInclude Include="Math\CircleCollider.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Math\RectengleCollider.h" />
     <ClInclude Include="Scenes\PaintScene.h" />
     <ClInclude Include="program\Program.h" />
     <ClInclude Include="Resource.h" />
@@ -164,6 +165,7 @@
   <ItemGroup>
     <ClCompile Include="Math\CircleCollider.cpp" />
     <ClCompile Include="framework.cpp" />
+    <ClCompile Include="Math\RectengleCollider.cpp" />
     <ClCompile Include="Scenes\PaintScene.cpp" />
     <ClCompile Include="program\Program.cpp" />
     <ClCompile Include="Scenes\Scene.cpp" />

@@ -4,6 +4,7 @@
 PaintScene::PaintScene()
 {
 	_circle = make_shared<CircleCollider>(Vector2(300.0f, 300.0f), 50.0f);
+	_rectengle = make_shared<RectengleCollider>(100.0f, 100.0f, 300.0f, 400.0f);
 }
 
 PaintScene::~PaintScene()
@@ -14,16 +15,26 @@ void PaintScene::Updata()
 {
 	if (GetAsyncKeyState('A'))
 	{
-		_circle->MoveCenter(Vector2(-1, -1).NormalVector2() * _speed);
+		_rectengle->MoveRecHR(-1);
 	}
 	if (GetAsyncKeyState('D'))
 	{
-		_circle->MoveCenter(Vector2(1, 1).NormalVector2() * _speed);
+		_rectengle->MoveRecHR(1);
 	}
-	_circle->Updata();
+
+	if (GetAsyncKeyState('W'))
+	{
+		_rectengle->MoveRecVT(-1);
+	}
+	if (GetAsyncKeyState('S'))
+	{
+		_rectengle->MoveRecVT(1);
+	}
+	_rectengle->Updata();
 }
 
 void PaintScene::Render(HDC hdc)
 {
 	_circle->Render(hdc);
+	_rectengle->Render(hdc);
 }

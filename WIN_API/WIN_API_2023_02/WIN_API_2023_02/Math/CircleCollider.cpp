@@ -2,21 +2,15 @@
 #include "CircleCollider.h"
 
 CircleCollider::CircleCollider(Vector2 center, float radius)
-	: _center(center)
+	: Collider(center)
 	, _radius(radius)
 {
-	HPEN green = CreatePen(PS_SOLID, 1, GREEN);
-	HPEN red =   CreatePen(PS_SOLID, 1, RED);
-	_pens.push_back(green);
-	_pens.push_back(red);
+	_type = Collider::ColliderType::CIRCLE;
 }
 
 CircleCollider::~CircleCollider()
 {
-	for (auto& pen : _pens)
-	{
-		DeleteObject(pen);
-	}
+	
 }
 
 void CircleCollider::Updata()
@@ -33,15 +27,7 @@ void CircleCollider::Render(HDC hdc)
 	Ellipse(hdc, left, top, right, bottom);
 }
 
-void CircleCollider::MoveCenter(const Vector2& value)
-{
-	_center += value;
-}
 
-void CircleCollider::SetCenter(const Vector2 value)
-{
-	_center = value;
-}
 
 void CircleCollider::SetRadius(float radius)
 {

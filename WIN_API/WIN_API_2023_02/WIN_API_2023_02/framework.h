@@ -27,6 +27,8 @@ using namespace std;
 
 //MAth
 #include "Math/Vector2.h"
+#include "Math/Line.h"
+#include "Math/Collider.h"
 #include "Math/CircleCollider.h"
 #include "Math/RectCollider.h"
 

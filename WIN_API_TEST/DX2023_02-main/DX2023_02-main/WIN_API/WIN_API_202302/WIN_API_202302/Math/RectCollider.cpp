@@ -66,6 +66,16 @@ bool RectCollider::IsCollision(Vector2 pos)
 
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
+	float HRDistance = abs(_center.x - other->GetCenter().x);
+	float HRSum = _halfSize.x + other->GetRadius();
+	float VTDistance = abs(_center.y - other->GetCenter().y);
+	float VTSum = _halfSize.y + other->GetRadius();
+	if (HRDistance < HRSum && VTDistance < VTSum)
+	{
+		if ((_center - other->GetCenter()).Length() > (this->HalfDiaginal() + other->GetRadius()))
+			return false;
+		return true;
+	}
 	return false;
 }
 

@@ -18,18 +18,18 @@ void PaintScene::Update()
 	Vector2 lerpResult = LERP(_rectMouse->GetCenter(), mousePos, 0.1f);
 	_rectMouse->SetCenter(lerpResult);
 
-	/*if (_circle->IsCollision(_circleMouse))
+	if (_circle->IsCollision(_rectMouse))
 	{
 		_circle->SetRed();
-		_circleMouse->SetRed();
+		_rectMouse->SetRed();
 	}
 	else
 	{
 		_circle->SetGreen();
-		_circleMouse->SetGreen();
+		_rectMouse->SetGreen();
 	}
 
-	if (_rect->IsCollision(mousePos))
+	/*if (_rect->IsCollision(mousePos))
 		_rect->SetRed();
 	else
 		_rect->SetGreen();*/

@@ -26,6 +26,8 @@ public:
 	float Right() const { return _center.x + _halfSize.x; }
 	float Top() const { return _center.y - _halfSize.y; }
 	float Bottom() const { return _center.y + _halfSize.y; }
+	float Diaginal() const{ return sqrtf(powf(_size.x, 2) + powf(_size.y, 2)); }
+	float HalfDiaginal() const { return this->Diaginal() * 0.5f; }
 
 	bool IsCollision(Vector2 pos);
 	bool IsCollision(shared_ptr<CircleCollider> other); // 맨나중에

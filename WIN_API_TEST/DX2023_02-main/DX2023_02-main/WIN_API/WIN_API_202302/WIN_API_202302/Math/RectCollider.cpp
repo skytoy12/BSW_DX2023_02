@@ -2,22 +2,15 @@
 #include "RectCollider.h"
 
 RectCollider::RectCollider(Vector2 center, Vector2 size)
-: _center(center)
+: Collider(center)
 , _size(size)
 , _halfSize(size * 0.5f)
 {
-	HPEN green = CreatePen(PS_SOLID, 1, GREEN);
-	HPEN red = CreatePen(PS_SOLID, 1, RED);
-	_pens.push_back(green);
-	_pens.push_back(red);
+	_type = Collider::ColliderType::RECT;
 }
 
 RectCollider::~RectCollider()
 {
-	for (auto& pen : _pens)
-	{
-		DeleteObject(pen);
-	}
 }
 
 void RectCollider::Update()
@@ -37,22 +30,11 @@ void RectCollider::Render(HDC hdc)
 	Rectangle(hdc, left, top, right, bottom);
 }
 
-void RectCollider::MoveCenter(const Vector2& value)
-{
-	_center += value;
-}
-
-void RectCollider::SetCenter(const Vector2& value)
-{
-	_center = value;
-}
-
 void RectCollider::SetSize(const Vector2& size)
 {
 	_size = size;
 	_halfSize = _size * 0.5f;
 }
-
 
 bool RectCollider::IsCollision(Vector2 pos)
 {
@@ -66,24 +48,39 @@ bool RectCollider::IsCollision(Vector2 pos)
 
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
-	float HRDistance = abs(_center.x - other->GetCenter().x);
-	float HRSum = _halfSize.x + other->GetRadius();
-	float VTDistance = abs(_center.y - other->GetCenter().y);
-	float VTSum = _halfSize.y + other->GetRadius();
-	if (HRDistance < HRSum && VTDistance < VTSum)
-	{
-		if ((_center - other->GetCenter()).Length() > (this->HalfDiaginal() + other->GetRadius()))
-			return false;
+	Vector2 leftTop = Vector2(Left(), Top());
+	Vector2 leftBottom = Vector2(Left(), Bottom());
+	Vector2 rightTop = Vector2(Right(), Top());
+	Vector2 rightBottom = Vector2(Right(), Bottom());
+
+	if (other->IsCollision(leftTop) || other->IsCollision(leftBottom) ||
+		other->IsCollision(rightTop) || other->IsCollision(rightBottom))
 		return true;
+
+	if (Right() > other->GetCenter().x && Left() < other->GetCenter().x)
+	{
+		if (Top() - other->GetRadius() < other->GetCenter().y
+			&& Bottom() + other->GetRadius() > other->GetCenter().y)
+			return true;
 	}
+
+	if (Bottom() > other->GetCenter().y && Top() < other->GetCenter().y)
+	{
+		if (Left() - other->GetRadius() < other->GetCenter().x
+			&& Right() + other->GetRadius() > other->GetCenter().x)
+			return true;
+	}
+
 	return false;
 }
 
 bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
 {
-	float HRDistance = abs(_center.x - other->GetCenter().x);
-	float HRSum = _halfSize.x + other->GetHalfSize().x;
-	float VTDistance = abs(_center.y - other->GetCenter().y);
-	float VTSum = _halfSize.y + other->GetHalfSize().y;
-	return HRDistance < HRSum && VTDistance < VTSum;
+	if (Right() > other->Left() && Left() < other->Right())
+	{
+		if (Bottom() > other->Top() && Top() < other->Bottom())
+			return true;
+	}
+
+	return false;
 }

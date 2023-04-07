@@ -5,7 +5,7 @@ public :
 	RectCollider(Vector2 center, Vector2 size);
 	virtual ~RectCollider();
 
-	virtual void Updata() override;
+	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
 

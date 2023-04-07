@@ -4,19 +4,20 @@
 #include "../Scenes/PaintScene.h"
 #include "../Scenes/LineScene.h"
 #include "../Scenes/LineCollisionScene.h"
+#include "../Scenes/CanonScene.h"
 
 Program::Program()
 {
-	_curScene = make_shared<LineCollisionScene>();
+	_curScene = make_shared<CanonScene>();
 }
 
 Program::~Program()
 {
 }
 
-void Program::Updata()
+void Program::Update()
 {
-	_curScene->Updata();
+	_curScene->Update();
 }
 
 void Program::Render(HDC hdc)

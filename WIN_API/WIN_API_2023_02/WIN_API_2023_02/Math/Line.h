@@ -5,7 +5,7 @@ public :
 	Line(Vector2 start, Vector2 end);
 	~Line();
 
-	void Updata();
+	void Update();
 	void Render(HDC hdc);
 
 	Vector2  GetVector2() { return (_end - _start); }

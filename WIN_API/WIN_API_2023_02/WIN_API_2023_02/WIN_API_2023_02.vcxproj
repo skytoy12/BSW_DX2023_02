@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Canon\Bullet.h" />
+    <ClInclude Include="Object\Canon\Canon.h" />
+    <ClInclude Include="Scenes\CanonScene.h" />
     <ClInclude Include="Scenes\LineCollisionScene.h" />
     <ClInclude Include="Scenes\LineScene.h" />
     <ClInclude Include="Math\Collider.h" />
@@ -168,6 +171,9 @@
     <ClInclude Include="WIN_API_2023_02.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Canon\Bullet.cpp" />
+    <ClCompile Include="Object\Canon\Canon.cpp" />
+    <ClCompile Include="Scenes\CanonScene.cpp" />
     <ClCompile Include="Scenes\LineCollisionScene.cpp" />
     <ClCompile Include="Scenes\LineScene.cpp" />
     <ClCompile Include="Math\Collider.cpp" />

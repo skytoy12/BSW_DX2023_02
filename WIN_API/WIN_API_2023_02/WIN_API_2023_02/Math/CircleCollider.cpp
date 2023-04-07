@@ -13,7 +13,7 @@ CircleCollider::~CircleCollider()
 	
 }
 
-void CircleCollider::Updata()
+void CircleCollider::Update()
 {
 }
 

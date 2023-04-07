@@ -15,7 +15,7 @@ public:
 	Collider(Vector2 center);
 	virtual ~Collider();
 
-	virtual void Updata() abstract;
+	virtual void Update() abstract;
 	virtual void Render(HDC hdc) abstract;
 
 	void MoveCenter(const Vector2& value);

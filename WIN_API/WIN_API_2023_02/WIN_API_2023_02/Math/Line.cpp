@@ -20,7 +20,7 @@ Line::~Line()
 	}
 }
 
-void Line::Updata()
+void Line::Update()
 {
 }
 
@@ -48,7 +48,16 @@ ColResult_Line Line::IsCollision(shared_ptr<Line> other)
 	if (a.IsBetween(a1, a2) && b.IsBetween(b1, b2))
 	{
 		result.isCollision = true;
-		// contact 구하는 곳
+		// 충돌지점넣기
+		float aArea = abs(a.Cross(a1));
+		float bArea = abs(a.Cross(a2));
+
+		float ratio = aArea / (aArea + bArea);
+
+		float length = b.Length() * ratio;
+		Vector2 bNomal = b.NormalVector2();
+		result.contact = other->_start + bNomal * length;
+
 		return result;
 	}
 

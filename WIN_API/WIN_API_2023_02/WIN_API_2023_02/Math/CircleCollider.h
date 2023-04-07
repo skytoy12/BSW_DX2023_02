@@ -6,7 +6,7 @@ public:
 	CircleCollider(Vector2 center, float radius);
 	virtual ~CircleCollider();
 
-	virtual void Updata() override;
+	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
 

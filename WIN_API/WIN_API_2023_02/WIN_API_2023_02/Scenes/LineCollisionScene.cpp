@@ -13,7 +13,7 @@ LineCollisionScene::~LineCollisionScene()
 {
 }
 
-void LineCollisionScene::Updata()
+void LineCollisionScene::Update()
 {
 	_line1->_end = mousePos;
 	ColResult_Line result = _line1->IsCollision(_line2);

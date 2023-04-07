@@ -25,8 +25,6 @@ public:
 
 	void SetGreen() { _curPenIndex = 0; }
 	void SetRed() { _curPenIndex = 1; }
-	void SetBlue() { _curPenIndex = 2; }
-	void SetBlack() { _curPenIndex = 3; }
 
 	virtual bool IsCollision(Vector2 pos) abstract;
 	bool IsCollision(shared_ptr<Collider> col);

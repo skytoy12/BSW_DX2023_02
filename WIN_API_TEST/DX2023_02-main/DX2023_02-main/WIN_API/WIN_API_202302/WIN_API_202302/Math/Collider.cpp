@@ -5,14 +5,10 @@ Collider::Collider(Vector2 center)
 : _center(center)
 , _type(Collider::ColliderType::NONE)
 {
-	HPEN green = CreatePen(PS_SOLID, 3, GREEN);
-	HPEN red = CreatePen(PS_SOLID, 3, RED);
-	HPEN blue = CreatePen(PS_SOLID, 3, BLUE);
-	HPEN black = CreatePen(PS_SOLID, 3, BLACK);
+	HPEN green = CreatePen(PS_SOLID, 1, GREEN);
+	HPEN red = CreatePen(PS_SOLID, 1, RED);
 	_pens.push_back(green);
 	_pens.push_back(red);
-	_pens.push_back(blue);
-	_pens.push_back(black);
 }
 
 Collider::~Collider()

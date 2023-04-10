@@ -14,7 +14,7 @@ RectCollider::~RectCollider()
 	
 }
 
-void RectCollider::Updata()
+void RectCollider::Update()
 {
 }
 

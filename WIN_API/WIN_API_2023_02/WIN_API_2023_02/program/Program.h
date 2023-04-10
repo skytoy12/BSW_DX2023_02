@@ -6,7 +6,7 @@ public :
 	~Program();
 
 	// 게임은 Updata와 Render가 두부분으로 갈린다.
-	void Updata();
+	void Update();
 	void Render(HDC hdc);
 
 private :

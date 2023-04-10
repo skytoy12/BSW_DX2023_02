@@ -25,12 +25,16 @@ using namespace std;
 
 #include "Types.h"
 
-//MAth
+//Math
 #include "Math/Vector2.h"
 #include "Math/Line.h"
 #include "Math/Collider.h"
 #include "Math/CircleCollider.h"
 #include "Math/RectCollider.h"
+
+//Object
+#include "Object/Canon/Bullet.h"
+#include "Object/Canon/Canon.h"
 
 // Scene
 #include "Scenes/Scene.h"

@@ -5,7 +5,7 @@ public :
 	LineCollisionScene();
 	virtual ~LineCollisionScene();
 	
-	virtual void Updata() override;
+	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 
 private :

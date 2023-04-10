@@ -5,7 +5,7 @@ public :
 	LineScene();
 	virtual ~LineScene();
 
-	virtual void Updata() override;
+	virtual void Update() override;
 	virtual void Render(HDC hdc) override;
 private :	
 	shared_ptr<Line> _lineFloor;

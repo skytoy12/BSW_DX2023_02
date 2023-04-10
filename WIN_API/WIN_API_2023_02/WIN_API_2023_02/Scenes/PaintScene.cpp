@@ -16,7 +16,7 @@ PaintScene::~PaintScene()
 {
 }
 
-void PaintScene::Updata()
+void PaintScene::Update()
 {
 	Vector2 lerpResult = LERP(_rectMouse->GetCenter(), mousePos, 0.1f);
 	// _circleMouse->SetCenter(lerpResult);
@@ -44,8 +44,8 @@ void PaintScene::Updata()
 		_rectMouse->SetGreen();
 	}
 
-	_circle->Updata();
-	_rect->Updata();
+	_circle->Update();
+	_rect->Update();
 }
 
 void PaintScene::Render(HDC hdc)

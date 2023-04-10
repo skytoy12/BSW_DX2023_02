@@ -20,6 +20,7 @@ void CircleCollider::Update()
 void CircleCollider::Render(HDC hdc)
 {
 	SelectObject(hdc, _pens[_curPenIndex]);
+
 	float left = _center.x - _radius;
 	float top = _center.y - _radius;
 	float right = _center.x + _radius;

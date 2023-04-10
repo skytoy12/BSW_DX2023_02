@@ -9,6 +9,9 @@ Collider::Collider(Vector2 center)
 	HPEN red = CreatePen(PS_SOLID, 1, RED);
 	_pens.push_back(green);
 	_pens.push_back(red);
+
+	
+	
 }
 
 Collider::~Collider()

@@ -11,8 +11,7 @@ public:
 	void Move();
 	void Angle();
 	void Fire();
-	
-	vector<shared_ptr<Bullet>> bullets() { return _bullets; }
+
 private:
 	float _muzzleLength = 100.0f;
 	float _muzzleAngle = 0.0f;

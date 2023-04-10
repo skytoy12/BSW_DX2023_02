@@ -151,7 +151,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Object\Cannon\canonEnemy.h" />
     <ClInclude Include="Object\Cannon\Bullet.h" />
     <ClInclude Include="Object\Cannon\Cannon.h" />
     <ClInclude Include="Scenes\CannonScene.h" />
@@ -172,7 +171,6 @@
     <ClInclude Include="WIN_API_202302.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Object\Cannon\canonEnemy.cpp" />
     <ClCompile Include="Object\Cannon\Bullet.cpp" />
     <ClCompile Include="Object\Cannon\Cannon.cpp" />
     <ClCompile Include="Scenes\CannonScene.cpp" />

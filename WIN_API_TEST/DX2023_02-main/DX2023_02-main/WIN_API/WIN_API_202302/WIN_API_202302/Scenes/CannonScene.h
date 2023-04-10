@@ -10,6 +10,5 @@ public:
 
 private:
 	shared_ptr<Cannon> _cannon;
-	shared_ptr<canonEnemy> _canonEnemy;
 };
 

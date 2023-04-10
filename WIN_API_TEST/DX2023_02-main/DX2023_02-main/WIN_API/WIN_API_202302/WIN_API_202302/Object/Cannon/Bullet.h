@@ -12,11 +12,6 @@ public:
 	void Shoot(const Vector2& dir, float speed);
 
 	bool IsActive() { return _isActive; }
-	shared_ptr<CircleCollider> Circle() { return _circle;  }
-	bool IsCollision(shared_ptr<CircleCollider> other)
-	{
-		return _circle->IsCollision(other);
-	}
 
 private:
 	bool _isActive = false;

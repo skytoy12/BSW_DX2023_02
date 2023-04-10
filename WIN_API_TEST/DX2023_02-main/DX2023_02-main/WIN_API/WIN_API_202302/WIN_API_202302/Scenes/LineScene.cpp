@@ -21,7 +21,7 @@ void LineScene::Update()
 	Vector2 floor_Normal = line_floorVec.NormalVector2();
 	float shadowLength = line_mouseVec.Dot(floor_Normal);
 
-	// _lineShadow->_start 
+	// _lineShadow->_start = ? 
 	_lineShadow->_end = _lineShadow->_start + floor_Normal * shadowLength;
 
 	_lineFloor->Update();

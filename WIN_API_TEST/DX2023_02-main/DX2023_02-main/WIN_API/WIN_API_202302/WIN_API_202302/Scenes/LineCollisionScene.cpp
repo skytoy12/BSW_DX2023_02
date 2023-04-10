@@ -6,7 +6,7 @@ LineCollisionScene::LineCollisionScene()
 	_line1 = make_shared<Line>(Vector2(0, 0), Vector2(0, 0));
 	_line2 = make_shared<Line>(Vector2(100, 500), Vector2(600, 100));
 
-	_circle = make_shared<CircleCollider>(Vector2(0, 0), 20);
+	_circle = make_shared<CircleCollider>(Vector2(0, 0), 5);
 }
 
 LineCollisionScene::~LineCollisionScene()

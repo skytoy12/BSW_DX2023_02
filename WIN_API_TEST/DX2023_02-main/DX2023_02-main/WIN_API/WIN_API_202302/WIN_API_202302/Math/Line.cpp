@@ -31,13 +31,11 @@ void Line::Render(HDC hdc)
 	LineTo(hdc, _end.x, _end.y);
 }
 
-
 ColResult_Line Line::IsCollision(shared_ptr<Line> other)
 {
 	ColResult_Line result;
 	result.isCollision = false;
 	result.contact = Vector2(0, 0);
-	
 
 	Vector2 a = this->GetVector2();
 	Vector2 a1 = other->_start - this->_start;
@@ -47,18 +45,22 @@ ColResult_Line Line::IsCollision(shared_ptr<Line> other)
 	Vector2 b1 = this->_start - other->_start;
 	Vector2 b2 = this->_end - other->_start;
 
-	float contact_x = (other->Y_intercept() - this->Y_intercept()) / (this->Slope() - other->Slope());
-	float contact_y = this->Slope() * ((other->Y_intercept() - this->Y_intercept()) / (this->Slope() - other->Slope())) + this->Y_intercept();
-
 	if (a.IsBetween(a1, a2) && b.IsBetween(b1, b2))
 	{
 		result.isCollision = true;
 		// 충돌지점넣기
-		result.contact = Vector2 (contact_x, contact_y);
+		float aArea = abs(a.Cross(a1));
+		float bArea = abs(a.Cross(a2));
+
+		float ratio = aArea / (aArea + bArea);
+
+		float length = b.Length() * ratio;
+		Vector2 bNormal = b.NormalVector2();
+		result.contact = other->_start + bNormal * length;
+
 		return result;
 	}
 
 	result.contact = { -10000.0f, -10000.0f };
 	return result;
 }
-

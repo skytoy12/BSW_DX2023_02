@@ -20,6 +20,7 @@
 #include <string>
 #include <algorithm>
 #include <memory>
+#include <iostream>
 
 using namespace std;
 
@@ -36,6 +37,9 @@ using namespace std;
 #include "Object/Canon/Bullet.h"
 #include "Object/Canon/Canon.h"
 
+#include "Object/Maze/MazeBlock.h"
+#include "Object/Maze/Maze.h"
+
 // Scene
 #include "Scenes/Scene.h"
 
@@ -43,3 +47,5 @@ using namespace std;
 #include "program/Program.h"
 
 extern Vector2 mousePos;
+extern HWND hWnd;
+extern bool isDebugMode;

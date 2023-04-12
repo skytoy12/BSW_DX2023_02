@@ -42,6 +42,9 @@ public :
         return *this;
     }
 
+    bool operator==(const Vector2& other);
+    bool operator!=(const Vector2& other);
+
     float Dot(const Vector2& other) const
     {
         return (this->x * other.x) + (this->y * other.y);;

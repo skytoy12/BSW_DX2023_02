@@ -6,7 +6,10 @@ public :
 	{
 		NONE,
 		ABLE,
-		DISABLE
+		DISABLE,
+		START,
+		END,
+		PLAYER
 	};
 	MazeBlock();
 	~MazeBlock();
@@ -15,6 +18,7 @@ public :
 	void Render(HDC hdc);
 
 	void SetType(BlockType type) { _type = type; }
+	BlockType GetType() { return _type; }
 	void SetPosition(Vector2 pos) { _rect->SetCenter(pos); }
 
 private :

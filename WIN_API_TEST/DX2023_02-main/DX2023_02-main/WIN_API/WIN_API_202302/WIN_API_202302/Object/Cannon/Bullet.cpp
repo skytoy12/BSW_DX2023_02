@@ -3,7 +3,7 @@
 
 Bullet::Bullet()
 {
-	_circle = make_shared<CircleCollider>(Vector2(0, 0), 5);
+	_collider = make_shared<CircleCollider>(Vector2(0, 0), 5);
 }
 
 Bullet::~Bullet()
@@ -15,13 +15,19 @@ void Bullet::Update()
 	if (_isActive == false)
 		return;
 
-	_circle->MoveCenter(_direction * _speed);
-	_direction.y += GRAVITY;
+	_collider->MoveCenter(_direction * _speed);
+	//_direction.y += GRAVITY;
 
-	if (_circle->GetCenter().y > WIN_HEIGHT)
-		_isActive = false;
+	//if (_collider->GetCenter().y > WIN_HEIGHT)
+	//	_isActive = false;
 
-	_circle->Update();
+	// 화면에 나갈려고할 때 정반사
+	if(_collider->GetCenter().y < 0.0f || _collider->GetCenter().y > WIN_HEIGHT)
+		_direction.y *= -1;
+	if (_collider->GetCenter().x < 0.0f || _collider->GetCenter().x > WIN_WIDTH)
+		_direction.x *= -1;
+
+	_collider->Update();
 }
 
 void Bullet::Render(HDC hdc)
@@ -29,7 +35,7 @@ void Bullet::Render(HDC hdc)
 	if (_isActive == false)
 		return;
 
-	_circle->Render(hdc);
+	_collider->Render(hdc);
 }
 
 void Bullet::Shoot(const Vector2& dir, float speed)
@@ -38,4 +44,14 @@ void Bullet::Shoot(const Vector2& dir, float speed)
 
 	_direction = dir;
 	_speed = speed;
+}
+
+bool Bullet::IsCollision(shared_ptr<class Cannon> cannon)
+{
+	if (_collider->IsCollision(cannon->GetCollider()))
+	{
+		return true;
+	}
+
+	return false;
 }

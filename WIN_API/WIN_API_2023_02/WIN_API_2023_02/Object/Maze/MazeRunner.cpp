@@ -19,10 +19,16 @@ void MazeRunner::Update()
 		return;
 
 	_time += 0.5f;
+	
 	if (_time > 1.0f)
 	{
 		_time = 0.0f;
 		_pos = _path[_pathindex];
+		
+		if (_pathindex > 0)
+		{
+			_maze->GetBlock(_path[_pathindex-1].y, _path[_pathindex - 1].x)->SetType(MazeBlock::BlockType::FOOT_PRINT);
+		}
 
 		_pathindex++;
 	}
@@ -76,6 +82,26 @@ void MazeRunner::LeftHand()
 		}
 	}
 
+	stack<Vector2> s;
+	for (int i = 0; i < _path.size() - 1; i++)
+	{
+		if (s.empty() == false && s.top() == _path[i + 1])
+			s.pop();
+		else
+			s.push(_path[i]);
+	}
+
+	s.push(_path.back());
+	_path.clear();
+
+	while (true)
+	{
+		if (s.empty() == true)
+			break;
+		_path.push_back(s.top());
+		s.pop();
+	}
+	std::reverse(_path.begin(), _path.end());
 }
 
 bool MazeRunner::CanGo(int y, int x)

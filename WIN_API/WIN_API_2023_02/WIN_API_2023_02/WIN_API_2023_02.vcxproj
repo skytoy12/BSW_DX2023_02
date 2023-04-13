@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Arkanoid\Ball.h" />
+    <ClInclude Include="Bar.h" />
+    <ClInclude Include="Object\Arkanoid\Block.h" />
     <ClInclude Include="Object\Maze\MazeRunner.h" />
     <ClInclude Include="Scenes\ArkanoidScene.h" />
     <ClInclude Include="Object\Maze\Maze.h" />
@@ -176,6 +179,9 @@
     <ClInclude Include="WIN_API_2023_02.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Arkanoid\Ball.cpp" />
+    <ClCompile Include="Object\Arkanoid\Bar.cpp" />
+    <ClCompile Include="Object\Arkanoid\Block.cpp" />
     <ClCompile Include="Object\Maze\MazeRunner.cpp" />
     <ClCompile Include="Scenes\ArkanoidScene.cpp" />
     <ClCompile Include="Object\Maze\Maze.cpp" />

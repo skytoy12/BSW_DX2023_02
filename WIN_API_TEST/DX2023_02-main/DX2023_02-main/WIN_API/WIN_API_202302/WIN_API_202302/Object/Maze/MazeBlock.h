@@ -10,7 +10,7 @@ public:
 		START,
 		END,
 		PLAYER,
-		OLD
+		FOOT_PRINT
 	};
 
 	MazeBlock();

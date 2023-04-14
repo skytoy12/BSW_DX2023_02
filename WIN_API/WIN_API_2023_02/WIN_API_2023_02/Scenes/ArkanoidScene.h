@@ -9,6 +9,6 @@ public :
 	virtual void Render(HDC hdc) override;
 
 private :
-
+	shared_ptr<Block> _block;
 };
 

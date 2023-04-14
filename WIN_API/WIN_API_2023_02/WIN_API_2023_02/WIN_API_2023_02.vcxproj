@@ -151,10 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Object\Arkanoid\Blocks.h" />
+    <ClInclude Include="Object\Arkanoid\ArkanoidBlocks.h" />
+    <ClInclude Include="Object\Arkanoid\ArkanoidBlock.h" />
     <ClInclude Include="Object\Arkanoid\Ball.h" />
     <ClInclude Include="Object\Arkanoid\Bar.h" />
-    <ClInclude Include="Object\Arkanoid\Block.h" />
     <ClInclude Include="Object\Maze\MazeRunner.h" />
     <ClInclude Include="Scenes\ArkanoidScene.h" />
     <ClInclude Include="Object\Maze\Maze.h" />
@@ -180,10 +180,10 @@
     <ClInclude Include="WIN_API_2023_02.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Object\Arkanoid\Blocks.cpp" />
+    <ClCompile Include="Object\Arkanoid\ArkanoidBlocks.cpp" />
+    <ClCompile Include="Object\Arkanoid\ArkanoidBlock.cpp" />
     <ClCompile Include="Object\Arkanoid\Ball.cpp" />
     <ClCompile Include="Object\Arkanoid\Bar.cpp" />
-    <ClCompile Include="Object\Arkanoid\Block.cpp" />
     <ClCompile Include="Object\Maze\MazeRunner.cpp" />
     <ClCompile Include="Scenes\ArkanoidScene.cpp" />
     <ClCompile Include="Object\Maze\Maze.cpp" />

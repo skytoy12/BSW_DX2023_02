@@ -1,13 +1,13 @@
 #pragma once
-class Block
+class ArkanoidBlock
 {
-public :
-	Block();
-	~Block();
+public:
+	ArkanoidBlock();
+	~ArkanoidBlock();
 
 	void Update();
 	void Render(HDC hdc);
-private :
+private:
 	shared_ptr<Collider> _rect;
 };
 

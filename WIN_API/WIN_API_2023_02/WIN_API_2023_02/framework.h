@@ -43,8 +43,8 @@ using namespace std;
 #include "Object/Maze/Maze.h"
 #include "Object/Maze/MazeRunner.h"
 
-#include "Object/Arkanoid/Block.h"
-#include "Object/Arkanoid/Blocks.h"
+#include "Object/Arkanoid/ArkanoidBlock.h"
+#include "Object/Arkanoid/ArkanoidBlocks.h"
 #include "Object/Arkanoid/Bar.h"
 #include "Object/Arkanoid/Ball.h"
 

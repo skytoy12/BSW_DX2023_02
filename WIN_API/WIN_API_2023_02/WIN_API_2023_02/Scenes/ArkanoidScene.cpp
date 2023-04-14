@@ -3,7 +3,7 @@
 
 ArkanoidScene::ArkanoidScene()
 {
-	_block = make_shared<Block>();
+	//_block = make_shared<Block>();
 }
 
 ArkanoidScene::~ArkanoidScene()
@@ -13,10 +13,10 @@ ArkanoidScene::~ArkanoidScene()
 
 void ArkanoidScene::Update()
 {
-	_block->Update();
+	//_block->Update();
 }
 
 void ArkanoidScene::Render(HDC hdc)
 {
-	_block->Render(hdc);
+	//_block->Render(hdc);
 }

@@ -6,11 +6,13 @@ public:
 	~ArkanoidBlocks();
 
 	void Update();
-	void Render();
+	void Render(HDC hdc);
+	vector<vector<shared_ptr<ArkanoidBlock>>> GetBlocks() { return _arkanoidBlocks; }
+	
 
 private:
-	vector<vector<shared_ptr<ArkanoidBlock>>> _blocks;
-	UINT _poolcountX = 20;
-	UINT _poolcountY = 20;
+	vector<vector<shared_ptr<ArkanoidBlock>>> _arkanoidBlocks;
+	UINT _poolCountX = 10;
+	UINT _poolCountY = 6;
 };
 

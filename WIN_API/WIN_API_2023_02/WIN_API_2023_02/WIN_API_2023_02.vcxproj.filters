@@ -96,6 +96,9 @@
     <ClInclude Include="Object\Arkanoid\ArkanoidBlocks.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Arkanoid\Frame.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="WIN_API_2023_02.cpp">
@@ -168,6 +171,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Arkanoid\ArkanoidBlocks.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Arkanoid\Frame.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

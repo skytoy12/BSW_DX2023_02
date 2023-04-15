@@ -21,6 +21,7 @@ public :
 	void SetType(BlockType type) { _type = type; }
 	BlockType GetType() { return _type; }
 	void SetPosition(Vector2 pos) { _rect->SetCenter(pos); }
+	
 
 private :
 	vector<HBRUSH> _brushes;

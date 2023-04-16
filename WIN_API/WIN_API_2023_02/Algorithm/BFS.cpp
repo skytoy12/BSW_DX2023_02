@@ -45,39 +45,32 @@ void CreateGraphByMatrix()
 	adjacent2[6][6] = true;
 }
 
-void BFS(int start)
+void BFSReady(int start)
 {
 	
-	while(true)
+	
+	for (int there = 0; there < adjacent2.size(); there++)
 	{
-		for (int there = 0; there < adjacent2.size(); there++)
+		// 인접해있나?
+		if (adjacent2[start][there] == true)
 		{
-			// 인접해있나?
-			if (adjacent2[start][there] == true)
-			{
-				waiting.push_back(there);
-				visited[there] = true;
-			}
+			waiting.push_back(there);
 		}
-
-		for (int there = 0; there < adjacent2.size(); there++)
-		{
-			if (adjacent2[start][there] == true && start < there)
-				BFS(there);
-		}
-		
-		int count = 0;
-
-		for (auto visit : visited)
-		{
-			count = std::count(visited.begin(), visited.end(), true);
-		}
-		
-		if (count == visited.size())
-			break;
 	}
 
+	for (int there = 0; there < adjacent2.size(); there++)
+	{
+		if (adjacent2[start][there] == true && start < there)
+			BFSReady(there);
+	}
 	
+
+}
+
+void BFS() 
+{
+	BFSReady(0);
+
 	for (int i = 0; i < adjacent2.size(); i++)
 	{
 		cout << waiting[0] << "을 방문하였습니다" << endl;
@@ -85,14 +78,13 @@ void BFS(int start)
 		waiting.erase(remove(waiting.begin(), waiting.end(), deleteNum));
 
 	}
-
-}
+};
 
 
 
 int main()
 {
 	CreateGraphByMatrix();
-	BFS(0);
+	BFS();
 	return 0;
 }

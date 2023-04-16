@@ -86,16 +86,6 @@ void ArkanoidScene::Update()
 				else if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK)
 					arkanoidBlock->SetAlive(false);
 			}
-			if (arkanoidBlock->GetEachBlock()->IsCollision(_bar->GetBallByBar()->GetBall()))
-			{
-				if (arkanoidBlock->IsAlive() == false)
-					return;
-				_bar->GetBallByBar()->SetDir(Vector2((_bar->GetBallByBar()->GetDir().x * -1), _bar->GetBallByBar()->GetDir().y));
-				if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::HARDBLOCK)
-					arkanoidBlock->SetType(ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK);
-				else if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK)
-					arkanoidBlock->SetAlive(false);
-			}
 		}
 	}
 }

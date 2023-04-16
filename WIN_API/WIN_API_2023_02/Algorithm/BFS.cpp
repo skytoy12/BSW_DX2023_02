@@ -11,6 +11,7 @@ using namespace std;
 
 vector<vector<bool>> adjacent2;
 vector<bool> visited;
+vector<int> waiting;
 
 void CreateGraphByMatrix()
 {
@@ -44,51 +45,54 @@ void CreateGraphByMatrix()
 	adjacent2[6][6] = true;
 }
 
-void DFS(int start)
+void BFS(int start)
 {
-	if (visited[start])
-		return;
-
-	visited[start] = true;
-	cout << start << "를 방문했습니다." << endl;
-
-	for (int there = 0; there < adjacent2.size(); there++)
+	
+	while(true)
 	{
-		// 갈곳이 출발점과 동일하면 다음
-		if (start == there)
-			continue;
-
-		// 인접해있나?
-		if (adjacent2[start][there] == false)
-			continue;
-
-		// 방문여부
-		if (visited[there] == true)
-			continue;
-
-		// 갈 곳을 찾은 경우
-		DFS(there);
-	}
-}
-
-int DfsAll()
-{
-	int count = 0;
-
-	for (int start = 0; start < 7; start++)
-	{
-		if (visited[start] == false)
+		for (int there = 0; there < adjacent2.size(); there++)
 		{
-			DFS(start);
-			count++;
+			// 인접해있나?
+			if (adjacent2[start][there] == true)
+			{
+				waiting.push_back(there);
+				visited[there] = true;
+			}
 		}
+
+		for (int there = 0; there < adjacent2.size(); there++)
+		{
+			if (adjacent2[start][there] == true && start < there)
+				BFS(there);
+		}
+		
+		int count = 0;
+
+		for (auto visit : visited)
+		{
+			count = std::count(visited.begin(), visited.end(), true);
+		}
+		
+		if (count == visited.size())
+			break;
 	}
-	return count;
+
+	
+	for (int i = 0; i < adjacent2.size(); i++)
+	{
+		cout << waiting[0] << "을 방문하였습니다" << endl;
+		int deleteNum = waiting[0];
+		waiting.erase(remove(waiting.begin(), waiting.end(), deleteNum));
+
+	}
+
 }
+
+
 
 int main()
 {
 	CreateGraphByMatrix();
-	DFS(0);
+	BFS(0);
 	return 0;
 }

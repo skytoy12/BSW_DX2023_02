@@ -40,6 +40,7 @@ void ArkanoidScene::Update()
 					arkanoidBlock->SetType(ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK);
 				else if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK)
 					arkanoidBlock->SetAlive(false);
+				return;
 			}
 
 			if (arkanoidBlock->GetEachBlock()->IsCollision(_bar->GetBallByBar()->GetBall()) &&
@@ -55,6 +56,7 @@ void ArkanoidScene::Update()
 					arkanoidBlock->SetType(ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK);
 				else if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK)
 					arkanoidBlock->SetAlive(false);
+				return;
 			}
 
 			if (arkanoidBlock->GetEachBlock()->IsCollision(_bar->GetBallByBar()->GetBall()) &&
@@ -70,6 +72,7 @@ void ArkanoidScene::Update()
 					arkanoidBlock->SetType(ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK);
 				else if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK)
 					arkanoidBlock->SetAlive(false);
+				return;
 			}
 			
 			if (arkanoidBlock->GetEachBlock()->IsCollision(_bar->GetBallByBar()->GetBall()) &&
@@ -85,6 +88,7 @@ void ArkanoidScene::Update()
 					arkanoidBlock->SetType(ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK);
 				else if (arkanoidBlock->GetType() == ArkanoidBlock::ArkanoidBlockType::NOMALBLOCK)
 					arkanoidBlock->SetAlive(false);
+				return;
 			}
 		}
 	}

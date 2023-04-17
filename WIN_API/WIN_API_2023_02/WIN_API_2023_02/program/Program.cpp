@@ -13,7 +13,7 @@ HDC Program::_backBuffer = nullptr;
 Program::Program()
 {
 	srand(unsigned int(time(nullptr)));
-	_curScene = make_shared<ArkanoidScene>();
+	_curScene = make_shared<MazeScene>();
 	HDC hdc = GetDC(hWnd);
 
 	_backBuffer = CreateCompatibleDC(hdc);

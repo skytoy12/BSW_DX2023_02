@@ -10,12 +10,12 @@
 using namespace std;
 
 vector<vector<bool>> adjacent2;
-vector<bool> visited;
+vector<bool> discovered;
 
 void CreateGraphByMatrix()
 {
 	adjacent2 = vector<vector<bool>>(7, vector<bool>(7, false));
-	visited = vector<bool>(7, false);
+	discovered = vector<bool>(7, false);
 
 	adjacent2[0][0] = true;
 	adjacent2[0][1] = true;
@@ -46,10 +46,10 @@ void CreateGraphByMatrix()
 
 void DFS(int start)
 {
-	if (visited[start])
+	if (discovered[start])
 		return;
 
-	visited[start] = true;
+	discovered[start] = true;
 	cout << start << "를 방문했습니다." << endl;
 
 	for (int there = 0; there < adjacent2.size(); there++)
@@ -63,7 +63,7 @@ void DFS(int start)
 			continue;
 
 		// 방문여부
-		if (visited[there] == true)
+		if (discovered[there] == true)
 			continue;
 
 		// 갈 곳을 찾은 경우
@@ -77,7 +77,7 @@ int DfsAll()
 
 	for (int start = 0; start < 7; start++)
 	{
-		if (visited[start] == false)
+		if (discovered[start] == false)
 		{
 			DFS(start);
 			count++;

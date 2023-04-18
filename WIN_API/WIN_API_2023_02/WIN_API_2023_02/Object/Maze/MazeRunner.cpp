@@ -13,21 +13,7 @@ MazeRunner::MazeRunner(shared_ptr<Maze> maze)
 
 	// BFS
 	BFS(_pos);
-	Vector2 endPos = _maze->End();
-	Vector2 targetPos = endPos;
-	vector<Vector2> a;
-	while (true)
-	{
-		if (_parent[targetPos.y][targetPos.x] == targetPos)
-			break;
-		a.push_back(targetPos);
-		targetPos = _parent[targetPos.y][targetPos.x];
-	}
-	reverse(a.begin(), a.end());
-	for (auto ready : a)
-	{
-		_path.push_back(ready);
-	}
+	
 }
 
 MazeRunner::~MazeRunner()
@@ -87,6 +73,7 @@ void MazeRunner::LeftHand()
 		{
 			_direction = static_cast<Dir>(newDir);
 			pos += newDirVector2;
+			_maze->GetBlock(pos.y, pos.x)->SetType(MazeBlock::BlockType::VISITED);
 			_path.push_back(pos);
 		}
 		
@@ -137,6 +124,7 @@ void MazeRunner::DFS(Vector2 here)
 		return;
 
 	_visited[(int)here.y][(int)here.x] = true;
+	_maze->GetBlock(here.y, here.x)->SetType(MazeBlock::BlockType::VISITED);
 	_path.push_back(here);
 
 	Vector2 frontPos[4] =
@@ -164,7 +152,9 @@ void MazeRunner::BFS(Vector2 start)
 {
 	queue<Vector2> queue;
 	queue.push(start);
+	_visited[start.y][start.x] = true;
 	_parent[start.y][start.x] = start;
+	_maze->GetBlock(start.y, start.x)->SetType(MazeBlock::BlockType::VISITED);
 
 	while (true)
 	{
@@ -176,13 +166,16 @@ void MazeRunner::BFS(Vector2 start)
 		if (_visited[endPos.y][endPos.x] == true)
 			break;
 
-		Vector2 frontPos[5] =
+		Vector2 frontPos[8] =
 		{
-			Vector2(1,1), // RIGHTDOWN
 			Vector2(0,-1), // UP
 			Vector2(1,0), // RIGHT
 			Vector2(0,1), // DOWN
-			Vector2(-1,0) // LEFT
+			Vector2(-1,0), // LEFT
+			Vector2(1,-1), // RIGHTUP
+			Vector2(1,1), // RIGHTDOWN
+			Vector2(-1,-1), // RIGHTDOWN
+			Vector2(-1,1), // RIGHTDOWN
 		};
 
 		for (int i = 0; i < 4; i++)
@@ -195,9 +188,27 @@ void MazeRunner::BFS(Vector2 start)
 			queue.push(there);
 			_parent[there.y][there.x] = here;
 			_visited[there.y][there.x] = true;
+			_maze->GetBlock(there.y, there.x)->SetType(MazeBlock::BlockType::VISITED);
 		}
 	}
 
+	Vector2 endPos = _maze->End();
+	Vector2 targetPos = endPos;
+	vector<Vector2> a;
+	while (true)
+	{
+		if (_parent[targetPos.y][targetPos.x] == targetPos)
+			break;
+		targetPos = _parent[targetPos.y][targetPos.x];
+		a.push_back(targetPos);
+	}
+
+	reverse(a.begin(), a.end());
+	for (auto ready : a)
+	{
+		_path.push_back(ready);
+	}
+	_path.push_back(endPos);
 }
 
 bool MazeRunner::CanGo(int y, int x)

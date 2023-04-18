@@ -27,5 +27,7 @@ private :
 
 	// DFS
 	vector<vector<bool>> _visited;
+	// BFS
+	vector<vector<Vector2>> _parent;
 };
 

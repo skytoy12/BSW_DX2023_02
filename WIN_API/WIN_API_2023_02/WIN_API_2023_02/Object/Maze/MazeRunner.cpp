@@ -12,8 +12,13 @@ MazeRunner::MazeRunner(shared_ptr<Maze> maze)
 	// DFS(_pos);
 
 	// BFS
-	BFS(_pos);
+	// BFS(_pos);
 	
+	// Djikstra
+	_best = vector<vector<int>>(maze->GetY(), vector<int>(maze->GetX(), INT_MAX));
+	_DjParent = vector<vector<Vector2>>(maze->GetY(), vector<Vector2>(maze->GetX(), Vector2(-1, -1)));
+	_DjVisited = vector<vector<bool>>(maze->GetY(), vector<bool>(maze->GetX(), false));
+	Djikstra(_pos);
 }
 
 MazeRunner::~MazeRunner()
@@ -213,7 +218,75 @@ void MazeRunner::BFS(Vector2 start)
 
 void MazeRunner::Djikstra(Vector2 start)
 {
+	Vector2 endPos = _maze->End();
+	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
+	Vertex startV = Vertex(_maze->Start(), 0);
+	pq.push(startV);
+	_best[startV.vertexPos.y][startV.vertexPos.x] = 0;
+	_DjVisited[startV.vertexPos.y][startV.vertexPos.x] = true;
+	_DjParent[startV.vertexPos.y][startV.vertexPos.x] = startV.vertexPos;
 
+	while (true)
+	{
+		if (pq.empty())
+			break;
+		int cost = pq.top().g;
+		Vector2 here = pq.top().vertexPos;
+		pq.pop();
+
+		Vector2 frontPos[8] =
+		{
+			Vector2(0,-1), // UP
+			Vector2(1,0), // RIGHT
+			Vector2(0,1), // DOWN
+			Vector2(-1,0), // LEFT
+			Vector2(1,-1), // RIGHTUP
+			Vector2(1,1), // RIGHTDOWN
+			Vector2(-1,-1), // RIGHTDOWN
+			Vector2(-1,1), // RIGHTDOWN
+		};
+		
+		for (int i = 0; i < 8; i++)
+		{
+			Vector2 there = here + frontPos[i];
+			if (here == there)
+				continue;
+			if (CanGo(there.y, there.x) == false)
+				continue;
+
+			float nextCost = _best[here.y][here.x];
+			if(i < 4)
+				float nextCost = _best[here.y][here.x] + 1;
+			if(i > 3)
+				float nextCost = _best[here.y][here.x] + 1.4f;
+
+
+			// 나중에 방문하려 했는데 이미 좋은 값이 있었다
+			if (nextCost >= _best[there.y][there.x])
+				continue;
+
+			// 방문
+			Vertex v = Vertex(there, nextCost);
+			pq.push(v);
+			_best[there.y][there.x] = nextCost;
+			_DjVisited[there.y][there.x] = true;
+			_DjParent[there.y][there.x] = here;
+			_maze->GetBlock(there.y, there.x)->SetType(MazeBlock::BlockType::VISITED);
+		}
+		if (_DjVisited[endPos.y][endPos.x] == true)
+			break;
+	}
+
+	Vector2 targetPos = endPos;
+	while (true)
+	{
+		if (_DjParent[targetPos.y][targetPos.x] == targetPos)
+			break;
+		targetPos = _DjParent[targetPos.y][targetPos.x];
+		_path.push_back(targetPos);
+	}
+	std::reverse(_path.begin(), _path.end());
+	_path.push_back(endPos);
 }
 
 bool MazeRunner::CanGo(int y, int x)

@@ -50,7 +50,8 @@ private :
 		int g;
 
 	};
-	vector<int> best;
-	vector<vector<Vector2>> DjParent;
+	vector<vector<int>> _best;
+	vector<vector<Vector2>> _DjParent;
+	vector<vector<bool>> _DjVisited;
 };
 

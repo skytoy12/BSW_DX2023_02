@@ -211,6 +211,11 @@ void MazeRunner::BFS(Vector2 start)
 	_path.push_back(endPos);
 }
 
+void MazeRunner::Djikstra(Vector2 start)
+{
+
+}
+
 bool MazeRunner::CanGo(int y, int x)
 {
 	if (_maze->GetBloockType(y, x) == MazeBlock::BlockType::DISABLE ||

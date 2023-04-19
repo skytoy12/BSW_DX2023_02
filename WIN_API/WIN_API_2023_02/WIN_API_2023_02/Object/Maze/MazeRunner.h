@@ -13,6 +13,8 @@ public :
 
 	void BFS(Vector2 start);
 
+	void Djikstra(Vector2 start);
+
 	bool CanGo(int y, int x);
 
 private :
@@ -29,5 +31,26 @@ private :
 	vector<vector<bool>> _visited;
 	// BFS
 	vector<vector<Vector2>> _parent;
+
+	// Djikstra
+	struct Vertex
+	{
+		Vertex(Vector2 pos, int g) : vertexPos(pos), g(g) {}
+		bool operator<(const Vertex& other) const
+		{
+			return g < other.g;
+		}
+
+		bool operator>(const Vertex& other) const
+		{
+			return g > other.g;
+		}
+
+		Vector2 vertexPos;
+		int g;
+
+	};
+	vector<int> best;
+	vector<vector<Vector2>> DjParent;
 };
 

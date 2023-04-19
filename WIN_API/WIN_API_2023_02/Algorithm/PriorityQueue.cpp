@@ -10,7 +10,7 @@
 
 using namespace std;
 
-template <typename T>
+template <typename T = int, typename Container = vector<int>, typename Pred = less<T>>
 class Priority_Queue
 {
 public :
@@ -19,53 +19,63 @@ public :
 	void push(const T& value)
 	{
 		container.push_back(value);
-		for (int i = 0; i < container.size(); i++)
+
+		int nowIndex = static_cast<int>(container.size() - 1);
+		while (true)
 		{
-			if ((i * 2) + 1 >= container.size())
-				return;
-			if ((i * 2) + 2 >= container.size())
+			if (nowIndex <= 0)
 			{
-				if (container[i] < container[(i * 2) + 1])
-				{
-					swap(container[i], container[(i * 2) + 1]);
-				}
 				return;
 			}
-			if (container[i] < container[(i * 2) + 1] || container[i] < container[(i * 2) + 2])
+
+			int parent = (nowIndex - 1) / 2;
+
+			Pred p;
+			if (!p(container[parent],container[nowIndex]))
 			{
-				if (container[(i * 2) + 1] >= container[(i * 2) + 2])
-					swap(container[i], container[(i * 2) + 1]);
-				else
-					swap(container[i], container[(i * 2) + 2]);
+				break;
 			}
+
+			std::swap(container[parent], container[nowIndex]);
+			nowIndex = parent;
+
 		}
 	}
 
 	void pop()
 	{
-		if (container.empty() == true)
+		if (container.empty())
 			return;
-		swap(container[0], container.back());
-		container.resize(container.size() - 1);
-		for (int i = 0; i < container.size(); i++)
+
+		std::swap(container[0], container[container.size() - 1]);
+		container.pop_back();
+
+		int nowIndex = 0;
+
+		while (true)
 		{
-			if ((i * 2) + 1 >= container.size())
-				return;
-			if ((i * 2) + 2 >= container.size())
-			{
-				if (container[i] < container[(i * 2) + 1])
-				{
-					swap(container[i], container[(i * 2) + 1]);
-				}
-				return;
-			}
-			if (container[i] < container[(i * 2) + 1] || container[i] < container[(i * 2) + 2])
-			{
-				if (container[(i * 2) + 1] >= container[(i * 2) + 2])
-					swap(container[i], container[(i * 2) + 1]);
-				else
-					swap(container[i], container[(i * 2) + 2]);
-			}
+			int leftChild = nowIndex * 2 + 1;
+			int rightChild = nowIndex * 2 + 2;
+
+			// Child가 없을 때
+			if (leftChild >= (int)container.size())
+				break;
+
+			int nextIndex = nowIndex;
+
+			Pred p;
+			if(p(container[nextIndex], container[leftChild]))
+				nextIndex = leftChild;
+
+			
+
+			if (rightChild < (int)container.size() && p(container[nextIndex], container[rightChild]))
+				nextIndex = rightChild;
+
+			if (nextIndex == nowIndex)
+				break;
+			std::swap(container[nowIndex], container[nextIndex]);
+			nowIndex = nextIndex;
 		}
 	}
 
@@ -73,13 +83,13 @@ public :
 
 	unsigned int size() { return container.size(); }
 
-	bool empty() { return container.size() == 0; }
+	bool empty() { return container.empty(); }
 
 private :
-	vector<T> container;
+	Container container;
 };
 
-int main()
+int PQ()
 {
 	// priority_queue는 완전이진트리로 구성되어있다
 	// 완전이진트리는 배열을 이용해서 구현할 수 있다
@@ -87,7 +97,7 @@ int main()
 	// 힙이론
 	// 
 
-	Priority_Queue<int> pq;
+	Priority_Queue<int, vector<int>, greater<int>> pq;
 	pq.push(10);
 	pq.push(7);
 	pq.push(20);

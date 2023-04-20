@@ -62,6 +62,8 @@ public :
         return sqrtf(powf(resultX, 2) + powf(resultY, 2));
     }
 
+    int MahattanDistance(const Vector2& other) const;
+
     float Length() const
     {
         return sqrtf(powf(this->x, 2) + powf(this->y, 2));

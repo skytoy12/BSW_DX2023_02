@@ -2,6 +2,42 @@
 class MazeRunner
 {
 public :
+
+	struct Vertex_Dijkstra
+	{
+		Vertex_Dijkstra(Vector2 pos, int g) : vertexPos(pos), g(g) {}
+		bool operator<(const Vertex_Dijkstra& other) const
+		{
+			return this->g < other.g;
+		}
+
+		bool operator>(const Vertex_Dijkstra& other) const
+		{
+			return this->g > other.g;
+		}
+
+		Vector2 vertexPos;
+		int g;
+	};
+
+	struct Vertex
+	{
+		Vector2 vertexPos;
+		int g;
+		int h;
+		int f;
+
+		bool operator<(const Vertex& other) const
+		{
+			return this->f < other.f;
+		}
+
+		bool operator>(const Vertex& other) const
+		{
+			return this->f > other.f;
+		}
+	};
+
 	MazeRunner(shared_ptr<Maze> maze);
 	~MazeRunner();
 
@@ -13,7 +49,9 @@ public :
 
 	void BFS(Vector2 start);
 
-	void Djikstra(Vector2 start);
+	void Dijkstra();
+	
+	void Astar();
 
 	bool CanGo(int y, int x);
 
@@ -33,23 +71,7 @@ private :
 	vector<vector<Vector2>> _parent;
 
 	// Djikstra
-	struct Vertex
-	{
-		Vertex(Vector2 pos, int g) : vertexPos(pos), g(g) {}
-		bool operator<(const Vertex& other) const
-		{
-			return g < other.g;
-		}
-
-		bool operator>(const Vertex& other) const
-		{
-			return g > other.g;
-		}
-
-		Vector2 vertexPos;
-		int g;
-
-	};
+	
 	vector<vector<int>> _best;
 	vector<vector<Vector2>> _DjParent;
 	vector<vector<bool>> _DjVisited;

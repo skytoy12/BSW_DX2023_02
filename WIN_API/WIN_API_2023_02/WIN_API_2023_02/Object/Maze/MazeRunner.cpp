@@ -30,7 +30,13 @@ MazeRunner::~MazeRunner()
 void MazeRunner::Update()
 {
 	if (_pathindex >= _path.size())
+	{
+		_maze->CreateMazeByKruskal();
+		_pathindex = 0;
+		_path.clear();
+		Astar();
 		return;
+	}
 
 	_time += 0.5f;
 	

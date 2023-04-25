@@ -2,6 +2,29 @@
 class Maze
 {
 public:
+	struct Edge_Kruskal
+	{
+		Vector2 u;
+		Vector2 v;
+		int cost;
+	};
+
+	struct Edge
+	{
+		Vector2 v;
+		int cost;
+
+		bool operator<(const Edge& other) const
+		{
+			return cost < other.cost;
+		}
+
+		bool operator>(const Edge& other) const
+		{
+			return cost > other.cost;
+		}
+	};
+
 	Maze();
 	~Maze();
 
@@ -9,6 +32,8 @@ public:
 	void Render(HDC hdc);
 
 	void CreateMaze();
+	void CreateMazeByKruskal();
+	void CreateMazeByPrim();
 
 	Vector2 Start() { return Vector2(1,1); }
 	Vector2 End() {return Vector2(int(_poolCountY - 2), int(_poolCountX - 2)); }

@@ -10,12 +10,7 @@ MazeRunner::MazeRunner(shared_ptr<Maze> maze)
 	_visited = vector<vector<bool>>(maze->GetY(), vector<bool>(maze->GetX(),false));
 	//BFS();
 	// DFS({1,1});
-
-	// Djikstra
-	_best = vector<vector<int>>(maze->GetY(), vector<int>(maze->GetX(), INT_MAX));
-	_DjParent = vector<vector<Vector2>>(maze->GetY(), vector<Vector2>(maze->GetX(), Vector2(-1, -1)));
-	_DjVisited = vector<vector<bool>>(maze->GetY(), vector<bool>(maze->GetX(), false));
-	Djikstra(_pos);
+	Astar();
 }
 
 MazeRunner::~MazeRunner()
@@ -25,8 +20,17 @@ MazeRunner::~MazeRunner()
 
 void MazeRunner::Update()
 {
-	if(_pathIndex >= _path.size())
+	if (_pathIndex >= _path.size())
+	{
+		_maze->CreateMazeByKruskal();
+		_pos = _maze->Start();
+		_pathIndex = 0;
+		_path.clear();
+		Astar();
+		Vector2 end = _maze->End();
+		_maze->GetBlock(end.y, end.x)->SetType(MazeBlock::BlockType::END);
 		return;
+	}
 
 	_time += 0.3f;
 
@@ -224,77 +228,209 @@ void MazeRunner::BFS()
 	std::reverse(_path.begin(), _path.end());
 }
 
-void MazeRunner::Djikstra(Vector2 start)
+void MazeRunner::Dijkstra()
 {
+	Vector2 frontPos[8] =
+	{
+		Vector2(0,-1), // UP
+		Vector2(1,0), // RIGHT
+		Vector2(0,1), // Down
+		Vector2(-1,0), // Left
+		Vector2(1,-1), // RightUp
+		Vector2(1,1), // RightDown
+		Vector2(-1,-1), // LeftUp
+		Vector2(-1,1), // LeftDown
+	};
+
+	int Dijkstra_Dis[8] =
+	{
+		10,
+		10,
+		10,
+		10,
+		14,
+		14,
+		14,
+		14,
+	};
+
+	Vector2 startPos = _maze->Start();
 	Vector2 endPos = _maze->End();
+
+	_best = vector<vector<int>>(_maze->GetY(), vector<int>(_maze->GetX(), INT_MAX));
+	_parents = vector<vector<Vector2>>(_maze->GetY(), vector<Vector2>(_maze->GetX(), Vector2(-1, -1)));
+
+	priority_queue<Vertex_Dijkstra, vector<Vertex_Dijkstra>, greater<Vertex_Dijkstra>> pq;
+
+	Vertex_Dijkstra start;
+	start.pos = _maze->Start();
+	start.g = 0;
+	pq.push(start);
+
+	_best[start.pos.y][start.pos.x] = start.g;
+	_parents[start.pos.y][start.pos.x] = start.pos;
+
+	while (true)
+	{
+		if(pq.empty())
+			break;
+
+		Vector2 here = pq.top().pos;
+		int cost = pq.top().g;
+		pq.pop();
+
+		if(here == endPos)
+			break;
+
+		for (int i = 0; i < 8; i++)
+		{
+			Vector2 there = here + frontPos[i];
+
+			if(here == there)
+				continue;
+
+			if(Cango(there.y, there.x) == false)
+				continue;
+
+			int newCost = cost + Dijkstra_Dis[i];
+
+			if(_best[there.y][there.x] < newCost)
+				continue;
+
+			Vertex_Dijkstra thereV;
+			thereV.pos = there;
+			thereV.g = newCost;
+
+			pq.push(thereV);
+			_best[there.y][there.x] = newCost;
+			_parents[there.y][there.x] = here;
+
+			_maze->GetBlock(there.y, there.x)->SetType(MazeBlock::BlockType::VISITED);
+		}
+	}
+
+	Vector2 pos = endPos;
+	_path.push_back(endPos);
+	while (true)
+	{
+		if (pos == startPos)
+			break;
+
+		pos = _parents[pos.y][pos.x];
+		_path.push_back(pos);
+	}
+
+	std::reverse(_path.begin(), _path.end());
+
+}
+
+void MazeRunner::Astar()
+{
+	Vector2 frontPos[8] =
+	{
+		Vector2(0,-1), // UP
+		Vector2(1,0), // RIGHT
+		Vector2(0,1), // Down
+		Vector2(-1,0), // Left
+		Vector2(1,-1), // RightUp
+		Vector2(1,1), // RightDown
+		Vector2(-1,-1), // LeftUp
+		Vector2(-1,1), // LeftDown
+	};
+
+	int Astar_Dis[8] =
+	{
+		10,
+		10,
+		10,
+		10,
+		14,
+		14,
+		14,
+		14,
+	};
+
+	Vector2 start = _maze->Start();
+	Vector2 end = _maze->End();
+
+	_best = vector<vector<int>>(_maze->GetY(), vector<int>(_maze->GetX(), INT_MAX));
+	_parents = vector<vector<Vector2>>(_maze->GetY(), vector<Vector2>(_maze->GetX(), Vector2(-1, -1)));
+
+	Vertex v;
+	v.pos = start;
+	v.g = 0;
+	v.h = start.MahattanDistance(end) * 10;
+	v.f = v.g + v.h;
+
 	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
-	Vertex startV = Vertex(_maze->Start(), 0);
-	pq.push(startV);
-	_best[startV.vertexPos.y][startV.vertexPos.x] = 0;
-	_DjVisited[startV.vertexPos.y][startV.vertexPos.x] = true;
-	_DjParent[startV.vertexPos.y][startV.vertexPos.x] = startV.vertexPos;
+	pq.push(v);
+
+	_best[v.pos.y][v.pos.x] = v.f;
+	_parents[v.pos.y][v.pos.x] = v.pos;
 
 	while (true)
 	{
 		if (pq.empty())
 			break;
-		int cost = pq.top().g;
-		Vector2 here = pq.top().vertexPos;
+
+		Vector2 here = pq.top().pos;
+		int g = pq.top().g;
+		int h = pq.top().h;
+		int f = pq.top().f;
+		int cost = f;
+
 		pq.pop();
 
-		Vector2 frontPos[8] =
+		if (here == end)
 		{
-			Vector2(0,-1), // UP
-			Vector2(1,0), // RIGHT
-			Vector2(0,1), // DOWN
-			Vector2(-1,0), // LEFT
-			Vector2(1,-1), // RIGHTUP
-			Vector2(1,1), // RIGHTDOWN
-			Vector2(-1,-1), // RIGHTDOWN
-			Vector2(-1,1), // RIGHTDOWN
-		};
+			_maze->GetBlock(end.y, end.x)->SetType(MazeBlock::BlockType::END);
+			break;
+		}
 
 		for (int i = 0; i < 8; i++)
 		{
 			Vector2 there = here + frontPos[i];
+
 			if (here == there)
 				continue;
-			if (CanGo(there.y, there.x) == false)
+
+			if (Cango(there.y, there.x) == false)
 				continue;
 
-			float nextCost = _best[here.y][here.x];
-			if (i < 4)
-				float nextCost = _best[here.y][here.x] + 1;
-			if (i > 3)
-				float nextCost = _best[here.y][here.x] + 1.4f;
+			int newG = g + Astar_Dis[i];
+			int newH = there.MahattanDistance(end) * 10;
+			int newCost = newG + newH;
 
-
-			// 나중에 방문하려 했는데 이미 좋은 값이 있었다
-			if (nextCost >= _best[there.y][there.x])
+			if (_best[there.y][there.x] < newCost)
 				continue;
 
-			// 방문
-			Vertex v = Vertex(there, nextCost);
-			pq.push(v);
-			_best[there.y][there.x] = nextCost;
-			_DjVisited[there.y][there.x] = true;
-			_DjParent[there.y][there.x] = here;
+
+			Vertex thereV;
+			thereV.pos = there;
+			thereV.g = newG;
+			thereV.h = newH;
+			thereV.f = newCost;
+
+			pq.push(thereV);
+			_best[there.y][there.x] = newCost;
+			_parents[there.y][there.x] = here;
+
 			_maze->GetBlock(there.y, there.x)->SetType(MazeBlock::BlockType::VISITED);
 		}
-		if (_DjVisited[endPos.y][endPos.x] == true)
-			break;
 	}
 
-	Vector2 targetPos = endPos;
+	Vector2 pos = end;
+	_path.push_back(end);
 	while (true)
 	{
-		if (_DjParent[targetPos.y][targetPos.x] == targetPos)
+		if (pos == start)
 			break;
-		targetPos = _DjParent[targetPos.y][targetPos.x];
-		_path.push_back(targetPos);
+
+		pos = _parents[pos.y][pos.x];
+		_path.push_back(pos);
 	}
+
 	std::reverse(_path.begin(), _path.end());
-	_path.push_back(endPos);
 }
 
 bool MazeRunner::Cango(int y, int x)

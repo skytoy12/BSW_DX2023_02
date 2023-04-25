@@ -62,7 +62,7 @@ private :
 	Dir _direction = Dir::DIR_UP;
 
 	vector<Vector2> _path;
-	int _pathindex = 0;
+	int _pathIndex = 0;
 	float _time = 0.0f;
 
 	// DFS

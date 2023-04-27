@@ -28,12 +28,16 @@ int main()
 	tree.Insert(9);
 	tree.Insert(100);
 
+	
 	tree.PrintTree(tree._root);
-	tree.Search(tree._root, 10);
-	cout << tree.Max(tree._root)->key << endl;
-	cout << tree.Min(tree._root)->key << endl;
-	cout << tree.Previous(tree._root)->key << endl;
-	cout << tree.Next(tree._root)->key << endl;
+	//tree.Search(tree._root, 10);
+	//cout << tree.Max(tree._root)->key << endl;
+	//cout << tree.Min(tree._root)->key << endl;
+	//cout << tree.Previous(tree._root)->key << endl;
+	//cout << tree.Next(tree._root)->key << endl;
+	tree.Delete(tree.Search(tree._root, 8));
+	cout << "8을 삭제한 후" << endl;
+	tree.PrintTree(tree._root);
 
 	return 0;
 }

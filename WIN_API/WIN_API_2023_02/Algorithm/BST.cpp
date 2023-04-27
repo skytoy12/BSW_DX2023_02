@@ -214,8 +214,19 @@ void BinarySearchTree::Delete(Node* node)
 		return;
 	if (node->left == nullptr && node->right == nullptr)
 		Replace(node, nullptr);
-	if (node->left != nullptr || node->right == nullptr)
+	else if (node->left != nullptr && node->right == nullptr)
 	{
-
+		node->key = Previous(node)->key;
+		Delete(Previous(node));
+	}
+	else if (node->left == nullptr && node->right != nullptr)
+	{
+		node->key = Next(node)->key;
+		Delete(Next(node));
+	}
+	else
+	{
+		node->key = Previous(node)->key;
+		Delete(Previous(node));
 	}
 }

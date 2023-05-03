@@ -60,7 +60,7 @@
     <ClCompile Include="DP_0.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="combine.cpp">
+    <ClCompile Include="combination.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="DP_1.cpp">

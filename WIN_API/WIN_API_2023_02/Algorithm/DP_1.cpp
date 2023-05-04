@@ -1,84 +1,86 @@
 #include <iostream>
+#include <string>
 #include <vector>
-#include <list>
-#include <map>
-#include <unordered_map>
-#include <algorithm>
-#include <stack>
-#include <queue>
 #include <windows.h>
 
 using namespace std;
 
 // ENCHANT
 
-// 강화하는데
-// +1
-// +2
-// +3
+// 강화를 하는데
+// + 1
+// + 2
+// + 3
 
-// N강을 하고 싶다... 이때 강화하는 대로 나오는 모든 경우의 수
+// 0강 f(0)
+// 1
+
+// 1강 f(1)
+// 1
+
+// 2강 f(2)
+// 2
+
+// 3강 f(3) = 4
 // 1 1 1
 // 1 2
 // 2 1
 // 3
 
-// 1111
-// 112
-// 121
-// 13
-// 211
-// 22
-// 31
+// 4강 f(4) = 
+// 1 1 1 1
+// 1 2 1
+// 2 2
+// 3 1
+// 1 3
+// 2 1 1
+// 1 1 2
 
-// 11111
-// 1112
-// 1121
-// 1211
-// 2111
-// 221
-// 212
-// 122
-// 311
-// 131
-// 113
-// 32
-// 23
+// N강을 하고 싶다... 이 때 강화하는 대로 나오는 모든 경우의 수
+// 3강을 하고 싶다...
+// 1 1 1
+// 1 2
+// 2 1
+// 3
 
-vector<int> cache = vector<int>(101, -1);
+
+vector<int> cache = vector<int>(100, -1);
 int Num = 10;
+//int Enchant(int N)
+//{
+//	if(N > Num)
+//		return 0;
+//
+//	if(N == Num)
+//		return 1;
+//
+//	// 캐쉬
+//	int& ref = cache[N];
+//	if(ref != -1)
+//		return ref;
+//
+//	// 구하기
+//	ref = Enchant(N + 1) + Enchant(N + 2) + Enchant(N + 3);
+//
+//	return ref;
+//}
+
 int Enchant(int N)
 {
-	
-	//if (n > Num)
-	//	return 0;
-	//if (n == Num)
-	//	return 1;
+    if (N == 0 || N == 1)
+        return 1;
+    if (N == 2)
+        return 2;
 
-	//// 캐쉬
-	//int& ref = cache[n];
-	//if (ref != -1)
-	//	return ref;
+    if (cache[N] != -1)
+        return cache[N];
 
-	//// 구하기
-	//ref = Enchant(n + 1) + Enchant(n + 2) + Enchant(n + 3);
-	//return ref;
-	if (N == 0 || N == 1)
-		return 1;
-	if (N == 2)
-		return 2;
+    cache[N] = Enchant(N - 1) + Enchant(N - 2) + Enchant(N - 3);
 
-	if (cache[N] != -1)
-		return cache[N];
-
-	cache[N] = Enchant(N - 1) + Enchant(N - 2) + Enchant(N - 3);
-
-	return cache[N];
+    return cache[N];
 }
 
 int main()
 {
-	
-	cout << Enchant(0) << endl;
-	return 0;
+	cout << Enchant(10) << endl;
 }

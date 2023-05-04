@@ -1,8 +1,9 @@
 #pragma once
+
 struct Node
 {
 	Node() {}
-	Node(int key) : key(key) {};
+	Node(int key) : key(key) {}
 
 	Node* left = nullptr;
 	Node* right = nullptr;
@@ -14,7 +15,7 @@ struct Node
 
 class BinarySearchTree
 {
-public :
+public:
 	BinarySearchTree();
 	~BinarySearchTree();
 
@@ -29,8 +30,8 @@ public :
 	Node* Next(Node* root);
 
 	void Replace(Node* node1, Node* node2); // node1은 교체된 다음 삭제
-	void Delete(Node* node); // 해당노드 삭제
+	void Delete(Node* Node); // 해당노드 삭제
 
-public :
+public:
 	Node* _root = nullptr;
 };

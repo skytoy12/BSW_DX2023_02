@@ -24,7 +24,7 @@ using namespace std;
 // 1, 2, 9, 8 (X)
 
 // vector<int> seq = {0, 5, 1, 2, 3, 1 };
-vector<int> seq = {3, 5, 1, 2, 4, 1};
+vector<int> seq = { 1, 5, 2, 3, 4, 1 };
 
 // LIS(0) = 0부터 시작해서 나올 수 있는 부분 증가 수열의 수
 // LIS(5) : 1                         1
@@ -33,27 +33,66 @@ vector<int> seq = {3, 5, 1, 2, 4, 1};
 // LIS(2) : LIS(3) or LIS(3) + 1      
 // LIS(1) : LIS(2) or LIS(2) + 1
 // LIS(0) : LIS(1) or LIS(1) + 1
-vector<int> cache = vector<int>(101, - 1);
+
+
+
+
+vector<int> cache = vector<int>(100, -1);
 
 int LIS(int pos)
 {
 	if (pos == seq.size() - 1)
-	{
-		cache[pos] = 1;
 		return 1;
-	}
-	else if (seq[pos] < seq[pos + 1])
-	{
-		cache[pos] = LIS(pos + 1) + 1;
-	}
-	else
-		cache[pos] = LIS(pos + 1);
 	
-	return cache[pos];
+	// 캐싱
+	int& ref = cache[pos];
+
+	ref = 1;
+	// 구하기
+	for (int next = pos + 1; next < seq.size(); next++)
+	{
+		if (seq[pos] <= seq[next])
+			ref = max(ref, LIS(next) + 1);
+	}
+
+	return ref;
+}
+
+int myLis(int pos)
+{
+	if (pos == seq.size() - 1)
+		return 1;
+	int& ref = cache[pos];
+
+	if(ref != -1)
+		return ref;
+
+	int maxLis = 0;
+	int index = pos + 1;
+	for (int i = pos + 1; i < seq.size(); i++)
+	{
+		if (maxLis <= LIS(i))
+		{
+			if (seq[i] <= seq[index])
+			{
+				index = i;
+			}
+			maxLis = LIS(i);
+		}
+	}
+	if (seq[pos] < seq[index] || (index - pos) > maxLis)
+		ref = maxLis + 1;
+	else
+		ref = maxLis;
 }
 
 int main()
 {
-	cout << LIS(1) << endl;
+	int lis = 0;
+	for (int i = 0; i < seq.size(); i++)
+	{
+		lis = max(lis, LIS(i));
+	}
+	cout << lis << endl;
 	return 0;
 }

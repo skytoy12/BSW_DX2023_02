@@ -54,28 +54,29 @@ void BFS(int start)
 
 	while (true)
 	{
-		if (queue.empty() == true)
+		if(queue.empty() == true)
 			break;
+
 		int here = queue.front();
 		queue.pop();
 
 		for (int there = 0; there < 7; there++)
 		{
-			if (adjacent2[here][there] == false)
+			if(adjacent2[here][there] == false)
 				continue;
-			if (discovered[there])
+
+			if(discovered[there])
 				continue;
 
 			queue.push(there);
 			parent[there] = here;
 			discovered[there] = true;
-			cout << there << "을 방문하였습니다." << endl;
+			cout << there << " 방문!!!" << endl;
 		}
-
 	}
 }
 
-int BFS()
+int main()
 {
 	CreateGraphByMatrix();
 	BFS(0);
@@ -83,10 +84,12 @@ int BFS()
 	int targetNode = 3;
 	while (true)
 	{
-		if (parent[targetNode] == targetNode)
+		if(parent[targetNode] == targetNode)
 			break;
-		cout << targetNode << "의 부모 : " << parent[targetNode] << endl;
+
+		cout << targetNode << "의 부모 :" <<parent[targetNode] << endl;
 		targetNode = parent[targetNode];
 	}
+
 	return 0;
 }

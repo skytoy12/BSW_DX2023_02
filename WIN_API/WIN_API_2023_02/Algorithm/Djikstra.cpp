@@ -7,7 +7,6 @@
 #include <stack>
 #include <queue>
 
-
 using namespace std;
 
 // Djikstra Algorithm : 길찾기 알고리즘
@@ -33,6 +32,7 @@ void CreateGraphByMatrix()
 	adjacent2[1][0] = 15;
 	adjacent2[1][1] = 0;
 
+
 	adjacent2[2][0] = 3;
 	adjacent2[2][2] = 0;
 	adjacent2[2][3] = 4;
@@ -56,7 +56,8 @@ void CreateGraphByMatrix()
 
 struct Vertex
 {
-	Vertex(int num, int g) : vertexNum(num), g(g) {}
+	Vertex(int num, int g): vertexNum(num), g(g) { }
+
 	bool operator<(const Vertex& other) const
 	{
 		return g < other.g;
@@ -69,7 +70,6 @@ struct Vertex
 
 	int vertexNum;
 	int g;
-
 };
 
 void Djikstra(int start)
@@ -78,37 +78,39 @@ void Djikstra(int start)
 	priority_queue<Vertex, vector<Vertex>, greater<Vertex>> pq;
 	Vertex startV = Vertex(0, 0);
 	pq.push(startV);
-	best[startV.vertexNum] = 0;
+	best[startV.vertexNum] = startV.g;
 
 	discovered[startV.vertexNum] = true;
 	parent[startV.vertexNum] = startV.vertexNum;
 
 	while (true)
 	{
-		if (pq.empty())
+		if(pq.empty())
 			break;
+
 		int cost = pq.top().g;
 		int here = pq.top().vertexNum;
 		pq.pop();
 
-		// pq에서 빼고 연결된 지점 방문하기 전에, 이미 더 좋은 best가 있었으먄 그냥 pq에서 빼기만
+		// pq에서 빼고 연결된 지점 방문하기 전에, 이미 더 좋은 best가 있었으면 그냥 pq에서 빼기만
 		if (best[here] < cost)
 		{
 			cout << here << endl;
 			cout << cost << endl;
 			cout << best[here] << endl;
 		}
+
 		for (int there = 0; there < adjacent2.size(); there++)
 		{
-			if (here == there)
+			if(here == there)
 				continue;
-			if (adjacent2[here][there] == -1)
+			if(adjacent2[here][there] == -1)
 				continue;
 
 			int nextCost = best[here] + adjacent2[here][there];
 
-			// 나중에 방문하려 했는데 이미 좋은 값이 있었다
-			if (nextCost >= best[there])
+			// 나중에 방문할려 했는데 이미 좋은 값이 있었다.
+			if(nextCost >= best[there])
 				continue;
 
 			// 방문
@@ -119,6 +121,7 @@ void Djikstra(int start)
 			parent[there] = here;
 		}
 	}
+
 	for (int i = 0; i < adjacent2.size(); i++)
 	{
 		cout << i << "의 부모는 " << parent[i] << endl;
@@ -130,5 +133,5 @@ int main()
 {
 	CreateGraphByMatrix();
 	Djikstra(0);
-	return 0;
+
 }

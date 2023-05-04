@@ -12,11 +12,12 @@ using namespace std;
 template <typename T, typename Container = deque<T>>
 class MyQueue
 {
-public :
+public:
 	void push(const T& value)
 	{
 		c.push_back(value);
 	}
+
 	void pop()
 	{
 		c.pop_front();
@@ -32,14 +33,13 @@ public :
 		return c.size() == 0;
 	}
 
-private :
+private:
 	Container c;
 };
 
-int queue()
+int main()
 {
 	MyQueue<int> q;
-
 	q.push(5);
 	q.push(8);
 	q.push(3);
@@ -48,8 +48,9 @@ int queue()
 
 	while (true)
 	{
-		if (q.empty() == true)
+		if(q.empty() == true)
 			break;
+
 		int value = q.front();
 		cout << value << endl;
 		q.pop();

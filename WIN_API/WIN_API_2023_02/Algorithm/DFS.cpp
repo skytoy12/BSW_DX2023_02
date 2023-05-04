@@ -15,7 +15,7 @@ vector<bool> discovered;
 void CreateGraphByMatrix()
 {
 	adjacent2 = vector<vector<bool>>(7, vector<bool>(7, false));
-	discovered = vector<bool>(7, false);
+	discovered = vector<bool>(7,false);
 
 	adjacent2[0][0] = true;
 	adjacent2[0][1] = true;
@@ -46,24 +46,24 @@ void CreateGraphByMatrix()
 
 void DFS(int start)
 {
-	if (discovered[start])
+	if(discovered[start])
 		return;
 
 	discovered[start] = true;
-	cout << start << "를 방문했습니다." << endl;
+	cout << start << "를 방문했습니다."<< endl;
 
 	for (int there = 0; there < adjacent2.size(); there++)
 	{
 		// 갈곳이 출발점과 동일하면 다음
-		if (start == there)
+		if(start == there)
 			continue;
 
-		// 인접해있나?
-		if (adjacent2[start][there] == false)
+		// 인접해있냐?
+		if(adjacent2[start][there] == false)
 			continue;
 
 		// 방문여부
-		if (discovered[there] == true)
+		if(discovered[there] == true)
 			continue;
 
 		// 갈 곳을 찾은 경우
@@ -83,12 +83,14 @@ int DfsAll()
 			count++;
 		}
 	}
+
 	return count;
 }
 
-int DFS()
+int main()
 {
 	CreateGraphByMatrix();
-	DFS(0);
+	int count = DfsAll();
+
 	return 0;
 }

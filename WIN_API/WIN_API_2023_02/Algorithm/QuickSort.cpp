@@ -7,7 +7,6 @@
 #include <stack>
 #include <queue>
 
-
 using namespace std;
 
 // QuickSort
@@ -19,8 +18,9 @@ int Partition(vector<int>& v, int left, int right)
 
 	while (true)
 	{
-		if (lowIndex > highIndex)
+		if(lowIndex > highIndex)
 			break;
+
 		while (lowIndex <= right && pivot >= v[lowIndex])
 		{
 			lowIndex++;
@@ -31,28 +31,31 @@ int Partition(vector<int>& v, int left, int right)
 			highIndex--;
 		}
 
-		if (lowIndex < highIndex)
+		if(lowIndex < highIndex)
 			std::swap(v[highIndex], v[lowIndex]);
 	}
+
 	std::swap(v[highIndex], v[left]);
-	
+
 	return highIndex;
 }
 
 void QuickSort(vector<int>& v, int left, int right)
 {
-	if (left >= right)
+	if(left >= right)
 		return;
-	int pivotIndex = Partition(v, left, right);
-	cout << left << " - " << pivotIndex - 1 << endl;
-	QuickSort(v, left, pivotIndex - 1);
+
+	int pivotIndex = Partition(v,left,right);
+	
+	cout << left << " ~ " << pivotIndex - 1 << endl;
+	QuickSort(v,left, pivotIndex - 1);
 	QuickSort(v, pivotIndex + 1, right);
 }
 
-
 int main()
 {
-	vector<int> v = { 55, 30, 15, 100, 1, 5, 70, 40 };
+	vector<int> v = {55, 30, 15, 100, 1, 5 ,70, 30};
 	QuickSort(v, 0, 7);
+
 	return 0;
 }

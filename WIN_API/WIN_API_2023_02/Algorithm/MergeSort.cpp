@@ -15,12 +15,12 @@ using namespace std;
 // - 정복 : 문제를 해결한다.
 // - 결합 : 결과를 취합하여 마무리한다.
 
-// => 폰 노이만이 개발한 알고리즘
+// => 폰노이만이 개발한 알고리즘
 
 // Quick, Merge, Heap
-// 평균적으로 N*log2N 시간 복잡도
+// 평균적으로 N * log2N 시간 복잡도
 
-void MergeResult(vector<int>& v, int left,int mid,  int right)
+void MergeResult(vector<int>& v,int left,int mid,int right)
 {
 	int leftIndex = left;
 	int rightIndex = mid + 1;
@@ -29,8 +29,9 @@ void MergeResult(vector<int>& v, int left,int mid,  int right)
 
 	while (true)
 	{
-		if (leftIndex > mid || rightIndex > right)
+		if(leftIndex > mid || rightIndex > right)
 			break;
+
 		if (v[leftIndex] <= v[rightIndex])
 		{
 			temp.push_back(v[leftIndex]);
@@ -43,7 +44,7 @@ void MergeResult(vector<int>& v, int left,int mid,  int right)
 		}
 	}
 
-	// 왼쪽이 먼저끝남
+	// 왼쪽이 먼저 끝남
 	if (leftIndex > mid)
 	{
 		while (rightIndex <= right)
@@ -52,7 +53,8 @@ void MergeResult(vector<int>& v, int left,int mid,  int right)
 			rightIndex++;
 		}
 	}
-	// 오른쪽이 먼저끝남
+
+	// 오른쪽이 먼저 끝남
 	if (rightIndex > right)
 	{
 		while (leftIndex <= mid)
@@ -71,22 +73,23 @@ void MergeResult(vector<int>& v, int left,int mid,  int right)
 
 void MergeSort(vector<int>& v, int left, int right)
 {
-	if (left >= right)
+	if(left >= right)
 		return;
 
-	//분할
+	// 분할
 	int mid = (left + right) / 2;
 	MergeSort(v, left, mid);
 	MergeSort(v, mid + 1, right);
 
 	// 정복 결합
-	MergeResult(v, left, mid, right);
+	MergeResult(v,left,mid,right);
 }
 
-int main() 
+int main()
 {
-	vector<int> v = { 55, 30, 15, 100, 1, 5, 70, 30 };
+	vector<int> v = {55, 30, 15, 100, 1, 5 ,70, 30};
 
 	MergeSort(v, 0, 7);
+
 	return 0;
 }

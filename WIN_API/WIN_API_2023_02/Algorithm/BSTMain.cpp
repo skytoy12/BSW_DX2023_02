@@ -7,11 +7,9 @@
 #include <stack>
 #include <queue>
 
-
 using namespace std;
 
 #include "BST.h"
-
 
 int main()
 {
@@ -28,15 +26,17 @@ int main()
 	tree.Insert(9);
 	tree.Insert(100);
 
-	
-	tree.PrintTree(tree._root);
-	//tree.Search(tree._root, 10);
-	//cout << tree.Max(tree._root)->key << endl;
-	//cout << tree.Min(tree._root)->key << endl;
-	//cout << tree.Previous(tree._root)->key << endl;
-	//cout << tree.Next(tree._root)->key << endl;
-	tree.Delete(tree.Search(tree._root, 8));
-	cout << "8을 삭제한 후" << endl;
+	// tree.PrintTree(tree._root);
+
+	cout << tree.Min(tree._root)->key << endl;
+	cout << tree.Max(tree._root)->key << endl;
+
+	Node* searchNode = tree.Search(tree._root,10);
+	if(searchNode != nullptr)
+		cout << searchNode->key << endl;
+
+	tree.Delete(searchNode);
+
 	tree.PrintTree(tree._root);
 
 	return 0;

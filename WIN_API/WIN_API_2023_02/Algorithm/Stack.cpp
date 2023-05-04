@@ -7,15 +7,15 @@
 #include <stack>
 
 using namespace std;
-// 1. 발자취 남기게 하기(발자취 색은 아무거나)
-// 2. stack(후입선출), queue(선입선출)에 대해 조사해오기
-//    팬케이크         줄서기
-// 3. extra stack... stack자료구조 구현해오기
 
-template <typename T>
+// 2. stack(후입선출) , queue(선입선출)에 대해서 조사해오기
+//		팬케이크          줄서기
+// 3. extra... stack 자료구조 구현해오기
+
+template <typename T, typename _Container = deque<T>>
 class MyStack
 {
-public :
+public:
 	void push(const T& value)
 	{
 		v.push_back(value);
@@ -36,13 +36,13 @@ public :
 		return v.size() == 0;
 	}
 
-private :
-	vector<T> v;
+private:
+	_Container v;
 };
 
-int Stack() 
+int Stack()
 {
-	stack<int> s;
+	MyStack<int> s;
 
 	s.push(5);
 	s.push(8);
@@ -52,14 +52,13 @@ int Stack()
 
 	while (true)
 	{
-		if (s.empty() == true)
+		if(s.empty() == true)
 			break;
 
 		int value = s.top();
 		cout << value << endl;
 		s.pop();
 	}
-
 
 	return 0;
 }

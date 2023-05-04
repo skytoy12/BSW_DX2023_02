@@ -57,10 +57,10 @@
     <ClCompile Include="MergeSort.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="DP_0.cpp">
+    <ClCompile Include="Babbling.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="combination.cpp">
+    <ClCompile Include="DP_0.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="DP_1.cpp">

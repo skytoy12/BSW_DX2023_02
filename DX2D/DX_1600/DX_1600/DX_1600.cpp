@@ -8,32 +8,32 @@
 
 // WIN_API
 // CPU에서 그리는 작업을 해줬다.
-// -> pixel 계산 
+// -> pixel 계산
 
-// 1980 * 1080... CPU가 다 하고 있었다
+// 1980 * 1080... CPU가 다 하고 있었다.
 
 // DX
-// -> GPU한테 픽셀 계산을 맡긴다.
+// -> GPU한테 픽셀을 맡긴다.
 
-// 목표 : DX11을 이용하여 2D 게임엔진을 만들기
+// 목표: DX11을 이용하여 2D 게임엔진을 만들기
 
 // CPU : 어려운 계산을 직렬처리한다.
 // GPU : 단순 계산을 병렬처리하는데 특화되어있다.
-// ALU가 많기 떄문에 픽셀 병렬 계산에 특화되어있다.
+// ALU가 많기 때문에 픽셀 병렬 계산에 특화되어있다.
 
 // DX 그래픽스
 // 영화 촬영
-// 카메라   /   카메라
+// 카메라  /   카메라
 // 소품   /   Actor
 // 배우   /   Character(Pawn)
-// 총감독   /   프로그래머
-// 조명   / light
-// 영화사   /   게임엔진
+// 총감독  /   프로그래머
+// 조명   /   Light
+// 영화사  /   게임엔진
 
 // 인력사무소장   /   Device
-// 연출담당   /   Device Context
+// 연출담당     /   Device Context
 
-// 렌더링 파이프라인
+// 렌더링 파이프 라인
 // => 3D 가상 공간에서 2D인 모니터로 이어지는 파이프라인
 
 // 인력사무소장
@@ -42,9 +42,9 @@
 ComPtr<ID3D11Device> device;
 
 // 연출감독
-// 세트장을 실질적으로 구며주는 연출감독
-// 렌더링할 대상을 결정한다(어따가 그릴지 결정)
-// -> 리소스를 그래픽 파이프라인에 바인딩, GPU가 수행 할 명령을 지시
+// 세트장을 실질적으로 꾸며주는 연출감독
+// 렌더링할 대상을 결정(어따가 그릴지 결정)
+// -> 리소스를 그래픽 파이프라인에 바인딩, GPU가 수행할 명령을 지시
 ComPtr<ID3D11DeviceContext> deviceContext;
 
 // DX의 인터페이스로써 1개 이상의 표면을 포함할 수 있다.
@@ -57,13 +57,13 @@ ComPtr<ID3D11RenderTargetView> renderTargetView;
 
 // 렌더링파이프라인 단계
 // -> 3차원에 있는 정점들을 2차원으로 투영 (Vertex Shader)
-// -> 정점들 사이에 있는 픽셀의 색을 결정 (Pixel Shader)
-// 그 외에... 최적화에 필요한 Shader(테셀레이션, Hull, compute Shader)
+// -> 정점들 사이에 있는 픽셀을 색을 결정 (Pixel Shader)
+// 그 외에... 최적화에 필요한 Shader(테셀레이션, Hull, Compute Shader)
 
 ComPtr<ID3D11Buffer> vertexBuffer; // 정점들을 담아놓는 버퍼
 ComPtr<ID3D11VertexShader> vertexShader;
 ComPtr<ID3D11PixelShader> pixelShader;
-ComPtr<ID3D11InputLayout> inputShader;
+ComPtr<ID3D11InputLayout> inputLayout;
 
 HWND hWnd;
 
@@ -79,7 +79,6 @@ void Render();
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
-
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -131,16 +130,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             // 메인루프
             Render();
         }
-      
     }
 
     // 삭제
 
     return (int) msg.wParam;
 }
-
-
-
 
 //
 //  함수: MyRegisterClass()
@@ -271,12 +266,11 @@ void InitDevice()
     UINT width = rc.right - rc.left;
     UINT height = rc.bottom - rc.top;
 
-    D3D_FEATURE_LEVEL featureLevels[] =
+    D3D_FEATURE_LEVEL featureLevels[] = 
     {
         D3D_FEATURE_LEVEL_11_0,
         D3D_FEATURE_LEVEL_10_1,
         D3D_FEATURE_LEVEL_10_0
-
     };
 
     UINT featureSize = ARRAYSIZE(featureLevels);
@@ -288,7 +282,7 @@ void InitDevice()
     sd.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     sd.BufferDesc.RefreshRate.Numerator = 60;
     sd.BufferDesc.RefreshRate.Denominator = 1;
-    // Numerator / Denominator => 화면 프레임 갱신 속도... FPS
+    // Numerator / Denominator => 화면 프레임 갱식 속도... FPS
     sd.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
     sd.OutputWindow = hWnd;
     sd.SampleDesc.Count = 1;
@@ -309,7 +303,6 @@ void InitDevice()
         IN device.GetAddressOf(),
         nullptr,
         IN deviceContext.GetAddressOf()
-
     );
 
     ComPtr<ID3D11Texture2D> backBuffer;
@@ -340,14 +333,15 @@ void InitDevice()
 
     DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
-    ComPtr<ID3DBlob> vertexBlob; // vertexSgader 만들때 필요한 애
-    D3DCompileFromFile(L"Shader/TutorialShader.hlsl", nullptr, nullptr, "VS", "vs_5_0", flags, 0, vertexBlob.GetAddressOf(), nullptr);
-    device->CreateVertexShader(vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), nullptr, vertexShader.GetAddressOf());
-    return;
+    ComPtr<ID3DBlob> vertexBlob; // VertexShader 만들 때 필요한 얘
 
+    D3DCompileFromFile(L"Shader/TutorialShader.hlsl", nullptr, nullptr, "VS", "vs_5_0", flags, 0, vertexBlob.GetAddressOf(), nullptr);
+
+    device->CreateVertexShader(vertexBlob->GetBufferPointer(), vertexBlob->GetBufferSize(), nullptr, vertexShader.GetAddressOf());
+
+    return;
 }
 
 void Render()
 {
 }
-

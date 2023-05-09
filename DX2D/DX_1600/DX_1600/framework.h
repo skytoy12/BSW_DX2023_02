@@ -19,13 +19,13 @@
 #include <string>
 #include <wrl/client.h>
 
-#include<d3d11.h>
-#include<d3dcompiler.h>
-#include<DirectXmath.h>
+#include <d3d11.h>
+#include <d3dcompiler.h>
+#include <DirectXMath.h>
 
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"d3dcompiler.lib")
 
 using namespace std;
 using namespace DirectX;
-using namespace Microsoft::WRL;;
+using namespace Microsoft::WRL;

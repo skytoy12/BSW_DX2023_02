@@ -9,5 +9,6 @@ public :
 	virtual void Render() abstract;
 
 private :
+	
 };
 

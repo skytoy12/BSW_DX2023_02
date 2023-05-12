@@ -154,9 +154,12 @@
     <ClInclude Include="Framework\Device\Device.h" />
     <ClInclude Include="DX_1600.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Framework\Math\Vector2.h" />
     <ClInclude Include="Framework\Render\PixelShader.h" />
     <ClInclude Include="Framework\Render\VertexLayOut.h" />
+    <ClInclude Include="Framework\Render\IndexBuffer.h" />
     <ClInclude Include="Program\Program.h" />
+    <ClInclude Include="Object\Bagic\Quad.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Framework\TextureMapping\SRV.h" />
@@ -180,8 +183,11 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
       <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|x64'">framework.h</PrecompiledHeaderFile>
     </ClCompile>
+    <ClCompile Include="Framework\Math\Vector2.cpp" />
     <ClCompile Include="Framework\Render\PixelShader.cpp" />
+    <ClCompile Include="Framework\Render\IndexBuffer.cpp" />
     <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Object\Bagic\Quad.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Framework\Render\VertexBuffer.cpp" />
     <ClCompile Include="Framework\Render\VertexShader.cpp" />
@@ -195,6 +201,7 @@
   <ItemGroup>
     <Image Include="DX_1600.ico" />
     <Image Include="Resource\Goomba.png" />
+    <Image Include="Resource\Zelda.png" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>

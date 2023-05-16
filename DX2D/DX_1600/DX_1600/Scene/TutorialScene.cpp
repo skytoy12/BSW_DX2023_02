@@ -3,6 +3,7 @@
 
 TutorialScene::TutorialScene()
 {
+
 	_quad1 = make_shared<Quad>(L"Resource/Zelda.png");
 	_quad2 = make_shared<Quad>(L"Resource/Goomba.png");
 
@@ -22,11 +23,20 @@ TutorialScene::~TutorialScene()
 
 void TutorialScene::Update()
 {
+
+	POINT mousePos3;
+	GetCursorPos(&mousePos3);
+	ScreenToClient(hWnd, &mousePos3);
+	Vector2 mousePos2;
+	mousePos2.x = mousePos3.x;
+	mousePos2.y = WIN_HEIGHT - mousePos3.y;
+	Vector2 lerpResult = LERP(_quad2->GetTransform()->GetPos(), mousePos2, 0.001f);
 	_angle1 += 0.0001f;
 	_angle2 += 0.0003f;
 
 	_quad1->GetTransform()->SetAngle(_angle1);
 	_quad2->GetTransform()->SetAngle(_angle2);
+	_quad2->GetTransform()->SetPosition(lerpResult);
 
 	_quad1->Update();
 	_quad2->Update();

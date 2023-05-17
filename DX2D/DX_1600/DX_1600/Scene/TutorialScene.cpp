@@ -23,14 +23,7 @@ TutorialScene::~TutorialScene()
 
 void TutorialScene::Update()
 {
-
-	POINT mousePos3;
-	GetCursorPos(&mousePos3);
-	ScreenToClient(hWnd, &mousePos3);
-	Vector2 mousePos2;
-	mousePos2.x = mousePos3.x;
-	mousePos2.y = WIN_HEIGHT - mousePos3.y;
-	Vector2 lerpResult = LERP(_quad2->GetTransform()->GetPos(), mousePos2, 0.001f);
+	Vector2 lerpResult = LERP(_quad2->GetTransform()->GetPos(), mousePos, 0.005f);
 	_angle1 += 0.0001f;
 	_angle2 += 0.0003f;
 

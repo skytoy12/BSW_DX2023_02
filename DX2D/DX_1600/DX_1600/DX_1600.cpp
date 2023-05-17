@@ -147,14 +147,12 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //
 //
 
-
+Vector2 mousePos;
 
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
-
-
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -172,7 +170,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-
+    case WM_MOUSEMOVE:
+    {
+        mousePos.x = static_cast<float>(LOWORD(lParam));
+        mousePos.y = static_cast<float>(HIWORD(lParam));
+        mousePos.y = WIN_HEIGHT - mousePos.y;
+        break;
+    }
 
     case WM_PAINT:
         {
@@ -227,3 +231,4 @@ void Render()
 
     Device::GetInstance()->Present();
 }
+

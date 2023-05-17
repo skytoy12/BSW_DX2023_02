@@ -59,6 +59,7 @@ using namespace Microsoft::WRL;
 
 //Object
 #include "Object/Bagic/Quad.h"
+#include "Object/SolarSystem/Planet.h"
 
 // Scene
 #include "Scene/Scene.h"

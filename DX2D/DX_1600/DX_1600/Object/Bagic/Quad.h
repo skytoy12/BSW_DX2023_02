@@ -6,15 +6,15 @@ public :
 	Quad(wstring srvFile);
 	~Quad();
 	
-	void Update();
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
-	void CreateVertices();
+	virtual void CreateVertices();
 
-	shared_ptr<Transform> GetTransform() { return _transform; }
+	virtual shared_ptr<Transform> GetTransform() { return _transform; }
 
 
-private :
+protected :
 	// Á¤Á¡(pos, color, uv) 6°³
 	vector<Vertex> _vertices;
 	vector<UINT> _indices;

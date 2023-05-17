@@ -214,21 +214,3 @@ INT_PTR CALLBACK About(HWND hDlg, UINT message, WPARAM wParam, LPARAM lParam)
     }
     return (INT_PTR)FALSE;
 }
-
-
-
-
-void Render()
-{
-
-    // TODO 렌더 단계 완성하기
-
-    Device::GetInstance()->Clear();
- 
-    DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-
-    DC->Draw(6, 0); // DrawCall
-
-    Device::GetInstance()->Present();
-}
-

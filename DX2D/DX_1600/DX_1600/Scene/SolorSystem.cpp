@@ -22,6 +22,7 @@ void SolorSystem::Update()
 {
 	_planetSun->setPosition(mousePos);
 
+	
 	_planetSun->Update();
 	_planetEarth->Update();
 	_planetMoon->Update();

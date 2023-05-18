@@ -87,6 +87,8 @@ public :
 
     bool IsBetween(Vector2 v1, Vector2 v2);
 
+    float Angle();
+
 public :
     float x;
     float y;

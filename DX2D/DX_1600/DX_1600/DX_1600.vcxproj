@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Dungreed\Dungreed.h" />
+    <ClInclude Include="Scene\DungreedScene.h" />
     <ClInclude Include="Framework\Render\ConstantBuffer.h" />
     <ClInclude Include="Framework\Device\Device.h" />
     <ClInclude Include="DX_1600.h" />
@@ -176,6 +178,8 @@
     <ClInclude Include="Framework\Render\VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Dungreed\Dungreed.cpp" />
+    <ClCompile Include="Scene\DungreedScene.cpp" />
     <ClCompile Include="Framework\Render\ConstantBuffer.cpp" />
     <ClCompile Include="Framework\Device\Device.cpp" />
     <ClCompile Include="DX_1600.cpp" />
@@ -209,9 +213,12 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="DX_1600.ico" />
+    <Image Include="Resource\Dungreed\Bow.png" />
+    <Image Include="Resource\Dungreed\Bullet.png" />
     <Image Include="Resource\earth.png" />
     <Image Include="Resource\Goomba.png" />
     <Image Include="Resource\moon.png" />
+    <Image Include="Resource\Dungreed\Player.png" />
     <Image Include="Resource\sun.png" />
     <Image Include="Resource\Zelda.png" />
     <Image Include="small.ico" />

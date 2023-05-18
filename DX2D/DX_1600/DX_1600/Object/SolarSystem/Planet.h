@@ -9,7 +9,7 @@ public :
 	void Render();
 
 	void setPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
-	void SetPratent(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent), _revolution->SetParent(parent); }
+	void SetPratent(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent); _revolution->SetParent(parent); }
 
 	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
 	shared_ptr<Transform> GetRevolution() { return _revolution; }
@@ -22,4 +22,3 @@ private :
 	float _angle = 0.0f;
 	float _revolutionAngle = 0.0f;
 };
-

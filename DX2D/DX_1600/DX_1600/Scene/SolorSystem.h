@@ -15,5 +15,7 @@ private :
 	shared_ptr<class Planet> _planetEarth;
 	shared_ptr<class Planet> _planetMoon;
 
+	shared_ptr<Dungreed> _player;
+
 };
 

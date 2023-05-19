@@ -10,6 +10,7 @@ public :
 
 	void SetIsActive(bool active) { _isActive = active; }
 	bool GetIsActive() { return _isActive; }
+	Vector2 GetPos() { return _quad->GetTransform()->GetPos(); }
 
 	void SetPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
 	void AddPosition(Vector2 pos) { _quad->GetTransform()->AddVector2(pos); }

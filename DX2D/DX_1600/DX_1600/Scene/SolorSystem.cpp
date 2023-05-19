@@ -30,7 +30,9 @@ void SolorSystem::Update()
 
 void SolorSystem::Render()
 {
+	ADDITIVE->SetState();
 	_planetSun->Render();
+	ALPHA->SetState();
 	_planetEarth->Render();
 	_planetMoon->Render();
 }

@@ -24,6 +24,8 @@ public :
 	}
 	}
 
+	vector<shared_ptr<DungreedBullet>> GetBullets() { return _bullets; }
+
 	void fire();
 
 	Vector2 GetPos() { return _quad->GetTransform()->GetPos(); }

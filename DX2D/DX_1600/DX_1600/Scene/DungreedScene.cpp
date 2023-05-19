@@ -22,6 +22,15 @@ DungreedScene::~DungreedScene()
 
 void DungreedScene::Update()
 {
+	for (auto bullet : _bow->GetBullets())
+	{
+		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT)
+		{
+			bullet->SetIsActive(false);
+			bullet->SetPosition(_bow->GetPos());
+		}
+
+	}
 	_bow->SetAngle(3.8f);
 	_player->SetbowAngle(mousePos.Angle());
 	_player->Update();

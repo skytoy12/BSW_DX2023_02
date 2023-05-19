@@ -1,16 +1,13 @@
 #include "framework.h"
 #include "DungreedScene.h"
+#include "../Object/Dungreed/DungreedBullet.h"
 
 DungreedScene::DungreedScene()
 {
 	
 	_player = make_shared<Dungreed>(L"Resource/Dungreed/Player.png", Vector2(1.0f, 1.0f));
-	_bow = make_shared<Dungreed>(L"Resource/Dungreed/Bow.png", Vector2(1.0f, 1.0f));
-	for (int i = 0; i < 30; i++)
-	{
-		shared_ptr<Dungreed> bullet = make_shared<Dungreed>(L"Resource/Dungreed/Bullet.png", Vector2(-0.1f, -0.1f));
-		_bullets.push_back(bullet);
-	}
+	_bow = make_shared<Dungreed>(L"Resource/Dungreed/Bow.png", Vector2(1.0f, 1.0f), 30, Vector2(0.1f, 0.1f));
+
 
 	_player->SetPosition(Vector2(100, 100));
 	_bow->SetParent(_player->GetBow());

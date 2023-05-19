@@ -12,6 +12,6 @@ private :
 
 	shared_ptr<Dungreed> _player;
 	shared_ptr<Dungreed> _bow;
-	vector<shared_ptr<Dungreed>> _bullets;
+
 };
 

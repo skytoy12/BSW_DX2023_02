@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Dungreed\DungreedBullet.h" />
     <ClInclude Include="Object\Dungreed\Dungreed.h" />
     <ClInclude Include="Scene\DungreedScene.h" />
     <ClInclude Include="Framework\Render\ConstantBuffer.h" />
@@ -178,6 +179,7 @@
     <ClInclude Include="Framework\Render\VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Dungreed\DungreedBullet.cpp" />
     <ClCompile Include="Object\Dungreed\Dungreed.cpp" />
     <ClCompile Include="Scene\DungreedScene.cpp" />
     <ClCompile Include="Framework\Render\ConstantBuffer.cpp" />

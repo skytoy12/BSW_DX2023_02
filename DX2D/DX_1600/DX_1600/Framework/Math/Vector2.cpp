@@ -47,7 +47,7 @@ bool Vector2::IsBetween(Vector2 v1, Vector2 v2)
     return false;
 }
 
-float Vector2::Angle()
+float Vector2::Angle() const
 {
     return atan2f(y,x);
 }

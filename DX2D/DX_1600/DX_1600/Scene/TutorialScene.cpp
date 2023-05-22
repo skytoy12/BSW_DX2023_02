@@ -23,7 +23,7 @@ TutorialScene::~TutorialScene()
 
 void TutorialScene::Update()
 {
-	Vector2 lerpResult = LERP(_quad2->GetTransform()->GetPos(), mousePos, 0.001f);
+	Vector2 lerpResult = LERP(_quad2->GetTransform()->GetPos(), MOUSE_POS, 0.001f);
 	_angle1 += 0.0001f;
 	_angle2 += 0.0003f;
 

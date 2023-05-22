@@ -87,7 +87,7 @@ public :
 
     bool IsBetween(Vector2 v1, Vector2 v2);
 
-    float Angle();
+    float Angle() const;
 
 public :
     float x;

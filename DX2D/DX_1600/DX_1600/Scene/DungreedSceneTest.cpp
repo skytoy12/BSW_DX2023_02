@@ -13,6 +13,18 @@ DungreedSceneTest::~DungreedSceneTest()
 
 void DungreedSceneTest::Update()
 {
+	if (KEY_PRESS('A'))
+	{
+		Vector2 movePos = Vector2(-500.0f, 0.0f) * DELTA_TIME;
+		_dun_player->Move(movePos);
+	}
+
+	if (KEY_PRESS('D'))
+	{
+		Vector2 movePos = Vector2(500.0f, 0.0f) * DELTA_TIME;
+		_dun_player->Move(movePos);
+	}
+
 	_dun_player->Update();
 }
 

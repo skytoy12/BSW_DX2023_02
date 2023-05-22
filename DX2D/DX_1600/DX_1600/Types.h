@@ -16,4 +16,12 @@
 #define ADDITIVE StateManager::GetInstance()->GetAdditive()
 #define BLEND StateManager::GetInstance()->GetBlendSTate()
 
+#define KEY_UP(k) InputManager::GetInstance()->Up(k)
+#define KEY_DOWN(k) InputManager::GetInstance()->Down(k)
+#define KEY_PRESS(k) InputManager::GetInstance()->Press(k)
+
+#define MOUSE_POS InputManager::GetInstance()->GetMousePos()
+
+#define DELTA_TIME Timer::GetInstance()->GetDeltaTime()
+
 #define LERP(s,e,t) s + (e - s)*t

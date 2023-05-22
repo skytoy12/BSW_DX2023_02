@@ -32,7 +32,7 @@ void DungreedScene::Update()
 
 	}
 	_bow->SetAngle(3.8f);
-	_player->SetbowAngle(mousePos.Angle());
+	_player->SetbowAngle(MOUSE_POS.Angle());
 	_player->Update();
 	_bow->Update();
 }

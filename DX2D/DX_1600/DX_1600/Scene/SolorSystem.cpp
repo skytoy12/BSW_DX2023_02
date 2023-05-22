@@ -20,7 +20,7 @@ SolorSystem::~SolorSystem()
 
 void SolorSystem::Update()
 {
-	_planetSun->setPosition(mousePos);
+	_planetSun->setPosition(MOUSE_POS);
 
 	
 	_planetSun->Update();

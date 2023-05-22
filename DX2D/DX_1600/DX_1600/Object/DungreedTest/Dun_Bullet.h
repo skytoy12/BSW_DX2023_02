@@ -10,6 +10,8 @@ public :
 
 	void Shoot(Vector2 dir, Vector2 startPos);
 
+	Vector2 GetPos() { return _quad->GetTransform()->GetPos(); }
+
 	bool _isActive = false;
 
 private :

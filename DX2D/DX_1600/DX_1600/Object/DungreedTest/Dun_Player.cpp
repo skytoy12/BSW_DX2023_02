@@ -16,6 +16,7 @@ Dun_Player::Dun_Player()
 	for (int i = 0; i < 30; i++)
 	{
 		shared_ptr<Dun_Bullet> bullet = make_shared<Dun_Bullet>();
+		bullet->_isActive = false;
 		_bullets.push_back(bullet);
 	}
 }
@@ -33,11 +34,21 @@ void Dun_Player::Update()
 		Fire();
 	}
 
-	_bowSlot->SetPosition(_quad->GetTransform()->GetPos());
-
 	SetBowAngle();
 
+	_bowSlot->SetPosition(_quad->GetTransform()->GetPos());
+
+	for (auto bullet : _bullets)
+	{
+		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT)
+		{
+			bullet->_isActive = false;
+		}
+
+	}
+
 	_quad->Update();
+	_bowSlot->Update();
 	_bow->Update();
 	for (auto bullet : _bullets)
 		bullet->Update();

@@ -32,3 +32,8 @@ void DungreedSceneTest::Render()
 {
 	_dun_player->Render();
 }
+
+void DungreedSceneTest::PostRender()
+{
+	ImGui::Text("mouseX : %d, mouseY : %d", (int)MOUSE_POS.x, (int)MOUSE_POS.y);
+}

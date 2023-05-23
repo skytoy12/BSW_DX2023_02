@@ -30,6 +30,11 @@
 #pragma comment(lib,"d3d11.lib")
 #pragma comment(lib,"d3dcompiler.lib")
 
+// Imgui
+#include "../ImGUI/imgui.h"
+#include "../ImGUI/imgui_impl_win32.h"
+#include "../ImGUI/imgui_impl_dx11.h"
+
 using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
@@ -56,6 +61,9 @@ using namespace Microsoft::WRL;
 #include "Framework/Render/IndexBuffer.h"
 #include "Framework/Render/VertexShader.h"
 #include "Framework/Render/PixelShader.h"
+
+//Collider
+#include "Framework/Collider/RectCollider.h"
 
 //TextureMapping
 #include "Framework/TextureMapping/SRV.h"

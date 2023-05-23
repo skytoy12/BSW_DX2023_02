@@ -5,10 +5,11 @@
 #include "../Scene/SolorSystem.h"
 #include "../Scene/DungreedScene.h"
 #include "../Scene/DungreedSceneTest.h"
+#include "../Scene/ColliderScene.h"
 
 Program::Program()
 {
-	_curScene = make_shared<DungreedSceneTest>();
+	_curScene = make_shared<ColliderScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_projection = make_shared<MatrixBuffer>();
@@ -19,6 +20,8 @@ Program::Program()
 	
 	_view->Update();
 	_projection->Update();
+
+	// Timer::GetInstance()->SetLockFPS(60.0);
 }
 
 Program::~Program()
@@ -37,12 +40,23 @@ void Program::Render()
 {
 	Device::GetInstance()->Clear();
 
+	ImGui_ImplDX11_NewFrame();
+	ImGui_ImplWin32_NewFrame();
+	ImGui::NewFrame();
+
 	_view->SetVSBuffer(1);
 	_projection->SetVSBuffer(2);
 
 	ALPHA->SetState();
 
 	_curScene->Render();
+
+	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
+
+	_curScene->PostRender();
+
+	ImGui::Render();
+	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	Device::GetInstance()->Present();
 }

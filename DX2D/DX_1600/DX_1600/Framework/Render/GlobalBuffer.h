@@ -26,3 +26,23 @@ public :
 	Data _data;
 
 };
+
+class ColorBuffer : public ConstantBuffer
+{
+public :
+	struct Data
+	{
+		XMFLOAT4 color;
+	};
+
+	ColorBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+		
+	}
+	virtual ~ColorBuffer() {}
+
+	void SetColor(XMFLOAT4 value) { _data.color = value; }
+
+	Data _data;
+};

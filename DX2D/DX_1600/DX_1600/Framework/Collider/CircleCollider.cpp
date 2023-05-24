@@ -20,7 +20,9 @@ void CircleCollider::Render()
 {
     _vertexBuffer->Set(0);
 
-    _transform->SetBuffer(0);
+    _transform->SetBuffer(0); // vs
+
+    _colorBuffer->SetPSBuffer(0); // ps
 
     DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
 
@@ -39,6 +41,9 @@ void CircleCollider::CreateData()
     _ps = make_shared<PixelShader>(L"Shader/ColliderPS.hlsl");
 
     _transform = make_shared<Transform>();
+
+    _colorBuffer = make_shared<ColorBuffer>();
+    SetGreen();
 }
 
 void CircleCollider::CreateVertices()
@@ -170,4 +175,13 @@ void CircleCollider::CreateVertices()
 
     temp.pos = XMFLOAT3(0.0f, _radius, 0.0f);
     _vertices.push_back(temp); // À§
+}
+
+bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
+{
+    Vector2 center1 = _transform->GetWorldPosition();
+    Vector2 center2 = other->_transform->GetWorldPosition();
+
+    float distance = (center1 - center2).Length();
+    return distance < GetWorldRadius() + other->GetWorldRadius();
 }

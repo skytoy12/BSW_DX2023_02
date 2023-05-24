@@ -2,9 +2,12 @@
 #include "CircleCollider.h"
 
 CircleCollider::CircleCollider(float radius)
-	: _radius(radius)
+	: Collider(),
+    _radius(radius)
 {
-    CreateData();
+    _type = Collider::ColliderType::CIRCLE;
+    CreateVertices();
+    CreatData();
 }
 
 CircleCollider::~CircleCollider()
@@ -32,19 +35,6 @@ void CircleCollider::Render()
     DC->Draw(_vertices.size(), 0);
 }
 
-void CircleCollider::CreateData()
-{
-    CreateVertices();
-    _vertexBuffer = make_shared<VertexBuffer>(_vertices.data(), sizeof(Vertex), _vertices.size());
-
-    _vs = make_shared<VertexShader>(L"Shader/ColliderVS.hlsl");
-    _ps = make_shared<PixelShader>(L"Shader/ColliderPS.hlsl");
-
-    _transform = make_shared<Transform>();
-
-    _colorBuffer = make_shared<ColorBuffer>();
-    SetGreen();
-}
 
 void CircleCollider::CreateVertices()
 {
@@ -59,6 +49,13 @@ void CircleCollider::CreateVertices()
  
 }
 
+
+bool CircleCollider::IsCollision(Vector2 pos)
+{
+    float distance = (_transform->GetWorldPosition() - pos).Length();
+    return distance < GetWorldRadius();
+}
+
 bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
     Vector2 center1 = _transform->GetWorldPosition();
@@ -66,4 +63,9 @@ bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
 
     float distance = (center1 - center2).Length();
     return distance < GetWorldRadius() + other->GetWorldRadius();
+}
+
+bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
+{
+    return other->IsCollision(shared_from_this());
 }

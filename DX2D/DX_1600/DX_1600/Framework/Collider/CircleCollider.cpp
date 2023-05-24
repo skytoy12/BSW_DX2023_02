@@ -50,131 +50,13 @@ void CircleCollider::CreateVertices()
 {
     Vertex temp;
  
+    for (int i = 0; i < 41; i++)
+    {
+        temp.pos = XMFLOAT3(_radius * cos(Angle(i * 9)), _radius * sin(Angle(i * 9)), 0.0f);
+        _vertices.push_back(temp);
+    }
 
-    temp.pos = XMFLOAT3(0.0f, _radius, 0.0f);
-    _vertices.push_back(temp); // 위
-
-    temp.pos = XMFLOAT3(sin(Angle(9)) * _radius, cos(Angle(9)) * _radius, 0.0f);
-    _vertices.push_back(temp); 
-
-    temp.pos = XMFLOAT3(sin(Angle(18)) * _radius, cos(Angle(18)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(27)) * _radius, cos(Angle(27)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(36)) * _radius, cos(Angle(36)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(45)) * _radius, cos(Angle(45)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(54)) * _radius, cos(Angle(54)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(63)) * _radius, cos(Angle(63)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(72)) * _radius, cos(Angle(72)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(sin(Angle(81)) * _radius, cos(Angle(81)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-
-    temp.pos = XMFLOAT3(_radius, 0.0f, 0.0f);
-    _vertices.push_back(temp); // 오른쪽
-
-    temp.pos = XMFLOAT3(cos(Angle(9)) * _radius, -sin(Angle(9)) * _radius, 0.0f);
-    _vertices.push_back(temp);      
-                                    
-    temp.pos = XMFLOAT3(cos(Angle(18)) * _radius, -sin(Angle(18)) * _radius, 0.0f);
-    _vertices.push_back(temp);      
-                                    
-    temp.pos = XMFLOAT3(cos(Angle(27)) * _radius, -sin(Angle(27)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(cos(Angle(36)) * _radius, -sin(Angle(36)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(cos(Angle(45)) * _radius, -sin(Angle(45)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(cos(Angle(54)) * _radius, -sin(Angle(54)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(cos(Angle(63)) * _radius, -sin(Angle(63)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(cos(Angle(72)) * _radius, -sin(Angle(72)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(cos(Angle(81)) * _radius, -sin(Angle(81)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-
-    temp.pos = XMFLOAT3(0.0f, -_radius, 0.0f);
-    _vertices.push_back(temp); // 아래
-
-    temp.pos = XMFLOAT3(-sin(Angle(9)) * _radius, -cos(Angle(9)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(18)) * _radius, -cos(Angle(18)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(27)) * _radius, -cos(Angle(27)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(36)) * _radius, -cos(Angle(36)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(45)) * _radius, -cos(Angle(45)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(54)) * _radius, -cos(Angle(54)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(63)) * _radius, -cos(Angle(63)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(72)) * _radius, -cos(Angle(72)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-sin(Angle(81)) * _radius, -cos(Angle(81)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-_radius, 0.0f, 0.0f);
-    _vertices.push_back(temp); // 왼쪽
-
-    temp.pos = XMFLOAT3(-cos(Angle(9)) * _radius, sin(Angle(9)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(18)) * _radius, sin(Angle(18)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(27)) * _radius, sin(Angle(27)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(36)) * _radius, sin(Angle(36)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(45)) * _radius, sin(Angle(45)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(54)) * _radius, sin(Angle(54)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(63)) * _radius, sin(Angle(63)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(72)) * _radius, sin(Angle(72)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(-cos(Angle(81)) * _radius, sin(Angle(81)) * _radius, 0.0f);
-    _vertices.push_back(temp);
-
-    temp.pos = XMFLOAT3(0.0f, _radius, 0.0f);
-    _vertices.push_back(temp); // 위
+ 
 }
 
 bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)

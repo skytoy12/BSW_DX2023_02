@@ -21,6 +21,7 @@ public :
 	float GetRadius() { return _radius; }
 	float GetWorldRadius() { return _radius * _transform->GetWorldScale().x; }
 	
+	virtual void Block(shared_ptr<CircleCollider> moveable);
 
 	float Angle(float angle) { return angle * (PI / 180); }
 

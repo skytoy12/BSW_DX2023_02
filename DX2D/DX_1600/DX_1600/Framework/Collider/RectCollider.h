@@ -29,10 +29,7 @@ public :
 
 	AABBRectInfo GetAABBInfo();
 
-	float WorldLeft() { return _transform->GetWorldPosition().x - (GetWorldSize().x * 0.5); }
-	float WorldRight() { return _transform->GetWorldPosition().x + (GetWorldSize().x * 0.5); }
-	float WorldTop() { return _transform->GetWorldPosition().y + (GetWorldSize().y * 0.5); }
-	float WorldBottom() { return _transform->GetWorldPosition().y - (GetWorldSize().y * 0.5); }
+
 
 
 private :

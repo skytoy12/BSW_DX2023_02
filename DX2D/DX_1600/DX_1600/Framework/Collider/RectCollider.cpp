@@ -2,11 +2,10 @@
 #include "RectCollider.h"
 
 RectCollider::RectCollider(Vector2 size)
-	:Collider(), _size(size)
+	: _size(size), Collider(Collider::ColliderType::RECT)
 {
-    _type = Collider::ColliderType::RECT;
     CreateVertices();
-    CreatData();
+    Collider::CreatData();
 }
 
 RectCollider::~RectCollider()
@@ -15,23 +14,12 @@ RectCollider::~RectCollider()
 
 void RectCollider::Update()
 {
-    _transform->Update();
+    Collider::Update();
 }
 
 void RectCollider::Render()
 {
-    _vertexBuffer->Set(0);
-
-    _transform->SetBuffer(0);
-
-    _colorBuffer->SetPSBuffer(0);
-
-    DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-
-    _vs->Set();
-    _ps->Set();
-
-    DC->Draw(_vertices.size(), 0);
+    Collider::Render();
 }
 
 
@@ -61,9 +49,10 @@ void RectCollider::CreateVertices()
 
 bool RectCollider::IsCollision(Vector2 pos)
 {
-    if (pos.x < WorldLeft() || pos.x > WorldRight())
+    AABBRectInfo info = GetAABBInfo();
+    if (pos.x < info.left || pos.x > info.right)
         return false;
-    if (pos.y > WorldTop() || pos.y < WorldBottom())
+    if (pos.y > info.top || pos.y < info.bottom)
         return false;
 
     return true;
@@ -71,34 +60,49 @@ bool RectCollider::IsCollision(Vector2 pos)
 
 bool RectCollider::IsCollision(shared_ptr<RectCollider> other)
 {
-    if (WorldRight() > other->WorldLeft() && WorldLeft() < other->WorldRight())
+    AABBRectInfo info = GetAABBInfo();
+    AABBRectInfo otherInfo = other->GetAABBInfo();
+    if (info.right > otherInfo.left && info.left < otherInfo.right)
     {
-        if (WorldBottom() < other->WorldTop() && WorldTop() > other->WorldBottom())
+        if (info.bottom < otherInfo.top && info.top > otherInfo.bottom)
             return true;
     }
     return false;
 }
 
+RectCollider::AABBRectInfo RectCollider::GetAABBInfo()
+{
+    AABBRectInfo result;
+    result.left = _transform->GetWorldPosition().x - (GetWorldSize().x * 0.5);
+    result.right = _transform->GetWorldPosition().x + (GetWorldSize().x * 0.5);
+    result.top = _transform->GetWorldPosition().y + (GetWorldSize().y * 0.5);
+    result.bottom = _transform->GetWorldPosition().y - (GetWorldSize().y * 0.5);
+
+    return result;
+}
+
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
-    Vector2 leftTop = Vector2(WorldLeft(), WorldTop());
-    Vector2 leftBottom = Vector2(WorldLeft(), WorldBottom());
-    Vector2 rightTop = Vector2(WorldRight(), WorldTop());
-    Vector2 rightBottom = Vector2(WorldRight(), WorldBottom());
+    AABBRectInfo info = GetAABBInfo();
+
+    Vector2 leftTop = Vector2(info.left, info.top);
+    Vector2 leftBottom = Vector2(info.left, info.bottom);
+    Vector2 rightTop = Vector2(info.right, info.top);
+    Vector2 rightBottom = Vector2(info.right, info.bottom);
 
     if (other->IsCollision(leftTop) || other->IsCollision(leftBottom) ||
         other->IsCollision(rightTop) || other->IsCollision(rightBottom))
         return true;
-    if (WorldRight() > other->GetTransform()->GetWorldPosition().x && WorldLeft() < other->GetTransform()->GetWorldPosition().x)
+    if (info.right > other->GetTransform()->GetWorldPosition().x && info.left < other->GetTransform()->GetWorldPosition().x)
     {
-        if (WorldTop() - other->GetWorldRadius() > other->GetTransform()->GetWorldPosition().y
-            && WorldBottom() + other->GetWorldRadius() < other->GetTransform()->GetWorldPosition().y)
+        if (info.top - other->GetWorldRadius() > other->GetTransform()->GetWorldPosition().y
+            && info.bottom + other->GetWorldRadius() < other->GetTransform()->GetWorldPosition().y)
             return true;
     }
-    if (WorldBottom() < other->GetTransform()->GetWorldPosition().y && WorldTop() > other->GetTransform()->GetWorldPosition().y)
+    if (info.bottom < other->GetTransform()->GetWorldPosition().y && info.top > other->GetTransform()->GetWorldPosition().y)
     {
-        if (WorldLeft() - other->GetWorldRadius() < other->GetTransform()->GetWorldPosition().x
-            && WorldRight() + other->GetWorldRadius() > other->GetTransform()->GetWorldPosition().x)
+        if (info.left - other->GetWorldRadius() < other->GetTransform()->GetWorldPosition().x
+            && info.right + other->GetWorldRadius() > other->GetTransform()->GetWorldPosition().x)
             return true;
     }
     return false;

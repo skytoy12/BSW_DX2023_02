@@ -4,7 +4,8 @@ class RectCollider;
 
 class Collider
 {
-public :
+
+protected :
 	enum class ColliderType
 	{
 		NONE,
@@ -12,11 +13,14 @@ public :
 		RECT
 	};
 
-	Collider();
+public :
+
+
+	Collider(ColliderType type);
 	virtual ~Collider();
 
-	virtual void Update() abstract;
-	virtual void Render() abstract;
+	virtual void Update();
+	virtual void Render();
 	virtual void CreateVertices() abstract;
 	void CreatData();
 

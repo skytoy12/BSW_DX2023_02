@@ -1,6 +1,15 @@
 #pragma once
 class RectCollider : public Collider
 {
+
+private :
+	struct AABBRectInfo
+	{
+		float left = 0.0f;
+		float top = 0.0f;
+		float right = 0.0f;
+		float bottom = 0.0f;
+	};
 public :
 	RectCollider(Vector2 size);
 	~RectCollider();
@@ -17,6 +26,8 @@ public :
 	virtual bool IsCollision(shared_ptr<RectCollider> other) override;
 
 	Vector2 GetWorldSize() { return { _size.x * _transform->GetWorldScale().x, _size.y * _transform->GetWorldScale().y }; }
+
+	AABBRectInfo GetAABBInfo();
 
 	float WorldLeft() { return _transform->GetWorldPosition().x - (GetWorldSize().x * 0.5); }
 	float WorldRight() { return _transform->GetWorldPosition().x + (GetWorldSize().x * 0.5); }

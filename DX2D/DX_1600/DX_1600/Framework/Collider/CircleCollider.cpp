@@ -2,12 +2,10 @@
 #include "CircleCollider.h"
 
 CircleCollider::CircleCollider(float radius)
-	: Collider(),
-    _radius(radius)
+	: _radius(radius), Collider(Collider::ColliderType::CIRCLE)
 {
-    _type = Collider::ColliderType::CIRCLE;
     CreateVertices();
-    CreatData();
+    Collider::CreatData();
 }
 
 CircleCollider::~CircleCollider()
@@ -16,23 +14,12 @@ CircleCollider::~CircleCollider()
 
 void CircleCollider::Update()
 {
-    _transform->Update();
+    Collider::Update();
 }
 
 void CircleCollider::Render()
 {
-    _vertexBuffer->Set(0);
-
-    _transform->SetBuffer(0); // vs
-
-    _colorBuffer->SetPSBuffer(0); // ps
-
-    DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINESTRIP);
-
-    _vs->Set();
-    _ps->Set();
-
-    DC->Draw(_vertices.size(), 0);
+    Collider::Render();
 }
 
 

@@ -43,6 +43,8 @@ public :
 
 	void SetParent(shared_ptr<Transform> transform) { _transform->SetParent(transform); }
 
+	
+
 protected :
 
 	vector<Vertex> _vertices;

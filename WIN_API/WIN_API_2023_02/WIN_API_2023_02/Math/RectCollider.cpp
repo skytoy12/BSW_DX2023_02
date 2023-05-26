@@ -67,8 +67,8 @@ bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 		return true;
 	if (Right() > other->GetCenter().x && Left() < other->GetCenter().x)
 	{
-		if (Top() - other->GetRadius() < other->GetCenter().y
-			&& Bottom() + other->GetRadius() > other->GetCenter().y)
+		if (Top() + other->GetRadius() < other->GetCenter().y
+			&& Bottom() - other->GetRadius() > other->GetCenter().y)
 			return true;
 	}
 	if (Bottom() > other->GetCenter().y && Top() < other->GetCenter().y)

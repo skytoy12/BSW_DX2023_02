@@ -10,6 +10,14 @@ private :
 		float right = 0.0f;
 		float bottom = 0.0f;
 	};
+
+	struct OBBRectinfo
+	{
+		Vector2 worldPos;
+		Vector2 direction[2]; // 가로 세로 벡터
+		float length[2]; // 가로 세로 길이
+	};
+
 public :
 	RectCollider(Vector2 size);
 	~RectCollider();
@@ -28,8 +36,11 @@ public :
 	Vector2 GetWorldSize() { return { _size.x * _transform->GetWorldScale().x, _size.y * _transform->GetWorldScale().y }; }
 
 	AABBRectInfo GetAABBInfo();
+	OBBRectinfo GetOBBInfo();
 
-	void Block(shared_ptr<RectCollider> moveable);
+	// Matrix 상속 걸려있는 구조에선 Block X
+	bool Block(shared_ptr<RectCollider> moveable);
+	bool Block(shared_ptr<class CircleCollider> moveable);
 
 
 

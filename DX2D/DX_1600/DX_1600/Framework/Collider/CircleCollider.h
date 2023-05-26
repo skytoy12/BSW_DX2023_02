@@ -21,7 +21,8 @@ public :
 	float GetRadius() { return _radius; }
 	float GetWorldRadius() { return _radius * _transform->GetWorldScale().x; }
 	
-	virtual void Block(shared_ptr<CircleCollider> moveable);
+	// Matrix 상속 걸려있는 구조에선 Block X
+	bool Block(shared_ptr<CircleCollider> moveable);
 
 	float Angle(float angle) { return angle * (PI / 180); }
 

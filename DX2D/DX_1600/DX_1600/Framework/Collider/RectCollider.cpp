@@ -81,41 +81,57 @@ RectCollider::AABBRectInfo RectCollider::GetAABBInfo()
     return result;
 }
 
-void RectCollider::Block(shared_ptr<RectCollider> moveable)
+RectCollider::OBBRectinfo RectCollider::GetOBBInfo()
+{
+    OBBRectinfo info;
+
+    info.worldPos = _transform->GetWorldPosition();
+
+    XMFLOAT4X4 matrix;
+    XMStoreFloat4x4(&matrix, _transform->GetMatrix());
+
+    info.direction[0] = { matrix._11, matrix._12 };
+    info.direction[1] = { matrix._21, matrix._22 };
+
+    info.length[0] = GetWorldSize().x * 0.5f;
+    info.length[1] = GetWorldSize().y * 0.5f;
+
+    return info;
+}
+
+bool RectCollider::Block(shared_ptr<RectCollider> moveable)
 {
     if (!IsCollision(moveable))
-        return;
-    Vector2 moveableCenter = moveable->GetTransform()->GetWorldPosition();
-    Vector2 blockCenter = GetTransform()->GetWorldPosition();
-    Vector2 Length = moveableCenter - blockCenter;
+        return false;
+    Vector2 dir = moveable->GetTransform()->GetWorldPosition() - _transform->GetWorldPosition();
+    Vector2 sum = moveable->GetWorldSize() * 0.5f + GetWorldSize() * 0.5f;
+    Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
 
-    float moveableHalfSizeX = moveable->GetWorldSize().x * 0.5f;
-    float moveableHalfSizeY = moveable->GetWorldSize().y * 0.5f;
-    float blockHalfSizeX = GetWorldSize().x * 0.5f;
-    float blockHalfSizeY = GetWorldSize().y * 0.5f;
+    Vector2 fixedPos = moveable->GetTransform()->GetPos();
 
-    if (blockCenter.x + blockHalfSizeX > moveableCenter.x - moveableHalfSizeX && blockCenter.x - blockHalfSizeX < moveableCenter.x + moveableHalfSizeX && blockCenter.y < moveableCenter.y - moveableHalfSizeY)
+    dir.Nomallize();
+
+    if (overlap.x > overlap.y)
     {
-        float scala = abs((moveableHalfSizeY + blockHalfSizeY) - abs(moveableCenter.y - blockCenter.y));
-        moveable->GetTransform()->AddVector2({ 0.0f, scala });
-    }
-    else if (blockCenter.x + blockHalfSizeX > moveableCenter.x - moveableHalfSizeX && blockCenter.x - blockHalfSizeX < moveableCenter.x + moveableHalfSizeX && blockCenter.y > moveableCenter.y + moveableHalfSizeY)
-    {
-        float scala = abs((moveableHalfSizeY + blockHalfSizeY) - abs(moveableCenter.y - blockCenter.y));
-        moveable->GetTransform()->AddVector2({ 0.0f, -scala });
-    }
-    else if (blockCenter.y - blockHalfSizeY < moveableCenter.y + moveableHalfSizeY && blockCenter.y + blockHalfSizeY > moveableCenter.y - moveableHalfSizeY && blockCenter.x < moveableCenter.x - moveableHalfSizeX)
-    {
-        float scala = abs((moveableHalfSizeX + blockHalfSizeX) - abs(moveableCenter.x - blockCenter.x));
-        moveable->GetTransform()->AddVector2({ scala, 0.0f });
-    }
-    else if (blockCenter.y - blockHalfSizeY < moveableCenter.y + moveableHalfSizeY && blockCenter.y + blockHalfSizeY > moveableCenter.y - moveableHalfSizeY && blockCenter.x > moveableCenter.x + moveableHalfSizeX)
-    {
-        float scala = abs((moveableHalfSizeX + blockHalfSizeX) - abs(moveableCenter.x - blockCenter.x));
-        moveable->GetTransform()->AddVector2({ -scala, 0.0f });
+        if (dir.y < 0.0f)
+            dir.y = -1.0f;
+        else if (dir.y > 0.0f)
+            dir.y = 1.0f;
+
+        fixedPos.y += dir.y * overlap.y;
     }
     else
-        return;
+    {
+        if (dir.x < 0.0f)
+            dir.x = -1.0f;
+        else if (dir.x > 0.0f)
+            dir.x = 1.0f;
+
+        fixedPos.x += dir.x * overlap.x;
+    }
+
+    moveable->GetTransform()->SetPosition(fixedPos);
+    return true;
 }
 
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
@@ -132,8 +148,8 @@ bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
         return true;
     if (info.right > other->GetTransform()->GetWorldPosition().x && info.left < other->GetTransform()->GetWorldPosition().x)
     {
-        if (info.top - other->GetWorldRadius() > other->GetTransform()->GetWorldPosition().y
-            && info.bottom + other->GetWorldRadius() < other->GetTransform()->GetWorldPosition().y)
+        if (info.top + other->GetWorldRadius() > other->GetTransform()->GetWorldPosition().y
+            && info.bottom - other->GetWorldRadius() < other->GetTransform()->GetWorldPosition().y)
             return true;
     }
     if (info.bottom < other->GetTransform()->GetWorldPosition().y && info.top > other->GetTransform()->GetWorldPosition().y)
@@ -143,4 +159,40 @@ bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
             return true;
     }
     return false;
+}
+
+bool RectCollider::Block(shared_ptr<CircleCollider> moveable)
+{
+    if (!IsCollision(moveable))
+        return false;
+    Vector2 virtualHalfSize = Vector2(moveable->GetWorldRadius(), moveable->GetWorldRadius());
+    Vector2 dir = moveable->GetTransform()->GetWorldPosition() - _transform->GetWorldPosition();
+    Vector2 sum = virtualHalfSize + GetWorldSize() * 0.5f;
+    Vector2 overlap = Vector2(sum.x - abs(dir.x), sum.y - abs(dir.y));
+
+    Vector2 fixedPos = moveable->GetTransform()->GetPos();
+
+    dir.Nomallize();
+
+    if (overlap.x > overlap.y)
+    {
+        if (dir.y < 0.0f)
+            dir.y = -1.0f;
+        else if (dir.y > 0.0f)
+            dir.y = 1.0f;
+
+        fixedPos.y += dir.y * overlap.y;
+    }
+    else
+    {
+        if (dir.x < 0.0f)
+            dir.x = -1.0f;
+        else if (dir.x > 0.0f)
+            dir.x = 1.0f;
+
+        fixedPos.x += dir.x * overlap.x;
+    }
+
+    moveable->GetTransform()->SetPosition(fixedPos);
+    return true;
 }

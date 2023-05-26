@@ -81,6 +81,43 @@ RectCollider::AABBRectInfo RectCollider::GetAABBInfo()
     return result;
 }
 
+void RectCollider::Block(shared_ptr<RectCollider> moveable)
+{
+    if (!IsCollision(moveable))
+        return;
+    Vector2 moveableCenter = moveable->GetTransform()->GetWorldPosition();
+    Vector2 blockCenter = GetTransform()->GetWorldPosition();
+    Vector2 Length = moveableCenter - blockCenter;
+
+    float moveableHalfSizeX = moveable->GetWorldSize().x * 0.5f;
+    float moveableHalfSizeY = moveable->GetWorldSize().y * 0.5f;
+    float blockHalfSizeX = GetWorldSize().x * 0.5f;
+    float blockHalfSizeY = GetWorldSize().y * 0.5f;
+
+    if (blockCenter.x + blockHalfSizeX > moveableCenter.x - moveableHalfSizeX && blockCenter.x - blockHalfSizeX < moveableCenter.x + moveableHalfSizeX && blockCenter.y < moveableCenter.y - moveableHalfSizeY)
+    {
+        float scala = abs((moveableHalfSizeY + blockHalfSizeY) - abs(moveableCenter.y - blockCenter.y));
+        moveable->GetTransform()->AddVector2({ 0.0f, scala });
+    }
+    else if (blockCenter.x + blockHalfSizeX > moveableCenter.x - moveableHalfSizeX && blockCenter.x - blockHalfSizeX < moveableCenter.x + moveableHalfSizeX && blockCenter.y > moveableCenter.y + moveableHalfSizeY)
+    {
+        float scala = abs((moveableHalfSizeY + blockHalfSizeY) - abs(moveableCenter.y - blockCenter.y));
+        moveable->GetTransform()->AddVector2({ 0.0f, -scala });
+    }
+    else if (blockCenter.y - blockHalfSizeY < moveableCenter.y + moveableHalfSizeY && blockCenter.y + blockHalfSizeY > moveableCenter.y - moveableHalfSizeY && blockCenter.x < moveableCenter.x - moveableHalfSizeX)
+    {
+        float scala = abs((moveableHalfSizeX + blockHalfSizeX) - abs(moveableCenter.x - blockCenter.x));
+        moveable->GetTransform()->AddVector2({ scala, 0.0f });
+    }
+    else if (blockCenter.y - blockHalfSizeY < moveableCenter.y + moveableHalfSizeY && blockCenter.y + blockHalfSizeY > moveableCenter.y - moveableHalfSizeY && blockCenter.x > moveableCenter.x + moveableHalfSizeX)
+    {
+        float scala = abs((moveableHalfSizeX + blockHalfSizeX) - abs(moveableCenter.x - blockCenter.x));
+        moveable->GetTransform()->AddVector2({ -scala, 0.0f });
+    }
+    else
+        return;
+}
+
 bool RectCollider::IsCollision(shared_ptr<CircleCollider> other)
 {
     AABBRectInfo info = GetAABBInfo();

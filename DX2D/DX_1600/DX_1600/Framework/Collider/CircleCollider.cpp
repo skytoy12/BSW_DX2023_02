@@ -71,5 +71,5 @@ void CircleCollider::Block(shared_ptr<CircleCollider> moveable)
     float scalar = abs((moveableRaduius + blockRaduius) - dir.Length());
     dir.Nomallize();
 
-    moveable->GetTransform()->SetPosition(dir * scalar);
+    moveable->GetTransform()->AddVector2(dir * scalar);
 }

@@ -51,8 +51,9 @@ void ColliderScene::Update()
 
 	_rectCollider2->GetTransform()->SetPosition(MOUSE_POS);
 
-	_circleCollider->SetPosition(MOUSE_POS);
+	_circleCollider->SetPosition(Vector2(0.0f, 0.0f));
 	_circleCollider->Block(_circleCollider2);
+	_rectCollider2->Block(_rectCollider);
 }
 
 void ColliderScene::Render()

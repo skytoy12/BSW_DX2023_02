@@ -29,6 +29,8 @@ public :
 
 	AABBRectInfo GetAABBInfo();
 
+	void Block(shared_ptr<RectCollider> moveable);
+
 
 
 

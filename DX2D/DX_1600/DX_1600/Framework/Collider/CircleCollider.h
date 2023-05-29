@@ -21,15 +21,19 @@ public :
 	float GetRadius() { return _radius; }
 	float GetWorldRadius() { return _radius * _transform->GetWorldScale().x; }
 	
+	void SetIsActive(bool isActive) { _isActive = isActive; }
+	bool GetISActive() { return _isActive; }
+
 	// Matrix 상속 걸려있는 구조에선 Block X
 	bool Block(shared_ptr<CircleCollider> moveable);
 
 	float Angle(float angle) { return angle * (PI / 180); }
 
-private :
+protected :
 
 	float _radius;
 
+	bool _isActive = true;
 
 };
 

@@ -14,6 +14,7 @@
 #define GREY            {0.5f, 0.5f, 0.5f, 1.0f}
 
 #define PI 3.141592
+#define GRAVITY 0.0098f
 
 #define DEVICE Device::GetInstance()->GetDevice()
 #define DC Device::GetInstance()->GetDC()

@@ -2,51 +2,34 @@
 class Dungreed
 {
 public :
-	Dungreed(wstring file, Vector2 scale);
-	Dungreed(wstring file, Vector2 scale, int number, Vector2 bulletScale);
+	Dungreed();
 	~Dungreed();
 
 	void Update();
 	void Render();
 
+	void SetBowAngle();
+
 	void SetPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
-	void SetAngle(float angle) { _quad->GetTransform()->SetAngle(angle); }
-	void SetbowAngle(float bowAngle) { _bow->SetAngle(bowAngle); }
-	void AddAngle(float angle) { _quad->GetTransform()->AddAngle(angle); }
-	void AddPos(Vector2 pos) { _quad->GetTransform()->AddVector2(pos); }
-	void SetParent(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent); _bow->SetParent(parent);
-	if (_isWeapon == true)
-	{
-		for (auto bullet : _bullets)
-		{
-			bullet->SetParentofBullet(parent);
-		}
-	}
-	}
 
-	vector<shared_ptr<DungreedBullet>> GetBullets() { return _bullets; }
+	void SetPratent(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent);}
 
-	void fire();
+	void Move(Vector2 movePos) { _quad->GetTransform()->AddVector2(movePos); }
 
-	Vector2 GetPos() { return _quad->GetTransform()->GetPos(); }
+	const Vector2& GetPos() { return _quad->GetTransform()->GetPos(); }
+
+	vector<shared_ptr<class DungreedBullet>> GetBullets() { return _bullets; }
 
 
-	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
-
-	shared_ptr<Transform> GetBow() { return _bow; }
+	void Fire();
 
 private :
-	Vector2 _scale;
-
 	shared_ptr<Quad> _quad;
 
-	shared_ptr<Transform> _bow;
+	shared_ptr<Transform> _bowSlot;
+	shared_ptr<Quad> _bow;
 
-	vector<shared_ptr<DungreedBullet>> _bullets;
-
-	Vector2 _bulletScale;
-
-	bool _isWeapon;
+	vector<shared_ptr<class DungreedBullet>> _bullets;
 
 
 };

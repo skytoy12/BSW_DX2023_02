@@ -4,12 +4,12 @@
 #include "../Scene/TutorialScene.h"
 #include "../Scene/SolorSystem.h"
 #include "../Scene/DungreedScene.h"
-#include "../Scene/DungreedSceneTest.h"
+#include "../Scene/DungreedBossScene.h"
 #include "../Scene/ColliderScene.h"
 
 Program::Program()
 {
-	_curScene = make_shared<ColliderScene>();
+	_curScene = make_shared<DungreedBossScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_projection = make_shared<MatrixBuffer>();

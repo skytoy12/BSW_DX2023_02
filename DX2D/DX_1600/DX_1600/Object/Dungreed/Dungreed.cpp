@@ -1,29 +1,23 @@
 #include "framework.h"
 #include "Dungreed.h"
 
-Dungreed::Dungreed(wstring file, Vector2 scale)
-	: _scale(scale), _isWeapon(false)
+Dungreed::Dungreed()
 {
-	_quad = make_shared<Quad>(file);
-	_quad->GetTransform()->SetScale(scale);
+	_quad = make_shared<Quad>(L"Resource/Dungreed/Player.png");
+	_quad->GetTransform()->SetPosition(Vector2(100, 100));
 
-	_bow = make_shared<Transform>();
-}
+	_bowSlot = make_shared<Transform>();
 
-Dungreed::Dungreed(wstring file, Vector2 scale, int number, Vector2 bulletScale)
-	: _scale(scale), _bulletScale(bulletScale), _isWeapon(true)
-{
-	_quad = make_shared<Quad>(file);
-	_quad->GetTransform()->SetScale(scale);
-
-	for (int i = 0; i < number; i++)
+	_bow = make_shared<Quad>(L"Resource/Dungreed/Bow.png");
+	_bow->GetTransform()->SetParent(_bowSlot);
+	_bow->GetTransform()->SetPosition({ 50, 0 });
+	_bow->GetTransform()->SetAngle(-PI * 0.75f);
+	for (int i = 0; i < 30; i++)
 	{
-		shared_ptr<DungreedBullet> bullet = make_shared<DungreedBullet>(L"Resource/Dungreed/Bullet.png", bulletScale);
-		bullet->SetPosition(_quad->GetTransform()->GetPos() + Vector2(250, 10));
+		shared_ptr<DungreedBullet> bullet = make_shared<DungreedBullet>();
+		bullet->_isActive = false;
 		_bullets.push_back(bullet);
 	}
-
-	_bow = make_shared<Transform>();
 }
 
 Dungreed::~Dungreed()
@@ -32,44 +26,52 @@ Dungreed::~Dungreed()
 
 void Dungreed::Update()
 {
-	if (_isWeapon == true)
+	if (GetAsyncKeyState(VK_LBUTTON) & 0x0001)
 	{
-		fire();
+		Fire();
 	}
-	_bow->SetPosition(Vector2(0, 0));
-	_quad->Update();
-	_bow->Update();
+	SetBowAngle();
+
+	_bowSlot->SetPosition(_quad->GetTransform()->GetWorldPosition());
+
 	for (auto bullet : _bullets)
 	{
-		bullet->Update();
+		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT || bullet->GetPos().y < 0 || bullet->GetPos().x < 0)
+		{
+			bullet->_isActive = false;
+		}
+
 	}
+
+	_quad->Update();
+	_bowSlot->Update();
+	_bow->Update();
+	for (auto bullet : _bullets)
+		bullet->Update();
 }
 
 void Dungreed::Render()
 {
 	_quad->Render();
-
+	_bow->Render();
 	for (auto bullet : _bullets)
-	{
 		bullet->Render();
-	}
 }
 
-void Dungreed::fire()
+void Dungreed::SetBowAngle()
 {
-	if (GetAsyncKeyState(VK_LBUTTON) & 0x0001)
-	{
-		auto iter = std::find_if(_bullets.begin(), _bullets.end(), [](const shared_ptr<DungreedBullet>& bullet)->bool
-			{
-				if (bullet->GetIsActive() == false)
-					return true;
-				return false;
-			});
-		if (iter != _bullets.end())
-		{
-			
-			(*iter)->SetIsActive(true);
-		
-		}
-	}
+	Vector2 playerToMouse = MOUSE_POS - GetPos();
+	float angle = playerToMouse.Angle();
+	_bowSlot->SetAngle(angle);
+}
+
+void Dungreed::Fire()
+{
+	Vector2 dir = MOUSE_POS - GetPos();
+
+	auto bulletiter = std::find_if(_bullets.begin(), _bullets.end(), [](const shared_ptr<DungreedBullet> obj)->bool {return !obj->_isActive; });
+
+	if (bulletiter == _bullets.end())
+		return;
+	(*bulletiter)->Shoot(dir, _bow->GetTransform()->GetWorldPosition());
 }

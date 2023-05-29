@@ -2,25 +2,25 @@
 class DungreedBullet
 {
 public :
-	DungreedBullet(wstring file, Vector2 scale);
+	DungreedBullet();
 	~DungreedBullet();
 
 	void Update();
 	void Render();
 
-	void SetIsActive(bool active) { _isActive = active; }
-	bool GetIsActive() { return _isActive; }
+	void Shoot(Vector2 dir, Vector2 startPos);
+
+	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
+
 	Vector2 GetPos() { return _quad->GetTransform()->GetPos(); }
 
-	void SetPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
-	void AddPosition(Vector2 pos) { _quad->GetTransform()->AddVector2(pos); }
-	void SetParentofBullet(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent); }
-private :
-	Vector2 _scale;
 
+	bool _isActive = false;
+
+private :
 	shared_ptr<Quad> _quad;
 
-	bool _isActive;
-
+	Vector2 _dir = Vector2();
+	float _speed = 200.0f;
 };
 

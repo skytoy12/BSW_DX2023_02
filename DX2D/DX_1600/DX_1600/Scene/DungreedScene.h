@@ -1,17 +1,17 @@
 #pragma once
 class DungreedScene : public Scene
 {
-public :
+public:
 	DungreedScene();
 	~DungreedScene();
-
 	virtual void Update() override;
+
 	virtual void Render() override;
 
-private :
-
-	shared_ptr<Dungreed> _player;
-	shared_ptr<Dungreed> _bow;
+	virtual void PostRender() override;
+private:
+	shared_ptr<class Dungreed> _dungreedPlayer;
+	shared_ptr<class DungreedBoss> _boss;
 
 };
 

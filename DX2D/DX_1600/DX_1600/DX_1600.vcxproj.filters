@@ -93,15 +93,6 @@
     <ClInclude Include="Object\Dungreed\DungreedBullet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\DungreedTest\Dun_Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\DungreedSceneTest.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Object\DungreedTest\Dun_Bullet.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Framework\TextureMapping\BlendState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -124,6 +115,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Collider\Collider.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\DungreedBossScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Dungreed\DungreedBoss.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -191,15 +188,6 @@
     <ClCompile Include="Object\Dungreed\DungreedBullet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\DungreedTest\Dun_Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\DungreedSceneTest.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\DungreedTest\Dun_Bullet.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Framework\TextureMapping\BlendState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -222,6 +210,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Collider\Collider.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\DungreedBossScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Dungreed\DungreedBoss.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -259,6 +253,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resource\Dungreed\Player.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Dungreed\Boss.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

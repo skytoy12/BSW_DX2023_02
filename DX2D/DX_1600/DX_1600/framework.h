@@ -67,6 +67,7 @@ using namespace Microsoft::WRL;
 #include "Framework/Collider/RectCollider.h"
 #include "Framework/Collider/CircleCollider.h"
 
+
 //TextureMapping
 #include "Framework/TextureMapping/SRV.h"
 #include "Framework/TextureMapping/SamplerState.h"
@@ -78,6 +79,7 @@ using namespace Microsoft::WRL;
 #include "Object/SolarSystem/Planet.h"
 #include "Object/Dungreed/DungreedBullet.h"
 #include "Object/Dungreed/Dungreed.h"
+#include "Object/Dungreed/DungreedBoss.h"
 
 // Scene
 #include "Scene/Scene.h"

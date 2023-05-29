@@ -1,19 +1,12 @@
 #include "framework.h"
 #include "DungreedScene.h"
-#include "../Object/Dungreed/DungreedBullet.h"
+#include "../Object/Dungreed/Dungreed.h"
+#include "../Object/Dungreed/DungreedBoss.h"
 
 DungreedScene::DungreedScene()
 {
-	
-	_player = make_shared<Dungreed>(L"Resource/Dungreed/Player.png", Vector2(1.0f, 1.0f));
-	_bow = make_shared<Dungreed>(L"Resource/Dungreed/Bow.png", Vector2(1.0f, 1.0f), 30, Vector2(0.1f, 0.1f));
-
-
-	_player->SetPosition(Vector2(100, 100));
-	_bow->SetParent(_player->GetBow());
-	
-	_bow->SetPosition(Vector2(250, 10));
-	
+	_dungreedPlayer = make_shared<Dungreed>();
+	_boss = make_shared<DungreedBoss>();
 }
 
 DungreedScene::~DungreedScene()
@@ -22,23 +15,29 @@ DungreedScene::~DungreedScene()
 
 void DungreedScene::Update()
 {
-	for (auto bullet : _bow->GetBullets())
+	if (KEY_PRESS('A'))
 	{
-		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT)
-		{
-			bullet->SetIsActive(false);
-			bullet->SetPosition(_bow->GetPos());
-		}
-
+		Vector2 movePos = Vector2(-500.0f, 0.0f) * DELTA_TIME;
+		_dungreedPlayer->Move(movePos);
 	}
-	_bow->SetAngle(3.8f);
-	_player->SetbowAngle(MOUSE_POS.Angle());
-	_player->Update();
-	_bow->Update();
+
+	if (KEY_PRESS('D'))
+	{
+		Vector2 movePos = Vector2(500.0f, 0.0f) * DELTA_TIME;
+		_dungreedPlayer->Move(movePos);
+	}
+
+	_dungreedPlayer->Update();
+	_boss->Update();
 }
 
 void DungreedScene::Render()
 {
-	_player->Render();
-	_bow->Render();
+	_dungreedPlayer->Render();
+	_boss->Render();
+}
+
+void DungreedScene::PostRender()
+{
+	ImGui::Text("mouseX : %d, mouseY : %d", (int)MOUSE_POS.x, (int)MOUSE_POS.y);
 }

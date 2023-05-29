@@ -151,15 +151,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Dungreed\DungreedBoss.h" />
+    <ClInclude Include="Scene\DungreedBossScene.h" />
     <ClInclude Include="Framework\Collider\Collider.h" />
     <ClInclude Include="Framework\Collider\CircleCollider.h" />
     <ClInclude Include="Framework\Collider\RectCollider.h" />
     <ClInclude Include="Scene\ColliderScene.h" />
     <ClInclude Include="Framework\TextureMapping\BlendState.h" />
     <ClInclude Include="Framework\Utility\InputManager.h" />
-    <ClInclude Include="Object\DungreedTest\Dun_Bullet.h" />
-    <ClInclude Include="Scene\DungreedSceneTest.h" />
-    <ClInclude Include="Object\DungreedTest\Dun_Player.h" />
     <ClInclude Include="Object\Dungreed\DungreedBullet.h" />
     <ClInclude Include="Object\Dungreed\Dungreed.h" />
     <ClInclude Include="Scene\DungreedScene.h" />
@@ -190,15 +189,14 @@
     <ClInclude Include="Framework\Render\VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Dungreed\DungreedBoss.cpp" />
+    <ClCompile Include="Scene\DungreedBossScene.cpp" />
     <ClCompile Include="Framework\Collider\Collider.cpp" />
     <ClCompile Include="Framework\Collider\CircleCollider.cpp" />
     <ClCompile Include="Framework\Collider\RectCollider.cpp" />
     <ClCompile Include="Scene\ColliderScene.cpp" />
     <ClCompile Include="Framework\TextureMapping\BlendState.cpp" />
     <ClCompile Include="Framework\Utility\InputManager.cpp" />
-    <ClCompile Include="Object\DungreedTest\Dun_Bullet.cpp" />
-    <ClCompile Include="Scene\DungreedSceneTest.cpp" />
-    <ClCompile Include="Object\DungreedTest\Dun_Player.cpp" />
     <ClCompile Include="Object\Dungreed\DungreedBullet.cpp" />
     <ClCompile Include="Object\Dungreed\Dungreed.cpp" />
     <ClCompile Include="Scene\DungreedScene.cpp" />
@@ -237,6 +235,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="DX_1600.ico" />
+    <Image Include="Resource\Dungreed\Boss.png" />
     <Image Include="Resource\Dungreed\Bow.png" />
     <Image Include="Resource\Dungreed\Bullet.png" />
     <Image Include="Resource\earth.png" />

@@ -11,7 +11,7 @@ ColliderScene::ColliderScene()
 
 	_rectCollider->SetPosition(CENTER);
 	_rectCollider->SetScale(Vector2(2.0f, 2.0f));
-	_circleCollider2->SetPosition(CENTER);
+	_rectCollider2->SetPosition(CENTER);
 
 }
 
@@ -38,8 +38,8 @@ void ColliderScene::Update()
 	_circleCollider->SetPosition(MOUSE_POS);
 	// _circleCollider->Block(_circleCollider2);
 
-	_rectCollider2->GetTransform()->SetPosition(MOUSE_POS);
-	_rectCollider2->Block(_circleCollider2);
+	_circleCollider2->GetTransform()->SetPosition(MOUSE_POS);
+	_circleCollider2->Block(_rectCollider2);
 }
 
 void ColliderScene::Render()

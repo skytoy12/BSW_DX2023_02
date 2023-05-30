@@ -34,11 +34,20 @@ DungreedBossScene::~DungreedBossScene()
 void DungreedBossScene::Update()
 {
 	_player->Update();
-	_boss->Update();
+	if (_bossCollider->GetISActive() == true)
+	{
+		_bossCollider->Update();
+		_boss->Update();
+	}
+
 
 	_floorCollider->Update();
 	_playerCollider->Update();
-	_bossCollider->Update();
+
+	if (_boss->GetHP() == 0)
+	{
+		_bossCollider->GetTransform()->SetPosition(Vector2(-500.0f, -500.0f));
+	}
 
 	for (int i = 0; i < 30; i++)
 	{
@@ -47,6 +56,19 @@ void DungreedBossScene::Update()
 			_bulletColliders[i]->Update();
 	}
 
+	for (int i = 0; i < 30; i++)
+	{
+		if (_bulletColliders[i]->IsCollision(_bossCollider))
+		{
+			_player->GetBullets()[i]->_isActive = false;
+			_boss->ReduceHP(1);
+		}
+	}
+
+	if (_boss->GetHP() == 0)
+	{
+		_bossCollider->SetIsActive(false);
+	}
 
 	_playerCollider->GetTransform()->AddVector2(Vector2(0.0f, -GRAVITY * _speed));
 
@@ -74,11 +96,16 @@ void DungreedBossScene::Update()
 void DungreedBossScene::Render()
 {
 	_player->Render();
-	_boss->Render();
+
+	if (_bossCollider->GetISActive() == true)
+	{
+		_bossCollider->Render();
+		_boss->Render();
+	}
 
 	_floorCollider->Render();
 	_playerCollider->Render();
-	_bossCollider->Render();
+
 
 	for (int i = 0; i < 30; i++)
 	{

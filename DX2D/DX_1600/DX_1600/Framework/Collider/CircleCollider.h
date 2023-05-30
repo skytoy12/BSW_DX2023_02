@@ -26,6 +26,7 @@ public :
 
 	// Matrix 상속 걸려있는 구조에선 Block X
 	bool Block(shared_ptr<CircleCollider> moveable);
+	bool Block(shared_ptr<class RectCollider> moveable);
 
 	float Angle(float angle) { return angle * (PI / 180); }
 

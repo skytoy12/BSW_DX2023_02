@@ -20,7 +20,7 @@ public :
 private :
 	shared_ptr<Quad> _quad;
 
-	int _hp = 10;
+	int _hp = 10000;
 
 };
 

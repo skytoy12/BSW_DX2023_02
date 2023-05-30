@@ -39,6 +39,7 @@ void Dungreed::Update()
 		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT || bullet->GetPos().y < 0 || bullet->GetPos().x < 0)
 		{
 			bullet->_isActive = false;
+			bullet->GetTransform()->SetPosition(Vector2(-500.0f, -500.0f));
 		}
 
 	}

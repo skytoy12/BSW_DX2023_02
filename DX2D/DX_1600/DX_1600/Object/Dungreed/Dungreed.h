@@ -5,25 +5,28 @@ public :
 	Dungreed();
 	~Dungreed();
 
-	void Update();
-	void Render();
+	virtual void Update();
+	virtual void Render();
 
 	void SetBowAngle();
 
-	void SetPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
 
 	void SetPratent(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent);}
+	
+	virtual void SetPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
 
-	void Move(Vector2 movePos) { _quad->GetTransform()->AddVector2(movePos); }
+	virtual void Move(Vector2 movePos) { _quad->GetTransform()->AddVector2(movePos); }
 
-	const Vector2& GetPos() { return _quad->GetTransform()->GetPos(); }
+	virtual const Vector2& GetPos() { return _quad->GetTransform()->GetPos(); }
 
 	vector<shared_ptr<class DungreedBullet>> GetBullets() { return _bullets; }
+
+	bool isCollision_Bullets(shared_ptr<Collider> col);
 
 
 	void Fire();
 
-private :
+protected :
 	shared_ptr<Quad> _quad;
 
 	shared_ptr<Transform> _bowSlot;

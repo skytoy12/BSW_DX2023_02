@@ -13,9 +13,10 @@ public :
 
 	virtual shared_ptr<Transform> GetTransform() { return _transform; }
 
-
+	Vector2 GetImageSize() { return _halfSize; }
 protected :
 	// Á¤Á¡(pos, color, uv) 6°³
+	Vector2 _halfSize;
 	vector<Vertex_Texture> _vertices;
 	vector<UINT> _indices;
 

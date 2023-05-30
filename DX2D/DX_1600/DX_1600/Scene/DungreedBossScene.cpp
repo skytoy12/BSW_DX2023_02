@@ -58,8 +58,11 @@ void DungreedBossScene::Update()
 
 	for (int i = 0; i < 30; i++)
 	{
+		
 		if (_bulletColliders[i]->IsCollision(_bossCollider))
 		{
+			//if (_bulletColliders[i]->GetISActive() == false || _boss->_isActive == false)
+			//	return;
 			_player->GetBullets()[i]->_isActive = false;
 			_boss->ReduceHP(1);
 		}

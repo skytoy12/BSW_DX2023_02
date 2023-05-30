@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Dungreed\Dun_Player_Advanced.h" />
     <ClInclude Include="Object\Dungreed\DungreedBoss.h" />
     <ClInclude Include="Scene\DungreedBossScene.h" />
     <ClInclude Include="Framework\Collider\Collider.h" />
@@ -189,6 +190,7 @@
     <ClInclude Include="Framework\Render\VertexShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Dungreed\Dun_Player_Advanced.cpp" />
     <ClCompile Include="Object\Dungreed\DungreedBoss.cpp" />
     <ClCompile Include="Scene\DungreedBossScene.cpp" />
     <ClCompile Include="Framework\Collider\Collider.cpp" />

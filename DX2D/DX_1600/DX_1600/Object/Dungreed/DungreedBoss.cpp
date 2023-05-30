@@ -4,12 +4,19 @@
 DungreedBoss::DungreedBoss()
 {
 	_quad = make_shared<Quad>(L"Resource/Dungreed/Boss.png");
-	_quad->GetTransform()->SetPosition(Vector2(1000, 500));
-	_quad->GetTransform()->SetScale(Vector2(0.4f, 0.4f));
+	_collider = make_shared<CircleCollider>(_quad->GetImageSize().x);
+	_collider->SetSCale(0.5f);
+	_quad->GetTransform()->SetParent(_collider->GetTransform());
 }
 
 DungreedBoss::~DungreedBoss()
 {
+}
+
+void DungreedBoss::Collider_Update()
+{
+	if (_isActive == true)
+		_collider->Update();
 }
 
 void DungreedBoss::Update()
@@ -21,13 +28,19 @@ void DungreedBoss::Update()
 void DungreedBoss::Render()
 {
 	if (_isActive == true)
+	{
 		_quad->Render();
+		_collider->Render();
+	}
+		
 }
 
 void DungreedBoss::ReduceHP(int damage)
 {
-	if (damage > _hp)
+	if (damage > _hp || !_isActive)
 		return;
 	_hp -= damage;
+	if (_hp <= 0)
+		_isActive = false;
 }
 

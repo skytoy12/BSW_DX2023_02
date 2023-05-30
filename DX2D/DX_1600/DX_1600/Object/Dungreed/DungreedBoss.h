@@ -5,9 +5,13 @@ public :
 	DungreedBoss();
 	~DungreedBoss();
 
+	void Collider_Update();
 	void Update();
 	void Render();
 
+	shared_ptr<CircleCollider> GetCollider() { return _collider; }
+
+	void SetPosition(Vector2 pos) { _collider->SetPosition(pos); }
 
 	void SetIsActive(bool isActive) { _isActive = isActive; }
 	bool _isActive = true;
@@ -18,9 +22,10 @@ public :
 
 	const Vector2& GetPos() { return _quad->GetTransform()->GetPos(); }
 private :
+	shared_ptr<CircleCollider> _collider;
 	shared_ptr<Quad> _quad;
 
-	int _hp = 10000;
+	int _hp = 10;
 
 };
 

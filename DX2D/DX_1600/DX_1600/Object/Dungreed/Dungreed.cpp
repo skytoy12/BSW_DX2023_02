@@ -4,7 +4,6 @@
 Dungreed::Dungreed()
 {
 	_quad = make_shared<Quad>(L"Resource/Dungreed/Player.png");
-	_quad->GetTransform()->SetPosition(Vector2(100, 100));
 
 	_bowSlot = make_shared<Transform>();
 
@@ -32,7 +31,7 @@ void Dungreed::Update()
 	}
 	SetBowAngle();
 
-	_bowSlot->SetPosition(_quad->GetTransform()->GetWorldPosition());
+	_bowSlot->SetPosition(_quad->GetTransform()->GetPos());
 
 	for (auto bullet : _bullets)
 	{
@@ -64,6 +63,23 @@ void Dungreed::SetBowAngle()
 	Vector2 playerToMouse = MOUSE_POS - GetPos();
 	float angle = playerToMouse.Angle();
 	_bowSlot->SetAngle(angle);
+}
+
+bool Dungreed::isCollision_Bullets(shared_ptr<Collider> col)
+{
+	for (auto bullet : _bullets)
+	{
+		if (bullet->_isActive == false)
+			continue;
+
+
+		if (col->IsCollision(bullet->GetCollider()))
+		{
+			bullet->_isActive = false;
+			return true;
+		}
+	}
+	return false;
 }
 
 void Dungreed::Fire()

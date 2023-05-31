@@ -43,7 +43,26 @@ bool CircleCollider::IsCollision(Vector2 pos)
     return distance < GetWorldRadius();
 }
 
-bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
+bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other, bool isObb)
+{
+    if (isObb)
+        return OBB_Collision(other);
+    return AABB_Collision(other);
+}
+
+bool CircleCollider::IsCollision(shared_ptr<RectCollider> other, bool isObb)
+{
+    if (isObb)
+        return OBB_Collision(other);
+    return AABB_Collision(other);
+}
+
+bool CircleCollider::AABB_Collision(shared_ptr<RectCollider> other)
+{
+    return other->IsCollision(shared_from_this());
+}
+
+bool CircleCollider::AABB_Collision(shared_ptr<CircleCollider> other)
 {
     Vector2 center1 = _transform->GetWorldPosition();
     Vector2 center2 = other->_transform->GetWorldPosition();
@@ -52,9 +71,14 @@ bool CircleCollider::IsCollision(shared_ptr<CircleCollider> other)
     return distance < GetWorldRadius() + other->GetWorldRadius();
 }
 
-bool CircleCollider::IsCollision(shared_ptr<RectCollider> other)
+bool CircleCollider::OBB_Collision(shared_ptr<RectCollider> other)
 {
     return other->IsCollision(shared_from_this());
+}
+
+bool CircleCollider::OBB_Collision(shared_ptr<CircleCollider> other)
+{
+    return AABB_Collision(other);
 }
 
 bool CircleCollider::Block(shared_ptr<CircleCollider> moveable)

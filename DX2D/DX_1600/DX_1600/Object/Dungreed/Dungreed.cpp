@@ -34,7 +34,7 @@ void Dungreed::Update()
 
 	for (auto bullet : _bullets)
 	{
-		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT || bullet->GetPos().y < 0 || bullet->GetPos().x < 0)
+		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT || bullet->GetPos().y < 0 || bullet->GetPos().x < 0 && bullet->_isActive)
 		{
 			bullet->_isActive = false;
 		}
@@ -73,7 +73,7 @@ bool Dungreed::isCollision_Bullets(shared_ptr<Collider> col)
 
 		if (col->IsCollision(bullet->GetCollider()))
 		{
-			bullet->_isActive = false;
+			//bullet->_isActive = false;
 			return true;
 		}
 	}

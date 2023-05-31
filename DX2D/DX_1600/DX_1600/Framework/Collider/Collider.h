@@ -35,9 +35,12 @@ public :
 
 
 	virtual bool IsCollision(Vector2 pos) abstract;
-	bool IsCollision(shared_ptr<Collider> col);
-	virtual bool IsCollision(shared_ptr<CircleCollider> other) abstract;
-	virtual bool IsCollision(shared_ptr<RectCollider> other) abstract;
+	
+	bool IsCollision(shared_ptr<Collider> col, bool isObb = false);
+	bool Block(shared_ptr<Collider> other);
+
+	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) abstract;
+	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) abstract;
 
 	const shared_ptr<Transform> GetTransform() { return _transform; }
 
@@ -46,6 +49,11 @@ public :
 	
 
 protected :
+	virtual bool AABB_Collision(shared_ptr<class CircleCollider> other) abstract;
+	virtual bool AABB_Collision(shared_ptr<class RectCollider> other) abstract;
+
+	virtual bool OBB_Collision(shared_ptr<class CircleCollider> other) abstract;
+	virtual bool OBB_Collision(shared_ptr<class RectCollider> other) abstract;
 
 	vector<Vertex> _vertices;
 	shared_ptr<VertexBuffer> _vertexBuffer;

@@ -18,6 +18,7 @@ void DungreedBullet::Collider_Update()
 {
 	if (!_isActive)
 		return;
+	_collider->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	_collider->Update();
 }
 
@@ -25,7 +26,6 @@ void DungreedBullet::Update()
 {
 	if (!_isActive)
 		return;
-	_quad->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
 	_quad->Update();
 }

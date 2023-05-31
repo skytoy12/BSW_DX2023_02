@@ -29,14 +29,19 @@ public :
 
 	void SetScale(Vector2 scale) { _transform->SetScale(scale); }
 
-	virtual bool IsCollision(Vector2 pos) override;
-	virtual bool IsCollision(shared_ptr<CircleCollider> other) override;
-	virtual bool IsCollision(shared_ptr<RectCollider> other) override;
-
 	Vector2 GetWorldSize() { return { _size.x * _transform->GetWorldScale().x, _size.y * _transform->GetWorldScale().y }; }
 
 	AABBRectInfo GetAABBInfo();
 	OBBRectinfo GetOBBInfo();
+
+
+	virtual bool IsCollision(Vector2 pos) override;
+	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
+	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
+
+
+
+
 
 	// Matrix 상속 걸려있는 구조에선 Block X
 	bool Block(shared_ptr<RectCollider> moveable);
@@ -46,7 +51,20 @@ public :
 
 
 private :
-	Vector2 _size;
+	virtual bool AABB_Collision(shared_ptr<RectCollider> other) override final;
+	virtual bool AABB_Collision(shared_ptr<CircleCollider> other) override final;
 
+	virtual bool OBB_Collision(shared_ptr<RectCollider> other) override final;
+	virtual bool OBB_Collision(shared_ptr<CircleCollider> other) override final;
+
+	float SeparateAxis(Vector2 separate, Vector2 e1, Vector2 e2)
+	{
+		float r1 = abs(separate.Dot(e1));
+		float r2 = abs(separate.Dot(e2));
+
+		return r1 + r2;
+	}
+
+	Vector2 _size;
 };
 

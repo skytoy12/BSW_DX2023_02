@@ -44,7 +44,7 @@ void Collider::CreatData()
     SetGreen();
 }
 
-bool Collider::IsCollision(shared_ptr<Collider> col)
+bool Collider::IsCollision(shared_ptr<Collider> col, bool isObb)
 {
     switch (col->_type)
     {
@@ -55,16 +55,40 @@ bool Collider::IsCollision(shared_ptr<Collider> col)
     case Collider::ColliderType::CIRCLE:
     {
         auto circle = dynamic_pointer_cast<CircleCollider>(col);
-        return IsCollision(circle);
+        return IsCollision(circle, isObb);
     }
     case Collider::ColliderType::RECT:
     {
         auto rect = dynamic_pointer_cast<RectCollider>(col);
-        return IsCollision(rect);
+        return IsCollision(rect, isObb);
         break;
     }
     default:
         return false;
     }
    
+}
+
+bool Collider::Block(shared_ptr<Collider> other)
+{
+    switch (other->_type)
+    {
+    case Collider::ColliderType::NONE:
+    {
+        return false;
+    }
+    case Collider::ColliderType::CIRCLE:
+    {
+        auto circle = dynamic_pointer_cast<CircleCollider>(other);
+        return Block(circle);
+    }
+    case Collider::ColliderType::RECT:
+    {
+        auto rect = dynamic_pointer_cast<RectCollider>(other);
+        return Block(rect);
+        break;
+    }
+    default:
+        return false;
+    }
 }

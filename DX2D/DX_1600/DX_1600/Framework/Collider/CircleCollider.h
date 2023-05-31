@@ -13,8 +13,10 @@ public :
 
 
 	virtual bool IsCollision(Vector2 pos) override;
-	virtual bool IsCollision(shared_ptr<CircleCollider> other) override;
-	virtual bool IsCollision(shared_ptr<RectCollider> other) override;
+	virtual bool IsCollision(shared_ptr<CircleCollider> other, bool isObb = false) override;
+	virtual bool IsCollision(shared_ptr<RectCollider> other, bool isObb = false) override;
+
+	
 
 	// Rect와 공유하지 않는 함수
 	void SetSCale(float value) { _transform->SetScale({ value, value }); }
@@ -31,6 +33,11 @@ public :
 	float Angle(float angle) { return angle * (PI / 180); }
 
 protected :
+	bool AABB_Collision(shared_ptr<RectCollider> other) override final;
+	bool AABB_Collision(shared_ptr<CircleCollider> other) override final;
+
+	bool OBB_Collision(shared_ptr<RectCollider> other) override final;
+	bool OBB_Collision(shared_ptr<CircleCollider> other) override final;
 
 	float _radius;
 

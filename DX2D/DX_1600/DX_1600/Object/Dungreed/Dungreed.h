@@ -5,7 +5,7 @@ public :
 	Dungreed();
 	~Dungreed();
 
-	virtual void Update();
+	virtual void Update() abstract;
 	virtual void Render();
 
 	void SetBowAngle();

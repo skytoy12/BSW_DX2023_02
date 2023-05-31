@@ -79,6 +79,7 @@ using namespace Microsoft::WRL;
 #include "Object/SolarSystem/Planet.h"
 #include "Object/Dungreed/DungreedBullet.h"
 #include "Object/Dungreed/Dungreed.h"
+#include "Object/Dungreed/Dun_Player_Advanced.h"
 #include "Object/Dungreed/DungreedBoss.h"
 
 // Scene

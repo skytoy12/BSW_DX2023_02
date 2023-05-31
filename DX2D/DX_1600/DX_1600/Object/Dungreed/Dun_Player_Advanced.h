@@ -29,5 +29,6 @@ private :
 	bool _isFalling = true;
 
 	shared_ptr<CircleCollider> _collider;
+
 };
 

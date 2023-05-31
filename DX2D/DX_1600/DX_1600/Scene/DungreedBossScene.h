@@ -16,7 +16,7 @@ private :
 	shared_ptr<RectCollider> _floorCollider;
 
 	shared_ptr<DungreedBoss> _boss;
-	shared_ptr<Dungreed> _player;
+	shared_ptr<Dun_Player_Advanced> _player;
 
 	float _speed = 50.0f;
 

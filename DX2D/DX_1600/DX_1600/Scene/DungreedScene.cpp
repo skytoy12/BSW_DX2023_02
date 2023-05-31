@@ -54,4 +54,7 @@ void DungreedScene::Render()
 void DungreedScene::PostRender()
 {
 	ImGui::Text("mouseX : %d, mouseY : %d", (int)MOUSE_POS.x, (int)MOUSE_POS.y);
+	ImGui::Text("boss HP : %d", _boss->GetHP());
+	ImGui::Text("bullet.x : %d", _dungreedPlayer->GetBullets()[0]->GetCollider()->GetTransform()->GetWorldPosition().x);
+	ImGui::Text("bullet.y : %d", _dungreedPlayer->GetBullets()[0]->GetCollider()->GetTransform()->GetWorldPosition().y);
 }

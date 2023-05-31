@@ -31,14 +31,12 @@ void Dungreed::Update()
 	}
 	SetBowAngle();
 
-	_bowSlot->SetPosition(_quad->GetTransform()->GetPos());
 
 	for (auto bullet : _bullets)
 	{
 		if (bullet->GetPos().x > WIN_WIDTH || bullet->GetPos().y > WIN_HEIGHT || bullet->GetPos().y < 0 || bullet->GetPos().x < 0)
 		{
 			bullet->_isActive = false;
-			bullet->GetTransform()->SetPosition(Vector2(-500.0f, -500.0f));
 		}
 
 	}

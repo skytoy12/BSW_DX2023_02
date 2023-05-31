@@ -23,6 +23,7 @@ void Dun_Player_Advanced::Collider_Update()
 	_collider->Update();
 }
 
+
 void Dun_Player_Advanced::Update()
 {
 	Input();
@@ -63,3 +64,4 @@ void Dun_Player_Advanced::Falling()
 	_fallingVec.y -= (float)(GRAVITY) * DELTA_TIME;
 	Move(_fallingVec);
 }
+

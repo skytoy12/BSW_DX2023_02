@@ -3,7 +3,7 @@
 
 DungreedBossScene::DungreedBossScene()
 {
-	_player = make_shared<Dungreed>();
+	_player = make_shared<Dun_Player_Advanced>();
 	_boss = make_shared<DungreedBoss>();
 
 	for (int i = 0; i < 30; i++)

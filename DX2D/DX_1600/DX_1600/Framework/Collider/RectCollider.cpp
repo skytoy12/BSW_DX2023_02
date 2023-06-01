@@ -47,6 +47,39 @@ void RectCollider::CreateVertices()
     _vertices.push_back(temp); // 왼쪽 위
 }
 
+RectCollider::AABBRectInfo RectCollider::GetAABBInfo()
+{
+    AABBRectInfo result;
+    result.left = _transform->GetWorldPosition().x - (GetWorldSize().x * 0.5);
+    result.right = _transform->GetWorldPosition().x + (GetWorldSize().x * 0.5);
+    result.top = _transform->GetWorldPosition().y + (GetWorldSize().y * 0.5);
+    result.bottom = _transform->GetWorldPosition().y - (GetWorldSize().y * 0.5);
+
+    return result;
+}
+
+RectCollider::OBBRectinfo RectCollider::GetOBBInfo()
+{
+    OBBRectinfo info;
+
+    info.worldPos = _transform->GetWorldPosition();
+
+    XMFLOAT4X4 matrix;
+    XMStoreFloat4x4(&matrix, _transform->GetMatrix());
+
+    info.direction[0] = { matrix._11, matrix._12 };
+    info.direction[1] = { matrix._21, matrix._22 };
+
+    info.direction[0].Nomallize();
+    info.direction[1].Nomallize();
+
+    info.length[0] = GetWorldSize().x * 0.5f;
+    info.length[1] = GetWorldSize().y * 0.5f;
+
+    return info;
+}
+
+
 bool RectCollider::IsCollision(Vector2 pos)
 {
     AABBRectInfo info = GetAABBInfo();
@@ -167,41 +200,65 @@ bool RectCollider::OBB_Collision(shared_ptr<RectCollider> other)
 
 bool RectCollider::OBB_Collision(shared_ptr<CircleCollider> other)
 {
-    //ToDo
-    return false;
+
+    OBBRectinfo infoA = GetOBBInfo();
+    Vector2 aToB = infoA.worldPos - other->GetTransform()->GetWorldPosition();
+
+    // n : normal... 길이가 1인 벡터
+    // e : edge... 모서리
+    Vector2 nea1 = infoA.direction[0];
+    Vector2 ea1 = infoA.direction[0] * infoA.length[0];
+    Vector2 nea2 = infoA.direction[1];
+    Vector2 ea2 = infoA.direction[1] * infoA.length[1];
+
+    float radius = sqrt((ea1.Length() * ea1.Length()) + (ea2.Length() * ea2.Length()));
+    float angle = GetTransform()->GetAngle();
+    Vector2 RightTop = Vector2(GetTransform()->GetWorldPosition().x + radius * cos((float) (angle + (45 * (PI / 180)))), (float)(GetTransform()->GetWorldPosition().y + radius * sin(angle + (45 * (PI / 180)))));
+    Vector2 RightBottom = Vector2(GetTransform()->GetWorldPosition().x + radius * cos((float) (angle + (135 * (PI / 180)))), (float)(GetTransform()->GetWorldPosition().y + radius * sin(angle + (135 * (PI / 180)))));
+    Vector2 LeftTop = Vector2(GetTransform()->GetWorldPosition().x + radius * cos((float) (angle + (225 * (PI / 180)))), (float)(GetTransform()->GetWorldPosition().y + radius * sin(angle + (225 * (PI / 180)))));
+    Vector2 LeftBottom = Vector2(GetTransform()->GetWorldPosition().x + radius * cos((float) (angle + (315 * (PI / 180)))), (float)(GetTransform()->GetWorldPosition().y + radius * sin(angle + (315 * (PI / 180)))));
+
+    if (other->IsCollision(RightTop) || other->IsCollision(RightBottom) ||
+        other->IsCollision(LeftTop) || other->IsCollision(LeftBottom))
+        return true;
+
+    float length = abs(nea1.Dot(aToB));
+    float lengthA = ea1.Length();
+    float lengthB = other->GetWorldRadius();
+
+    if (length > lengthA + lengthB)
+        return false;
+
+    length = abs(nea2.Dot(aToB));
+    lengthA = ea2.Length();
+    lengthB = other->GetWorldRadius();
+
+    if (length > lengthA + lengthB)
+        return false;
+
+    // neb1 축으로 투영
+    length = abs(Vector2(1.0f, 0.0f).Dot(aToB));
+    lengthA = SeparateAxis(Vector2(1.0f, 0.0f), ea1, ea2);
+    lengthB = other->GetWorldRadius();
+
+    if (length > lengthA + lengthB)
+        return false;
+
+    // neb2 축으로 투영
+    length = abs(Vector2(0.0f, 1.0f).Dot(aToB));
+    lengthA = SeparateAxis(Vector2(0.0f, 1.0f), ea1, ea2);
+    lengthB = other->GetWorldRadius();
+
+    if (length > lengthA + lengthB)
+        return false;
+
+    if (!AABB_Collision(other))
+        return false;
+
+
+    return true;
 }
 
-RectCollider::AABBRectInfo RectCollider::GetAABBInfo()
-{
-    AABBRectInfo result;
-    result.left = _transform->GetWorldPosition().x - (GetWorldSize().x * 0.5);
-    result.right = _transform->GetWorldPosition().x + (GetWorldSize().x * 0.5);
-    result.top = _transform->GetWorldPosition().y + (GetWorldSize().y * 0.5);
-    result.bottom = _transform->GetWorldPosition().y - (GetWorldSize().y * 0.5);
-
-    return result;
-}
-
-RectCollider::OBBRectinfo RectCollider::GetOBBInfo()
-{
-    OBBRectinfo info;
-
-    info.worldPos = _transform->GetWorldPosition();
-
-    XMFLOAT4X4 matrix;
-    XMStoreFloat4x4(&matrix, _transform->GetMatrix());
-
-    info.direction[0] = { matrix._11, matrix._12 };
-    info.direction[1] = { matrix._21, matrix._22 };
-
-    info.direction[0].Nomallize();
-    info.direction[1].Nomallize();
-
-    info.length[0] = GetWorldSize().x * 0.5f;
-    info.length[1] = GetWorldSize().y * 0.5f;
-
-    return info;
-}
 
 bool RectCollider::Block(shared_ptr<RectCollider> moveable)
 {
@@ -237,7 +294,6 @@ bool RectCollider::Block(shared_ptr<RectCollider> moveable)
     moveable->GetTransform()->SetPosition(fixedPos);
     return true;
 }
-
 
 bool RectCollider::Block(shared_ptr<CircleCollider> moveable)
 {

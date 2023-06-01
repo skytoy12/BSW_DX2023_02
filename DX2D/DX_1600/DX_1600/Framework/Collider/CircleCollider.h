@@ -19,7 +19,7 @@ public :
 	
 
 	// Rect와 공유하지 않는 함수
-	void SetSCale(float value) { _transform->SetScale({ value, value }); }
+	void SetScale(float value) { _transform->SetScale({ value, value }); }
 	float GetRadius() { return _radius; }
 	float GetWorldRadius() { return _radius * _transform->GetWorldScale().x; }
 	

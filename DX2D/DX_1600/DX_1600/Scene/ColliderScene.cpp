@@ -9,8 +9,8 @@ ColliderScene::ColliderScene()
 	_circleCollider2 = make_shared<CircleCollider>(100.0f);
 
 
-	_rectCollider->SetPosition(CENTER);
-	_rectCollider->SetScale(Vector2(2.0f, 2.0f));
+	_circleCollider->SetPosition(CENTER);
+	_circleCollider->SetScale(2.0f);
 	_rectCollider2->SetPosition(CENTER);
 
 }
@@ -42,14 +42,14 @@ void ColliderScene::Update()
 	if (KEY_PRESS('A'))
 		_rectCollider2->GetTransform()->AddScale(Vector2(-1.0f * DELTA_TIME, 0.0f));
 
-	if (_rectCollider2->IsCollision(_rectCollider, true))
+	if (_rectCollider2->IsCollision(_circleCollider, true))
 	{
-		_rectCollider->SetRed();
+		_circleCollider->SetRed();
 		_rectCollider2->SetRed();
 	}
 	else
 	{
-		_rectCollider->SetGreen();
+		_circleCollider->SetGreen();
 		_rectCollider2->SetGreen();
 	}
 

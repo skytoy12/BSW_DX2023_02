@@ -236,21 +236,6 @@ bool RectCollider::OBB_Collision(shared_ptr<CircleCollider> other)
     if (length > lengthA + lengthB)
         return false;
 
-    // neb1 축으로 투영
-    length = abs(Vector2(1.0f, 0.0f).Dot(aToB));
-    lengthA = SeparateAxis(Vector2(1.0f, 0.0f), ea1, ea2);
-    lengthB = other->GetWorldRadius();
-
-    if (length > lengthA + lengthB)
-        return false;
-
-    // neb2 축으로 투영
-    length = abs(Vector2(0.0f, 1.0f).Dot(aToB));
-    lengthA = SeparateAxis(Vector2(0.0f, 1.0f), ea1, ea2);
-    lengthB = other->GetWorldRadius();
-
-    if (length > lengthA + lengthB)
-        return false;
 
     if (!AABB_Collision(other))
         return false;

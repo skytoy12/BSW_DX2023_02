@@ -35,8 +35,8 @@ void Collider::CreatData()
 {
     _vertexBuffer = make_shared<VertexBuffer>(_vertices.data(), sizeof(Vertex), _vertices.size());
 
-    _vs = make_shared<VertexShader>(L"Shader/ColliderVS.hlsl");
-    _ps = make_shared<PixelShader>(L"Shader/ColliderPS.hlsl");
+    _vs = ADD_VS(L"Shader/ColliderVS.hlsl");
+    _ps = ADD_PS(L"Shader/ColliderPS.hlsl");
 
     _transform = make_shared<Transform>();
 

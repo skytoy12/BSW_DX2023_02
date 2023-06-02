@@ -4,10 +4,11 @@ DungreedBullet::DungreedBullet()
 {
 	_collider = make_shared<CircleCollider>(1.0f);
 	_quad = make_shared<Quad>(L"Resource/Dungreed/Bullet.png");
+	_transform = make_shared<Transform>();
 
-	_quad->GetTransform()->SetParent(_collider->GetTransform());
-	_quad->GetTransform()->SetScale({ 0.05f, 0.05f });
-	_quad->GetTransform()->SetPosition({ -7.0f, 0.0f });
+	_transform->SetParent(_collider->GetTransform());
+	_transform->SetScale({ 0.05f, 0.05f });
+	_transform->SetPosition({ -7.0f, 0.0f });
 }
 
 DungreedBullet::~DungreedBullet()
@@ -27,13 +28,14 @@ void DungreedBullet::Update()
 	if (!_isActive)
 		return;
 
-	_quad->Update();
+	_transform->Update();
 }
 
 void DungreedBullet::Render()
 {
 	if (!_isActive)
 		return;
+	_transform->SetBuffer(0);
 	_quad->Render();
 	_collider->Render();
 }

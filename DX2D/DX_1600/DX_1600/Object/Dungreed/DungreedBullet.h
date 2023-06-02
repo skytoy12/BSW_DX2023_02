@@ -13,7 +13,7 @@ public :
 
 	void Shoot(Vector2 dir, Vector2 startPos);
 
-	shared_ptr<Transform> GetTransform() { return _quad->GetTransform(); }
+	shared_ptr<Transform> GetTransform() { return _transform; }
 
 	shared_ptr<CircleCollider> GetCollider() { return _collider; }
 
@@ -24,6 +24,7 @@ public :
 
 private :
 	shared_ptr<Quad> _quad;
+	shared_ptr<Transform> _transform;
 	shared_ptr<CircleCollider> _collider;
 
 	Vector2 _dir = Vector2();

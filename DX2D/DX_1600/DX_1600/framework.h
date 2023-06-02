@@ -72,12 +72,14 @@ using namespace Microsoft::WRL;
 
 //TextureMapping
 #include "Framework/TextureMapping/SRV.h"
+#include "Framework/TextureMapping/SRVManager.h"
 #include "Framework/TextureMapping/SamplerState.h"
 #include "Framework/TextureMapping/BlendState.h"
 #include "Framework/TextureMapping/StateManager.h"
 
 //Object
 #include "Object/Bagic/Quad.h"
+#include "Object/Bagic/Sprite.h"
 #include "Object/SolarSystem/Planet.h"
 #include "Object/Dungreed/DungreedBullet.h"
 #include "Object/Dungreed/Dungreed.h"

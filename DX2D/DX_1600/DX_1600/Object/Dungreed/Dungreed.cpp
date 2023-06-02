@@ -4,13 +4,15 @@
 Dungreed::Dungreed()
 {
 	_quad = make_shared<Quad>(L"Resource/Dungreed/Player.png");
-
+	_transform = make_shared <Transform>();
 	_bowSlot = make_shared<Transform>();
 
 	_bow = make_shared<Quad>(L"Resource/Dungreed/Bow.png");
-	_bow->GetTransform()->SetParent(_bowSlot);
-	_bow->GetTransform()->SetPosition({ 50, 0 });
-	_bow->GetTransform()->SetAngle(-PI * 0.75f);
+	_bowTrans = make_shared<Transform>();
+	_bowTrans->SetParent(_bowSlot);
+	_bowTrans->SetPosition({ 50, 0 });
+	_bowTrans->SetAngle(-PI * 0.75f);
+
 	for (int i = 0; i < 30; i++)
 	{
 		shared_ptr<DungreedBullet> bullet = make_shared<DungreedBullet>();
@@ -41,16 +43,18 @@ void Dungreed::Update()
 
 	}
 
-	_quad->Update();
+	_transform->Update();
 	_bowSlot->Update();
-	_bow->Update();
+	_bowTrans->Update();
 	for (auto bullet : _bullets)
 		bullet->Update();
 }
 
 void Dungreed::Render()
 {
+	_transform->SetBuffer(0);
 	_quad->Render();
+	_bowTrans->SetBuffer(0);
 	_bow->Render();
 	for (auto bullet : _bullets)
 		bullet->Render();
@@ -88,5 +92,5 @@ void Dungreed::Fire()
 
 	if (bulletiter == _bullets.end())
 		return;
-	(*bulletiter)->Shoot(dir, _bow->GetTransform()->GetWorldPosition());
+	(*bulletiter)->Shoot(dir, _bowTrans->GetWorldPosition());
 }

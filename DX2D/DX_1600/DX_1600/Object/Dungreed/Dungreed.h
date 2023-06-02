@@ -11,13 +11,13 @@ public :
 	void SetBowAngle();
 
 
-	void SetPratent(shared_ptr<Transform> parent) { _quad->GetTransform()->SetParent(parent);}
+	void SetPratent(shared_ptr<Transform> parent) { _transform->SetParent(parent);}
 	
-	virtual void SetPosition(Vector2 pos) { _quad->GetTransform()->SetPosition(pos); }
+	virtual void SetPosition(Vector2 pos) { _transform->SetPosition(pos); }
 
-	virtual void Move(Vector2 movePos) { _quad->GetTransform()->AddVector2(movePos); }
+	virtual void Move(Vector2 movePos) { _transform->AddVector2(movePos); }
 
-	virtual const Vector2& GetPos() { return _quad->GetTransform()->GetPos(); }
+	virtual const Vector2& GetPos() { return _transform->GetPos(); }
 
 	vector<shared_ptr<class DungreedBullet>> GetBullets() { return _bullets; }
 
@@ -28,9 +28,11 @@ public :
 
 protected :
 	shared_ptr<Quad> _quad;
-
+	shared_ptr<Transform> _transform;
 	shared_ptr<Transform> _bowSlot;
+
 	shared_ptr<Quad> _bow;
+	shared_ptr<Transform> _bowTrans;
 
 	vector<shared_ptr<class DungreedBullet>> _bullets;
 

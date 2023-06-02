@@ -20,10 +20,11 @@ public :
 	void SetHP(int hp) { _hp = hp; }
 	void ReduceHP(int damage);
 
-	const Vector2& GetPos() { return _quad->GetTransform()->GetPos(); }
+	const Vector2& GetPos() { return _transform->GetPos(); }
 private :
 	shared_ptr<CircleCollider> _collider;
 	shared_ptr<Quad> _quad;
+	shared_ptr<Transform> _transform;
 
 	int _hp = 10;
 

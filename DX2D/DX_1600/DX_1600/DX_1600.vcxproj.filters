@@ -57,7 +57,7 @@
     <ClInclude Include="Framework\TextureMapping\SamplerState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\TutorialScene.h">
+    <ClInclude Include="Scene\BagicScene\TutorialScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\Bagic\Quad.h">
@@ -78,13 +78,13 @@
     <ClInclude Include="Framework\Math\Transform.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SolorSystem.h">
+    <ClInclude Include="Scene\BagicScene\SolorSystem.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\SolarSystem\Planet.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\DungreedScene.h">
+    <ClInclude Include="Scene\BagicScene\DungreedScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\Dungreed\Dungreed.h">
@@ -105,7 +105,7 @@
     <ClInclude Include="Framework\Utility\Timer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\ColliderScene.h">
+    <ClInclude Include="Scene\BagicScene\ColliderScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Framework\Collider\RectCollider.h">
@@ -117,7 +117,7 @@
     <ClInclude Include="Framework\Collider\Collider.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\DungreedBossScene.h">
+    <ClInclude Include="Scene\BagicScene\DungreedBossScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\Dungreed\DungreedBoss.h">
@@ -138,7 +138,13 @@
     <ClInclude Include="Object\Bagic\Sprite.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SpriteScene.h">
+    <ClInclude Include="Scene\BagicScene\SpriteScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BagicScene\ActionScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Framework\Animation\Action.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -173,7 +179,7 @@
     <ClCompile Include="Framework\TextureMapping\SamplerState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\TutorialScene.cpp">
+    <ClCompile Include="Scene\BagicScene\TutorialScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Bagic\Quad.cpp">
@@ -191,13 +197,13 @@
     <ClCompile Include="Framework\Math\Transform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SolorSystem.cpp">
+    <ClCompile Include="Scene\BagicScene\SolorSystem.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\SolarSystem\Planet.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\DungreedScene.cpp">
+    <ClCompile Include="Scene\BagicScene\DungreedScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Dungreed\Dungreed.cpp">
@@ -218,7 +224,7 @@
     <ClCompile Include="Framework\Utility\Timer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\ColliderScene.cpp">
+    <ClCompile Include="Scene\BagicScene\ColliderScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Collider\RectCollider.cpp">
@@ -230,7 +236,7 @@
     <ClCompile Include="Framework\Collider\Collider.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\DungreedBossScene.cpp">
+    <ClCompile Include="Scene\BagicScene\DungreedBossScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Dungreed\DungreedBoss.cpp">
@@ -251,7 +257,13 @@
     <ClCompile Include="Object\Bagic\Sprite.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SpriteScene.cpp">
+    <ClCompile Include="Scene\BagicScene\SpriteScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BagicScene\ActionScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Animation\Action.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

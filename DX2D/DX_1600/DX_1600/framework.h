@@ -18,6 +18,7 @@
 #include <algorithm>
 #include <string>
 #include <memory>
+#include <functional>
 #include <wrl/client.h>
 
 #include <d3d11.h>
@@ -76,6 +77,9 @@ using namespace Microsoft::WRL;
 #include "Framework/TextureMapping/SamplerState.h"
 #include "Framework/TextureMapping/BlendState.h"
 #include "Framework/TextureMapping/StateManager.h"
+
+// Animation
+#include "Framework/Animation/Action.h"
 
 //Object
 #include "Object/Bagic/Quad.h"

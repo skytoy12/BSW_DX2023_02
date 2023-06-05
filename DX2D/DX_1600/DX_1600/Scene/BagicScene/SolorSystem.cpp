@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "SolorSystem.h"
-#include "../Object/SolarSystem/Planet.h"
+#include "../../Object/SolarSystem/Planet.h"
 
 SolorSystem::SolorSystem()
 {

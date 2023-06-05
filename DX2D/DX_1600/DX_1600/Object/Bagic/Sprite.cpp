@@ -27,3 +27,16 @@ void Sprite::Render()
 	_frameBuffer->SetPSBuffer(0);
 	Quad::Render();
 }
+
+void Sprite::SetCurFrame(Vector2 frame)
+{
+	_frameBuffer->SetCurFrame(frame);
+}
+
+void Sprite::SetCurframe(Action::Clip clip)
+{
+	Vector2 frame;
+	frame.x = clip._startPos.x / clip._size.x;
+	frame.y = clip._startPos.y / clip._size.y;
+	_frameBuffer->SetCurFrame(frame);
+}

@@ -150,6 +150,9 @@
     <ClInclude Include="Object\Zelda\ZeldaAction.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Zelda\ZeldaPotion.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX_1600.cpp">
@@ -272,6 +275,9 @@
     <ClCompile Include="Object\Zelda\ZeldaAction.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\Zelda\ZeldaPotion.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_1600.rc">
@@ -310,6 +316,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="Resource\Dungreed\Boss.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Item_11x5.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>

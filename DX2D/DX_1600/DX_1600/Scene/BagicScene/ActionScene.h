@@ -5,6 +5,7 @@ public :
 	ActionScene();
 	~ActionScene();
 
+	virtual void Collider_Update() override;
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void PostRender() override;
@@ -13,6 +14,8 @@ public :
 
 private :
 	shared_ptr<class ZeldaAction> _zelda;
+	shared_ptr<class ZeldaPotion> _potion;
+	shared_ptr<class ZeldaPotion> _potion2;
 
 };
 

@@ -7,10 +7,12 @@ ZeldaAction::ZeldaAction()
 	Vector2 size = ADD_SRV(L"Resource/spritezelda.png")->GetImageSize();
 	size.x /= 10;
 	size.y /= 8;
-	_sprite = make_shared<Sprite>(L"Resource/spritezelda.png", Vector2(10, 8), size);
+	_sprite = make_shared<Sprite>(L"Resource/spritezelda.png", Vector2(10, 8), size * 0.7f);
 	_transform = make_shared<Transform>();
+	_collider = make_shared<RectCollider>(size * 0.7f);
 
-	_transform->SetPosition(CENTER);
+	_transform->SetParent(_collider->GetTransform());
+	_collider->SetPosition(CENTER);
 
 	// Listner 패턴, Observer 패턴, 구독자 패턴
 	_forwordAction->SetEndEvent(std::bind(&ZeldaAction::EndEvent, this));
@@ -22,6 +24,11 @@ ZeldaAction::~ZeldaAction()
 {
 }
 
+void ZeldaAction::Collider_Update()
+{
+	_collider->Update();
+}
+
 void ZeldaAction::Update()
 {
 	Select();
@@ -29,13 +36,15 @@ void ZeldaAction::Update()
 	_sprite->Update();
 	_transform->Update();
 	(*_action)->Update();
+
 }
 
 void ZeldaAction::Render()
 {
 	_transform->SetBuffer(0);
-	_sprite->SetCurframe((*_action)->GetCurClip());
+	_sprite->SetCurFrame((*_action)->GetCurClip());
 	_sprite->Render();
+	_collider->Render();
 }
 
 void ZeldaAction::PostRender()
@@ -44,30 +53,39 @@ void ZeldaAction::PostRender()
 		ImGui::Text("EndEvent!!!");
 }
 
+
 void ZeldaAction::Select()
 {
 	if (KEY_PRESS('A'))
 	{
 		_leftAction->Play();
 		_action = &_leftAction;
+		Vector2 movePos = Vector2(-500.0f, 0.0f) * DELTA_TIME;
+		Move(movePos);
 	}
 
 	if (KEY_PRESS('D'))
 	{
 		_rightAction->Play();
 		_action = &_rightAction;
+		Vector2 movePos = Vector2(500.0f, 0.0f) * DELTA_TIME;
+		Move(movePos);
 	}
 
 	if (KEY_PRESS('W'))
 	{
 		_backAction->Play();
 		_action = &_backAction;
+		Vector2 movePos = Vector2(0.0f, 500.0f) * DELTA_TIME;
+		Move(movePos);
 	}
 
 	if (KEY_PRESS('S'))
 	{
 		_forwordAction->Play();
 		_action = &_forwordAction;
+		Vector2 movePos = Vector2(0.0f, -500.0f) * DELTA_TIME;
+		Move(movePos);
 	}
 }
 

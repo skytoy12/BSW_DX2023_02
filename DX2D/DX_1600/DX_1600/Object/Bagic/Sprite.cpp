@@ -33,7 +33,7 @@ void Sprite::SetCurFrame(Vector2 frame)
 	_frameBuffer->SetCurFrame(frame);
 }
 
-void Sprite::SetCurframe(Action::Clip clip)
+void Sprite::SetCurFrame(Action::Clip clip)
 {
 	Vector2 frame;
 	frame.x = clip._startPos.x / clip._size.x;

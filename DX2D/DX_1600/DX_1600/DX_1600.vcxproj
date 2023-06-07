@@ -196,6 +196,7 @@
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
     <ClInclude Include="Object\Zelda\ZeldaAction.h" />
+    <ClInclude Include="Object\Zelda\ZeldaPotion.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\Action.cpp" />
@@ -247,6 +248,7 @@
     <ClCompile Include="Object\Bagic\Sprite.cpp" />
     <ClCompile Include="Scene\BagicScene\SpriteScene.cpp" />
     <ClCompile Include="Object\Zelda\ZeldaAction.cpp" />
+    <ClCompile Include="Object\Zelda\ZeldaPotion.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_1600.rc" />
@@ -258,6 +260,7 @@
     <Image Include="Resource\Dungreed\Bullet.png" />
     <Image Include="Resource\earth.png" />
     <Image Include="Resource\Goomba.png" />
+    <Image Include="Resource\Item_11x5.png" />
     <Image Include="Resource\moon.png" />
     <Image Include="Resource\Dungreed\Player.png" />
     <Image Include="Resource\sun.png" />

@@ -195,6 +195,7 @@
     <ClInclude Include="Types.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
+    <ClInclude Include="Object\Zelda\ZeldaAction.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Animation\Action.cpp" />
@@ -245,6 +246,7 @@
     <ClCompile Include="Framework\TextureMapping\SRVManager.cpp" />
     <ClCompile Include="Object\Bagic\Sprite.cpp" />
     <ClCompile Include="Scene\BagicScene\SpriteScene.cpp" />
+    <ClCompile Include="Object\Zelda\ZeldaAction.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_1600.rc" />

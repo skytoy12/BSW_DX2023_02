@@ -14,8 +14,6 @@ public :
 
 private :
 	shared_ptr<class ZeldaAction> _zelda;
-	shared_ptr<class ZeldaPotion> _potion;
-	shared_ptr<class ZeldaPotion> _potion2;
 
 };
 

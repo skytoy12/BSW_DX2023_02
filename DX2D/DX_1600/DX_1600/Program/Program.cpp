@@ -8,11 +8,12 @@
 #include "../Scene/BagicScene/ColliderScene.h"
 #include "../Scene/BagicScene/SpriteScene.h"
 #include "../Scene/BagicScene/ActionScene.h"
+#include "../Scene/BagicScene/CupHeadScene.h"
 
 Program::Program()
 {
 	srand(unsigned int(time(nullptr)));
-	_curScene = make_shared<ActionScene>();
+	_curScene = make_shared<CupHeadScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_projection = make_shared<MatrixBuffer>();

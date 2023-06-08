@@ -20,6 +20,7 @@
 #include <memory>
 #include <functional>
 #include <wrl/client.h>
+#include <time.h>
 
 #include <d3d11.h>
 #include <d3dcompiler.h>

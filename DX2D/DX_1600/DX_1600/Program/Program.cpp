@@ -11,6 +11,7 @@
 
 Program::Program()
 {
+	srand(unsigned int(time(nullptr)));
 	_curScene = make_shared<ActionScene>();
 
 	_view = make_shared<MatrixBuffer>();

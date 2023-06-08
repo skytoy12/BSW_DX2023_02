@@ -1,7 +1,7 @@
 #include "framework.h"
 #include "ZeldaPotion.h"
 
-ZeldaPotion::ZeldaPotion(Vector2 curframe)
+ZeldaPotion::ZeldaPotion(Vector2 curframe, Vector2 pos)
 {
 	Vector2 size = ADD_SRV(L"Resource/Item_11x5.png")->GetImageSize();
 	size.x /= 11;
@@ -14,7 +14,7 @@ ZeldaPotion::ZeldaPotion(Vector2 curframe)
 	_transform = make_shared<Transform>();
 
 	_transform->SetParent(_collider->GetTransform());
-	_collider->SetPosition(CENTER + Vector2(300, 300));
+	_collider->SetPosition(pos);
 }
 
 ZeldaPotion::~ZeldaPotion()
@@ -23,17 +23,23 @@ ZeldaPotion::~ZeldaPotion()
 
 void ZeldaPotion::Collider_Update()
 {
+	if (_isActive == false)
+		return;
 	_collider->Update();
 }
 
 void ZeldaPotion::Update()
 {
+	if (_isActive == false)
+		return;
 	_sprite->Update();
 	_transform->Update();
 }
 
 void ZeldaPotion::Render()
 {
+	if (_isActive == false)
+		return;
 	_transform->SetBuffer(0);
 	_sprite->Render();
 	_collider->Render();

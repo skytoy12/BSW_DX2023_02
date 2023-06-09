@@ -262,6 +262,7 @@
   <ItemGroup>
     <Image Include="DX_1600.ico" />
     <Image Include="Resource\CupHead\Idle.png" />
+    <Image Include="Resource\CupHead\Run.png" />
     <Image Include="Resource\Dungreed\Boss.png" />
     <Image Include="Resource\Dungreed\Bow.png" />
     <Image Include="Resource\Dungreed\Bullet.png" />
@@ -398,6 +399,7 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\CupHead\Idle.xml" />
+    <Xml Include="Resource\CupHead\Run.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -263,6 +263,7 @@
     <Image Include="DX_1600.ico" />
     <Image Include="Resource\CupHead\Idle.png" />
     <Image Include="Resource\CupHead\Run.png" />
+    <Image Include="Resource\CupHead\track.png" />
     <Image Include="Resource\Dungreed\Boss.png" />
     <Image Include="Resource\Dungreed\Bow.png" />
     <Image Include="Resource\Dungreed\Bullet.png" />

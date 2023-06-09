@@ -44,8 +44,8 @@ public :
 
 
 	// Matrix 상속 걸려있는 구조에선 Block X
-	bool Block(shared_ptr<RectCollider> moveable);
-	bool Block(shared_ptr<class CircleCollider> moveable);
+	virtual bool Block(shared_ptr<RectCollider> moveable) override;
+	virtual bool Block(shared_ptr<class CircleCollider> moveable)override;
 
 
 

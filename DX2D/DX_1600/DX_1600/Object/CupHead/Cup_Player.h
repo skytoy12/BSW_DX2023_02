@@ -20,12 +20,23 @@ public :
 	void Move(Vector2 movePos) { _collider->GetTransform()->AddVector2(movePos); }
 	void Select();
 
-	void CreateIdleAction();
-	void CreateRunAction();
+	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size);
 
 	void SetPosition(Vector2 pos) { _collider->SetPosition(pos); }
 
+	void Input();
+
+	void Jump();
+
+	void AnimationControl();
+
+	void SetGrounded() { _jumpPower = 0.0f; }
+
+	shared_ptr<Collider> GetCollider() { return _collider; }
+
 private :
+	void SetLeft();
+	void SetRight();
 	State _state = Cup_Player::State::IDLE;
 
 	shared_ptr<CircleCollider>_collider;
@@ -33,11 +44,13 @@ private :
 	vector<shared_ptr<Action>> _actions;
 
 
-	shared_ptr<Sprite> _idleSprite;
+	vector<shared_ptr<Sprite>> _sprites;
 	shared_ptr<Sprite> _runSprite;
 
 	shared_ptr<Transform> _transform;
 
 	Vector2 _fixedPos;
+
+	float _jumpPower = 0.0f;
 };
 

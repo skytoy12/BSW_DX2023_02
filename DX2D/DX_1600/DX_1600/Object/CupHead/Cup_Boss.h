@@ -16,6 +16,7 @@ public :
 
 	void Update();
 	void Render();
+	void PostRender();
 
 	void SetPosition(Vector2 pos) { _collider->SetPosition(pos); }
 

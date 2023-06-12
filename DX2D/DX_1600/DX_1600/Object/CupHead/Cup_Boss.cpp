@@ -30,25 +30,22 @@ void Cup_Boss::Update()
 	if (_state == Boss_State::START && _isEnd == true)
 	{
 		_isEnd = false;
-		_state = Boss_State::LOOP;
-		_actions[_state]->Stop();
 		_actions[_state]->Play();
+		_state = Boss_State::LOOP;
 	}
 
 	if (_state == Boss_State::LOOP && _isEnd == true)
 	{
 		_isEnd = false;
-		_state = Boss_State::END;
-		_actions[_state]->Stop();
 		_actions[_state]->Play();
+		_state = Boss_State::END;
 	}
 
 	if (_state == Boss_State::END && _isEnd == true)
 	{
 		_isEnd = false;
-		_state = Boss_State::START;
-		_actions[_state]->Stop();
 		_actions[_state]->Play();
+		_state = Boss_State::START;
 	}
 
 	_collider->Update();
@@ -68,6 +65,10 @@ void Cup_Boss::Render()
 	_sprites[_state]->Render();
 
 	_collider->Render();
+}
+
+void Cup_Boss::PostRender()
+{
 }
 
 void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size)

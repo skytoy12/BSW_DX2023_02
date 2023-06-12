@@ -20,7 +20,7 @@ public :
 	void Render();
 	void PostRender();
 
-	void Move(Vector2 movePos) { _collider->GetTransform()->AddVector2(movePos); }
+	void Move(Vector2 movePos) { _collider->GetTransform()->AddVector2(movePos * DELTA_TIME); }
 	void Select();
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size);
@@ -33,11 +33,11 @@ public :
 
 	void AnimationControl();
 
-	void SetType(State _type) { _state = _type; }
+	void SetType(State _type) { _curstate = _type; }
 
 	void Fire();
 
-	void SetGrounded() { _jumpPower = 0.0f; }
+	void SetGrounded() { _isJump = false; }
 
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
@@ -46,7 +46,8 @@ public :
 private :
 	void SetLeft();
 	void SetRight();
-	State _state = Cup_Player::State::IDLE;
+	State _oldstate = Cup_Player::State::IDLE;
+	State _curstate = Cup_Player::State::IDLE;
 
 	shared_ptr<CircleCollider>_collider;
 

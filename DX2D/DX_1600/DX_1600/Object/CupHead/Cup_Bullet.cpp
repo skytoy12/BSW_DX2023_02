@@ -7,12 +7,14 @@ Cup_Bullet::Cup_Bullet()
 {
 	_collider = make_shared<CircleCollider>(5);
 
-	CreateAction(L"Resource/CupHead/Bullet_Intro.png", "Resource/CupHead/Bullet_Intro.xml", "IntroBullet", Vector2(100, 100));
+	CreateAction(L"Resource/CupHead/Bullet_Intro.png", "Resource/CupHead/Bullet_Intro.xml", "IntroBullet", Vector2(30, 90));
 	_actions[0]->SetType(Action::Type::END);
-	CreateAction(L"Resource/CupHead/Bullet_Loop.png", "Resource/CupHead/Bullet_Loop.xml", "LoopBullet", Vector2(100, 100));
+	CreateAction(L"Resource/CupHead/Bullet_Loop.png", "Resource/CupHead/Bullet_Loop.xml", "LoopBullet", Vector2(30, 90));
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
+	_transform->SetAngle(-(PI / 2));
+	_transform->SetPosition(Vector2(-40, 0));
 	_actions[0]->SetEndEvent(std::bind(&Cup_Bullet::EndEvent, this));
 }
 
@@ -32,7 +34,10 @@ void Cup_Bullet::Update()
 	_collider->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	_collider->Update();
 	if (_isEnd == true)
+	{
 		_state = Bullet_State::LOOP;
+	}
+
 	_actions[_state]->Update();
 
 	_sprites[_state]->Update();
@@ -43,6 +48,12 @@ void Cup_Bullet::Update()
 	{
 		_isActive = false;
 		_isEnd = false;
+	}
+
+	if (!_isActive)
+	{
+		_state = Bullet_State::INTRO;
+		_actions[_state]->Play();
 	}
 
 }

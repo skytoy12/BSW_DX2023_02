@@ -43,9 +43,9 @@ void Cup_Player::Update()
 
 	_HandCollider->Update();
 
-	_actions[_state]->Update();
+	_actions[_curstate]->Update();
 
-	_sprites[_state]->Update();
+	_sprites[_curstate]->Update();
 
 	_transform->Update();
 
@@ -58,8 +58,8 @@ void Cup_Player::Render()
 {
 	_transform->SetBuffer(0);
 
-	_sprites[_state]->SetCurFrame(_actions[_state]->GetCurClip());
-	_sprites[_state]->Render();
+	_sprites[_curstate]->SetCurFrame(_actions[_curstate]->GetCurClip());
+	_sprites[_curstate]->Render();
 
 	_HandCollider->Render();
 	_collider->Render();
@@ -70,7 +70,7 @@ void Cup_Player::Render()
 
 void Cup_Player::PostRender()
 {
-	//ImGui::SliderFloat2("FixedPos", (float*)&_fixedPos, 0, 100);
+	//ImGui::SliderFloat2("State", (int*)&_state, 0, 100);
 	//_transform->SetPosition(_fixedPos);
 }
 
@@ -81,9 +81,9 @@ void Cup_Player::Select()
 	{
 		if (_isJump == false)
 		{
-			_state = Cup_Player::State::RUN;
+			_curstate = Cup_Player::State::RUN;
 		}
-		Vector2 movePos = Vector2(-500.0f, 0.0f) * DELTA_TIME;
+		Vector2 movePos = Vector2(-500.0f, 0.0f);
 		Move(movePos);
 	}
 
@@ -91,9 +91,9 @@ void Cup_Player::Select()
 	{
 		if (_isJump == false)
 		{
-			_state = Cup_Player::State::RUN;
+			_curstate = Cup_Player::State::RUN;
 		}
-		Vector2 movePos = Vector2(500.0f, 0.0f) * DELTA_TIME;
+		Vector2 movePos = Vector2(500.0f, 0.0f);
 		Move(movePos);
 	}
 
@@ -101,7 +101,7 @@ void Cup_Player::Select()
 	{
 		if (_isJump == false)
 		{
-			_state = Cup_Player::State::IDLE;
+			_curstate = Cup_Player::State::IDLE;
 		}
 	}
 
@@ -109,7 +109,7 @@ void Cup_Player::Select()
 	{
 		if (_isJump == false)
 		{
-			_state = Cup_Player::State::IDLE;
+			_curstate = Cup_Player::State::IDLE;
 		}
 
 	}
@@ -120,14 +120,14 @@ void Cup_Player::Select()
 		{
 			_HandCollider->SetPosition(Vector2(-60, 8));
 			SetLeft();
-			_state = Cup_Player::State::CHARGE;
+			_curstate = Cup_Player::State::CHARGE;
 		}
 
 		if (MOUSE_POS.x > _collider->GetPos().x)
 		{
 			_HandCollider->SetPosition(Vector2(60, 8));
 			SetRight();
-			_state = Cup_Player::State::CHARGE;
+			_curstate = Cup_Player::State::CHARGE;
 		}
 	}
 
@@ -135,15 +135,25 @@ void Cup_Player::Select()
 	{
 		if (_isJump == false)
 		{
-			_state = Cup_Player::State::SHOT;
+			_curstate = Cup_Player::State::SHOT;
 			Fire();
-			_state = Cup_Player::State::IDLE;
+			_curstate = Cup_Player::State::IDLE;
 		}
 		if (_isJump == true)
 		{
-			_state = Cup_Player::State::SHOT;
+			_curstate = Cup_Player::State::SHOT;
 			Fire();
-			_state = Cup_Player::State::JUMP;
+			_curstate = Cup_Player::State::JUMP;
+		}
+	}
+
+	if (_isJump == false)
+	{
+		if (KEY_PRESS(VK_SPACE))
+		{
+			_curstate = Cup_Player::State::JUMP;
+			_isJump = true;
+			_jumpPower = 600.0f;
 		}
 	}
 }
@@ -190,12 +200,12 @@ void Cup_Player::Input()
 {
 	if (KEY_PRESS('A'))
 	{
-		_sprites[_state]->SetLeft();
+		_sprites[_curstate]->SetLeft();
 	}
 	
 	if (KEY_PRESS('D'))
 	{
-		_sprites[_state]->SetRight();
+		_sprites[_curstate]->SetRight();
 	}
 }
 
@@ -213,15 +223,7 @@ void Cup_Player::Jump()
 		_collider->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);
 	}
 
-	if (_isJump == false)
-	{
-		if (KEY_PRESS(VK_SPACE))
-		{
-			_state = Cup_Player::State::JUMP;
-			_isJump = true;
-			_jumpPower = 600.0f;
-		}
-	}
+
 }
 
 void Cup_Player::AnimationControl()

@@ -7,6 +7,9 @@ public :
 	{
 		IDLE,
 		RUN,
+		JUMP,
+		CHARGE,
+		SHOT,
 		NONE
 	};
 
@@ -30,9 +33,15 @@ public :
 
 	void AnimationControl();
 
+	void SetType(State _type) { _state = _type; }
+
+	void Fire();
+
 	void SetGrounded() { _jumpPower = 0.0f; }
 
 	shared_ptr<Collider> GetCollider() { return _collider; }
+
+	bool _isJump = false;
 
 private :
 	void SetLeft();
@@ -41,11 +50,13 @@ private :
 
 	shared_ptr<CircleCollider>_collider;
 
+	shared_ptr<CircleCollider>_HandCollider;
+
 	vector<shared_ptr<Action>> _actions;
 
+	vector<shared_ptr<class Cup_Bullet>> _bullets;
 
 	vector<shared_ptr<Sprite>> _sprites;
-	shared_ptr<Sprite> _runSprite;
 
 	shared_ptr<Transform> _transform;
 

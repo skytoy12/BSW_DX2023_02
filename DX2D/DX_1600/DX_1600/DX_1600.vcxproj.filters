@@ -162,6 +162,12 @@
     <ClInclude Include="Scene\BagicScene\CupHeadScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\CupHead\Cup_Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CupHead\Cup_Boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX_1600.cpp">
@@ -296,6 +302,12 @@
     <ClCompile Include="Scene\BagicScene\CupHeadScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\CupHead\Cup_Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CupHead\Cup_Boss.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_1600.rc">
@@ -348,6 +360,30 @@
     <Image Include="Resource\CupHead\track.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\CupHead\Jump.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\AimStraightCharge.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\AimStraightShot.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Bullet_Intro.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Bullet_Loop.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\TutorialShader.hlsl" />
@@ -362,5 +398,13 @@
   <ItemGroup>
     <Xml Include="Resource\CupHead\Idle.xml" />
     <Xml Include="Resource\CupHead\Run.xml" />
+    <Xml Include="Resource\CupHead\Jump.xml" />
+    <Xml Include="Resource\CupHead\AimStraightCharge.xml" />
+    <Xml Include="Resource\CupHead\AimStraightShot.xml" />
+    <Xml Include="Resource\CupHead\Bullet_Intro.xml" />
+    <Xml Include="Resource\CupHead\Bullet_Loop.xml" />
+    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.xml" />
+    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.xml" />
+    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.xml" />
   </ItemGroup>
 </Project>

@@ -23,6 +23,7 @@ public :
 	bool _isActive = false;
 
 private :
+
 	shared_ptr<Quad> _quad;
 	shared_ptr<Transform> _transform;
 	shared_ptr<CircleCollider> _collider;

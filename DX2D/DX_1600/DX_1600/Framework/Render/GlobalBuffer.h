@@ -97,3 +97,30 @@ public:
 
 	Data _data;
 };
+
+
+
+class FilterBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		int selected = 0;
+		int Value1 = 0;
+		int Value2 = 0;
+		int Value3 = 0;
+
+		Vector2 imageSize;
+		Vector2 radialCenter;
+	};
+
+	FilterBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+
+	}
+	virtual ~FilterBuffer() {}
+
+
+	Data _data;
+};

@@ -5,7 +5,7 @@ DungreedBoss::DungreedBoss()
 {
 	_quad = make_shared<Quad>(L"Resource/Dungreed/Boss.png");
 	_transform = make_shared<Transform>();
-	_collider = make_shared<CircleCollider>(_quad->GetImageSize().x);
+	_collider = make_shared<CircleCollider>(_quad->GetQuadHalfSize().x);
 	_collider->SetScale(0.5f);
 	_transform->SetParent(_collider->GetTransform());
 }

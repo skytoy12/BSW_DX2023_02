@@ -9,9 +9,9 @@ Cup_Boss::Cup_Boss()
 
 	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.xml", "START", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
 
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(100, 100), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
 
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(200, 200), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
 
 
 	_transform = make_shared<Transform>();
@@ -24,26 +24,6 @@ Cup_Boss::~Cup_Boss()
 
 void Cup_Boss::Update()
 {
-	if (_state == Boss_State::START && _isEnd == true)
-	{
-		_isEnd = false;
-		_actions[_state]->Play();
-		_state = Boss_State::LOOP;
-	}
-
-	if (_state == Boss_State::LOOP && _isEnd == true)
-	{
-		_isEnd = false;
-		_actions[_state]->Play();
-		_state = Boss_State::END;
-	}
-
-	if (_state == Boss_State::END && _isEnd == true)
-	{
-		_isEnd = false;
-		_actions[_state]->Play();
-		_state = Boss_State::START;
-	}
 
 	_collider->Update();
 
@@ -108,24 +88,30 @@ void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName,
 
 void Cup_Boss::EndEvent()
 {
-	//if (_state == Boss_State::START)
-	//{
-	//	_actions[_state]->Play();
-	//	_state = Boss_State::LOOP;
-	//}
+	if (_state == Boss_State::START)
+	{
+		_state = Boss_State::LOOP;
+		_actions[_state]->Play();
+		_actions[START]->Reset();
+		return;
+	}
 
-	//if (_state == Boss_State::LOOP)
-	//{
-	//	_actions[_state]->Play();
-	//	_state = Boss_State::END;
-	//}
+	if (_state == Boss_State::LOOP)
+	{
+		_state = Boss_State::END;
+		_actions[_state]->Play();
+		_actions[LOOP]->Reset();
+		return;
+	}
 
-	//if (_state == Boss_State::END)
-	//{
-	//	_actions[_state]->Play();
-	//	_state = Boss_State::START;
-	//}
-	_isEnd = true;
+	if (_state == Boss_State::END)
+	{
+		_state = Boss_State::START;
+		_actions[_state]->Play();
+		_actions[END]->Reset();
+		return;
+	}
+
 }
 
 void Cup_Boss::SetLeft()

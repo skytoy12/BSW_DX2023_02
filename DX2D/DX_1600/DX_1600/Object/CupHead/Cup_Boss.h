@@ -28,8 +28,6 @@ private :
 	void SetLeft();
 	void SetRight();
 
-	bool _isEnd = false;
-
 	Boss_State _state = Boss_State::START;
 
 	shared_ptr<CircleCollider>_collider;

@@ -7,9 +7,9 @@ Cup_Bullet::Cup_Bullet()
 {
 	_collider = make_shared<CircleCollider>(5);
 
-	CreateAction(L"Resource/CupHead/Bullet_Intro.png", "Resource/CupHead/Bullet_Intro.xml", "IntroBullet", Vector2(30, 90));
-	_actions[0]->SetType(Action::Type::END);
-	CreateAction(L"Resource/CupHead/Bullet_Loop.png", "Resource/CupHead/Bullet_Loop.xml", "LoopBullet", Vector2(30, 90));
+	CreateAction(L"Resource/CupHead/Bullet_Intro.png", "Resource/CupHead/Bullet_Intro.xml", "IntroBullet", Vector2(30, 90), Action::Type::END, std::bind(&Cup_Bullet::EndEvent, this));
+
+	CreateAction(L"Resource/CupHead/Bullet_Loop.png", "Resource/CupHead/Bullet_Loop.xml", "LoopBullet", Vector2(30, 90), Action::Type::LOOP);
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
@@ -33,10 +33,6 @@ void Cup_Bullet::Update()
 		SetLeft();
 	_collider->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	_collider->Update();
-	if (_isEnd == true)
-	{
-		_state = Bullet_State::LOOP;
-	}
 
 	_actions[_state]->Update();
 
@@ -47,7 +43,6 @@ void Cup_Bullet::Update()
 	if (_collider->GetPos().x < 0 || _collider->GetPos().x > WIN_WIDTH)
 	{
 		_isActive = false;
-		_isEnd = false;
 	}
 
 	if (!_isActive)
@@ -73,6 +68,9 @@ void Cup_Bullet::Render()
 void Cup_Bullet::Shoot(Vector2 dir, Vector2 startPos)
 {
 	_isActive = true;
+	_state = INTRO;
+	_actions[_state]->Play();
+	_actions[LOOP]->Reset();
 
 	_collider->GetTransform()->SetPosition(startPos);
 	_dir = dir.NormalVector2();
@@ -80,7 +78,7 @@ void Cup_Bullet::Shoot(Vector2 dir, Vector2 startPos)
 	_collider->GetTransform()->SetAngle(angle);
 }
 
-void Cup_Bullet::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size)
+void Cup_Bullet::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
 {
 	shared_ptr<SRV> srv = ADD_SRV(srvPath);
 
@@ -110,11 +108,18 @@ void Cup_Bullet::CreateAction(wstring srvPath, string xmmlPath, string actionNam
 		row = row->NextSiblingElement();
 	}
 
-	shared_ptr<Action> action = make_shared<Action>(clips, actionName);
+	shared_ptr<Action> action = make_shared<Action>(clips, actionName, type);
 	action->Play();
+	action->SetEndEvent(event);
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
+}
+
+void Cup_Bullet::EndEvent()
+{
+	_state = LOOP;
+	_actions[LOOP]->Play();
 }
 
 void Cup_Bullet::SetLeft()

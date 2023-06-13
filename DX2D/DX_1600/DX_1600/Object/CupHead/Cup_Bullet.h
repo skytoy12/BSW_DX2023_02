@@ -17,15 +17,14 @@ public :
 
 	void Shoot(Vector2 dir, Vector2 startPos);
 
-	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size);
+	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
-	void EndEvent() { _isEnd = true; }
+	void EndEvent();
 
 	bool _isActive = false;
 private :
 	Bullet_State _state = Bullet_State::INTRO;
 
-	bool _isEnd = false;
 
 	Vector2 _dir = Vector2(0, 0);
 	float _speed = 200.0f;

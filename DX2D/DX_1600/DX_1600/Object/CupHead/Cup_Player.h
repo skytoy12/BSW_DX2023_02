@@ -23,7 +23,7 @@ public :
 	void Move(Vector2 movePos) { _collider->GetTransform()->AddVector2(movePos * DELTA_TIME); }
 	void Select();
 
-	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size);
+	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
 	void SetPosition(Vector2 pos) { _collider->SetPosition(pos); }
 

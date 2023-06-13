@@ -7,18 +7,15 @@ Cup_Boss::Cup_Boss()
 	_collider = make_shared<CircleCollider>(150);
 
 
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.xml", "START", Vector2(400, 400));
-	_actions[0]->SetType(Action::Type::END);
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(400, 400));
-	_actions[1]->SetType(Action::Type::END);
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(400, 400));
-	_actions[2]->SetType(Action::Type::END);
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.xml", "START", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
+
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(100, 100), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
+
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(200, 200), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
+
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
-	_actions[0]->SetEndEvent(std::bind(&Cup_Boss::EndEvent, this));
-	_actions[1]->SetEndEvent(std::bind(&Cup_Boss::EndEvent, this));
-	_actions[2]->SetEndEvent(std::bind(&Cup_Boss::EndEvent, this));
 }
 
 Cup_Boss::~Cup_Boss()
@@ -71,7 +68,7 @@ void Cup_Boss::PostRender()
 {
 }
 
-void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size)
+void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
 {
 	shared_ptr<SRV> srv = ADD_SRV(srvPath);
 
@@ -101,11 +98,34 @@ void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName,
 		row = row->NextSiblingElement();
 	}
 
-	shared_ptr<Action> action = make_shared<Action>(clips, actionName);
+	shared_ptr<Action> action = make_shared<Action>(clips, actionName, type);
 	action->Play();
+	action->SetEndEvent(event);
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
+}
+
+void Cup_Boss::EndEvent()
+{
+	//if (_state == Boss_State::START)
+	//{
+	//	_actions[_state]->Play();
+	//	_state = Boss_State::LOOP;
+	//}
+
+	//if (_state == Boss_State::LOOP)
+	//{
+	//	_actions[_state]->Play();
+	//	_state = Boss_State::END;
+	//}
+
+	//if (_state == Boss_State::END)
+	//{
+	//	_actions[_state]->Play();
+	//	_state = Boss_State::START;
+	//}
+	_isEnd = true;
 }
 
 void Cup_Boss::SetLeft()

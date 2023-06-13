@@ -20,9 +20,9 @@ public :
 
 	void SetPosition(Vector2 pos) { _collider->SetPosition(pos); }
 
-	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size);
+	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
-	void EndEvent() { _isEnd = true; }
+	void EndEvent();
 
 private :
 	void SetLeft();

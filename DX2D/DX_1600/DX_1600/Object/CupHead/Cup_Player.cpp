@@ -9,11 +9,11 @@ Cup_Player::Cup_Player()
 	_collider = make_shared<CircleCollider>(50);
 	_HandCollider = make_shared<CircleCollider>(20);
 
-	CreateAction(L"Resource/CupHead/Idle.png", "Resource/CupHead/Idle.xml", "IDLE", Vector2(250, 250));
-	CreateAction(L"Resource/CupHead/Run.png", "Resource/CupHead/Run.xml", "RUN", Vector2(120, 120));
-	CreateAction(L"Resource/CupHead/Jump.png", "Resource/CupHead/Jump.xml", "JUMP", Vector2(120, 120));
-	CreateAction(L"Resource/CupHead/AimStraightCharge.png", "Resource/CupHead/AimStraightCharge.xml", "CHARGE", Vector2(120, 120));
-	CreateAction(L"Resource/CupHead/AimStraightShot.png", "Resource/CupHead/AimStraightShot.xml", "SHOT", Vector2(250, 250));
+	CreateAction(L"Resource/CupHead/Idle.png", "Resource/CupHead/Idle.xml", "IDLE", Vector2(250, 250), Action::Type::LOOP);
+	CreateAction(L"Resource/CupHead/Run.png", "Resource/CupHead/Run.xml", "RUN", Vector2(120, 120), Action::Type::LOOP);
+	CreateAction(L"Resource/CupHead/Jump.png", "Resource/CupHead/Jump.xml", "JUMP", Vector2(120, 120), Action::Type::LOOP);
+	CreateAction(L"Resource/CupHead/AimStraightCharge.png", "Resource/CupHead/AimStraightCharge.xml", "CHARGE", Vector2(120, 120), Action::Type::LOOP);
+	CreateAction(L"Resource/CupHead/AimStraightShot.png", "Resource/CupHead/AimStraightShot.xml", "SHOT", Vector2(250, 250), Action::Type::LOOP);
 	_actions[4]->SetType(Action::Type::END);
 
 	for (int i = 0; i < 30; i++)
@@ -158,7 +158,7 @@ void Cup_Player::Select()
 	}
 }
 
-void Cup_Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size)
+void Cup_Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
 {
 	shared_ptr<SRV> srv = ADD_SRV(srvPath);
 
@@ -188,8 +188,9 @@ void Cup_Player::CreateAction(wstring srvPath, string xmmlPath, string actionNam
 		row = row->NextSiblingElement();
 	}
 
-	shared_ptr<Action> action = make_shared<Action>(clips, actionName);
+	shared_ptr<Action> action = make_shared<Action>(clips, actionName, type);
 	action->Play();
+	action->SetEndEvent(event);
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
 	_actions.push_back(action);
 	_sprites.push_back(sprite);

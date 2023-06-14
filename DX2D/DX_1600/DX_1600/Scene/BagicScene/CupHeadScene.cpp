@@ -43,6 +43,14 @@ void CupHeadScene::Update()
 			_player->SetType(Cup_Player::State::IDLE);
 		_player->_isJump = false;
 	}
+
+	if (_boss->_isAlive == true)
+	{
+		if (_player->isCollision_Bullets(_boss->GetCollider()))
+		{
+			_boss->Damage(1);
+		}
+	}
 }
 
 void CupHeadScene::Render()
@@ -58,4 +66,5 @@ void CupHeadScene::Render()
 void CupHeadScene::PostRender()
 {
 	_player->PostRender();
+	_boss->PostRender();
 }

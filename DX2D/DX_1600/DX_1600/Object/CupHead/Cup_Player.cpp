@@ -242,6 +242,23 @@ void Cup_Player::Fire()
 	(*bulletiter)->Shoot(Vector2(dir.x, 0.0f), _HandCollider->GetTransform()->GetWorldPosition());
 }
 
+bool Cup_Player::isCollision_Bullets(shared_ptr<Collider> col)
+{
+	for (auto bullet : _bullets)
+	{
+		if (bullet->_isActive == false)
+			continue;
+
+
+		if (col->IsCollision(bullet->GetCollider()))
+		{
+			bullet->_isActive = false;
+			return true;
+		}
+	}
+	return false;
+}
+
 void Cup_Player::SetLeft()
 {
 	for (auto sprite : _sprites)

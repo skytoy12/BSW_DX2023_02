@@ -43,6 +43,8 @@ public :
 
 	bool _isJump = false;
 
+	bool isCollision_Bullets(shared_ptr<Collider> col);
+
 private :
 	void SetLeft();
 	void SetRight();

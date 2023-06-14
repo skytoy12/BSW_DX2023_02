@@ -124,3 +124,33 @@ public:
 
 	Data _data;
 };
+
+
+
+class ActionFilterBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		Vector2 startPos;
+		Vector2 size;
+		Vector2 imageSize;
+		Vector2 radialCenter;
+		int isRight = 0;
+		int selected = 0;
+		int value1 = 0;
+		int value2 = 0;
+		int value3 = 0;
+		int pedding[3] = { 0, 0, 0 };
+	};
+
+	ActionFilterBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+
+	}
+	virtual ~ActionFilterBuffer() {}
+
+
+	Data _data;
+};

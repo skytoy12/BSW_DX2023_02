@@ -13,6 +13,9 @@ Cup_Boss::Cup_Boss()
 
 	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
 
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Die.png", "Resource/CupHead/Clown_Page_Last_Die.xml", "Die", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::DieEvent, this));
+	_actions[DIE]->SetSpeed(0.1f);
+
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
@@ -24,7 +27,8 @@ Cup_Boss::~Cup_Boss()
 
 void Cup_Boss::Update()
 {
-
+	if (_isAlive == false)
+		return;
 	_collider->Update();
 
 	_actions[_state]->Update();
@@ -32,10 +36,20 @@ void Cup_Boss::Update()
 	_sprites[_state]->Update();
 
 	_transform->Update();
+
+	if (_hp <= 0)
+	{
+		_state = DIE;
+		_sprites[_state]->SetSelected(1);
+		_sprites[_state]->SetValue1(20);
+		//_sprites[_state]->AddValue1(-5);
+	}
 }
 
 void Cup_Boss::Render()
 {
+	if (_isAlive == false)
+		return;
 	_transform->SetBuffer(0);
 
 	_sprites[_state]->SetCurFrame(_actions[_state]->GetCurClip());
@@ -46,6 +60,7 @@ void Cup_Boss::Render()
 
 void Cup_Boss::PostRender()
 {
+	ImGui::Text("BossHP : %d", _hp);
 }
 
 void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
@@ -112,6 +127,11 @@ void Cup_Boss::EndEvent()
 		return;
 	}
 
+}
+
+void Cup_Boss::DieEvent()
+{
+	_isAlive = false;
 }
 
 void Cup_Boss::SetLeft()

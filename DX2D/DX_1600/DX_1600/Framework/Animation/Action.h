@@ -34,6 +34,8 @@ public :
 
 	void SetType(Type _type) { _repeatType = _type; }
 
+	void SetSpeed(float speed) { _speed = speed; }
+
 	const Action::Clip& GetCurClip() { return _clips[_curClipIndex]; }
 	Action::Type GetReapeatType() { return _repeatType; }
 	bool IsPlay() { return _isPlay; }

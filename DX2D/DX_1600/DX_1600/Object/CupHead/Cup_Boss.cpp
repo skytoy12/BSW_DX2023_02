@@ -5,20 +5,33 @@ using namespace tinyxml2;
 Cup_Boss::Cup_Boss()
 {
 	_collider = make_shared<CircleCollider>(150);
-
-
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.xml", "START", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
-
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
-
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::EndEvent, this));
-
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Die.png", "Resource/CupHead/Clown_Page_Last_Die.xml", "Die", Vector2(400, 400), Action::Type::END, std::bind(&Cup_Boss::DieEvent, this));
-	_actions[DIE]->SetSpeed(0.1f);
-
-
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
+
+	_intBuffer = make_shared<IntBuffer>();
+	_intBuffer->_data.aInt = 3;
+	_intBuffer->_data.bInt = 300;
+
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.xml", "START", Vector2(250, 400), Action::Type::END, (std::bind(&Cup_Boss::EndEvent, this)));
+
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(250, 400), Action::Type::END, (std::bind(&Cup_Boss::EndEvent, this)));
+
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(250, 400), Action::Type::END);
+
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Die.png", "Resource/CupHead/Clown_Page_Last_Die.xml", "Die", Vector2(250, 400), Action::Type::END, std::bind(&Cup_Boss::DieEvent, this));
+	_actions[DIE]->SetSpeed(0.5f);
+
+
+	//action Event ¼³Á¤
+	{
+		_actions[Boss_State::START]->SetAlmostEvent(std::bind(&Cup_Boss::EndEvent, this));
+		_actions[Boss_State::LOOP]->SetAlmostEvent(std::bind(&Cup_Boss::EndEvent, this));
+		//_actions[Boss_State::END]->SetAlmostEvent(std::bind(&Cup_Boss::EndEvent, this));
+	}
+
+
+
+	SetLeft();
 }
 
 Cup_Boss::~Cup_Boss()
@@ -31,6 +44,8 @@ void Cup_Boss::Update()
 		return;
 	_collider->Update();
 
+	_intBuffer->Update();
+
 	_actions[_state]->Update();
 
 	_sprites[_state]->Update();
@@ -40,9 +55,11 @@ void Cup_Boss::Update()
 	if (_hp <= 0)
 	{
 		_state = DIE;
-		_sprites[_state]->SetSelected(1);
-		_sprites[_state]->SetValue1(20);
-		//_sprites[_state]->AddValue1(-5);
+		_sprites[_state]->SetPS(ADD_PS(L"Shader/ActionFilterPS.hlsl"));
+
+		if (_intBuffer->_data.bInt <= 1)
+			_intBuffer->_data.bInt = 100;
+		_intBuffer->_data.bInt -= 1;
 	}
 }
 
@@ -51,6 +68,7 @@ void Cup_Boss::Render()
 	if (_isAlive == false)
 		return;
 	_transform->SetBuffer(0);
+	_intBuffer->SetPSBuffer(1);
 
 	_sprites[_state]->SetCurFrame(_actions[_state]->GetCurClip());
 	_sprites[_state]->Render();
@@ -61,6 +79,8 @@ void Cup_Boss::Render()
 void Cup_Boss::PostRender()
 {
 	ImGui::Text("BossHP : %d", _hp);
+	 ImGui::SliderInt("State", (int*)&_state, 0, 3);
+	//ImGui::SliderInt("Mosaic", &_intBuffer->_data.bInt, 0, 300);
 }
 
 void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
@@ -97,6 +117,12 @@ void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName,
 	action->Play();
 	action->SetEndEvent(event);
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
+
+	action->Update();
+	sprite->Update();
+
+	sprite->SetCurFrame(action->GetCurClip());
+
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }
@@ -113,7 +139,7 @@ void Cup_Boss::EndEvent()
 
 	if (_state == Boss_State::LOOP)
 	{
-		_state = Boss_State::END;
+		_state = Boss_State::START;
 		_actions[_state]->Play();
 		_actions[LOOP]->Reset();
 		return;

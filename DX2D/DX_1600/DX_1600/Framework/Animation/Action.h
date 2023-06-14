@@ -42,6 +42,7 @@ public :
 
 
 	void SetEndEvent(CallBack endEvent) { _endEvent = endEvent; }
+	void SetAlmostEvent(CallBack almostEvent) { _almostEnd = almostEvent; }
 
 
 private :
@@ -58,7 +59,8 @@ private :
 
 	bool _isReverse = false;
 
-	CallBack _endEvent;
+	CallBack _almostEnd = nullptr;
+	CallBack _endEvent = nullptr;
 
 };
 

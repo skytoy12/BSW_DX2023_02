@@ -11,6 +11,8 @@ cbuffer ActionBuffer : register(b0)
 	int padding;
 }
 
+
+
 struct PixelInput
 {
 	float4 pos : SV_POSITION;
@@ -28,8 +30,5 @@ float4 PS(PixelInput input) : SV_TARGET
 	input.uv.x = (startPos.x / imageSize.x) + (size.x / imageSize.x) * input.uv.x;
 	input.uv.y = (startPos.y / imageSize.y) + (size.y / imageSize.y) * input.uv.y;
 
-
-	float4 color = map.Sample(samp, input.uv);
-
-	return color;
+	return map.Sample(samp, input.uv);
 }

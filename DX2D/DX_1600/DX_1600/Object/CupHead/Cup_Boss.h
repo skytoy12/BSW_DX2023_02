@@ -38,6 +38,8 @@ private :
 	void SetRight();
 	int _hp = 10;
 
+	shared_ptr<IntBuffer> _intBuffer;
+
 	Boss_State _state = Boss_State::START;
 
 	shared_ptr<CircleCollider>_collider;

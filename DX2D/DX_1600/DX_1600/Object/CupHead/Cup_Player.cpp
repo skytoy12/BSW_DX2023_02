@@ -58,7 +58,7 @@ void Cup_Player::Render()
 {
 	_transform->SetBuffer(0);
 
-	_sprites[_curstate]->SetCurFrame(_actions[_curstate]->GetCurClip());
+	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 
 	_HandCollider->Render();

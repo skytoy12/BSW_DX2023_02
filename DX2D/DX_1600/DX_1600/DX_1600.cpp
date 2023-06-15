@@ -9,7 +9,7 @@
 
 HWND hWnd;
 
-void Render();
+// void Render();
 
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
@@ -61,6 +61,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     StateManager::Create();
     ShaderManager::Create();
     SRVManager::Create();
+    EffectManager::Create();
 
     shared_ptr<Program> program = make_shared<Program>();
 
@@ -88,6 +89,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
 
     // 삭제
+    EffectManager::Delete();
     SRVManager::Delete();
     ShaderManager::Delete();
     StateManager::Delete();

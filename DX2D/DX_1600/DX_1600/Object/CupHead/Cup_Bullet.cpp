@@ -59,7 +59,7 @@ void Cup_Bullet::Render()
 		return;
 	_transform->SetBuffer(0);
 
-	_sprites[_state]->SetCurFrame(_actions[_state]->GetCurClip());
+	_sprites[_state]->SetCurClip(_actions[_state]->GetCurClip());
 	_sprites[_state]->Render();
 
 	_collider->Render();

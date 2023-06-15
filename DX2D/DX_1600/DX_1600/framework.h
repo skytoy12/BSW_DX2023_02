@@ -86,6 +86,8 @@ using namespace Microsoft::WRL;
 //Object
 #include "Object/Bagic/Quad.h"
 #include "Object/Bagic/Sprite.h"
+#include "Object/Bagic/Effect.h"
+#include "Object/Bagic/EffectManager.h"
 #include "Object/SolarSystem/Planet.h"
 #include "Object/Dungreed/DungreedBullet.h"
 #include "Object/Dungreed/Dungreed.h"

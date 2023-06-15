@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Bagic\EffectManager.h" />
+    <ClInclude Include="Object\Bagic\Effect.h" />
+    <ClInclude Include="Scene\BagicScene\EffectScene.h" />
     <ClInclude Include="Object\CupHead\Cup_Boss.h" />
     <ClInclude Include="Object\CupHead\Cup_Bullet.h" />
     <ClInclude Include="Scene\BagicScene\CupHeadScene.h" />
@@ -204,6 +207,9 @@
     <ClInclude Include="Object\Zelda\ZeldaPotion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Bagic\EffectManager.cpp" />
+    <ClCompile Include="Object\Bagic\Effect.cpp" />
+    <ClCompile Include="Scene\BagicScene\EffectScene.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Boss.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Bullet.cpp" />
     <ClCompile Include="Scene\BagicScene\CupHeadScene.cpp" />
@@ -272,6 +278,7 @@
     <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.png" />
     <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.png" />
     <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.png" />
+    <Image Include="Resource\CupHead\GreenExplosion.png" />
     <Image Include="Resource\CupHead\Idle.png" />
     <Image Include="Resource\CupHead\Jump.png" />
     <Image Include="Resource\CupHead\Run.png" />

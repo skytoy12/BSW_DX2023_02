@@ -28,5 +28,5 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="clown_pillar_idle_0001(106).png" x="1005" y="810" w="500" h="800" pX="0.5" pY="0.5"/>
     <sprite n="clown_pillar_idle_0001(107).png" x="1507" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
     <sprite n="clown_pillar_idle_0001(108).png" x="1507" y="810" w="500" h="800" pX="0.5" pY="0.5"/>
-    <sprite n="clown_pillar_idle_0001(109).png" x="2009" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
+    <sprite n="clown_pillar_idle_0001(109).png" x="2059" y="1" w="500" h="800" pX="0.5" pY="0.5"/>
 </TextureAtlas>

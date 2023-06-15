@@ -63,7 +63,7 @@ void ZeldaAction::Update()
 void ZeldaAction::Render()
 {
 	_transform->SetBuffer(0);
-	_sprite->SetCurFrame(_actions[_state]->GetCurClip());
+	_sprite->SetCurClip(_actions[_state]->GetCurClip());
 	_sprite->Render();
 	_collider->Render();
 

@@ -14,7 +14,7 @@ Cup_Boss::Cup_Boss()
 
 	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Start.xml", "START", Vector2(250, 400), Action::Type::END, (std::bind(&Cup_Boss::EndEvent, this)));
 
-	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(250, 400), Action::Type::END, (std::bind(&Cup_Boss::EndEvent, this)));
+	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_Loop.xml", "LOOP", Vector2(250, 400), Action::Type::LOOP);
 
 	CreateAction(L"Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.png", "Resource/CupHead/Clown_Page_Last_Spawn_Penguin_End.xml", "END", Vector2(250, 400), Action::Type::END);
 
@@ -25,8 +25,6 @@ Cup_Boss::Cup_Boss()
 	//action Event ¼³Á¤
 	{
 		_actions[Boss_State::START]->SetAlmostEvent(std::bind(&Cup_Boss::EndEvent, this));
-		_actions[Boss_State::LOOP]->SetAlmostEvent(std::bind(&Cup_Boss::EndEvent, this));
-		//_actions[Boss_State::END]->SetAlmostEvent(std::bind(&Cup_Boss::EndEvent, this));
 	}
 
 
@@ -42,15 +40,16 @@ void Cup_Boss::Update()
 {
 	if (_isAlive == false)
 		return;
+
 	_collider->Update();
-
 	_intBuffer->Update();
-
 	_actions[_state]->Update();
 
 	_sprites[_state]->Update();
 
 	_transform->Update();
+
+	_sprites[_state]->SetCurClip(_actions[_state]->GetCurClip());
 
 	if (_hp <= 0)
 	{
@@ -70,7 +69,7 @@ void Cup_Boss::Render()
 	_transform->SetBuffer(0);
 	_intBuffer->SetPSBuffer(1);
 
-	_sprites[_state]->SetCurFrame(_actions[_state]->GetCurClip());
+
 	_sprites[_state]->Render();
 
 	_collider->Render();
@@ -121,8 +120,6 @@ void Cup_Boss::CreateAction(wstring srvPath, string xmmlPath, string actionName,
 	action->Update();
 	sprite->Update();
 
-	sprite->SetCurFrame(action->GetCurClip());
-
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }
@@ -136,23 +133,6 @@ void Cup_Boss::EndEvent()
 		_actions[START]->Reset();
 		return;
 	}
-
-	if (_state == Boss_State::LOOP)
-	{
-		_state = Boss_State::START;
-		_actions[_state]->Play();
-		_actions[LOOP]->Reset();
-		return;
-	}
-
-	if (_state == Boss_State::END)
-	{
-		_state = Boss_State::START;
-		_actions[_state]->Play();
-		_actions[END]->Reset();
-		return;
-	}
-
 }
 
 void Cup_Boss::DieEvent()

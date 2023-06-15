@@ -14,7 +14,7 @@
 Program::Program()
 {
 	srand(unsigned int(time(nullptr)));
-	_curScene = make_shared<EffectScene>();
+	_curScene = make_shared<CupHeadScene>();
 
 	_view = make_shared<MatrixBuffer>();
 	_projection = make_shared<MatrixBuffer>();
@@ -37,10 +37,11 @@ void Program::Update()
 {
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();
-	EffectManager::GetInstance()->Update();
 
 	_curScene->Collider_Update();
 	_curScene->Update();
+
+	EffectManager::GetInstance()->Update();
 }
 
 void Program::Render()

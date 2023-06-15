@@ -43,6 +43,8 @@ public :
 
 	bool _isJump = false;
 
+	Vector2 GetBulletPos();
+
 	bool isCollision_Bullets(shared_ptr<Collider> col);
 
 private :

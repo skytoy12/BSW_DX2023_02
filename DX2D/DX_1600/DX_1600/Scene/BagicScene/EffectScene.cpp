@@ -3,7 +3,7 @@
 
 EffectScene::EffectScene()
 {
-	EffectManager::GetInstance()->AddEffect("GreenEffect", L"Resource/CupHead/GreenExplosion.png", Vector2(4, 4), Vector2(150, 150));
+	EffectManager::GetInstance()->AddEffect("Hit", L"Resource/CupHead/GreenExplosion.png", Vector2(4, 4), Vector2(100, 100));
 }
 
 EffectScene::~EffectScene()
@@ -14,7 +14,7 @@ void EffectScene::Update()
 {
 	if (KEY_DOWN(VK_LBUTTON))
 	{
-		EFFECT_PLAY("GreenEffect", MOUSE_POS);
+		EFFECT_PLAY("Hit", MOUSE_POS);
 	}
 }
 

@@ -6,6 +6,7 @@ using namespace tinyxml2;
 
 Cup_Player::Cup_Player()
 {
+	EffectManager::GetInstance()->AddEffect("Hit", L"Resource/CupHead/GreedExplosion.png", Vector2(4, 4), Vector2(100, 100));
 	_collider = make_shared<CircleCollider>(50);
 	_HandCollider = make_shared<CircleCollider>(20);
 
@@ -242,6 +243,14 @@ void Cup_Player::Fire()
 	(*bulletiter)->Shoot(Vector2(dir.x, 0.0f), _HandCollider->GetTransform()->GetWorldPosition());
 }
 
+Vector2 Cup_Player::GetBulletPos()
+{
+	for (auto bullet : _bullets)
+	{
+		return bullet->GetPos();
+	}
+}
+
 bool Cup_Player::isCollision_Bullets(shared_ptr<Collider> col)
 {
 	for (auto bullet : _bullets)
@@ -253,6 +262,7 @@ bool Cup_Player::isCollision_Bullets(shared_ptr<Collider> col)
 		if (col->IsCollision(bullet->GetCollider()))
 		{
 			bullet->_isActive = false;
+			EFFECT_PLAY("Hit", bullet->GetPos());
 			return true;
 		}
 	}

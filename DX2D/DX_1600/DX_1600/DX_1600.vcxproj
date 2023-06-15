@@ -282,6 +282,7 @@
     <Image Include="Resource\CupHead\Idle.png" />
     <Image Include="Resource\CupHead\Jump.png" />
     <Image Include="Resource\CupHead\Run.png" />
+    <Image Include="Resource\CupHead\skill_6x2.png" />
     <Image Include="Resource\CupHead\track.png" />
     <Image Include="Resource\Dungreed\Boss.png" />
     <Image Include="Resource\Dungreed\Bow.png" />

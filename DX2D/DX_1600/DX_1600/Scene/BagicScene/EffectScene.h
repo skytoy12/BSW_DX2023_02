@@ -10,6 +10,5 @@ public :
 	virtual void Render() override;
 
 private :
-	shared_ptr<Effect> _effect;
 };
 

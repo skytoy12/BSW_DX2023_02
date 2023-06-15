@@ -23,7 +23,7 @@ public :
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
-	shared_ptr<CircleCollider> GetCollider() { return _collider; }
+	shared_ptr<RectCollider> GetCollider() { return _collider; }
 
 	void EndEvent();
 
@@ -42,7 +42,7 @@ private :
 
 	Boss_State _state = Boss_State::START;
 
-	shared_ptr<CircleCollider>_collider;
+	shared_ptr<RectCollider>_collider;
 
 	vector<shared_ptr<Action>> _actions;
 

@@ -4,10 +4,11 @@ using namespace tinyxml2;
 
 Cup_Boss::Cup_Boss()
 {
-	_collider = make_shared<CircleCollider>(150);
+	_collider = make_shared<RectCollider>(Vector2(Vector2(150, 350)));
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
 
+	_transform->SetPosition(Vector2(10, 0));
 	_intBuffer = make_shared<IntBuffer>();
 	_intBuffer->_data.aInt = 3;
 	_intBuffer->_data.bInt = 300;

@@ -21,7 +21,6 @@ public :
 
 	shared_ptr<CircleCollider> GetCollider() { return _collider; }
 
-	Vector2 GetPos() { return _collider->GetTransform()->GetWorldPosition(); }
 
 	void EndEvent();
 

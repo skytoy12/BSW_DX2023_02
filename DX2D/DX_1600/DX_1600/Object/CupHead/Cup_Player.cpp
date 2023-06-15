@@ -6,7 +6,6 @@ using namespace tinyxml2;
 
 Cup_Player::Cup_Player()
 {
-	EffectManager::GetInstance()->AddEffect("Hit", L"Resource/CupHead/GreedExplosion.png", Vector2(4, 4), Vector2(100, 100));
 	_collider = make_shared<CircleCollider>(50);
 	_HandCollider = make_shared<CircleCollider>(20);
 
@@ -28,6 +27,7 @@ Cup_Player::Cup_Player()
 	_HandCollider->SetParent(_collider->GetTransform());
 	_transform->SetPosition(Vector2(0, 9.876));
 
+	EffectManager::GetInstance()->AddEffect("Hit", L"Resource/CupHead/GreenExplosion.png", Vector2(4, 4), Vector2(100, 100));
 }
 
 Cup_Player::~Cup_Player()
@@ -247,7 +247,7 @@ Vector2 Cup_Player::GetBulletPos()
 {
 	for (auto bullet : _bullets)
 	{
-		return bullet->GetPos();
+		return bullet->GetCollider()->GetPos();
 	}
 }
 
@@ -262,7 +262,7 @@ bool Cup_Player::isCollision_Bullets(shared_ptr<Collider> col)
 		if (col->IsCollision(bullet->GetCollider()))
 		{
 			bullet->_isActive = false;
-			EFFECT_PLAY("Hit", bullet->GetPos());
+			EFFECT_PLAY("Hit", bullet->GetCollider()->GetPos());
 			return true;
 		}
 	}

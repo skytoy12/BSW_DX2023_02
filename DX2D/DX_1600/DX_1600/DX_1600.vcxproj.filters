@@ -180,6 +180,15 @@
     <ClInclude Include="Object\CupHead\Cup_Wall.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Framework\Utility\Sound.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CupHead\Cup_Track.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Cup_BackGround.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX_1600.cpp">
@@ -330,6 +339,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\CupHead\Cup_Wall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Framework\Utility\Sound.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CupHead\Cup_Track.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Cup_BackGround.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -486,5 +504,23 @@
     <Xml Include="Resource\CupHead\Boss\Clown_Die_End.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Die_Middle.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Die_Start.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Library\FMOD\fmod.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <Library Include="Library\FMOD\fmod_vc.lib" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\CupHead\Sound\attack.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\CupHead\Sound\BGM.mp3" />
+    <Media Include="Resource\CupHead\Sound\drumloop.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\CupHead\Sound\jump.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
   </ItemGroup>
 </Project>

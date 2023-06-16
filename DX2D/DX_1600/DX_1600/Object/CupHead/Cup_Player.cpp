@@ -6,6 +6,7 @@ using namespace tinyxml2;
 
 Cup_Player::Cup_Player()
 {
+	SOUND->Add("Cup_Attack", "Resource/CupHead/Sound/attack.wav");
 	_collider = make_shared<CircleCollider>(50);
 	_HandCollider = make_shared<CircleCollider>(20);
 
@@ -139,12 +140,14 @@ void Cup_Player::Select()
 			_curstate = Cup_Player::State::SHOT;
 			Fire();
 			_curstate = Cup_Player::State::IDLE;
+			SOUND->Play("Cup_Attack", 0.3f);
 		}
 		if (_isJump == true)
 		{
 			_curstate = Cup_Player::State::SHOT;
 			Fire();
 			_curstate = Cup_Player::State::JUMP;
+			SOUND->Play("Cup_Attack", 0.3f);
 		}
 	}
 

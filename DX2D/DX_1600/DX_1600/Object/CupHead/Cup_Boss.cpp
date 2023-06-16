@@ -160,6 +160,7 @@ void Cup_Boss::EndEventDash()
 {
 	if (_coolDown > 0) 
 	{
+		_actions[LOOP]->Reset();
 		_state = Boss_State::LOOP;
 		_actions[_state]->Play();
 		_coolDown -= 1;
@@ -169,7 +170,7 @@ void Cup_Boss::EndEventDash()
 	{
 		_state = Boss_State::READY1;
 		_actions[_state]->Play();
-		_coolDown -= RandomNum(1, 4);
+		_coolDown -= RandomNum(10, 14);
 		return;
 	}
 }

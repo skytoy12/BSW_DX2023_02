@@ -42,6 +42,7 @@
 #define ADD_SRV(k) SRVManager::GetInstance()->Add_SRV(k)
 
 #define EFFECT_PLAY(n,p) EffectManager::GetInstance()->Play(n,p)
+#define SOUND Sound::GetInstance()
 
 #define LERP(s,e,t) s + (e - s)*t
 

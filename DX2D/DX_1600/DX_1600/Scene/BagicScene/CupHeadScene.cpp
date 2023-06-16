@@ -2,6 +2,7 @@
 #include "CupHeadScene.h"
 #include "../../Object/CupHead/Cup_Player.h"
 #include "../../Object/CupHead/Cup_Boss.h"
+#include "../../Object/CupHead/Cup_Wall.h"
 
 CupHeadScene::CupHeadScene()
 {
@@ -9,7 +10,9 @@ CupHeadScene::CupHeadScene()
 	_player->SetPosition(CENTER);
 
 	_boss = make_shared<Cup_Boss>();
-	_boss->SetPosition(CENTER + Vector2(300, -25));
+	_boss->SetPosition(CENTER + Vector2(300, -130));
+
+	_wall = make_shared<Cup_Wall>();
 
 	_track = make_shared<Quad>(L"Resource/CupHead/Track.png");
 	_transform = make_shared<Transform>();
@@ -36,12 +39,25 @@ void CupHeadScene::Update()
 
 	_transform->Update();
 	_col->Update();
+	_wall->Update();
 
 	if (_col->Block(_player->GetCollider()))
 	{
 		if (_player->_isJump == true)
 			_player->SetType(Cup_Player::State::IDLE);
 		_player->_isJump = false;
+	}
+
+	if (_boss->GetCollider()->IsCollision(_wall->GetLeftWall()))
+	{
+		_boss->_isWallCrash = true;
+		_boss->GetCollider()->GetTransform()->AddVector2(Vector2(100, 0));
+	}
+
+	if (_boss->GetCollider()->IsCollision(_wall->GetRightWall()))
+	{
+		_boss->_isWallCrash = true;
+		_boss->GetCollider()->GetTransform()->AddVector2(Vector2(-100, 0));
 	}
 
 	if (_boss->_isAlive == true)
@@ -51,6 +67,8 @@ void CupHeadScene::Update()
 			_boss->Damage(1);
 		}
 	}
+
+
 }
 
 void CupHeadScene::Render()
@@ -58,6 +76,7 @@ void CupHeadScene::Render()
 	_transform->SetBuffer(0);
 	_track->Render();
 	_col->Render();
+	_wall->Render();
 
 	_player->Render();
 	_boss->Render();

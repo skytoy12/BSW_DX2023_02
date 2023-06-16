@@ -15,5 +15,7 @@ private :
 	shared_ptr<class Cup_Boss> _boss;
 	shared_ptr<Quad> _track;
 	shared_ptr<Collider> _col;
+
+	shared_ptr<class Cup_Wall> _wall;
 };
 

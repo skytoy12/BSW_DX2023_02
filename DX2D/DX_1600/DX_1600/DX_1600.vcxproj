@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\CupHead\Cup_Wall.h" />
     <ClInclude Include="Object\Bagic\EffectManager.h" />
     <ClInclude Include="Object\Bagic\Effect.h" />
     <ClInclude Include="Scene\BagicScene\EffectScene.h" />
@@ -207,6 +208,7 @@
     <ClInclude Include="Object\Zelda\ZeldaPotion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\CupHead\Cup_Wall.cpp" />
     <ClCompile Include="Object\Bagic\EffectManager.cpp" />
     <ClCompile Include="Object\Bagic\Effect.cpp" />
     <ClCompile Include="Scene\BagicScene\EffectScene.cpp" />
@@ -273,6 +275,18 @@
     <Image Include="DX_1600.ico" />
     <Image Include="Resource\CupHead\AimStraightCharge.png" />
     <Image Include="Resource\CupHead\AimStraightShot.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Dash.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Dash_Loop.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Die_End.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Die_Middle.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Die_Start.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Intro_1.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Intro_2.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Move_1.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Move_2.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Move_3.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Ready_Dash.png" />
+    <Image Include="Resource\CupHead\Boss\Clown_Wall_Crash.png" />
     <Image Include="Resource\CupHead\Bullet_Intro.png" />
     <Image Include="Resource\CupHead\Bullet_Loop.png" />
     <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.png" />
@@ -449,6 +463,18 @@
   <ItemGroup>
     <Xml Include="Resource\CupHead\AimStraightCharge.xml" />
     <Xml Include="Resource\CupHead\AimStraightShot.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Dash.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Dash_Loop.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Die_End.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Die_Middle.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Die_Start.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Intro_1.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Intro_2.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Move_1.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Move_2.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Move_3.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Ready_Dash.xml" />
+    <Xml Include="Resource\CupHead\Boss\Clown_Wall_Crash.xml" />
     <Xml Include="Resource\CupHead\Bullet_Intro.xml" />
     <Xml Include="Resource\CupHead\Bullet_Loop.xml" />
     <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.xml" />

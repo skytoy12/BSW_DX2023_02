@@ -7,9 +7,14 @@ public :
 	{
 		START,
 		LOOP,
-		END,
-		DIE,
-		NONE
+		READY1,
+		READY2,
+		READY3,
+		DASHREADY,
+		DASHSTART,
+		DASHLOOP,
+		DASHSTOP,
+		DIE
 	};
 
 	Cup_Boss();
@@ -25,18 +30,37 @@ public :
 
 	shared_ptr<RectCollider> GetCollider() { return _collider; }
 
+	void Dash();
+
+	void EndEventDash();
+
 	void EndEvent();
 
 	void DieEvent();
 
+	void EndEventCrash();
+
 	void Damage(int value) { _hp -= value; }
 
+	void Move(Vector2 movePos) { _collider->GetTransform()->AddVector2(movePos * DELTA_TIME); }
+
 	bool _isAlive = true;
+
+	int RandomNum(int min, int max) { return rand() % (max - min) + min; }
+
+	bool _isWallCrash = false;
 
 private :
 	void SetLeft();
 	void SetRight();
 	int _hp = 10;
+
+
+	bool _isLeft = true;
+
+
+
+	int _coolDown = 3;
 
 	shared_ptr<IntBuffer> _intBuffer;
 

@@ -16,15 +16,6 @@ Program::Program()
 	srand(unsigned int(time(nullptr)));
 	_curScene = make_shared<CupHeadScene>();
 
-	_view = make_shared<MatrixBuffer>();
-	_projection = make_shared<MatrixBuffer>();
-
-	XMMATRIX projectM = XMMatrixOrthographicOffCenterLH(0, WIN_WIDTH, 0, WIN_HEIGHT, 0.0f, 1.0f);
-
-	_projection->SetData(projectM);
-	
-	_view->Update();
-	_projection->Update();
 
 	Timer::GetInstance()->SetLockFPS(60.0);
 }
@@ -38,6 +29,7 @@ void Program::Update()
 	InputManager::GetInstance()->Update();
 	Timer::GetInstance()->Update();
 	Sound::GetInstance()->Update();
+	CAMERA->Update();
 
 	_curScene->Collider_Update();
 	_curScene->Update();
@@ -52,12 +44,13 @@ void Program::Render()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+	CAMERA->SetCameraBuffer();
+	CAMERA->SetProjectionBuffer();
 
-	_view->SetVSBuffer(1);
-	_projection->SetVSBuffer(2);
 
 	ALPHA->SetState();
 
+	CAMERA->PostRender();
 	_curScene->Render();
 	EffectManager::GetInstance()->Render();
 

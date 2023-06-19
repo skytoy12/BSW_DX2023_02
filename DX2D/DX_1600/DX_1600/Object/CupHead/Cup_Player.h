@@ -36,7 +36,7 @@ public :
 
 	void DieEvent();
 
-	void SetType(State _type) { _curstate = _type; }
+	void SetType(State _type);
 
 	void Fire();
 
@@ -45,6 +45,8 @@ public :
 	void SetGrounded() { _isJump = false; }
 
 	shared_ptr<CircleCollider> GetCollider() { return _collider; }
+
+	shared_ptr<Transform> GetTransform() { return _collider->GetTransform(); }
 
 	bool _isJump = false;
 
@@ -62,7 +64,7 @@ private :
 	void SetLeft();
 	void SetRight();
 
-	int _hp = 5;
+	int _hp = 15;
 
 	State _oldstate = Cup_Player::State::IDLE;
 	State _curstate = Cup_Player::State::IDLE;

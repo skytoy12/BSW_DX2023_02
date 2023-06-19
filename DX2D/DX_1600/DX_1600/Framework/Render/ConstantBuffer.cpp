@@ -14,7 +14,7 @@ ConstantBuffer::ConstantBuffer(void* data, UINT dataSize)
 
 	DEVICE->CreateBuffer(&bd, &initData, _buffer.GetAddressOf());
 
-
+	Update();
 }
 
 ConstantBuffer::~ConstantBuffer()

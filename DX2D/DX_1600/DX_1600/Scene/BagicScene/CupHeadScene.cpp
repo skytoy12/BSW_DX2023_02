@@ -9,19 +9,19 @@
 CupHeadScene::CupHeadScene()
 {
 	_player = make_shared<Cup_Player>();
-	_player->SetPosition(CENTER);
+	_player->SetPosition(Vector2(0,0));
 
 	_boss = make_shared<Cup_Boss>();
-	_boss->SetPosition(CENTER + Vector2(300, -130));
+	_boss->SetPosition(Vector2(0, 0));
 
 	_2phase = make_shared<Cup_Boss_2phase>();
-	_2phase->SetPosition(CENTER + Vector2(0, -500));
+	_2phase->SetPosition(Vector2(0, -200));
 
 	_wall = make_shared<Cup_Wall>();
 
 	_track = make_shared<Cup_Track>();
 
-
+	CAMERA->SetTarget(_player->GetTransform());
 }
 
 CupHeadScene::~CupHeadScene()
@@ -80,18 +80,18 @@ void CupHeadScene::Update()
 
 	if (_player->_isActive == true)
 	{
-		if (_boss->GetCollider()->IsCollision(_player->GetCollider()) && _boss->_isAlive == true) //&& _player->_isHitted == false)
+		if (_boss->GetCollider()->IsCollision(_player->GetCollider()) && _boss->_isAlive == true && _player->_isHitted == false)
 		{
-			//_player->_isHitted = true;
+			_player->_isHitted = true;
 			_player->Damaged(1);
-			//_player->SetType(Cup_Player::State::HIT);
+			_player->SetType(Cup_Player::State::HIT);
 		}
 
-		if (_2phase->isCollision_Bullets(_player->GetCollider())) //&& _player->_isHitted == false)
+		if (_2phase->isCollision_Bullets(_player->GetCollider()) && _player->_isHitted == false)
 		{
-			//_player->_isHitted = true;
+			_player->_isHitted = true;
 			_player->Damaged(1);
-			//_player->SetType(Cup_Player::State::HIT);
+			_player->SetType(Cup_Player::State::HIT);
 		}
 	}
 

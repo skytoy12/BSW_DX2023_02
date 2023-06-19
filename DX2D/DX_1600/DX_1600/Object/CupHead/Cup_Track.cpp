@@ -11,9 +11,7 @@ Cup_Track::Cup_Track()
 	_transform->SetParent(_col->GetTransform());
 	_transform->SetPosition(Vector2(0, 75));
 
-	Vector2 pos = CENTER;
-	pos.y -= 350.0f;
-	_col->GetTransform()->SetPosition(pos);
+	_col->GetTransform()->SetPosition(Vector2(0.0f, CENTER.y * -1.0f));
 }
 
 Cup_Track::~Cup_Track()

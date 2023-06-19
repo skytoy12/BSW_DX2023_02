@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Camera\Camera.h" />
     <ClInclude Include="Object\CupHead\Cup_BackGround.h" />
     <ClInclude Include="Object\CupHead\Cup_Boss_2phase.h" />
     <ClInclude Include="Object\CupHead\Cup_Track.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Object\Zelda\ZeldaPotion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Camera\Camera.cpp" />
     <ClCompile Include="Object\CupHead\Cup_BackGround.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Boss_2phase.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Track.cpp" />

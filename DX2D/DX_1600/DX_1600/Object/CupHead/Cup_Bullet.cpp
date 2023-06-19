@@ -16,6 +16,8 @@ Cup_Bullet::Cup_Bullet()
 	_transform->SetAngle(-(PI / 2));
 	_transform->SetPosition(Vector2(-65, 0));
 	_actions[0]->SetEndEvent(std::bind(&Cup_Bullet::EndEvent, this));
+	_collider->Update();
+	_transform->Update();
 }
 
 Cup_Bullet::~Cup_Bullet()

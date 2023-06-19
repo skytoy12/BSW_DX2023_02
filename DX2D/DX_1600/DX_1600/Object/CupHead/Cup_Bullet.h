@@ -28,7 +28,7 @@ public :
 
 	bool _isActive = false;
 private :
-	Bullet_State _state = Bullet_State::INTRO;
+	Bullet_State _state = Bullet_State::LOOP;
 
 
 	Vector2 _dir = Vector2(0, 0);

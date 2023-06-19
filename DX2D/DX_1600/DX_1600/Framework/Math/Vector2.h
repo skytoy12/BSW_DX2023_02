@@ -42,6 +42,14 @@ public :
         return *this;
     }
 
+    Vector2 operator-()
+    {
+        this->x = -x;
+        this->y = -y;
+
+        return *this;
+    }
+
     bool operator==(const Vector2& other) const;
     bool operator!=(const Vector2& other) const;
     bool operator<(const Vector2& other) const;

@@ -262,9 +262,7 @@ void Cup_Player::Jump()
 void Cup_Player::EndEvent()
 {
 	_isHitted = false;
-	_curstate = State::IDLE;
-	_actions[_curstate]->Play();
-	_actions[HIT]->Reset();
+	SetType(IDLE);
 	return;
 }
 
@@ -274,6 +272,14 @@ void Cup_Player::DieEvent()
 	{
 		_isActive = false;
 	}
+}
+
+void Cup_Player::SetType(State _type)
+{
+	_curstate = _type;
+	_actions[_curstate]->Play();
+	_actions[_oldstate]->Reset();
+	_oldstate = _curstate;
 }
 
 

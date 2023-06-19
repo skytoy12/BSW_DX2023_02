@@ -7,14 +7,14 @@ Cup_Bullet::Cup_Bullet()
 {
 	_collider = make_shared<CircleCollider>(5);
 
-	CreateAction(L"Resource/CupHead/Bullet_Intro.png", "Resource/CupHead/Bullet_Intro.xml", "IntroBullet", Vector2(30, 90), Action::Type::END, std::bind(&Cup_Bullet::EndEvent, this));
+	CreateAction(L"Resource/CupHead/Bullet_Intro.png", "Resource/CupHead/Bullet_Intro.xml", "IntroBullet", Vector2(50, 150), Action::Type::END, std::bind(&Cup_Bullet::EndEvent, this));
 
-	CreateAction(L"Resource/CupHead/Bullet_Loop.png", "Resource/CupHead/Bullet_Loop.xml", "LoopBullet", Vector2(30, 90), Action::Type::LOOP);
+	CreateAction(L"Resource/CupHead/Bullet_Loop.png", "Resource/CupHead/Bullet_Loop.xml", "LoopBullet", Vector2(50, 150), Action::Type::LOOP);
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_collider->GetTransform());
 	_transform->SetAngle(-(PI / 2));
-	_transform->SetPosition(Vector2(-40, 0));
+	_transform->SetPosition(Vector2(-65, 0));
 	_actions[0]->SetEndEvent(std::bind(&Cup_Bullet::EndEvent, this));
 }
 

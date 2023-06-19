@@ -15,6 +15,8 @@ Cup_Player::Cup_Player()
 	CreateAction(L"Resource/CupHead/Jump.png", "Resource/CupHead/Jump.xml", "JUMP", Vector2(120, 120), Action::Type::LOOP);
 	CreateAction(L"Resource/CupHead/AimStraightCharge.png", "Resource/CupHead/AimStraightCharge.xml", "CHARGE", Vector2(120, 120), Action::Type::LOOP);
 	CreateAction(L"Resource/CupHead/AimStraightShot.png", "Resource/CupHead/AimStraightShot.xml", "SHOT", Vector2(250, 250), Action::Type::LOOP);
+	CreateAction(L"Resource/CupHead/Player/Player_Hit.png", "Resource/CupHead/Player/Player_Hit.xml", "SHOT", Vector2(250, 250), Action::Type::END, std::bind(&Cup_Player::EndEvent, this));
+	CreateAction(L"Resource/CupHead/Player/Player_Ghost.png", "Resource/CupHead/Player/Player_Ghost.xml", "SHOT", Vector2(250, 250), Action::Type::LOOP);
 	_actions[4]->SetType(Action::Type::END);
 
 	for (int i = 0; i < 30; i++)
@@ -37,6 +39,20 @@ Cup_Player::~Cup_Player()
 
 void Cup_Player::Update()
 {
+	if (_isActive == false)
+		return;
+
+	if (_isDead == true)
+	{
+		Move(Vector2(0, 200));
+	}
+
+	if (_hp <= 0)
+	{
+		_hp = 0;
+		_curstate = DIE;
+		_isDead = true;
+	}
 	Input();
 	Select();
 	Jump();
@@ -58,6 +74,9 @@ void Cup_Player::Update()
 
 void Cup_Player::Render()
 {
+	if (_isActive == false)
+		return;
+
 	_transform->SetBuffer(0);
 
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
@@ -72,12 +91,17 @@ void Cup_Player::Render()
 
 void Cup_Player::PostRender()
 {
+	ImGui::Text("PlayerHP : %d", _hp);
 	//ImGui::SliderFloat2("State", (int*)&_state, 0, 100);
 	//_transform->SetPosition(_fixedPos);
 }
 
 void Cup_Player::Select()
 {
+	if (_isHitted == true)
+		return;
+	if (_isDead == true)
+		return;
 
 	if (KEY_PRESS('A'))
 	{
@@ -203,6 +227,9 @@ void Cup_Player::CreateAction(wstring srvPath, string xmmlPath, string actionNam
 
 void Cup_Player::Input()
 {
+	if (_isDead == true)
+		return;
+
 	if (KEY_PRESS('A'))
 	{
 		_sprites[_curstate]->SetLeft();
@@ -216,7 +243,8 @@ void Cup_Player::Input()
 
 void Cup_Player::Jump()
 {
-
+	if (_isDead == true)
+		return;
 	// 중력작용
 	{
 		_jumpPower -= 15;
@@ -231,9 +259,23 @@ void Cup_Player::Jump()
 
 }
 
-void Cup_Player::AnimationControl()
+void Cup_Player::EndEvent()
 {
+	_isHitted = false;
+	_curstate = State::IDLE;
+	_actions[_curstate]->Play();
+	_actions[HIT]->Reset();
+	return;
 }
+
+void Cup_Player::DieEvent()
+{
+	if (_collider->GetPos().y > WIN_HEIGHT && _isDead == true)
+	{
+		_isActive = false;
+	}
+}
+
 
 void Cup_Player::Fire()
 {

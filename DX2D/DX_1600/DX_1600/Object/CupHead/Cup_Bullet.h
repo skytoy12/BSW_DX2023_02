@@ -19,6 +19,8 @@ public :
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
+	void SetAngle(float value) { _collider->GetTransform()->SetAngle(value); }
+
 	shared_ptr<CircleCollider> GetCollider() { return _collider; }
 
 

@@ -151,7 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Cup_BackGround.h" />
+    <ClInclude Include="Object\CupHead\Cup_BackGround.h" />
+    <ClInclude Include="Object\CupHead\Cup_Boss_2phase.h" />
     <ClInclude Include="Object\CupHead\Cup_Track.h" />
     <ClInclude Include="Object\CupHead\Cup_Wall.h" />
     <ClInclude Include="Object\Bagic\EffectManager.h" />
@@ -211,7 +212,8 @@
     <ClInclude Include="Object\Zelda\ZeldaPotion.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Cup_BackGround.cpp" />
+    <ClCompile Include="Object\CupHead\Cup_BackGround.cpp" />
+    <ClCompile Include="Object\CupHead\Cup_Boss_2phase.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Track.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Wall.cpp" />
     <ClCompile Include="Object\Bagic\EffectManager.cpp" />
@@ -281,6 +283,10 @@
     <Image Include="DX_1600.ico" />
     <Image Include="Resource\CupHead\AimStraightCharge.png" />
     <Image Include="Resource\CupHead\AimStraightShot.png" />
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Die.png" />
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_End.png" />
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Loop.png" />
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Start.png" />
     <Image Include="Resource\CupHead\Boss\Clown_Dash.png" />
     <Image Include="Resource\CupHead\Boss\Clown_Dash_Loop.png" />
     <Image Include="Resource\CupHead\Boss\Clown_Die_End.png" />
@@ -295,12 +301,11 @@
     <Image Include="Resource\CupHead\Boss\Clown_Wall_Crash.png" />
     <Image Include="Resource\CupHead\Bullet_Intro.png" />
     <Image Include="Resource\CupHead\Bullet_Loop.png" />
-    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.png" />
-    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.png" />
-    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.png" />
     <Image Include="Resource\CupHead\GreenExplosion.png" />
     <Image Include="Resource\CupHead\Idle.png" />
     <Image Include="Resource\CupHead\Jump.png" />
+    <Image Include="Resource\CupHead\Player\Player_Ghost.png" />
+    <Image Include="Resource\CupHead\Player\Player_Hit.png" />
     <Image Include="Resource\CupHead\Run.png" />
     <Image Include="Resource\CupHead\skill_6x2.png" />
     <Image Include="Resource\CupHead\track.png" />
@@ -469,6 +474,10 @@
   <ItemGroup>
     <Xml Include="Resource\CupHead\AimStraightCharge.xml" />
     <Xml Include="Resource\CupHead\AimStraightShot.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Die.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_End.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Loop.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Start.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Dash.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Dash_Loop.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Die_End.xml" />
@@ -483,14 +492,14 @@
     <Xml Include="Resource\CupHead\Boss\Clown_Wall_Crash.xml" />
     <Xml Include="Resource\CupHead\Bullet_Intro.xml" />
     <Xml Include="Resource\CupHead\Bullet_Loop.xml" />
-    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.xml" />
-    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.xml" />
-    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.xml" />
     <Xml Include="Resource\CupHead\Idle.xml" />
     <Xml Include="Resource\CupHead\Jump.xml" />
+    <Xml Include="Resource\CupHead\Player\Player_Ghost.xml" />
+    <Xml Include="Resource\CupHead\Player\Player_Hit.xml" />
     <Xml Include="Resource\CupHead\Run.xml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fmod.dll" />
     <None Include="Library\FMOD\fmod.dll" />
   </ItemGroup>
   <ItemGroup>

@@ -186,7 +186,10 @@
     <ClInclude Include="Object\CupHead\Cup_Track.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Cup_BackGround.h">
+    <ClInclude Include="Object\CupHead\Cup_BackGround.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\CupHead\Cup_Boss_2phase.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -347,7 +350,10 @@
     <ClCompile Include="Object\CupHead\Cup_Track.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Cup_BackGround.cpp">
+    <ClCompile Include="Object\CupHead\Cup_BackGround.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\CupHead\Cup_Boss_2phase.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -417,15 +423,6 @@
     <Image Include="Resource\CupHead\Bullet_Loop.png">
       <Filter>리소스 파일</Filter>
     </Image>
-    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.png">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.png">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.png">
-      <Filter>리소스 파일</Filter>
-    </Image>
     <Image Include="Resource\CupHead\GreenExplosion.png">
       <Filter>리소스 파일</Filter>
     </Image>
@@ -468,6 +465,24 @@
     <Image Include="Resource\CupHead\Boss\Clown_Die_Start.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Die.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_End.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Loop.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Start.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Player\Player_Ghost.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\CupHead\Player\Player_Hit.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Shader\TutorialShader.hlsl" />
@@ -489,9 +504,6 @@
     <Xml Include="Resource\CupHead\AimStraightShot.xml" />
     <Xml Include="Resource\CupHead\Bullet_Intro.xml" />
     <Xml Include="Resource\CupHead\Bullet_Loop.xml" />
-    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_End.xml" />
-    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Loop.xml" />
-    <Xml Include="Resource\CupHead\Clown_Page_Last_Spawn_Penguin_Start.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Dash.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Dash_Loop.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Intro_1.xml" />
@@ -504,9 +516,16 @@
     <Xml Include="Resource\CupHead\Boss\Clown_Die_End.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Die_Middle.xml" />
     <Xml Include="Resource\CupHead\Boss\Clown_Die_Start.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Die.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_End.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Loop.xml" />
+    <Xml Include="Resource\CupHead\Boss2\Clown_Page_Last_Spawn_Penguin_Start.xml" />
+    <Xml Include="Resource\CupHead\Player\Player_Ghost.xml" />
+    <Xml Include="Resource\CupHead\Player\Player_Hit.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Library\FMOD\fmod.dll" />
+    <None Include="fmod.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="Library\FMOD\fmod_vc.lib" />

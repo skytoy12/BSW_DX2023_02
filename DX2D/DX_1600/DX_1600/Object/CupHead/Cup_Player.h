@@ -10,7 +10,8 @@ public :
 		JUMP,
 		CHARGE,
 		SHOT,
-		NONE
+		HIT,
+		DIE
 	};
 
 	Cup_Player();
@@ -31,25 +32,38 @@ public :
 
 	void Jump();
 
-	void AnimationControl();
+	void EndEvent();
+
+	void DieEvent();
 
 	void SetType(State _type) { _curstate = _type; }
 
 	void Fire();
 
+	void Damaged(int value) { _hp -= value; }
+
 	void SetGrounded() { _isJump = false; }
 
-	shared_ptr<Collider> GetCollider() { return _collider; }
+	shared_ptr<CircleCollider> GetCollider() { return _collider; }
 
 	bool _isJump = false;
 
 	Vector2 GetBulletPos();
+
+	bool _isActive = true;
+
+	bool _isDead = false;
+
+	bool _isHitted = false;
 
 	bool isCollision_Bullets(shared_ptr<Collider> col);
 
 private :
 	void SetLeft();
 	void SetRight();
+
+	int _hp = 5;
+
 	State _oldstate = Cup_Player::State::IDLE;
 	State _curstate = Cup_Player::State::IDLE;
 

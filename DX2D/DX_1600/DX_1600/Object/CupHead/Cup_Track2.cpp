@@ -1,7 +1,7 @@
 #include "framework.h"
-#include "Cup_Track.h"
+#include "Cup_Track2.h"
 
-Cup_Track::Cup_Track()
+Cup_Track2::Cup_Track2()
 {
 	_quad = make_shared<Quad>(L"Resource/CupHead/Track.png");
 	_transform = make_shared<Transform>();
@@ -11,20 +11,20 @@ Cup_Track::Cup_Track()
 	_transform->SetParent(_col->GetTransform());
 	_transform->SetPosition(Vector2(0, 75));
 
-	_col->GetTransform()->SetPosition(Vector2(0.0f, CENTER.y * -1.0f));
+	_col->GetTransform()->SetPosition(Vector2(1700.0f, CENTER.y * -1.0f + 200.0f));
 }
 
-Cup_Track::~Cup_Track()
+Cup_Track2::~Cup_Track2()
 {
 }
 
-void Cup_Track::Update()
+void Cup_Track2::Update()
 {
 	_transform->Update();
 	_col->Update();
 }
 
-void Cup_Track::Render()
+void Cup_Track2::Render()
 {
 	_transform->SetBuffer(0);
 	_quad->Render();

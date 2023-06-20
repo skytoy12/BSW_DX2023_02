@@ -40,20 +40,33 @@ public :
 	void SetPosition(Vector2& pos);
 
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
+	void SetLeftBottom(Vector2 value) { _leftBottom = value; }
+	void SetRightTop(Vector2 value) { _rightTop = value; }
+	void SetOffSet(Vector2 value) { _offSet = value; }
 
 private :
 	void FollowMode();
+	void FreeMode();
+	void Shake();
 
 	static Camera* _instance;
 
 	shared_ptr<Transform> _view;
 	shared_ptr<MatrixBuffer> _projection;
 
+	//FollowMode
 	weak_ptr<Transform> _target;
 	Vector2 _offSet;
+	Vector2 _leftBottom = Vector2(-10000.0f, -10000.0f);
+	Vector2 _rightTop = Vector2(10000.0f, 10000.0f);
 
-	Vector2 _pos;
-	Vector2 _scale = { 1,1 };
-	float _angle = 0;
+	//FreeMode
+	float _speed = 300;
+
+	float _duration = 0.0f;
+	float _magnitude = 0.0f;
+	float _reduceDamping = 0.0f;
+	
+	Vector2 _originPos;
 };
 

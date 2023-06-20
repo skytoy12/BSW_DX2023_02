@@ -4,13 +4,13 @@
 Cup_Wall::Cup_Wall()
 {
 	_leftWall = make_shared<RectCollider>(Vector2(10, WIN_HEIGHT));
-	_leftWall->SetPosition(Vector2(0, WIN_HEIGHT / 2));
+	_leftWall->SetPosition(Vector2(-(WIN_WIDTH / 2), 0));
 
 	_rightWall = make_shared<RectCollider>(Vector2(10, WIN_HEIGHT));
-	_rightWall->SetPosition(Vector2(WIN_WIDTH - 15, WIN_HEIGHT / 2));
+	_rightWall->SetPosition(Vector2(WIN_WIDTH / 2, 0));
 
 	_UpWall = make_shared<RectCollider>(Vector2(WIN_WIDTH, 10));
-	_UpWall->SetPosition(Vector2(WIN_WIDTH / 2 - 500, 500));
+	_UpWall->SetPosition(Vector2(0, WIN_HEIGHT / 2));
 }
 
 Cup_Wall::~Cup_Wall()

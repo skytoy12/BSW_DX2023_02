@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Framework\Camera\Camera.h" />
+    <ClInclude Include="Framework\Math\MyMath.h" />
     <ClInclude Include="Object\CupHead\Cup_BackGround.h" />
     <ClInclude Include="Object\CupHead\Cup_Boss_2phase.h" />
     <ClInclude Include="Object\CupHead\Cup_Track.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="Scene\BagicScene\TutorialScene.h" />
     <ClInclude Include="Framework\Math\Transform.h" />
     <ClInclude Include="Framework\Utility\Timer.h" />
+    <ClInclude Include="Object\CupHead\Cup_Track2.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Framework\Render\VertexBuffer.h" />
     <ClInclude Include="Framework\Render\VertexShader.h" />
@@ -214,6 +216,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Framework\Camera\Camera.cpp" />
+    <ClCompile Include="Framework\Math\MyMath.cpp" />
     <ClCompile Include="Object\CupHead\Cup_BackGround.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Boss_2phase.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Track.cpp" />
@@ -277,6 +280,7 @@
     <ClCompile Include="Object\Zelda\ZeldaAction.cpp" />
     <ClCompile Include="Object\Zelda\ZeldaPotion.cpp" />
     <ClCompile Include="Framework\Utility\Sound.cpp" />
+    <ClCompile Include="Object\CupHead\Cup_Track2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX_1600.rc" />

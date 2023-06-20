@@ -38,6 +38,8 @@ public :
 
 	void SetType(State _type);
 
+	void SetState(State _type) { _curstate = _type; }
+
 	void Fire();
 
 	void Damaged(int value) { _hp -= value; }
@@ -57,6 +59,8 @@ public :
 	bool _isDead = false;
 
 	bool _isHitted = false;
+
+	bool _isInvincibility = false;
 
 	bool isCollision_Bullets(shared_ptr<Collider> col);
 

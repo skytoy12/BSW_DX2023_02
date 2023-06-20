@@ -44,7 +44,7 @@ public :
 
 	void Move(Vector2 movePos) { _collider->GetTransform()->AddVector2(movePos * DELTA_TIME); }
 
-	bool _isAlive = false;
+	bool _isAlive = true;
 
 	int RandomNum(int min, int max) { return rand() % (max - min) + min; }
 

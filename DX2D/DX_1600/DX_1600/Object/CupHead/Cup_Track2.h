@@ -1,9 +1,9 @@
 #pragma once
-class Cup_Track
+class Cup_Track2
 {
-public :
-	Cup_Track();
-	~Cup_Track();
+public:
+	Cup_Track2();
+	~Cup_Track2();
 	void Update();
 	void Render();
 
@@ -11,7 +11,7 @@ public :
 
 	Vector2 GetTrackSize() { return _trackHalfSize; }
 
-private :
+private:
 	shared_ptr<Quad> _quad;
 	shared_ptr<Collider> _col;
 	shared_ptr<Transform> _transform;

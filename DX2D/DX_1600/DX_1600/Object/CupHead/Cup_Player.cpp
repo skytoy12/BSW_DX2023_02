@@ -53,6 +53,11 @@ void Cup_Player::Update()
 		_curstate = DIE;
 		_isDead = true;
 	}
+
+	if (KEY_PRESS(VK_F11))
+	{
+		_collider->SetPosition(Vector2(0, 0));
+	}
 	Input();
 	Select();
 	Jump();
@@ -165,6 +170,7 @@ void Cup_Player::Select()
 			Fire();
 			_curstate = Cup_Player::State::IDLE;
 			SOUND->Play("Cup_Attack", 0.3f);
+			CAMERA->ShakeStart(5.0f, 1.0f);
 		}
 		if (_isJump == true)
 		{
@@ -172,6 +178,7 @@ void Cup_Player::Select()
 			Fire();
 			_curstate = Cup_Player::State::JUMP;
 			SOUND->Play("Cup_Attack", 0.3f);
+			CAMERA->ShakeStart(5.0f, 1.0f);
 		}
 	}
 

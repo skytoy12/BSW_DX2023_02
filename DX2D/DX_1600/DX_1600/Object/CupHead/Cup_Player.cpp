@@ -301,6 +301,7 @@ void Cup_Player::Fire()
 	(*bulletiter)->Shoot(Vector2(dir.x, 0.0f), _HandCollider->GetTransform()->GetWorldPosition());
 }
 
+
 Vector2 Cup_Player::GetBulletPos()
 {
 	for (auto bullet : _bullets)

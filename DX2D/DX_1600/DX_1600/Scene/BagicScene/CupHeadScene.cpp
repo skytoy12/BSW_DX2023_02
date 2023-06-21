@@ -26,6 +26,8 @@ CupHeadScene::CupHeadScene()
 	CAMERA->SetTarget(_player->GetTransform());
 	CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track->GetCollider()->GetPos().y));
 	CAMERA->SetRightTop(Vector2(_track2->GetCollider()->GetPos().x + _track2->GetTrackSize().x, 1000.0f));
+
+	Load();
 }
 
 CupHeadScene::~CupHeadScene()
@@ -149,5 +151,42 @@ void CupHeadScene::PostRender()
 	{
 		CAMERA->SetTarget(nullptr);
 	}
+
+	if (ImGui::Button("Save", ImVec2(100, 50)))
+	{
+		Save();
+	}
+
+	if (ImGui::Button("Load", ImVec2(100, 50)))
+	{
+		Load();
+	}
+
+}
+
+void CupHeadScene::Save()
+{
+	BinaryWriter writer = BinaryWriter(L"Save/test.test");
+	writer.Int(1);
+
+	Vector2 playerPos = _player->GetCollider()->GetTransform()->GetWorldPosition();
+
+	writer.String("PlayerPos");
+	writer.Byte(&playerPos, sizeof(Vector2));
+}
+
+void CupHeadScene::Load()
+{
+	BinaryReader reader = BinaryReader(L"Save/test.test");
+	int temp = reader.Int();
+
+	string str = reader.String();
+	assert(str == "PlayerPos");
+
+	Vector2 playerPos;
+	Vector2* ptr = &playerPos;
+	reader.Byte((void**)&ptr, sizeof(Vector2));
+
+	_player->SetPosition(playerPos);
 
 }

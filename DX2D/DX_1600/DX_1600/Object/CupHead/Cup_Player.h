@@ -50,6 +50,7 @@ public :
 
 	shared_ptr<Transform> GetTransform() { return _collider->GetTransform(); }
 
+
 	bool _isJump = false;
 
 	Vector2 GetBulletPos();

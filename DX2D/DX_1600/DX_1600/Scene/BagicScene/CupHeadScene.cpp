@@ -34,6 +34,16 @@ CupHeadScene::~CupHeadScene()
 {
 }
 
+void CupHeadScene::Init()
+{
+	Load();
+}
+
+void CupHeadScene::End()
+{
+	// CupHead 총알회수 함수...
+}
+
 void CupHeadScene::Update()
 {
 	_player->Update();

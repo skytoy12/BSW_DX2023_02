@@ -5,7 +5,7 @@ public:
 	DungreedScene();
 	~DungreedScene();
 
-	virtual void Collider_Update() override;
+
 	virtual void Update() override;
 	virtual void Render() override;
 	virtual void PostRender() override;

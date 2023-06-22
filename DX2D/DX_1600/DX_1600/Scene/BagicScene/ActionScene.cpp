@@ -12,14 +12,11 @@ ActionScene::~ActionScene()
 {
 }
 
-void ActionScene::Collider_Update()
-{
-	_zelda->Collider_Update();
-}
 
 void ActionScene::Update()
 {
 	_zelda->Update();
+	_zelda->Collider_Update();
 }
 
 void ActionScene::Render()

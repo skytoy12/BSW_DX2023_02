@@ -100,5 +100,7 @@ public :
 
     float Angle() const;
 
+    Vector2 TransformCoord(XMMATRIX matrix);
+
 };
 

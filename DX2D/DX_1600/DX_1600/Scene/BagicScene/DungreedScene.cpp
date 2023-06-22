@@ -19,12 +19,6 @@ DungreedScene::~DungreedScene()
 {
 }
 
-void DungreedScene::Collider_Update()
-{
-	_dungreedPlayer->Collider_Update();
-	_floor->Update();
-	_boss->Collider_Update();
-}
 
 void DungreedScene::Update()
 {
@@ -41,6 +35,9 @@ void DungreedScene::Update()
 		}
 	}
 
+	_dungreedPlayer->Collider_Update();
+	_floor->Update();
+	_boss->Collider_Update();
 }
 
 void DungreedScene::Render()

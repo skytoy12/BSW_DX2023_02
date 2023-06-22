@@ -19,15 +19,6 @@ ColliderScene::~ColliderScene()
 {
 }
 
-void ColliderScene::Collider_Update()
-{
-	_rectCollider->Update();
-	_rectCollider2->Update();
-	_circleCollider->Update();
-	_circleCollider2->Update();
-
-
-}
 
 void ColliderScene::Update()
 {
@@ -52,6 +43,11 @@ void ColliderScene::Update()
 		_circleCollider->SetGreen();
 		_rectCollider2->SetGreen();
 	}
+
+	_rectCollider->Update();
+	_rectCollider2->Update();
+	_circleCollider->Update();
+	_circleCollider2->Update();
 
 }
 

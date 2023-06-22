@@ -51,3 +51,15 @@ float Vector2::Angle() const
 {
     return atan2f(y,x);
 }
+
+Vector2 Vector2::TransformCoord(XMMATRIX matrix)
+{
+    XMVECTOR temp = XMLoadFloat2(this);
+
+    temp = XMVector2TransformCoord(temp, matrix);
+
+    Vector2 result;
+    XMStoreFloat2(&result, temp);
+
+    return result;
+}

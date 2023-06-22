@@ -161,6 +161,7 @@
     <ClInclude Include="Object\CupHead\Cup_Wall.h" />
     <ClInclude Include="Object\Bagic\EffectManager.h" />
     <ClInclude Include="Object\Bagic\Effect.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\BagicScene\EffectScene.h" />
     <ClInclude Include="Object\CupHead\Cup_Boss.h" />
     <ClInclude Include="Object\CupHead\Cup_Bullet.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Object\CupHead\Cup_Wall.cpp" />
     <ClCompile Include="Object\Bagic\EffectManager.cpp" />
     <ClCompile Include="Object\Bagic\Effect.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\BagicScene\EffectScene.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Boss.cpp" />
     <ClCompile Include="Object\CupHead\Cup_Bullet.cpp" />

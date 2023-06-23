@@ -24,6 +24,11 @@ void Program::Update()
 	SCENE->Update();
 
 	EffectManager::GetInstance()->Update();
+
+	if (KEY_DOWN(VK_F1))
+	{
+		Collider::_isDebug = !Collider::_isDebug;
+	}
 }
 
 void Program::Render()
@@ -39,12 +44,13 @@ void Program::Render()
 
 	ALPHA->SetState();
 
-	CAMERA->PostRender();
 	SCENE->Render();
 	EffectManager::GetInstance()->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
 
+	CAMERA->SetUICameraBuffer();
+	CAMERA->PostRender();
 	SCENE->PostRender();
 
 	ImGui::Render();

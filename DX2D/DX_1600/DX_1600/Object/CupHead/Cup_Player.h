@@ -61,15 +61,17 @@ public :
 
 	bool _isHitted = false;
 
-	bool _isInvincibility = false;
+	bool _isInvincibility = true;
 
 	bool isCollision_Bullets(shared_ptr<Collider> col);
+
+	int _hp = 10;
+	int _maxhp = 10;
 
 private :
 	void SetLeft();
 	void SetRight();
 
-	int _hp = 15;
 
 	State _oldstate = Cup_Player::State::IDLE;
 	State _curstate = Cup_Player::State::IDLE;

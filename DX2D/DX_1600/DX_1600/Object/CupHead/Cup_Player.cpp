@@ -42,6 +42,9 @@ void Cup_Player::Update()
 	if (_isActive == false)
 		return;
 
+	if (KEY_DOWN(VK_F2))
+		_hp -= 1;
+
 	if (_isDead == true)
 	{
 		Move(Vector2(0, 200));
@@ -103,8 +106,8 @@ void Cup_Player::PostRender()
 
 void Cup_Player::Select()
 {
-	if (_isHitted == true)
-		return;
+	//if (_isHitted == true)
+	//	return;
 	if (_isDead == true)
 		return;
 

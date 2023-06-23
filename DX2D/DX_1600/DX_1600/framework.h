@@ -105,6 +105,9 @@ using namespace Microsoft::WRL;
 #include "Object/Dungreed/Dun_Player_Advanced.h"
 #include "Object/Dungreed/DungreedBoss.h"
 
+// UI
+#include "Object/UI/Button.h"
+
 // Scene
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"

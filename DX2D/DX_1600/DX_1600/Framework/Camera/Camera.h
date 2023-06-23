@@ -29,6 +29,7 @@ public :
 
 	void SetViewPort(UINT width = WIN_WIDTH, UINT height = WIN_HEIGHT);
 	void SetCameraBuffer() { _view->SetBuffer(1); }
+	void SetUICameraBuffer() { _uiView->SetBuffer(1); }
 	void SetProjectionBuffer() { _projection->SetVSBuffer(2); }
 
 	void AddAngle(float angle) { _view->AddAngle(-angle); }
@@ -54,6 +55,7 @@ private :
 	static Camera* _instance;
 
 	shared_ptr<Transform> _view;
+	shared_ptr<Transform> _uiView;
 	shared_ptr<MatrixBuffer> _projection;
 
 	//FollowMode

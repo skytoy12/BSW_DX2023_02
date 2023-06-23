@@ -50,6 +50,7 @@ public :
 	void SetParent(shared_ptr<Transform> transform) { _transform->SetParent(transform); }
 
 	
+	static bool _isDebug;
 
 protected :
 	virtual bool AABB_Collision(shared_ptr<class CircleCollider> other) abstract;
@@ -68,5 +69,6 @@ protected :
 	shared_ptr<ColorBuffer> _colorBuffer;
 
 	ColliderType _type;
+
 };
 

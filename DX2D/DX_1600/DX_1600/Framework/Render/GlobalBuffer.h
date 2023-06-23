@@ -148,3 +148,46 @@ public:
 
 	Data _data;
 };
+
+class ButtonBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		int state = 0;
+		float hovered = 0.0f;
+		float clicked = 0.0f;
+		float padding = 0.0f;
+	};
+
+	ButtonBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+
+	}
+	virtual ~ButtonBuffer() {}
+
+
+	Data _data;
+};
+
+class HPBarBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		float maxHP = 0.0f;
+		float curHP = 0.0f;
+		float padding[2] = { 0.0f, 0.0f };
+	};
+
+	HPBarBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+
+	}
+	virtual ~HPBarBuffer() {}
+
+
+	Data _data;
+};

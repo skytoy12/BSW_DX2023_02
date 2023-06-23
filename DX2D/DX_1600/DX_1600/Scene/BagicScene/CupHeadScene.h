@@ -20,5 +20,6 @@ private :
 	shared_ptr<class Cup_Track2> _track2;
 	shared_ptr<class Cup_Wall> _wall;
 	shared_ptr<class Cup_Boss_2phase> _2phase;
+	shared_ptr<Button> _button;
 };
 

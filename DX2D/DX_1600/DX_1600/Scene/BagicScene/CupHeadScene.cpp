@@ -23,6 +23,11 @@ CupHeadScene::CupHeadScene()
 	_track = make_shared<Cup_Track>();
 	_track2 = make_shared<Cup_Track2>();
 
+	shared_ptr<SRV> srv = ADD_SRV(L"Resource/UI/Button.png");
+	_button = make_shared<Button>(L"Resource/UI/Button.png", srv->GetImageSize() + Vector2(500, 0));
+	_button->SetEvent(std::bind(&CupHeadScene::Load, this));
+
+
 	CAMERA->SetTarget(_player->GetTransform());
 	CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track->GetCollider()->GetPos().y));
 	CAMERA->SetRightTop(Vector2(_track2->GetCollider()->GetPos().x + _track2->GetTrackSize().x, 1000.0f));
@@ -52,6 +57,11 @@ void CupHeadScene::Update()
 	_track->Update();
 	_track2->Update();
 	_wall->Update();
+	_button->Update();
+
+	_button->_hpBarBuffer->_data.maxHP = _player->_maxhp;
+	_button->_hpBarBuffer->_data.curHP = _player->_hp;
+	//_button->GetCollider()->GetTransform()->SetScale(Vector2(_player->_hp / _player->_maxhp, 0));
 
 	if(_player->GetCollider()->GetPos().x > _track->GetCollider()->GetPos().x + _track->GetTrackSize().x)
 		CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track2->GetCollider()->GetPos().y));
@@ -112,8 +122,8 @@ void CupHeadScene::Update()
 	{
 		if (_boss->GetCollider()->IsCollision(_player->GetCollider()) && _boss->_isAlive == true)
 		{
-			if (_player->_isInvincibility == true)
-				return;
+			//if (_player->_isInvincibility == true)
+			//	return;
 			_player->SetType(Cup_Player::State::HIT);
 			_player->_isHitted = true;
 			_player->_isInvincibility = true;
@@ -122,8 +132,8 @@ void CupHeadScene::Update()
 
 		if (_2phase->isCollision_Bullets(_player->GetCollider()) && _player->_isHitted == false)
 		{
-			if (_player->_isInvincibility == true)
-				return;
+			//if (_player->_isInvincibility == true)
+			//	return;
 			_player->SetType(Cup_Player::State::HIT);
 			_player->_isHitted = true;
 			_player->_isInvincibility = true;
@@ -151,7 +161,7 @@ void CupHeadScene::PostRender()
 	_player->PostRender();
 	_boss->PostRender();
 	_2phase->PostRender();
-
+	_button->PostRender();
 	if(ImGui::Button("TargetON", ImVec2(100, 50)))
 	{
 		CAMERA->SetTarget(_player->GetTransform());

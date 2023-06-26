@@ -5,7 +5,7 @@ TutorialScene::TutorialScene()
 {
 
 	_quad = make_shared<Quad>(L"Resource/SUN.png");
-	_quad->SetPS(ADD_PS(L"Shader/FilterPS.hlsl"));
+	// _quad->SetPS(ADD_PS(L"Shader/FilterPS.hlsl"));
 	_transform = make_shared<Transform>();
 
 

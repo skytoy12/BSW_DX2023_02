@@ -59,9 +59,6 @@ void CupHeadScene::Update()
 	_wall->Update();
 	_button->Update();
 
-	_button->_hpBarBuffer->_data.maxHP = _player->_maxhp;
-	_button->_hpBarBuffer->_data.curHP = _player->_hp;
-	//_button->GetCollider()->GetTransform()->SetScale(Vector2(_player->_hp / _player->_maxhp, 0));
 
 	if(_player->GetCollider()->GetPos().x > _track->GetCollider()->GetPos().x + _track->GetTrackSize().x)
 		CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track2->GetCollider()->GetPos().y));

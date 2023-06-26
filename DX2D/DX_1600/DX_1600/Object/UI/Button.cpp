@@ -9,11 +9,10 @@ Button::Button(wstring path, Vector2 size)
 	_collider = make_shared<RectCollider>(size);
 
 	_transform->SetParent(_collider->GetTransform());
-	_hpBarBuffer = make_shared<HPBarBuffer>();
 
-	//_buttonBuffer = make_shared<ButtonBuffer>();
-	//_buttonBuffer->_data.hovered = 0.3f;
-	//_buttonBuffer->_data.clicked = 0.6f;
+	_buttonBuffer = make_shared<ButtonBuffer>();
+	_buttonBuffer->_data.hovered = 0.3f;
+	_buttonBuffer->_data.clicked = 0.6f;
 }
 
 Button::~Button()
@@ -27,7 +26,7 @@ void Button::Update()
 
 	if (_collider->IsCollision(MOUSE_POS))
 	{
-		//_buttonBuffer->_data.state = 1;
+		_buttonBuffer->_data.state = 1;
 		if (KEY_PRESS(VK_LBUTTON))
 		{
 			_buttonBuffer->_data.state = 2;
@@ -38,17 +37,17 @@ void Button::Update()
 	}
 	else
 	{
-		//_buttonBuffer->_data.state = 0;
+		_buttonBuffer->_data.state = 0;
 		_collider->SetGreen();
 	}
 
-	//_buttonBuffer->Update();
+	_buttonBuffer->Update();
 }
 
 void Button::PostRender()
 {
 	_transform->SetBuffer(0);
-	//_buttonBuffer->SetPSBuffer(0);
+	_buttonBuffer->SetPSBuffer(0);
 	_quad->Render();
 	_collider->Render();
 }

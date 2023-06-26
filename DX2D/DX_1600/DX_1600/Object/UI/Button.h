@@ -13,7 +13,6 @@ public :
 
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
-	shared_ptr<HPBarBuffer> _hpBarBuffer;
 
 private :
 	shared_ptr<Collider> _collider;

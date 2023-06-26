@@ -20,8 +20,13 @@ struct PixelInput
 
 float4 PS(PixelInput input) : SV_TARGET
 {
-	input.uv.x = input.uv.x * (curHP / maxHP);
 	float4 color = map.Sample(samp, input.uv);
+	float ratio = (float)curHP / (float)maxHP;
+
+	if (ratio > 1)
+		ratio = 1;
+	if (input.uv.x > ratio)
+		return float4 (0, 0, 0, 0);
 
 	return color;
 }

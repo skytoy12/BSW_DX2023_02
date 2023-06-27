@@ -310,11 +310,9 @@
     <FxCompile Include="Shader\ColliderPS.hlsl" />
     <FxCompile Include="Shader\ColliderVS.hlsl" />
     <FxCompile Include="Shader\FilterPS.hlsl" />
-    <FxCompile Include="Shader\HPBarPS.hlsl" />
     <FxCompile Include="Shader\SpritePS.hlsl" />
     <FxCompile Include="Shader\SpriteVS.hlsl" />
     <FxCompile Include="Shader\TexturePS.hlsl" />
     <FxCompile Include="Shader\TextureVS.hlsl" />
-    <FxCompile Include="Shader\TutorialShader.hlsl" />
   </ItemGroup>
 </Project>

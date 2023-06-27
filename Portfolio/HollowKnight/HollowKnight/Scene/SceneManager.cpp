@@ -1,16 +1,14 @@
 #include "framework.h"
 #include "SceneManager.h"
 
-#include "BagicScene/CupHeadScene.h"
-#include "BagicScene/SolorSystem.h"
-#include "BagicScene/TutorialScene.h"
+//#include "BagicScene/CupHeadScene.h"
+
 
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
+
 	//_scenes.push_back(make_shared<TutorialScene>());
-	//_scenes.push_back(make_shared<SolorSystem>());
-	_scenes.push_back(make_shared<TutorialScene>());
 }
 
 SceneManager::~SceneManager()

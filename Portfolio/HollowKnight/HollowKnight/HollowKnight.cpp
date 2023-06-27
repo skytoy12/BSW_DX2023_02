@@ -6,10 +6,17 @@
 
 #define MAX_LOADSTRING 100
 
+
+HWND hWnd;
+
+
 // 전역 변수:
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
+
+
+
 
 // 이 코드 모듈에 포함된 함수의 선언을 전달합니다:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
@@ -40,19 +47,68 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_HOLLOWKNIGHT));
 
-    MSG msg;
+    // 생성
+    Device::Create();
+
+    ImGui::CreateContext();
+    ImGui::StyleColorsDark();
+
+    ImGui_ImplWin32_Init(hWnd);
+    ImGui_ImplDX11_Init(DEVICE.Get(), DC.Get());
+
+    InputManager::Create();
+    Timer::Create();
+    StateManager::Create();
+    ShaderManager::Create();
+    SRVManager::Create();
+    EffectManager::Create();
+    Sound::Create();
+    Camera::Create();
+    SceneManager::Create();
+
+    shared_ptr<Program> program = make_shared<Program>();
+
+    MSG msg = {};
 
     // 기본 메시지 루프입니다:
-    while (GetMessage(&msg, nullptr, 0, 0))
+    while (msg.message != WM_QUIT)
     {
-        if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+        if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
         {
-            TranslateMessage(&msg);
-            DispatchMessage(&msg);
+            if (!TranslateAccelerator(msg.hwnd, hAccelTable, &msg))
+            {
+                TranslateMessage(&msg);
+                DispatchMessage(&msg);
+            }
+        }
+        else
+        {
+            // 메인루프
+            // Render();
+
+            program->Update();
+            program->Render();
         }
     }
 
-    return (int) msg.wParam;
+    // 삭제
+    SceneManager::Delete();
+    Camera::Delete();
+    Sound::Delete();
+    EffectManager::Delete();
+    SRVManager::Delete();
+    ShaderManager::Delete();
+    StateManager::Delete();
+    Timer::Delete();
+    InputManager::Delete();
+
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
+
+    Device::Delete();
+
+    return (int)msg.wParam;
 }
 
 
@@ -97,14 +153,15 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
+       0, 0, WIN_WIDTH, WIN_HEIGHT, nullptr, nullptr, hInstance, nullptr);
 
    if (!hWnd)
    {
       return FALSE;
    }
 
+   SetMenu(hWnd, nullptr);
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
@@ -121,6 +178,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //  WM_DESTROY  - 종료 메시지를 게시하고 반환합니다.
 //
 //
+
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
+
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
@@ -142,6 +202,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
+
+    case WM_MOUSEMOVE:
+    {
+        int x = static_cast<float>(LOWORD(lParam));
+        int y = WIN_HEIGHT - static_cast<float>(HIWORD(lParam));
+        InputManager::GetInstance()->SetMousePos({ x, y });
+        break;
+    }
+
     case WM_PAINT:
         {
             PAINTSTRUCT ps;

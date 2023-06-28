@@ -9,6 +9,7 @@
 
 CupHeadScene::CupHeadScene()
 {
+#pragma region CupHead
 	_player = make_shared<Cup_Player>();
 	_player->SetPosition(Vector2(0,0));
 
@@ -33,6 +34,19 @@ CupHeadScene::CupHeadScene()
 	CAMERA->SetRightTop(Vector2(_track2->GetCollider()->GetPos().x + _track2->GetTrackSize().x, 1000.0f));
 
 	Load();
+#pragma endregion
+
+#pragma region RTV
+	_rtv = make_shared<RenderTarget>();
+	_rtvQuad = make_shared<Quad>(Vector2(WIN_WIDTH, WIN_HEIGHT));
+	shared_ptr<SRV> rtvsrv = make_shared<SRV>(_rtv->GetSRV());
+	_rtvQuad->SetSRV(rtvsrv);
+	_rtvQuad->SetPS(ADD_PS(L"Shader/FilterPS.hlsl"));
+
+	_rtvTransform = make_shared<Transform>();
+	_filterbuffer = make_shared<FilterBuffer>();
+	
+#pragma endregion
 }
 
 CupHeadScene::~CupHeadScene()
@@ -143,14 +157,23 @@ void CupHeadScene::Update()
 
 void CupHeadScene::Render()
 {
+	_rtvTransform->SetBuffer(0);
+	_filterbuffer->SetPSBuffer(0);
+	_rtvQuad->Render();
+}
+
+void CupHeadScene::PreRender()
+{
+	_rtv->Set();
+
 	_2phase->Render();
 	_track->Render();
 	_track2->Render();
 
 	_wall->Render();
 
-	_player->Render();
 	_boss->Render();
+	_player->Render();
 }
 
 void CupHeadScene::PostRender()
@@ -159,6 +182,7 @@ void CupHeadScene::PostRender()
 	_boss->PostRender();
 	_2phase->PostRender();
 	_button->PostRender();
+
 	if(ImGui::Button("TargetON", ImVec2(100, 50)))
 	{
 		CAMERA->SetTarget(_player->GetTransform());

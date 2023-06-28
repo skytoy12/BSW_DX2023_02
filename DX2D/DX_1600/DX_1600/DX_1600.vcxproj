@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Render\RenderTarget.h" />
     <ClInclude Include="Scene\BagicScene\MapToolScene.h" />
     <ClInclude Include="Object\UI\Button.h" />
     <ClInclude Include="Framework\Utility\BinaryReader.h" />
@@ -220,6 +221,7 @@
     <ClInclude Include="Object\Zelda\ZeldaPotion.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Render\RenderTarget.cpp" />
     <ClCompile Include="Scene\BagicScene\MapToolScene.cpp" />
     <ClCompile Include="Object\UI\Button.cpp" />
     <ClCompile Include="Framework\Utility\BinaryReader.cpp" />
@@ -333,6 +335,7 @@
     <Image Include="Resource\Item_11x5.png" />
     <Image Include="Resource\moon.png" />
     <Image Include="Resource\Dungreed\Player.png" />
+    <Image Include="Resource\Run.png" />
     <Image Include="Resource\sun.png" />
     <Image Include="Resource\UI\Button.png" />
     <Image Include="Resource\Zelda.png" />
@@ -542,6 +545,7 @@
     <Xml Include="Resource\CupHead\Player\Player_Ghost.xml" />
     <Xml Include="Resource\CupHead\Player\Player_Hit.xml" />
     <Xml Include="Resource\CupHead\Run.xml" />
+    <Xml Include="Resource\Run.xml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fmod.dll" />

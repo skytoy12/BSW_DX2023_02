@@ -9,6 +9,7 @@ public :
 	virtual void End() override;
 	virtual void Update() override;
 	virtual void Render() override;
+	virtual void PreRender() override;
 	virtual void PostRender() override;
 
 	void Save();
@@ -21,5 +22,10 @@ private :
 	shared_ptr<class Cup_Wall> _wall;
 	shared_ptr<class Cup_Boss_2phase> _2phase;
 	shared_ptr<Button> _button;
+
+	shared_ptr<Quad> _rtvQuad;
+	shared_ptr<RenderTarget> _rtv;
+	shared_ptr<FilterBuffer> _filterbuffer;
+	shared_ptr<Transform> _rtvTransform;
 };
 

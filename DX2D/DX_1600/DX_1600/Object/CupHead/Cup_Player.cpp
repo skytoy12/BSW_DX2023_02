@@ -11,7 +11,7 @@ Cup_Player::Cup_Player()
 	_HandCollider = make_shared<CircleCollider>(20);
 
 	CreateAction(L"Resource/CupHead/Idle.png", "Resource/CupHead/Idle.xml", "IDLE", Vector2(250, 250), Action::Type::LOOP);
-	CreateAction(L"Resource/CupHead/Run.png", "Resource/CupHead/Run.xml", "RUN", Vector2(120, 120), Action::Type::LOOP);
+	CreateAction(L"Resource/Run.png", "Resource/Run.xml", "RUN", Vector2(120, 120), Action::Type::LOOP);
 	CreateAction(L"Resource/CupHead/Jump.png", "Resource/CupHead/Jump.xml", "JUMP", Vector2(120, 120), Action::Type::LOOP);
 	CreateAction(L"Resource/CupHead/AimStraightCharge.png", "Resource/CupHead/AimStraightCharge.xml", "CHARGE", Vector2(120, 120), Action::Type::LOOP);
 	CreateAction(L"Resource/CupHead/AimStraightShot.png", "Resource/CupHead/AimStraightShot.xml", "SHOT", Vector2(250, 250), Action::Type::LOOP);
@@ -63,7 +63,7 @@ void Cup_Player::Update()
 	}
 	Input();
 	Select();
-	Jump();
+	// Jump();
 
 	_collider->Update();
 

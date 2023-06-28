@@ -38,6 +38,7 @@ void Program::Render()
 	ImGui_ImplDX11_NewFrame();
 	ImGui_ImplWin32_NewFrame();
 	ImGui::NewFrame();
+
 	CAMERA->SetCameraBuffer();
 	CAMERA->SetProjectionBuffer();
 
@@ -48,6 +49,9 @@ void Program::Render()
 	EffectManager::GetInstance()->Render();
 
 	ImGui::Text("FPS : %d", Timer::GetInstance()->GetFPS());
+	ImGui::Text("W_MOUSEPOS : { %.0f , %.0f }", W_MOUSE_POS.x, W_MOUSE_POS.y);
+	ImGui::Text("S_MOUSEPOS : { %.0f , %.0f }", S_MOUSE_POS.x, S_MOUSE_POS.y);
+	ImGui::Text("MOUSEPOS : { %.0f , %.0f }", MOUSE_POS.x, MOUSE_POS.y);
 
 	CAMERA->SetUICameraBuffer();
 	CAMERA->PostRender();

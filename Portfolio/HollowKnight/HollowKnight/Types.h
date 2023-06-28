@@ -35,6 +35,7 @@
 
 #define MOUSE_POS InputManager::GetInstance()->GetMousePos()
 #define W_MOUSE_POS Camera::GetInstance()->GetWorldMousePos()
+#define S_MOUSE_POS InputManager::GetInstance()->GetScreenMousePos()
 
 #define DELTA_TIME Timer::GetInstance()->GetDeltaTime()
 

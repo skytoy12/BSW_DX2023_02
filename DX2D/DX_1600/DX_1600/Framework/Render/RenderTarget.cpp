@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "RenderTarget.h"
+#include "../TextureMapping/SRV.h"
 
 RenderTarget::RenderTarget(UINT width, UINT height)
 	:_width(width), _height(height)
@@ -52,6 +53,8 @@ void RenderTarget::CreateSRV()
 	desc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 	desc.Texture2D.MipLevels = 1;
 
-	DEVICE->CreateShaderResourceView(_rtvTexture.Get(), &desc, _srv.GetAddressOf());
+	DEVICE->CreateShaderResourceView(_rtvTexture.Get(), &desc, _shaderResourceView.GetAddressOf());
+
+	_srv = make_shared<SRV>(_shaderResourceView);
 }
 

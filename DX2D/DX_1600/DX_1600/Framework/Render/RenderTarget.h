@@ -7,7 +7,7 @@ public :
 
 	void Set(XMFLOAT4 clearColor = XMFLOAT4(1, 1, 1, 1));
 
-	ComPtr<ID3D11ShaderResourceView> GetSRV() { return _srv; }
+	shared_ptr<class SRV> GetSRV() { return _srv; }
 
 
 private :
@@ -20,7 +20,8 @@ private :
 
 	ComPtr<ID3D11Texture2D> _rtvTexture;
 	ComPtr<ID3D11RenderTargetView> _rtv;
-	ComPtr<ID3D11ShaderResourceView> _srv;
+	ComPtr<ID3D11ShaderResourceView> _shaderResourceView;
 
+	shared_ptr<class SRV> _srv;
 };
 

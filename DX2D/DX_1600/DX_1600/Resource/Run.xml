@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:c1c144380044b1d25e1dffd3e1ee734d:e0ebe12478ed872331dcc2b76ee3f126:ed982377c07a778df57b538fb5e157cd$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Run.png" width="1551" height="119">
+    <sprite n="002-00-514.png" x="1442" y="1" w="108" h="113" oX="6" oY="4" oW="192" oH="117"/>
+    <sprite n="002-01-515.png" x="1278" y="1" w="162" h="115" oX="0" oY="1" oW="192" oH="117"/>
+    <sprite n="002-02-516.png" x="729" y="1" w="189" h="116" oX="0" oY="0" oW="192" oH="117"/>
+    <sprite n="002-03-517.png" x="920" y="1" w="180" h="116" oX="0" oY="0" oW="192" oH="117"/>
+    <sprite n="002-04-518.png" x="535" y="1" w="192" h="116" oX="0" oY="0" oW="192" oH="117"/>
+    <sprite n="002-05-519.png" x="1102" y="1" w="174" h="116" oX="3" oY="1" oW="192" oH="117"/>
+    <sprite n="002-06-520.png" x="1" y="1" w="87" h="117" oX="9" oY="0" oW="192" oH="117"/>
+    <sprite n="002-07-520.png" x="90" y="1" w="87" h="117" oX="9" oY="0" oW="192" oH="117"/>
+    <sprite n="002-08-520.png" x="179" y="1" w="87" h="117" oX="9" oY="0" oW="192" oH="117"/>
+    <sprite n="002-09-520.png" x="268" y="1" w="87" h="117" oX="9" oY="0" oW="192" oH="117"/>
+    <sprite n="002-10-520.png" x="357" y="1" w="87" h="117" oX="9" oY="0" oW="192" oH="117"/>
+    <sprite n="002-11-520.png" x="446" y="1" w="87" h="117" oX="9" oY="0" oW="192" oH="117"/>
+</TextureAtlas>

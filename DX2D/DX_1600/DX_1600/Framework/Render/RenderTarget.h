@@ -1,4 +1,6 @@
 #pragma once
+#include "../TextureMapping/SRV.h"
+
 class RenderTarget
 {
 public :
@@ -7,7 +9,7 @@ public :
 
 	void Set(XMFLOAT4 clearColor = XMFLOAT4(1, 1, 1, 1));
 
-	shared_ptr<class SRV> GetSRV() { return _srv; }
+	shared_ptr<class SRV> GetSRV() { return _rtvSRV; }
 
 
 private :
@@ -22,6 +24,6 @@ private :
 	ComPtr<ID3D11RenderTargetView> _rtv;
 	ComPtr<ID3D11ShaderResourceView> _shaderResourceView;
 
-	shared_ptr<class SRV> _srv;
+	shared_ptr<class SRV> _rtvSRV;
 };
 

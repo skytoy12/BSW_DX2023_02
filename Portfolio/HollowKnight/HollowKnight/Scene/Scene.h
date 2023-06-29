@@ -12,6 +12,7 @@ public :
 	virtual void Render() abstract;
 
 	virtual void PostRender() {}
+	virtual void PreRender() {}
 
 private :
 	

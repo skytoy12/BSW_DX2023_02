@@ -20,3 +20,7 @@ void MapTool::Render()
 {
 	_collider->Render();
 }
+
+void MapTool::PostRender()
+{
+}

@@ -21,7 +21,7 @@ CupHeadScene::CupHeadScene()
 
 	_wall = make_shared<Cup_Wall>();
 
-	_track = make_shared<Cup_Track>(CENTER);
+	_track = make_shared<Cup_Track2>();
 	_track2 = make_shared<Cup_Track2>();
 
 	shared_ptr<SRV> srv = ADD_SRV(L"Resource/UI/Button.png");
@@ -30,8 +30,8 @@ CupHeadScene::CupHeadScene()
 
 
 	CAMERA->SetTarget(_player->GetTransform());
-	CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track->GetCollider()->GetPos().y));
-	CAMERA->SetRightTop(Vector2(_track2->GetCollider()->GetPos().x + _track2->GetTrackSize().x, 1000.0f));
+	CAMERA->SetLeftBottom(Vector2(-100000, -100000));
+	CAMERA->SetRightTop(Vector2(100000, 100000));
 
 	Load();
 #pragma endregion
@@ -39,12 +39,12 @@ CupHeadScene::CupHeadScene()
 #pragma region RTV
 	_rtv = make_shared<RenderTarget>();
 	_rtvQuad = make_shared<Quad>(Vector2(WIN_WIDTH, WIN_HEIGHT));
-	shared_ptr<SRV> rtvsrv = make_shared<SRV>(_rtv->GetSRV());
-	_rtvQuad->SetSRV(rtvsrv);
+	_rtvQuad->SetSRV(_rtv->GetSRV());
 	_rtvQuad->SetPS(ADD_PS(L"Shader/FilterPS.hlsl"));
 
 	_rtvTransform = make_shared<Transform>();
 	_filterbuffer = make_shared<FilterBuffer>();
+	_filterbuffer->_data.selected = 1;
 	
 #pragma endregion
 }
@@ -73,11 +73,14 @@ void CupHeadScene::Update()
 	_wall->Update();
 	_button->Update();
 
+	_rtvTransform->Update();
+	_filterbuffer->Update();
 
-	if(_player->GetCollider()->GetPos().x > _track->GetCollider()->GetPos().x + _track->GetTrackSize().x)
-		CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track2->GetCollider()->GetPos().y));
-	if (_player->GetCollider()->GetPos().x < _track->GetCollider()->GetPos().x + _track->GetTrackSize().x)
-		CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track->GetCollider()->GetPos().y));
+
+	//if(_player->GetCollider()->GetPos().x > _track->GetCollider()->GetPos().x + _track->GetTrackSize().x)
+	//	CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track2->GetCollider()->GetPos().y));
+	//if (_player->GetCollider()->GetPos().x < _track->GetCollider()->GetPos().x + _track->GetTrackSize().x)
+	//	CAMERA->SetLeftBottom(Vector2(-_track->GetTrackSize().x, _track->GetCollider()->GetPos().y));
 
 	if (_2phase->GetCollider()->GetPos().x > _player->GetCollider()->GetPos().x)
 		_2phase->SetLeft();
@@ -202,6 +205,8 @@ void CupHeadScene::PostRender()
 	{
 		Load();
 	}
+
+	ImGui::SliderInt("Mosaic", &_filterbuffer->_data.Value1, 1, 300);
 
 }
 

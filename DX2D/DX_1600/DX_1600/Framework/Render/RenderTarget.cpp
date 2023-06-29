@@ -55,6 +55,6 @@ void RenderTarget::CreateSRV()
 
 	DEVICE->CreateShaderResourceView(_rtvTexture.Get(), &desc, _shaderResourceView.GetAddressOf());
 
-	_srv = make_shared<SRV>(_shaderResourceView);
+	_rtvSRV = make_shared<SRV>(_shaderResourceView);
 }
 

@@ -168,6 +168,12 @@
     <ClInclude Include="Scene\BagicScene\MapTool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Player.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BagicScene\TestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -284,6 +290,12 @@
     <ClCompile Include="Scene\BagicScene\MapTool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Player.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BagicScene\TestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc">
@@ -295,6 +307,9 @@
       <Filter>리소스 파일</Filter>
     </Image>
     <Image Include="HollowKnight.ico">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Run.png">
       <Filter>리소스 파일</Filter>
     </Image>
   </ItemGroup>
@@ -320,5 +335,9 @@
     <FxCompile Include="Shader\SpriteVS.hlsl" />
     <FxCompile Include="Shader\TexturePS.hlsl" />
     <FxCompile Include="Shader\TextureVS.hlsl" />
+    <FxCompile Include="Shader\PlayerPS.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="Resource\Player\Run.xml" />
   </ItemGroup>
 </Project>

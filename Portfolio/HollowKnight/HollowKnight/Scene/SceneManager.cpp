@@ -2,13 +2,14 @@
 #include "SceneManager.h"
 
 #include "BagicScene/MapTool.h"
+#include "BagicScene/TestScene.h"
 
 
 SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
 
-	_scenes.push_back(make_shared<MapTool>());
+	_scenes.push_back(make_shared<TestScene>());
 }
 
 SceneManager::~SceneManager()

@@ -4,7 +4,7 @@
 MapTool::MapTool()
 {
 	_collider = make_shared<CircleCollider>(50.0f);
-	_collider->SetPosition(CENTER);
+	_collider->SetPosition(Vector2(0, 0));
 }
 
 MapTool::~MapTool()

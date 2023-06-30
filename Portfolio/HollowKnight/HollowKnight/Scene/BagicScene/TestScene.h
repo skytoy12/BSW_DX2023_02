@@ -7,9 +7,11 @@ public :
 
 	virtual void Update() override;
 	virtual void Render() override;
+	virtual void PostRender() override;
 
 private :
 	shared_ptr<class Player> _player;
-
+	shared_ptr<RectCollider> _col;
+	float _scale = 1.0f;
 };
 

@@ -336,6 +336,7 @@
     <FxCompile Include="Shader\TexturePS.hlsl" />
     <FxCompile Include="Shader\TextureVS.hlsl" />
     <FxCompile Include="Shader\PlayerPS.hlsl" />
+    <FxCompile Include="Shader\NonRedPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Player\Run.xml" />

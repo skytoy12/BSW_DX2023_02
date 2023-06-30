@@ -30,6 +30,8 @@ float4 PS(PixelInput input) : SV_TARGET
 	input.uv.y = (startPos.y / imageSize.y) + (size.y / imageSize.y) * input.uv.y;
 
 	float4 color = map.Sample(samp, input.uv);
+	if (color.x > 0.9f && color.y < 0.1f && color.z < 0.1f)
+		return float4(0, 0, 0, 0);
 
 	return color;
 }

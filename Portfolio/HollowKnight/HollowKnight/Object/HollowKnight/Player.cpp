@@ -9,10 +9,7 @@ Player::Player()
 {
 	_col = make_shared<CircleCollider>(50);
 
-
 	CreateAction(L"Resource/Player/Run.png", "Resource/Player/Run.xml", "Run", Vector2(75, 120), Action::Type::LOOP);
-	
-
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_col->GetTransform());
@@ -32,7 +29,7 @@ void Player::Update()
 	_sprites[0]->Update();
 	_transform->Update();
 
-	Input();
+	Gravity();
 	Select();
 }
 
@@ -50,23 +47,42 @@ void Player::PostRender()
 
 #pragma endregion
 
+#pragma region Add Funtion
+void Player::Select()
+{
+	LeftRight();
+	Walk();
+	Jump();
+	Dash();
+}
+#pragma endregion
+
 #pragma region Update Funtion
 
 
-void Player::Input()
+void Player::LeftRight()
 {
 	if (KEY_PRESS('A'))
 	{
-		_sprites[_curstate]->SetRight();
+		SetRight();
 	}
 
 	if (KEY_PRESS('D'))
 	{
-		_sprites[_curstate]->SetLeft();
+		SetLeft();
 	}
 }
 
-void Player::Select()
+
+void Player::Jump()
+{
+	if (KEY_PRESS(VK_SPACE))
+	{
+		_jumpPower = 600.0f;
+	}
+}
+
+void Player::Walk()
 {
 	if (KEY_PRESS('A'))
 	{
@@ -81,9 +97,41 @@ void Player::Select()
 	}
 }
 
+void Player::Dash()
+{
+	if (KEY_PRESS(VK_LSHIFT))
+	{
+		if (_isLeft == true)
+		{
+			SetSpeed(3.0f);
+			Move(Vector2(-500.0f, 0.0f));
+			SetSpeed(1.0f);
+		}
+		else
+		{
+			SetSpeed(3.0f);
+			Move(Vector2(500.0f, 0.0f));
+			SetSpeed(1.0f);
+		}
+	}
+}
+
+
+
 #pragma endregion
 
 #pragma region NoUpdate
+
+void Player::Gravity()
+{
+	_jumpPower -= 15;
+
+	if (_jumpPower < -600.0f)
+		_jumpPower = -600.0f;
+
+
+	_col->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);
+}
 
 void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
 {
@@ -119,6 +167,8 @@ void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, V
 	action->Play();
 	action->SetEndEvent(event);
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
+
+	sprite->SetPS(ADD_PS(L"Shader/NonRedPS.hlsl"));
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }
@@ -128,12 +178,14 @@ void Player::SetLeft()
 {
 	for (auto sprite : _sprites)
 		sprite->SetLeft();
+	_isLeft = false;
 }
 
 void Player::SetRight()
 {
 	for (auto sprite : _sprites)
 		sprite->SetRight();
+	_isLeft = true;
 }
 
 #pragma endregion

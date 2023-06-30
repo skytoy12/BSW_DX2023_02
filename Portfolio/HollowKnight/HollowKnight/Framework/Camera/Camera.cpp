@@ -72,6 +72,8 @@ Vector2 Camera::GetWorldMousePos()
 void Camera::FollowMode()
 {
 	Vector2 targetPos = _target.lock()->GetWorldPosition() - _offSet;
+	targetPos.x *= _view->GetScale().x;
+	targetPos.y *= _view->GetScale().y;
 
 	if (targetPos.x < _leftBottom.x + WIN_WIDTH * 0.5f)
 		targetPos.x = _leftBottom.x + WIN_WIDTH * 0.5f;

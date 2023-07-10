@@ -32,7 +32,7 @@ public :
 
 #pragma region Player Get Info
 	shared_ptr<Transform> GetTransform() { return _transform; }
-	shared_ptr<CircleCollider> GetCollider() { return _col; }
+	shared_ptr<RectCollider> GetCollider() { return _col; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -53,6 +53,7 @@ private :
 	shared_ptr<Transform> _transform;
 	vector<shared_ptr<Sprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;
-	shared_ptr<CircleCollider> _col;
+	shared_ptr<RectCollider> _col;
+	shared_ptr<RectCollider> _weaponCol;
 };
 

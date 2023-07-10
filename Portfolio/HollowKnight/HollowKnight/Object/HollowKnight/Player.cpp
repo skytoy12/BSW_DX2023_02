@@ -7,12 +7,14 @@ using namespace tinyxml2;
 
 Player::Player()
 {
-	_col = make_shared<CircleCollider>(50);
-
+	_col = make_shared<RectCollider>(Vector2(50, 100));
+	_weaponCol = make_shared<RectCollider>(Vector2(50, 10));
+	CreateAction(L"Resource/Player/Idle.png", "Resource/Player/Idle.xml", "Idle", Vector2(61, 130), Action::Type::LOOP);
 	CreateAction(L"Resource/Player/Run.png", "Resource/Player/Run.xml", "Run", Vector2(75, 120), Action::Type::LOOP);
 
 	_transform = make_shared<Transform>();
 	_transform->SetParent(_col->GetTransform());
+	_weaponCol->GetTransform()->SetParent(_col->GetTransform());
 	_transform->SetPosition(Vector2(0, 9.876));
 
 
@@ -25,6 +27,7 @@ Player::~Player()
 void Player::Update()
 {
 	_col->Update();
+	_weaponCol->Update();
 	_actions[0]->Update();
 	_sprites[0]->Update();
 	_transform->Update();
@@ -39,6 +42,7 @@ void Player::Render()
 	_sprites[0]->SetCurClip(_actions[0]->GetCurClip());
 	_sprites[0]->Render();
 	_col->Render();
+	_weaponCol->Render();
 }
 
 void Player::PostRender()
@@ -62,12 +66,12 @@ void Player::Select()
 
 void Player::LeftRight()
 {
-	if (KEY_PRESS('A'))
+	if (KEY_PRESS(VK_LEFT))
 	{
 		SetRight();
 	}
 
-	if (KEY_PRESS('D'))
+	if (KEY_PRESS(VK_RIGHT))
 	{
 		SetLeft();
 	}
@@ -76,7 +80,7 @@ void Player::LeftRight()
 
 void Player::Jump()
 {
-	if (KEY_PRESS(VK_SPACE))
+	if (KEY_PRESS('C'))
 	{
 		_jumpPower = 600.0f;
 	}
@@ -84,13 +88,13 @@ void Player::Jump()
 
 void Player::Walk()
 {
-	if (KEY_PRESS('A'))
+	if (KEY_PRESS(VK_LEFT))
 	{
 		Vector2 movePos = Vector2(-500.0f, 0.0f);
 		Move(movePos);
 	}
 
-	if (KEY_PRESS('D'))
+	if (KEY_PRESS(VK_RIGHT))
 	{
 		Vector2 movePos = Vector2(500.0f, 0.0f);
 		Move(movePos);

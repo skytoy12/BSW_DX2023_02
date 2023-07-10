@@ -7,17 +7,22 @@ using namespace tinyxml2;
 
 Player::Player()
 {
+#pragma region Create Base
 	_col = make_shared<RectCollider>(Vector2(50, 100));
-	_weaponCol = make_shared<RectCollider>(Vector2(50, 10));
+	_weaponCol = make_shared<RectCollider>(Vector2(75, 20));
+	_transform = make_shared<Transform>();
+#pragma endregion
+#pragma region CreateAction
 	CreateAction(L"Resource/Player/Idle.png", "Resource/Player/Idle.xml", "Idle", Vector2(61, 130), Action::Type::LOOP);
 	CreateAction(L"Resource/Player/Run.png", "Resource/Player/Run.xml", "Run", Vector2(75, 120), Action::Type::LOOP);
+#pragma endregion
 
-	_transform = make_shared<Transform>();
+#pragma region Setting
 	_transform->SetParent(_col->GetTransform());
 	_weaponCol->GetTransform()->SetParent(_col->GetTransform());
+	_weaponCol->SetPosition(Vector2(30, -25));
 	_transform->SetPosition(Vector2(0, 9.876));
-
-
+#pragma endregion
 }
 
 Player::~Player()
@@ -80,8 +85,12 @@ void Player::LeftRight()
 
 void Player::Jump()
 {
+	if (_isJump == true)
+		return;
+
 	if (KEY_PRESS('C'))
 	{
+		_isJump = true;
 		_jumpPower = 600.0f;
 	}
 }

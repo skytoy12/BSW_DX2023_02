@@ -37,6 +37,7 @@ public :
 
 #pragma region Player Set Info
 	void SetSpeed(float value) { _speed = value; }
+	void SetIsJump(bool value) { _isJump = value; }
 #pragma endregion
 
 private :
@@ -45,7 +46,11 @@ private :
 
 	float _jumpPower = 0.0f;
 	float _speed = 1.0f;
+
+#pragma region STATE
 	bool _isLeft = false;
+	bool _isJump = false;
+#pragma endregion
 
 	State_Player _oldstate = Player::State_Player::IDLE;
 	State_Player _curstate = Player::State_Player::IDLE;

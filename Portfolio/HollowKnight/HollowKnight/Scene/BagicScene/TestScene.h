@@ -11,6 +11,7 @@ public :
 
 private :
 	shared_ptr<class Player> _player;
+	shared_ptr<class JumpMonster> _mon1;
 	shared_ptr<RectCollider> _col;
 	float _scale = 1.0f;
 };

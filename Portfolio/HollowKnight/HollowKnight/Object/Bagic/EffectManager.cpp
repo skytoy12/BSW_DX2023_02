@@ -45,7 +45,7 @@ void EffectManager::AddEffect(string name, wstring file, Vector2 maxFrame, Vecto
 
 }
 
-void EffectManager::Play(string name, Vector2 pos)
+void EffectManager::LeftPlay(string name, Vector2 pos)
 {
 	if (_effectTable.count(name) == 0)
 		return;
@@ -53,6 +53,22 @@ void EffectManager::Play(string name, Vector2 pos)
 	{
 		if (effect->_isActive == false)
 		{
+			effect->SetLeft();
+			effect->Play(pos);
+			return;
+		}
+	}
+}
+
+void EffectManager::RightPlay(string name, Vector2 pos)
+{
+	if (_effectTable.count(name) == 0)
+		return;
+	for (auto effect : _effectTable[name])
+	{
+		if (effect->_isActive == false)
+		{
+			effect->SetRight();
 			effect->Play(pos);
 			return;
 		}

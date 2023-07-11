@@ -43,7 +43,8 @@
 #define ADD_PS(k) ShaderManager::GetInstance()->AddPS(k)
 #define ADD_SRV(k) SRVManager::GetInstance()->Add_SRV(k)
 
-#define EFFECT_PLAY(n,p) EffectManager::GetInstance()->Play(n,p)
+#define EFFECT_LPLAY(n,p) EffectManager::GetInstance()->LeftPlay(n,p)
+#define EFFECT_RPLAY(n,p) EffectManager::GetInstance()->RightPlay(n,p)
 #define SOUND Sound::GetInstance()
 #define CAMERA Camera::GetInstance()
 

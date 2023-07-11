@@ -261,7 +261,24 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="HollowKnight.ico" />
+    <Image Include="Resource\Bullet\Bullet.png" />
+    <Image Include="Resource\Bullet\BulletEnd.png" />
+    <Image Include="Resource\Effect\ChargeEffect.png" />
+    <Image Include="Resource\Effect\DashEffect.png" />
+    <Image Include="Resource\Effect\SlashEffect.png" />
+    <Image Include="Resource\Player\Charge.png" />
+    <Image Include="Resource\Player\Dash.png" />
+    <Image Include="Resource\Player\DashToIdle.png" />
+    <Image Include="Resource\Player\Death.png" />
+    <Image Include="Resource\Player\DNSlash.png" />
+    <Image Include="Resource\Player\DNSlashStart.png" />
+    <Image Include="Resource\Player\Idle.png" />
     <Image Include="Resource\Player\Run.png" />
+    <Image Include="Resource\Player\Running.png" />
+    <Image Include="Resource\Player\RunStart.png" />
+    <Image Include="Resource\Player\RunToIdle.png" />
+    <Image Include="Resource\Player\ShadowDash.png" />
+    <Image Include="Resource\Player\Slash.png" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -448,7 +465,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Xml Include="Resource\Bullet\Bullet.xml" />
+    <Xml Include="Resource\Bullet\BulletEnd.xml" />
+    <Xml Include="Resource\Effect\ChargeEffect.xml" />
+    <Xml Include="Resource\Effect\DashEffect.xml" />
+    <Xml Include="Resource\Effect\SlashEffect.xml" />
+    <Xml Include="Resource\Player\Charge.xml" />
+    <Xml Include="Resource\Player\Dash.xml" />
+    <Xml Include="Resource\Player\DashToIdle.xml" />
+    <Xml Include="Resource\Player\Death.xml" />
+    <Xml Include="Resource\Player\DNSlash.xml" />
+    <Xml Include="Resource\Player\DNSlashStart.xml" />
+    <Xml Include="Resource\Player\Idle.xml" />
     <Xml Include="Resource\Player\Run.xml" />
+    <Xml Include="Resource\Player\Running.xml" />
+    <Xml Include="Resource\Player\RunStart.xml" />
+    <Xml Include="Resource\Player\RunToIdle.xml" />
+    <Xml Include="Resource\Player\ShadowDash.xml" />
+    <Xml Include="Resource\Player\Slash.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -324,6 +324,57 @@
     <Image Include="Resource\Player\Run.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Bullet\Bullet.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Bullet\BulletEnd.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Effect\ChargeEffect.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Effect\DashEffect.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Effect\SlashEffect.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Charge.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Dash.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\DashToIdle.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Death.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\DNSlash.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\DNSlashStart.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Idle.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Running.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\RunStart.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\RunToIdle.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\ShadowDash.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Slash.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -352,5 +403,22 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Player\Run.xml" />
+    <Xml Include="Resource\Bullet\Bullet.xml" />
+    <Xml Include="Resource\Bullet\BulletEnd.xml" />
+    <Xml Include="Resource\Effect\ChargeEffect.xml" />
+    <Xml Include="Resource\Effect\DashEffect.xml" />
+    <Xml Include="Resource\Effect\SlashEffect.xml" />
+    <Xml Include="Resource\Player\Charge.xml" />
+    <Xml Include="Resource\Player\Dash.xml" />
+    <Xml Include="Resource\Player\DashToIdle.xml" />
+    <Xml Include="Resource\Player\Death.xml" />
+    <Xml Include="Resource\Player\DNSlash.xml" />
+    <Xml Include="Resource\Player\DNSlashStart.xml" />
+    <Xml Include="Resource\Player\Idle.xml" />
+    <Xml Include="Resource\Player\Running.xml" />
+    <Xml Include="Resource\Player\RunStart.xml" />
+    <Xml Include="Resource\Player\RunToIdle.xml" />
+    <Xml Include="Resource\Player\ShadowDash.xml" />
+    <Xml Include="Resource\Player\Slash.xml" />
   </ItemGroup>
 </Project>

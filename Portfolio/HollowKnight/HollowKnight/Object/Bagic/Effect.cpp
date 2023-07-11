@@ -42,6 +42,16 @@ void Effect::End()
 	_action->Reset();
 }
 
+void Effect::SetLeft()
+{
+	_sprite->SetLeft();
+}
+
+void Effect::SetRight()
+{
+	_sprite->SetRight();
+}
+
 void Effect::CreateAction(string name, wstring file, Vector2 maxFrame, Vector2 size, float speed, Action::Type type)
 {
 	_sprite = make_shared<Sprite>(file, maxFrame, size);
@@ -61,7 +71,7 @@ void Effect::CreateAction(string name, wstring file, Vector2 maxFrame, Vector2 s
 			clips.push_back(clip);
 		}
 	}
-
+	_sprite->SetPS(ADD_PS(L"Shader/NonRedPS.hlsl"));
 	_action = make_shared<Action>(clips, name, type, speed);
 	_action->SetEndEvent(std::bind(&Effect::End, this));
 }

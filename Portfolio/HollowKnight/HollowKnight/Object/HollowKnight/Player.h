@@ -6,7 +6,12 @@ public :
 	enum State_Player
 	{
 		IDLE,
-		RUN
+		RUNSTART,
+		RUNNING,
+		DASH,
+		SLASH,
+		CHARGE,
+		DEATH
 	};
 
 	Player();
@@ -26,9 +31,14 @@ public :
 	void Jump();
 	void Walk();
 	void Dash();
+	void Attack();
 
 	void Gravity();
 #pragma endregion
+
+#pragma region EVENT
+	void EndEvent();
+#pragma endregion 
 
 #pragma region Player Get Info
 	shared_ptr<Transform> GetTransform() { return _transform; }
@@ -38,6 +48,8 @@ public :
 #pragma region Player Set Info
 	void SetSpeed(float value) { _speed = value; }
 	void SetIsJump(bool value) { _isJump = value; }
+	void SetState(State_Player type);
+	void SetAndResetState(State_Player type);
 #pragma endregion
 
 private :
@@ -50,6 +62,8 @@ private :
 #pragma region STATE
 	bool _isLeft = false;
 	bool _isJump = false;
+	bool _isAttack = false;
+	bool _isDash = false;
 #pragma endregion
 
 	State_Player _oldstate = Player::State_Player::IDLE;
@@ -60,5 +74,6 @@ private :
 	vector<shared_ptr<Action>> _actions;
 	shared_ptr<RectCollider> _col;
 	shared_ptr<RectCollider> _weaponCol;
+	shared_ptr<CircleCollider> _dashCol;
 };
 

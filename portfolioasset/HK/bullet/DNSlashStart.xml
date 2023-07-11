@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:7eb9493fe1b25b887d689ae794ec7f56:d9516412847d5aa9fc2b5889b1327d91:726003a9fc7be9649dab20d144a34d75$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="DNSlashStart.png" width="1010" height="130">
+    <sprite n="147-00-220.png" x="0" y="0" w="202" h="130"/>
+    <sprite n="147-01-226.png" x="202" y="0" w="202" h="130"/>
+    <sprite n="147-02-224.png" x="404" y="0" w="202" h="130"/>
+    <sprite n="147-03-232.png" x="606" y="0" w="202" h="130"/>
+    <sprite n="147-04-214.png" x="808" y="0" w="202" h="130"/>
+</TextureAtlas>

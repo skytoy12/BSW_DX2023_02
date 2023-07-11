@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:e66d3d180547cd4fbcfce18f04b66fbb:3aa449e42d72406e513e7c920af457e9:c8d1ee2ae1caf737032dfdfaf2929dc9$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="ShadowDash.png" width="294" height="1529">
+    <sprite n="121-00-756.png" x="0" y="0" w="294" h="139"/>
+    <sprite n="121-01-757.png" x="0" y="139" w="294" h="139"/>
+    <sprite n="121-02-758.png" x="0" y="278" w="294" h="139"/>
+    <sprite n="121-03-759.png" x="0" y="417" w="294" h="139"/>
+    <sprite n="121-04-760.png" x="0" y="556" w="294" h="139"/>
+    <sprite n="121-05-761.png" x="0" y="695" w="294" h="139"/>
+    <sprite n="121-06-762.png" x="0" y="834" w="294" h="139"/>
+    <sprite n="121-07-762.png" x="0" y="973" w="294" h="139"/>
+    <sprite n="121-08-762.png" x="0" y="1112" w="294" h="139"/>
+    <sprite n="121-09-762.png" x="0" y="1251" w="294" h="139"/>
+    <sprite n="121-10-762.png" x="0" y="1390" w="294" h="139"/>
+</TextureAtlas>

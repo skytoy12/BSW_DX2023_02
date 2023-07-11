@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:16a6cfb5abe00a597c2b945a801f05a4:00f6e83fcdd399313f73bc2c4ab6c747:5a265202c9f3f0527cc2bd9f55350a6a$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="BulletEnd.png" width="207" height="255">
+    <sprite n="003-00-017.png" x="0" y="0" w="207" h="85"/>
+    <sprite n="003-01-018.png" x="0" y="85" w="207" h="85"/>
+    <sprite n="003-02-015.png" x="0" y="170" w="207" h="85"/>
+</TextureAtlas>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:55823103eb3b83caea7eef7f235adfe7:4ad3c732806c6948a3cba63fc48808e1:94ecec7bbd89c560bffd3454a77b8f12$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="ChargeEffect.png" width="1585" height="590">
+    <sprite n="106-00-260.png" x="0" y="0" w="317" h="295"/>
+    <sprite n="106-01-261.png" x="317" y="0" w="317" h="295"/>
+    <sprite n="106-02-262.png" x="634" y="0" w="317" h="295"/>
+    <sprite n="106-03-263.png" x="951" y="0" w="317" h="295"/>
+    <sprite n="106-04-264.png" x="1268" y="0" w="317" h="295"/>
+    <sprite n="106-05-265.png" x="0" y="295" w="317" h="295"/>
+    <sprite n="106-06-622.png" x="317" y="295" w="317" h="295"/>
+    <sprite n="106-07-623.png" x="634" y="295" w="317" h="295"/>
+    <sprite n="106-08-624.png" x="951" y="295" w="317" h="295"/>
+    <sprite n="106-09-625.png" x="1268" y="295" w="317" h="295"/>
+</TextureAtlas>

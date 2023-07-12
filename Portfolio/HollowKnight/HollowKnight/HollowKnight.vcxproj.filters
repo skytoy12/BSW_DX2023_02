@@ -168,7 +168,7 @@
     <ClInclude Include="Scene\BagicScene\MapTool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\HollowKnight\Player.h">
+    <ClInclude Include="Object\HollowKnight\Player\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Scene\BagicScene\TestScene.h">
@@ -178,6 +178,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\HollowKnight\Monster\JumpMonster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Player\Bullet.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Player\ChargeEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -296,7 +302,7 @@
     <ClCompile Include="Scene\BagicScene\MapTool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\HollowKnight\Player.cpp">
+    <ClCompile Include="Object\HollowKnight\Player\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scene\BagicScene\TestScene.cpp">
@@ -306,6 +312,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\HollowKnight\Monster\JumpMonster.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Player\Bullet.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Player\ChargeEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

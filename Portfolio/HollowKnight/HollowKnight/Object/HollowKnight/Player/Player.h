@@ -26,12 +26,14 @@ public :
 #pragma region Player Move & Attack
 	void Move(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos * DELTA_TIME * _speed); }
 	void Select();
+	void CoolTime();
 
 	void LeftRight();
 	void Jump();
 	void Walk();
 	void Dash();
 	void Attack();
+	void ChargeAndFire();
 
 	void Gravity();
 #pragma endregion
@@ -58,12 +60,15 @@ private :
 
 	float _jumpPower = 0.0f;
 	float _speed = 1.0f;
+	float _chargeTime = 0.0f;
+	float _bulletCoolTime = 10.0f;
 
 #pragma region STATE
 	bool _isLeft = false;
 	bool _isJump = false;
 	bool _isAttack = false;
 	bool _isDash = false;
+	bool _isChargeAndFire = false;
 #pragma endregion
 
 	State_Player _oldstate = Player::State_Player::IDLE;
@@ -75,5 +80,8 @@ private :
 	shared_ptr<RectCollider> _col;
 	shared_ptr<RectCollider> _weaponCol;
 	shared_ptr<CircleCollider> _dashCol;
+
+	shared_ptr<class Bullet> _bullet;
+	shared_ptr<class ChargeEffect> _effect;
 };
 

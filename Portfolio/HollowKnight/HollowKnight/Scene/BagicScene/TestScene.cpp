@@ -1,6 +1,6 @@
 #include "framework.h"
 #include "TestScene.h"
-#include "../../Object/HollowKnight/Player.h"
+#include "../../Object/HollowKnight/Player/Player.h"
 #include "../../Object/HollowKnight/Monster/JumpMonster.h"
 TestScene::TestScene()
 {

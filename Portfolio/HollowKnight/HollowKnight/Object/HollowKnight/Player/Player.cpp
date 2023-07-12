@@ -1,5 +1,7 @@
 #include "framework.h"
 #include "Player.h"
+#include "Bullet.h"
+#include "ChargeEffect.h"
 
 using namespace tinyxml2;
 
@@ -9,9 +11,11 @@ Player::Player()
 {
 #pragma region Create Base
 	_col = make_shared<RectCollider>(Vector2(50, 100));
-	_weaponCol = make_shared<RectCollider>(Vector2(75, 20));
+	_weaponCol = make_shared<RectCollider>(Vector2(120, 20));
 	_dashCol = make_shared<CircleCollider>(10);
 	_transform = make_shared<Transform>();
+	_bullet = make_shared<Bullet>();
+	_effect = make_shared<ChargeEffect>();
 #pragma endregion
 #pragma region CreateAction
 	CreateAction(L"Resource/Player/Idle.png", "Resource/Player/Idle.xml", "Idle", Vector2(61, 130), Action::Type::LOOP);
@@ -19,20 +23,24 @@ Player::Player()
 	CreateAction(L"Resource/Player/Running.png", "Resource/Player/Running.xml", "Running", Vector2(86, 130), Action::Type::LOOP);
 	CreateAction(L"Resource/Player/Dash.png", "Resource/Player/Dash.xml", "Dash", Vector2(192, 117), Action::Type::END, std::bind(&Player::EndEvent, this));
 	_actions[DASH]->SetSpeed(0.05f);
-	CreateAction(L"Resource/Player/DNSlash.png", "Resource/Player/DNSlash.xml", "Dash", Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
+	CreateAction(L"Resource/Player/DNSlash.png", "Resource/Player/DNSlash.xml", "Slash", Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
+	_actions[SLASH]->SetSpeed(0.03f);
+	CreateAction(L"Resource/Player/Charge.png", "Resource/Player/Charge.xml", "Charge", Vector2(114, 127), Action::Type::LOOP);
 #pragma endregion
 
 #pragma region CREAT EFFECT
 	EffectManager::GetInstance()->AddEffect("Dash", L"Resource/Effect/DashEffect.png", Vector2(1, 8), Vector2(402, 188));
+	EffectManager::GetInstance()->AddEffect("Slash", L"Resource/Effect/SlashEffect.png", Vector2(6, 1), Vector2(157, 114));
 #pragma endregion
 
 #pragma region Setting
 	_transform->SetParent(_col->GetTransform());
 	_weaponCol->GetTransform()->SetParent(_col->GetTransform());
-	_weaponCol->SetPosition(Vector2(30, -25));
+	_weaponCol->SetPosition(Vector2(80, -25));
 	_dashCol->SetParent(_col->GetTransform());
 	_dashCol->SetPosition(Vector2(0, -15));
 	_transform->SetPosition(Vector2(0, 9.876));
+	_effect->GetTransform()->SetParent(_col->GetTransform());
 #pragma endregion
 
 #pragma region TEST
@@ -53,7 +61,10 @@ void Player::Update()
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 	_transform->Update();
+	_bullet->Update();
+	_effect->Update();
 
+	CoolTime();
 	if(_isDash == false)
 		Gravity();
 	Select();
@@ -67,6 +78,8 @@ void Player::Render()
 	_col->Render();
 	if(_isAttack == true)
 		_weaponCol->Render();
+	_bullet->Render();
+	_effect->Render();
 }
 
 void Player::PostRender()
@@ -83,7 +96,9 @@ void Player::Select()
 	Jump();
 	Dash();
 	Attack();
+	ChargeAndFire();
 }
+
 #pragma endregion
 
 #pragma region Update Funtion
@@ -94,13 +109,13 @@ void Player::LeftRight()
 	if (KEY_PRESS(VK_LEFT))
 	{
 		SetRight();
-		_weaponCol->SetPosition(Vector2(-30, -25));
+		_weaponCol->SetPosition(Vector2(-80, -25));
 	}
 
 	if (KEY_PRESS(VK_RIGHT))
 	{
 		SetLeft();
-		_weaponCol->SetPosition(Vector2(30, -25));
+		_weaponCol->SetPosition(Vector2(80, -25));
 	}
 }
 
@@ -188,11 +203,65 @@ void Player::Attack()
 {
 	if (_isAttack == true)
 		return;
+	if (_isDash == true)
+		return;
 
 	if (KEY_PRESS('X'))
 	{
+		_weaponCol->Update();
 		_isAttack = true;
 		SetAndResetState(SLASH);
+		if(_isLeft == true)
+			EFFECT_RPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(-10, 20));
+		else
+			EFFECT_LPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(10, 20));
+	}
+}
+
+void Player::ChargeAndFire()
+{
+	if (_isDash == true)
+		return;
+	if (_isAttack == true)
+		return;
+
+
+	if (KEY_PRESS('Z'))
+	{
+		if (_bulletCoolTime < 10.0f)
+			return;
+		SetAndResetState(CHARGE);
+		_effect->_isActive = true;
+		_chargeTime += DELTA_TIME;
+	}
+
+	if (KEY_UP('Z'))
+	{
+		if (_bulletCoolTime < 10.0f)
+			return;
+		_effect->_isActive = false;
+		if (_chargeTime < 1.0f)
+		{
+			_chargeTime = 0.0f;
+			SetAndResetState(IDLE);
+			return;
+		}
+
+		SetAndResetState(SLASH);
+		if (_bullet->_isActive == true)
+			return;
+
+		if (_isLeft == false)
+		{
+			_bullet->Update();
+			_bullet->Shoot(_col->GetTransform()->GetWorldPosition());
+		}
+		else
+		{
+			_bullet->Update();
+			_bullet->Shoot(_col->GetTransform()->GetWorldPosition(), Vector2(-1, 0));
+		}
+
 	}
 }
 
@@ -215,6 +284,7 @@ void Player::EndEvent()
 	{
 		SetAndResetState(IDLE);
 		_isAttack = false;
+		_isChargeAndFire = false;
 		return;
 	}
 }
@@ -234,7 +304,12 @@ void Player::Gravity()
 	_col->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);
 }
 
-
+void Player::CoolTime()
+{
+	_bulletCoolTime += DELTA_TIME;
+	if (_bulletCoolTime > 10.0f)
+		_bulletCoolTime = 10.0f;
+}
 
 void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
 {

@@ -17,6 +17,8 @@ public :
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
+	void EndEvent() { _isActive = false; }
+
 	bool _isActive = false;
 private :
 	bool _isLeft = false;

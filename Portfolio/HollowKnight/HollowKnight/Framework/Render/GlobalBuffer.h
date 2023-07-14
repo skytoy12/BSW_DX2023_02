@@ -171,22 +171,22 @@ public:
 	Data _data;
 };
 
-class HPBarBuffer : public ConstantBuffer
+class RatioBuffer : public ConstantBuffer
 {
 public:
 	struct Data
 	{
-		float maxHP = 0.0f;
-		float curHP = 0.0f;
+		float max = 0.0f;
+		float cur = 0.0f;
 		float padding[2] = { 0.0f, 0.0f };
 	};
 
-	HPBarBuffer()
+	RatioBuffer()
 		:ConstantBuffer(&_data, sizeof(Data))
 	{
 
 	}
-	virtual ~HPBarBuffer() {}
+	virtual ~RatioBuffer() {}
 
 
 	Data _data;

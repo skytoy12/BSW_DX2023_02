@@ -13,10 +13,13 @@ public :
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 protected :
 	int _hp = 0;
-	bool _isActive = true;
 	float _jumpPower = 0.0f;
-	float _speed = 1.0f;
+	float _speed = 150.0f;
+	Vector2 _dir = { 0,0 };
 
+	bool _isAlive = true;
+	bool _isActive = false;
+	weak_ptr<Transform> _target;
 	shared_ptr<CircleCollider> _col;
 	shared_ptr<Transform> _transform;
 	vector<shared_ptr<Sprite>> _sprites;

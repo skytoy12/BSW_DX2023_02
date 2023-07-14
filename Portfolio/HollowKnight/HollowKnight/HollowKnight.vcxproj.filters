@@ -186,6 +186,12 @@
     <ClInclude Include="Object\HollowKnight\Player\ChargeEffect.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Monster\RushMonster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\BulletCoolTime.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -320,6 +326,12 @@
     <ClCompile Include="Object\HollowKnight\Player\ChargeEffect.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Monster\RushMonster.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\BulletCoolTime.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc">
@@ -412,6 +424,7 @@
     <FxCompile Include="Shader\TextureVS.hlsl" />
     <FxCompile Include="Shader\PlayerPS.hlsl" />
     <FxCompile Include="Shader\NonRedPS.hlsl" />
+    <FxCompile Include="Shader\RatioPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Player\Run.xml" />

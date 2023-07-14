@@ -1,30 +1,36 @@
 #include "framework.h"
-#include "JumpMonster.h"
+#include "RushMonster.h"
 
-JumpMonster::JumpMonster()
+RushMonster::RushMonster()
 {
-	_col = make_shared<CircleCollider>(25);
+	_col = make_shared<CircleCollider>(50);
 	_transform->SetParent(_col->GetTransform());
-
 }
 
-JumpMonster::~JumpMonster()
+RushMonster::~RushMonster()
 {
 }
 
-void JumpMonster::Update()
+void RushMonster::Update()
 {
 	if (_target.expired() == true)
 		return;
+
 	if (_isAlive == false)
 		return;
+
+	if (_isActive == true)
+		_col->SetRed();
+	if (_isActive == false)
+		_col->SetGreen();
 
 	Gravity();
 	_col->Update();
 
+
 	if (_isActive == true)
 		_col->SetRed();
-	if(_isActive == false)
+	if (_isActive == false)
 		_col->SetGreen();
 
 
@@ -34,25 +40,23 @@ void JumpMonster::Update()
 	else
 	{
 		_isActive = false;
-		_isJump = false;
+		_isRush = false;
 	}
 
-	if (_isJump == false)
+	if (_isRush == false)
 	{
 		_dir = Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_target.lock()->GetWorldPosition().x, 0.0f);
 		_dir = _dir.NormalVector2() * -1;
 	}
 
-	_speed = 150.0f;
-	if(_isActive == true)
+	if (_isActive == true)
 		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
 	if (_isActive == true)
 		Attack();
-
 }
 
-void JumpMonster::Render()
+void RushMonster::Render()
 {
 	if (_target.expired() == true)
 		return;
@@ -63,15 +67,11 @@ void JumpMonster::Render()
 	_col->Render();
 }
 
-void JumpMonster::PostRender()
+void RushMonster::PostRender()
 {
 }
 
-void JumpMonster::Attack()
+void RushMonster::Attack()
 {
-	if (_isJump == true)
-		return;
-
-	_isJump = true;
-	_jumpPower = 800.0f;
+	_speed = 300.0f;
 }

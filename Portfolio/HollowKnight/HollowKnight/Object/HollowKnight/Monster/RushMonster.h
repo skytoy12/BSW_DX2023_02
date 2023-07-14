@@ -1,9 +1,9 @@
 #pragma once
-class JumpMonster : public Monster
+class RushMonster : public Monster
 {
 public :
-	JumpMonster();
-	virtual ~JumpMonster();
+	RushMonster();
+	~RushMonster();
 
 	virtual void Update() override;
 	virtual void Render() override;
@@ -15,9 +15,9 @@ public :
 	shared_ptr<CircleCollider> GetCollider() { return _col; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
-private :
 
-	float _jumpTime = 0.0f;
-	bool _isJump = false;
+private :
+	float _rushTime = 0.0f;
+	bool _isRush = false;
 };
 

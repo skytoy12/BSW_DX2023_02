@@ -21,6 +21,7 @@ void Program::Update()
 	Sound::GetInstance()->Update();
 	CAMERA->Update();
 
+
 	SCENE->Update();
 
 	EffectManager::GetInstance()->Update();

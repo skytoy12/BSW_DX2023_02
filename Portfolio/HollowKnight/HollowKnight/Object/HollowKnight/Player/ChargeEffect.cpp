@@ -25,12 +25,6 @@ void ChargeEffect::Update()
 	_sprites[_state]->Update();
 
 
-
-	if (!_isActive)
-	{
-		_state = START;
-		_actions[_state]->Reset();
-	}
 }
 
 void ChargeEffect::Render()

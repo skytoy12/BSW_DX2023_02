@@ -15,6 +15,9 @@ public :
 	void Render();
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
+	void Play() { _actions[START]->Play(); }
+	void Reset() { _actions[START]->Reset(); }
+
 	shared_ptr<Transform> GetTransform() { return _transform; }
 
 	bool _isActive = false;

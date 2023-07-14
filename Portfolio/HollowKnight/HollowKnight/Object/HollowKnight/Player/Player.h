@@ -64,6 +64,7 @@ private :
 	float _bulletCoolTime = 10.0f;
 
 #pragma region STATE
+	bool _isAlive = true;
 	bool _isLeft = false;
 	bool _isJump = false;
 	bool _isAttack = false;

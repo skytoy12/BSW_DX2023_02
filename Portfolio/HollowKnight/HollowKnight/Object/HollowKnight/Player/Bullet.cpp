@@ -6,10 +6,10 @@ using namespace tinyxml2;
 Bullet::Bullet()
 {
 	_transform = make_shared<Transform>();
-	_col = make_shared<CircleCollider>(5);
+	_col = make_shared<CircleCollider>(50);
 
 	CreateAction(L"Resource/Bullet/Bullet.png", "Resource/Bullet/Bullet.xml", "Bullet", Vector2(266, 116), Action::Type::END);
-	CreateAction(L"Resource/Bullet/BulletEnd.png", "Resource/Bullet/BulletEnd.xml", "BulletEnd", Vector2(207, 85), Action::Type::END);
+	CreateAction(L"Resource/Bullet/BulletEnd.png", "Resource/Bullet/BulletEnd.xml", "BulletEnd", Vector2(207, 85), Action::Type::END, std::bind(&Bullet::EndEvent, this));
 
 	_transform->SetParent(_col->GetTransform());
 }
@@ -23,6 +23,9 @@ void Bullet::Update()
 	if (_isActive == false)
 		return;
 
+	if(_state = IDLE)
+		_speed = 0.0f;
+
 	if (_dir.x > 0)
 		SetRight();
 	if (_dir.x < 0)
@@ -34,8 +37,12 @@ void Bullet::Update()
 	_sprites[_state]->Update();
 
 	_length += DELTA_TIME;
-	if (_length > 1.0f)
-		_isActive = false;
+	if (_length > 1.5f)
+	{
+		_state = END;
+		// SetAndReset을 bullet에도 구현
+		_speed = 0.0f;
+	}
 
 	if (!_isActive)
 	{

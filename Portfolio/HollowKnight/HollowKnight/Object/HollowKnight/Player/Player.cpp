@@ -26,6 +26,7 @@ Player::Player()
 	CreateAction(L"Resource/Player/DNSlash.png", "Resource/Player/DNSlash.xml", "Slash", Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
 	_actions[SLASH]->SetSpeed(0.03f);
 	CreateAction(L"Resource/Player/Charge.png", "Resource/Player/Charge.xml", "Charge", Vector2(114, 127), Action::Type::LOOP);
+	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Death", Vector2(116, 131), Action::Type::END, std::bind(&Player::EndEvent, this));
 #pragma endregion
 
 #pragma region CREAT EFFECT
@@ -54,6 +55,15 @@ Player::~Player()
 
 void Player::Update()
 {
+	if (KEY_DOWN(VK_F3))
+	{
+		SetAndResetState(IDLE);
+		_isAlive = true;
+	}
+
+	if (_isAlive == false)
+		return;
+
 	_col->Update();
 	if (_isAttack == true)
 		_weaponCol->Update();
@@ -72,6 +82,9 @@ void Player::Update()
 
 void Player::Render()
 {
+	if (_isAlive == false)
+		return;
+
 	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
@@ -96,7 +109,10 @@ void Player::Select()
 	Jump();
 	Dash();
 	Attack();
-	ChargeAndFire();
+	if(_bulletCoolTime > 2.9f)
+		ChargeAndFire();
+	if (KEY_DOWN(VK_F4))
+		SetAndResetState(DEATH);
 }
 
 #pragma endregion
@@ -106,6 +122,16 @@ void Player::Select()
 
 void Player::LeftRight()
 {
+
+	if (_isDash == true)
+		return;
+
+	if (_isAttack == true)
+		return;
+
+	if (_isChargeAndFire == true)
+		return;
+
 	if (KEY_PRESS(VK_LEFT))
 	{
 		SetRight();
@@ -125,6 +151,12 @@ void Player::Jump()
 	if (_isJump == true)
 		return;
 
+	if (_isDash == true)
+		return;
+
+	if (_isAttack == true)
+		return;
+
 	if (KEY_PRESS('C'))
 	{
 		_isJump = true;
@@ -138,6 +170,9 @@ void Player::Walk()
 		return;
 
 	if (_isAttack == true)
+		return;
+
+	if (_isChargeAndFire == true)
 		return;
 
 	if (KEY_PRESS(VK_LEFT))
@@ -171,7 +206,11 @@ void Player::Dash()
 {
 	if (_isDash == true)
 		return;
+
 	if (_isAttack == true)
+		return;
+
+	if (_isChargeAndFire == true)
 		return;
 
 
@@ -225,43 +264,55 @@ void Player::ChargeAndFire()
 	if (_isAttack == true)
 		return;
 
-
+	if (KEY_DOWN('Z'))
+	{
+		_effect->Update();
+		_effect->_isActive = true;
+		_effect->Play();
+		_isChargeAndFire = true;
+	}
 	if (KEY_PRESS('Z'))
 	{
-		if (_bulletCoolTime < 10.0f)
-			return;
 		SetAndResetState(CHARGE);
-		_effect->_isActive = true;
 		_chargeTime += DELTA_TIME;
 	}
 
 	if (KEY_UP('Z'))
 	{
-		if (_bulletCoolTime < 10.0f)
-			return;
+		_effect->Reset();
 		_effect->_isActive = false;
 		if (_chargeTime < 1.0f)
 		{
 			_chargeTime = 0.0f;
 			SetAndResetState(IDLE);
+			_isChargeAndFire = false;
 			return;
 		}
 
 		SetAndResetState(SLASH);
 		if (_bullet->_isActive == true)
+		{
+			_isChargeAndFire = false;
 			return;
+		}
+
 
 		if (_isLeft == false)
 		{
+			_chargeTime = 0.0f;
+			_bulletCoolTime = 0.0f;
 			_bullet->Update();
 			_bullet->Shoot(_col->GetTransform()->GetWorldPosition());
 		}
 		else
 		{
+			_chargeTime = 0.0f;
+			_bulletCoolTime = 0.0f;
 			_bullet->Update();
 			_bullet->Shoot(_col->GetTransform()->GetWorldPosition(), Vector2(-1, 0));
 		}
 
+		_isChargeAndFire = false;
 	}
 }
 
@@ -287,6 +338,12 @@ void Player::EndEvent()
 		_isChargeAndFire = false;
 		return;
 	}
+
+	if (_curstate == DEATH)
+	{
+		_isAlive = false;
+		return;
+	}
 }
 
 #pragma endregion
@@ -307,8 +364,8 @@ void Player::Gravity()
 void Player::CoolTime()
 {
 	_bulletCoolTime += DELTA_TIME;
-	if (_bulletCoolTime > 10.0f)
-		_bulletCoolTime = 10.0f;
+	if (_bulletCoolTime > 3.0f)
+		_bulletCoolTime = 3.0f;
 }
 
 void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)

@@ -135,13 +135,11 @@ void Player::LeftRight()
 	if (KEY_PRESS(VK_LEFT))
 	{
 		SetRight();
-		_weaponCol->SetPosition(Vector2(-80, -25));
 	}
 
 	if (KEY_PRESS(VK_RIGHT))
 	{
 		SetLeft();
-		_weaponCol->SetPosition(Vector2(80, -25));
 	}
 }
 
@@ -401,9 +399,11 @@ void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, V
 	shared_ptr<Action> action = make_shared<Action>(clips, actionName, type);
 	action->Play();
 	action->SetEndEvent(event);
+	action->Update();
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
 
 	sprite->SetPS(ADD_PS(L"Shader/NonRedPS.hlsl"));
+	sprite->Update();
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }
@@ -430,15 +430,17 @@ void Player::SetAndResetState(State_Player type)
 
 void Player::SetLeft()
 {
-	for (auto sprite : _sprites)
-		sprite->SetLeft();
+	//for (auto sprite : _sprites)
+	//	sprite->SetLeft();
+	_col->SetScale(Vector2(1, 1));
 	_isLeft = false;
 }
 
 void Player::SetRight()
 {
-	for (auto sprite : _sprites)
-		sprite->SetRight();
+	//for (auto sprite : _sprites)
+	//	sprite->SetRight();
+	_col->SetScale(Vector2(-1, 1));
 	_isLeft = true;
 }
 

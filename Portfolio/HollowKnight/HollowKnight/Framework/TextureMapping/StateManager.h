@@ -34,5 +34,7 @@ private :
 	shared_ptr<BlendState> _alpha;
 	shared_ptr<BlendState> _additive;
 	shared_ptr<BlendState> _blendState;
+
+	ID3D11RasterizerState* rasterizerState = nullptr;
 };
 

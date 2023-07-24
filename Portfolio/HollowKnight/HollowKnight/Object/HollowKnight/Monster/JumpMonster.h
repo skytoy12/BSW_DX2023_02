@@ -2,6 +2,19 @@
 class JumpMonster : public Monster
 {
 public :
+
+	enum State_JumpMonster
+	{
+		IDLE,
+		WALK,
+		TURN,
+		JUMPREADY,
+		JUMP,
+		DOWN,
+		LAND,
+		DEATH
+	};
+
 	JumpMonster();
 	virtual ~JumpMonster();
 
@@ -10,13 +23,18 @@ public :
 	virtual void PostRender() override;
 	virtual void Attack() override;
 
+	void SetState(State_JumpMonster type);
+	void SetAndResetState(State_JumpMonster type);
+
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
 
-	shared_ptr<CircleCollider> GetCollider() { return _col; }
+	shared_ptr<RectCollider> GetCollider() { return _col; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 private :
-
+	shared_ptr<RectCollider> _col;
+	State_JumpMonster _curstate = IDLE;
+	State_JumpMonster _oldstate = IDLE;
 	float _jumpTime = 0.0f;
 	bool _isJump = false;
 };

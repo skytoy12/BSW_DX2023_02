@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:2e863b0bc150288efb8fd1f6aac18fdc:e9ce566792cbd72e5c9a57104effd8da:b6977bdb89e1e373f086521eb631c1c0$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="FLYIDLE.png" width="193" height="230">
+    <sprite n="PC Computer - Hollow Knight - Gruzzer2_waifu2x_art_noise2.png" x="0" y="0" w="95" h="114"/>
+    <sprite n="PC Computer - Hollow Knight - Gruzzer3_waifu2x_art_noise3.png" x="95" y="0" w="97" h="114"/>
+    <sprite n="PC Computer - Hollow Knight - Gruzzer4_waifu2x_art_noise4.png" x="0" y="114" w="94" h="115"/>
+    <sprite n="PC Computer - Hollow Knight - Gruzzer_waifu2x_art_noise1.png" x="94" y="114" w="99" h="116"/>
+</TextureAtlas>

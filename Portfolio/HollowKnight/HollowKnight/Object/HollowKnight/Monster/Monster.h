@@ -9,7 +9,8 @@ public :
 	virtual void PostRender() abstract;
 	virtual void Attack() abstract;
 
-	void Gravity();
+	void Gravity(shared_ptr<CircleCollider> col);
+	void Gravity(shared_ptr<RectCollider> col);
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 protected :
 	int _hp = 0;
@@ -20,7 +21,6 @@ protected :
 	bool _isAlive = true;
 	bool _isActive = false;
 	weak_ptr<Transform> _target;
-	shared_ptr<CircleCollider> _col;
 	shared_ptr<Transform> _transform;
 	vector<shared_ptr<Sprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;

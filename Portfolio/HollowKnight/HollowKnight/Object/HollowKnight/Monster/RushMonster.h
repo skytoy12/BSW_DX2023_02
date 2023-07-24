@@ -12,11 +12,12 @@ public :
 
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
 
-	shared_ptr<CircleCollider> GetCollider() { return _col; }
+	shared_ptr<RectCollider> GetCollider() { return _col; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
 private :
+	shared_ptr<RectCollider> _col;
 	float _rushTime = 0.0f;
 	bool _isRush = false;
 };

@@ -3,7 +3,7 @@
 
 RushMonster::RushMonster()
 {
-	_col = make_shared<CircleCollider>(50);
+	_col = make_shared<RectCollider>(Vector2(50,50));
 	_transform->SetParent(_col->GetTransform());
 }
 
@@ -24,7 +24,7 @@ void RushMonster::Update()
 	if (_isActive == false)
 		_col->SetGreen();
 
-	Gravity();
+	Gravity(_col);
 	_col->Update();
 
 

@@ -399,6 +399,36 @@
     <Image Include="Resource\Player\Slash.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Jump\JM_Down.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JM_Idle.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JM_Jump.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JM_JumpReady.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JM_Land.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JM_Turn.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JM_Walk.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Fly\FLYDEATH1.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Fly\FLYDEATH2.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Fly\FLYIDLE.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -445,5 +475,15 @@
     <Xml Include="Resource\Player\RunToIdle.xml" />
     <Xml Include="Resource\Player\ShadowDash.xml" />
     <Xml Include="Resource\Player\Slash.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_Down.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_Idle.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_Jump.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_JumpReady.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_Land.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_Turn.xml" />
+    <Xml Include="Resource\Monster\Jump\JM_Walk.xml" />
+    <Xml Include="Resource\Monster\Fly\FLYDEATH1.xml" />
+    <Xml Include="Resource\Monster\Fly\FLYDEATH2.xml" />
+    <Xml Include="Resource\Monster\Fly\FLYIDLE.xml" />
   </ItemGroup>
 </Project>

@@ -10,7 +10,7 @@ Monster::Monster()
 
 
 
-void Monster::Gravity()
+void Monster::Gravity(shared_ptr<CircleCollider> col)
 {
 	_jumpPower -= 15;
 
@@ -18,7 +18,19 @@ void Monster::Gravity()
 		_jumpPower = -600.0f;
 
 
-	_col->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);
+	col->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);
+}
+
+
+void Monster::Gravity(shared_ptr<RectCollider> col)
+{
+	_jumpPower -= 15;
+
+	if (_jumpPower < -600.0f)
+		_jumpPower = -600.0f;
+
+
+	col->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);
 }
 
 void Monster::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)

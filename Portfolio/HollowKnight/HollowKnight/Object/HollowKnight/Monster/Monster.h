@@ -20,6 +20,8 @@ protected :
 
 	bool _isAlive = true;
 	bool _isActive = false;
+	bool _isLeft = false;
+
 	weak_ptr<Transform> _target;
 	shared_ptr<Transform> _transform;
 	vector<shared_ptr<Sprite>> _sprites;

@@ -46,4 +46,5 @@ void TestScene::Render()
 void TestScene::PostRender()
 {
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
+	_mon1->PostRender();
 }

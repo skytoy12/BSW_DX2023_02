@@ -264,8 +264,8 @@ void Player::ChargeAndFire()
 
 	if (KEY_DOWN('Z'))
 	{
-		_effect->Update();
 		_effect->_isActive = true;
+		_effect->Update();
 		_effect->Play();
 		_isChargeAndFire = true;
 	}

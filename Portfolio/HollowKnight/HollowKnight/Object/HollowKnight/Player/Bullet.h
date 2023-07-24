@@ -17,7 +17,10 @@ public :
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
-	void EndEvent() { _isActive = false; }
+	void EndEvent();
+
+	void SetState(State_Bullet type);
+	void SetAndResetState(State_Bullet type);
 
 	bool _isActive = false;
 private :
@@ -26,7 +29,8 @@ private :
 	float _speed = 800.0f;
 	float _length = 0.0f;
 
-	State_Bullet _state = IDLE;
+	State_Bullet _curstate = IDLE;
+	State_Bullet _oldstate = IDLE;
 
 	void SetLeft();
 	void SetRight();

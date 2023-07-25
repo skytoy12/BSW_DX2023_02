@@ -16,7 +16,7 @@ protected :
 	int _hp = 0;
 	float _jumpPower = 0.0f;
 	float _speed = 150.0f;
-	Vector2 _dir = { 0,0 };
+	Vector2 _dir = { 1,0 };
 
 	bool _isAlive = true;
 	bool _isActive = false;

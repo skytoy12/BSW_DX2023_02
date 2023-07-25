@@ -32,6 +32,16 @@ public :
 
 	void TurnEvent();
 	void JumpEvent();
+	void LandEvent();
+#pragma region Update Function
+	void UnActiveIDle();
+	void LandMotionChange();
+	void Active();
+	void AttackStart();
+	void JumpMove();
+	void DirFix();
+	void WalkChange();
+#pragma endregion
 
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
 
@@ -42,8 +52,12 @@ private :
 	void SetLeft();
 	void SetRight();
 	shared_ptr<RectCollider> _col;
+	shared_ptr<CircleCollider> _landPoint;
 	State_JumpMonster _curstate = IDLE;
 	State_JumpMonster _oldstate = IDLE;
+
+	float _attackCoolTime = 0.0f;
+	float _turnCoolTime = 2.0f;
 
 	float _jumpTime = 0.0f;
 	bool _isJump = false;

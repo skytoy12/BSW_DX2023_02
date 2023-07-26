@@ -192,6 +192,9 @@
     <ClInclude Include="Object\UI\BulletCoolTime.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Monster\FlyMonster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -330,6 +333,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\UI\BulletCoolTime.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Monster\FlyMonster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

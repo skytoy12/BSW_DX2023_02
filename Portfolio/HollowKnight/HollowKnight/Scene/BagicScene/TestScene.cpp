@@ -3,14 +3,14 @@
 #include "../../Object/HollowKnight/Player/Player.h"
 #include "../../Object/HollowKnight/Monster/JumpMonster.h"
 #include "../../Object/HollowKnight/Monster/RushMonster.h"
+#include "../../Object/HollowKnight/Monster/FlyMonster.h"
 TestScene::TestScene()
 {
 	_player = make_shared<Player>();
 	_mon1 = make_shared<JumpMonster>();
 	_mon1->SetPosition(Vector2(800, 0));
 	_mon1->SetTarget(_player->GetTransform());
-	_mon2 = make_shared<RushMonster>();
-	_mon2->SetPosition(Vector2(-800, 0));
+	_mon2 = make_shared<FlyMonster>(Vector2(-800, 0));
 	_mon2->SetTarget(_player->GetTransform());
 
 	CAMERA->SetTarget(_player->GetTransform());
@@ -47,4 +47,5 @@ void TestScene::PostRender()
 {
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
 	_mon1->PostRender();
+	_mon2->PostRender();
 }

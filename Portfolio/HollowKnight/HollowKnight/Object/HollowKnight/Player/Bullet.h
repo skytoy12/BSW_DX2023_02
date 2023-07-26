@@ -20,6 +20,7 @@ public :
 	void EndEvent();
 
 	void SetState(State_Bullet type);
+	void SetPlayState(State_Bullet type);
 	void SetAndResetState(State_Bullet type);
 
 	bool _isActive = false;

@@ -268,7 +268,7 @@ void JumpMonster::DirFix()
 	if (_isJump == false && _dir.Length() != 0)
 	{
 		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
-		_dir = _dir.NormalVector2();
+		_dir = _dir.NomalVector2();
 	}
 }
 

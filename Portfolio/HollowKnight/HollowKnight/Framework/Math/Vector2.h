@@ -86,7 +86,7 @@ public :
         this->y /= length;
     }
 
-    Vector2 NormalVector2() const
+    Vector2 NomalVector2() const
     {
         Vector2 result;
         float length = Length();

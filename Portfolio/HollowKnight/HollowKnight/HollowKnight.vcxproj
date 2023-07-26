@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\HollowKnight\Monster\FlyMonster.h" />
     <ClInclude Include="Object\UI\BulletCoolTime.h" />
     <ClInclude Include="Object\HollowKnight\Player\ChargeEffect.h" />
     <ClInclude Include="Object\HollowKnight\Player\Bullet.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\HollowKnight\Monster\FlyMonster.cpp" />
     <ClCompile Include="Object\UI\BulletCoolTime.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\ChargeEffect.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\Bullet.cpp" />

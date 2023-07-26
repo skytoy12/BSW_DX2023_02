@@ -22,7 +22,10 @@ void Bullet::Update()
 {
 	if (_isActive == false)
 	{
-		SetAndResetState(IDLE);
+		_length = 0.0f;
+		SetState(IDLE);
+		_actions[IDLE]->Reset();
+		_actions[END]->Reset();
 		return;
 	}
 
@@ -43,7 +46,10 @@ void Bullet::Update()
 	_length += DELTA_TIME;
 	if (_length > 1.5f)
 	{
+		if (_curstate == END)
+			return;
 		SetState(END);
+		_actions[END]->Play();
 		_speed = 0.0f;
 	}
 
@@ -68,7 +74,7 @@ void Bullet::Shoot(Vector2 startPos, Vector2 dir)
 	_actions[IDLE]->Play();
 
 	_col->GetTransform()->SetPosition(startPos);
-	_dir = dir.NormalVector2();
+	_dir = dir.NomalVector2();
 }
 
 void Bullet::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
@@ -113,7 +119,7 @@ void Bullet::CreateAction(wstring srvPath, string xmmlPath, string actionName, V
 
 void Bullet::EndEvent()
 {
-	_isActive == false;
+	_isActive = false;
 }
 
 void Bullet::SetState(State_Bullet type)
@@ -122,6 +128,15 @@ void Bullet::SetState(State_Bullet type)
 	_curstate = type;
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
+}
+
+void Bullet::SetPlayState(State_Bullet type)
+{
+	_oldstate = _curstate;
+	_curstate = type;
+	_actions[_curstate]->Update();
+	_sprites[_curstate]->Update();
+	_actions[_curstate]->Play();
 }
 
 void Bullet::SetAndResetState(State_Bullet type)

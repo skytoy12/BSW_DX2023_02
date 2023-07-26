@@ -271,6 +271,7 @@ void Player::ChargeAndFire()
 	}
 	if (KEY_PRESS('Z'))
 	{
+		_effect->_isActive = true;
 		SetAndResetState(CHARGE);
 		_chargeTime += DELTA_TIME;
 	}

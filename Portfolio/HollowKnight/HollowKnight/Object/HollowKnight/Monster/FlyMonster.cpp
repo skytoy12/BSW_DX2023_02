@@ -31,6 +31,8 @@ void FlyMonster::Update()
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 	_SRCoolTime += DELTA_TIME;
+	_turnCoolTime += DELTA_TIME;
+
 	if (_SRCoolTime > 9.0f)
 		_SRCoolTime = 9.0f;
 
@@ -44,7 +46,7 @@ void FlyMonster::Update()
 		_col->SetRed();
 		Attack();
 	}
-
+	// 몬스터가 가까이있을때 떨리는 현상 _dir이 1이하일때 스피드 0으로 해서 해결해보기
 
 	CreateRangePoint();
 	RightLeft();
@@ -72,6 +74,7 @@ void FlyMonster::PostRender()
 {
 	ImGui::Text("_dir.x : %f", _dir.x);
 	ImGui::Text("_dir.y : %f", _dir.y);
+	ImGui::Text("_cooltime : %f", _turnCoolTime);
 }
 
 void FlyMonster::Attack()
@@ -180,12 +183,18 @@ void FlyMonster::CreateRandomPos()
 #pragma endregion
 void FlyMonster::SetLeft()
 {
+	if (_turnCoolTime < 0.2f)
+		return;
 	_col->reverseScale();
 	_isLeft = true;
+	_turnCoolTime = 0.0f;
 }
 
 void FlyMonster::SetRight()
 {
+	if (_turnCoolTime < 0.2f)
+		return;
 	_col->OriginScale();
 	_isLeft = false;
+	_turnCoolTime = 0.0f;
 }

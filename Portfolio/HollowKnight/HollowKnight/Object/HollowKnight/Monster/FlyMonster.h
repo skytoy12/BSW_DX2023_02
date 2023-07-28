@@ -42,5 +42,6 @@ private :
 	Vector2 _randomPos = { 1,0 };
 	float _searchRange = 0.0f;
 	float _SRCoolTime = 0.0f;
+	float _turnCoolTime = 0.0f;
 };
 

@@ -98,6 +98,7 @@ void JumpMonster::Attack()
 		return;
 
 	_isAttack = true;
+	_actions[JUMPREADY]->Update();
 	SetState(JUMPREADY);
 	_actions[JUMPREADY]->Play();
 }
@@ -148,6 +149,7 @@ void JumpMonster::Turn()
 		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x < 0)
 		{
 			_isturn = true;
+			_actions[TURN]->Update();
 			SetState(TURN);
 		}
 		return;
@@ -181,6 +183,7 @@ void JumpMonster::JumpEvent()
 	{
 		_isJump = true;
 		_landPoint->SetPosition(_target.lock()->GetWorldPosition());
+		_actions[JUMP]->Update();
 		SetAndResetState(JUMP);
 		//_actions[DOWN]->Reset();
 		_jumpPower = 800.0f;
@@ -189,12 +192,14 @@ void JumpMonster::JumpEvent()
 	if (_curstate == DOWN)
 	{
 		_isJump = false;
+		_actions[LAND]->Update();
 		SetAndResetState(LAND);
 	}
 }
 
 void JumpMonster::LandEvent()
 {
+	_actions[IDLE]->Update();
 	SetState(IDLE);
 	_attackCoolTime = 0.0f;
 	_isAttack = false;
@@ -208,6 +213,7 @@ void JumpMonster::UnActiveIDle()
 			return;
 		if (_isAttack == true)
 			return;
+		_actions[IDLE]->Update();
 		SetState(IDLE);
 		_col->SetGreen();
 	}
@@ -219,6 +225,8 @@ void JumpMonster::LandMotionChange()
 	{
 		if (_curstate == DOWN)
 			return;
+
+		_actions[DOWN]->Update();
 		SetState(DOWN);
 		_actions[DOWN]->Play();
 	}
@@ -282,6 +290,8 @@ void JumpMonster::WalkChange()
 		if (_isAttack == true)
 			return;
 		_speed = 100.0f;
+
+		_actions[WALK]->Update();
 		SetState(WALK);
 		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	}
@@ -291,12 +301,14 @@ void JumpMonster::WalkChange()
 
 void JumpMonster::SetLeft()
 {
+	_actions[_curstate]->Update();
 	_col->SetScale(Vector2(-1, 1));
 	_isLeft = true;
 }
 
 void JumpMonster::SetRight()
 {
+	_actions[_curstate]->Update();
 	_col->SetScale(Vector2(1, 1));
 	_isLeft = false;
 }

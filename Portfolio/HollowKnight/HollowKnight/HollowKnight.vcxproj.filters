@@ -435,6 +435,24 @@
     <Image Include="Resource\Monster\Fly\FLYIDLE.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Rush\RushEnd.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushIdle.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushReady.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushRush.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushTurn.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushWalk.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -491,5 +509,11 @@
     <Xml Include="Resource\Monster\Fly\FLYDEATH1.xml" />
     <Xml Include="Resource\Monster\Fly\FLYDEATH2.xml" />
     <Xml Include="Resource\Monster\Fly\FLYIDLE.xml" />
+    <Xml Include="Resource\Monster\Rush\RushEnd.xml" />
+    <Xml Include="Resource\Monster\Rush\RushIdle.xml" />
+    <Xml Include="Resource\Monster\Rush\RushReady.xml" />
+    <Xml Include="Resource\Monster\Rush\RushRush.xml" />
+    <Xml Include="Resource\Monster\Rush\RushTurn.xml" />
+    <Xml Include="Resource\Monster\Rush\RushWalk.xml" />
   </ItemGroup>
 </Project>

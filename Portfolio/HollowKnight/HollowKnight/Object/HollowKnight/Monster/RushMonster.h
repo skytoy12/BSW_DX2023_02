@@ -8,6 +8,8 @@ public :
 		WALK,
 		RUSHREADY,
 		RUSH,
+		RUSHEND,
+		TURN,
 		DEATH
 	};
 	RushMonster();

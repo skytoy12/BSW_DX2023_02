@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:5f7fe3633eae396182f7f200571d6d78:e1ac3164f5babd9a2f55ce119d207fab:09c335cccdab31dc3e82d7fdaf4a1a23$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="RushWalk.png" width="949" height="178">
+    <sprite n="RushWalk1.png" x="0" y="0" w="133" h="178"/>
+    <sprite n="RushWalk2.png" x="133" y="0" w="138" h="177"/>
+    <sprite n="RushWalk3.png" x="271" y="0" w="136" h="177"/>
+    <sprite n="RushWalk4.png" x="407" y="0" w="136" h="177"/>
+    <sprite n="RushWalk5.png" x="543" y="0" w="138" h="178"/>
+    <sprite n="RushWalk6.png" x="681" y="0" w="134" h="177"/>
+    <sprite n="RushWalk7.png" x="815" y="0" w="134" h="178"/>
+</TextureAtlas>

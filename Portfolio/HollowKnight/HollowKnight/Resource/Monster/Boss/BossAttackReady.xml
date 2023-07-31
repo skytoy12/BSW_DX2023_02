@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:be1739c658868c9553686e6b3e282636:76ea2c911aea51ff8168de9b72b90540:e7326a9e8b8e1e8b94ecd83ae717fb85$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="BossAttackReady.png" width="1733" height="798">
+    <sprite n="AttackReady1.png" x="0" y="0" w="580" h="399"/>
+    <sprite n="AttackReady2.png" x="580" y="0" w="578" h="399"/>
+    <sprite n="AttackReady3.png" x="1158" y="0" w="575" h="399"/>
+    <sprite n="AttackReady4.png" x="0" y="399" w="578" h="399"/>
+    <sprite n="AttackReady5.png" x="578" y="399" w="578" h="398"/>
+    <sprite n="AttackReady6.png" x="1156" y="399" w="577" h="395"/>
+</TextureAtlas>

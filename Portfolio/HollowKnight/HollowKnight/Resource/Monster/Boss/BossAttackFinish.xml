@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:34ea772d3de9f85efe687ac517f0f4fe:1a10b721c9ef8d02fad9b558de4dd144:ee0428cd08356304155f00e99f8839fa$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="BossAttackFinish.png" width="1928" height="1153">
+    <sprite n="AttackFinish1.png" x="649" y="576" w="652" h="577"/>
+    <sprite n="AttackFinish2.png" x="1281" y="0" w="647" h="572"/>
+    <sprite n="AttackFinish3.png" x="0" y="576" w="649" h="571"/>
+    <sprite n="ATtackFinish4.png" x="0" y="0" w="638" h="576"/>
+    <sprite n="AttackFinish5 .png" x="638" y="0" w="643" h="569"/>
+</TextureAtlas>

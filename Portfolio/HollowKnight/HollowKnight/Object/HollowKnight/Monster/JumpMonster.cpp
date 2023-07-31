@@ -8,7 +8,7 @@ JumpMonster::JumpMonster()
 	_landPoint = make_shared<CircleCollider>(20);
 	_transform->SetParent(_col->GetTransform());
 	CreateAction(L"Resource/Monster/Jump/JM_Idle.png", "Resource/Monster/Jump/JM_Idle.xml", "Idle", Vector2(95, 207), Action::Type::LOOP);
-	_actions[0]->SetSpeed(0.2);
+	_actions[0]->SetSpeed(0.3);
 	CreateAction(L"Resource/Monster/Jump/JM_Walk.png", "Resource/Monster/Jump/JM_Walk.xml", "Idle", Vector2(134, 194), Action::Type::LOOP);
 	_actions[1]->SetSpeed(0.2);
 	CreateAction(L"Resource/Monster/Jump/JM_Turn.png", "Resource/Monster/Jump/JM_Turn.xml", "Idle", Vector2(81, 207), Action::Type::END, std::bind(&JumpMonster::TurnEvent, this));
@@ -141,8 +141,8 @@ void JumpMonster::Turn()
 	if (_turnCoolTime < 0.4f)
 		return;
 
-	_actions[2]->Reset();
-	_actions[2]->Play();
+	_actions[TURN]->Reset();
+	_actions[TURN]->Play();
 
 	if (_isLeft == true)
 	{

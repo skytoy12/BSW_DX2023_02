@@ -151,6 +151,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\BagicScene\BossTestScene.h" />
+    <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h" />
+    <ClInclude Include="Object\HollowKnight\Monster\Boss.h" />
     <ClInclude Include="Object\HollowKnight\Monster\FlyMonster.h" />
     <ClInclude Include="Object\UI\BulletCoolTime.h" />
     <ClInclude Include="Object\HollowKnight\Player\ChargeEffect.h" />
@@ -213,6 +216,9 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\BagicScene\BossTestScene.cpp" />
+    <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp" />
+    <ClCompile Include="Object\HollowKnight\Monster\Boss.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\FlyMonster.cpp" />
     <ClCompile Include="Object\UI\BulletCoolTime.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\ChargeEffect.cpp" />
@@ -287,6 +293,7 @@
     <Image Include="Resource\Monster\Jump\JM_Turn.png" />
     <Image Include="Resource\Monster\Jump\JM_Walk.png" />
     <Image Include="Resource\Monster\Rush\RushEnd.png" />
+    <Image Include="Resource\Monster\Rush\RushEnd1.png" />
     <Image Include="Resource\Monster\Rush\RushIdle.png" />
     <Image Include="Resource\Monster\Rush\RushReady.png" />
     <Image Include="Resource\Monster\Rush\RushRush.png" />
@@ -515,6 +522,7 @@
     <Xml Include="Resource\Monster\Jump\JM_Turn.xml" />
     <Xml Include="Resource\Monster\Jump\JM_Walk.xml" />
     <Xml Include="Resource\Monster\Rush\RushEnd.xml" />
+    <Xml Include="Resource\Monster\Rush\RushEnd1.xml" />
     <Xml Include="Resource\Monster\Rush\RushIdle.xml" />
     <Xml Include="Resource\Monster\Rush\RushReady.xml" />
     <Xml Include="Resource\Monster\Rush\RushRush.xml" />

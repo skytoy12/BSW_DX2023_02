@@ -195,6 +195,15 @@
     <ClInclude Include="Object\HollowKnight\Monster\FlyMonster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Monster\Boss.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\BagicScene\BossTestScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -338,6 +347,15 @@
     <ClCompile Include="Object\HollowKnight\Monster\FlyMonster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Monster\Boss.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\BagicScene\BossTestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc">
@@ -453,6 +471,9 @@
     <Image Include="Resource\Monster\Rush\RushWalk.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Rush\RushEnd1.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -515,5 +536,6 @@
     <Xml Include="Resource\Monster\Rush\RushRush.xml" />
     <Xml Include="Resource\Monster\Rush\RushTurn.xml" />
     <Xml Include="Resource\Monster\Rush\RushWalk.xml" />
+    <Xml Include="Resource\Monster\Rush\RushEnd1.xml" />
   </ItemGroup>
 </Project>

@@ -11,7 +11,7 @@ Player::Player()
 {
 #pragma region Create Base
 	_col = make_shared<RectCollider>(Vector2(50, 100));
-	_weaponCol = make_shared<RectCollider>(Vector2(120, 20));
+	_weaponCol = make_shared<RectCollider>(Vector2(120, 70));
 	_dashCol = make_shared<CircleCollider>(10);
 	_transform = make_shared<Transform>();
 	_bullet = make_shared<Bullet>();
@@ -37,7 +37,7 @@ Player::Player()
 #pragma region Setting
 	_transform->SetParent(_col->GetTransform());
 	_weaponCol->GetTransform()->SetParent(_col->GetTransform());
-	_weaponCol->SetPosition(Vector2(80, -25));
+	_weaponCol->SetPosition(Vector2(80, -5));
 	_dashCol->SetParent(_col->GetTransform());
 	_dashCol->SetPosition(Vector2(0, -15));
 	_transform->SetPosition(Vector2(0, 9.876));
@@ -249,9 +249,9 @@ void Player::Attack()
 		_isAttack = true;
 		SetAndResetState(SLASH);
 		if(_isLeft == true)
-			EFFECT_RPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(-10, 20));
+			EFFECT_RPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(-10, 0));
 		else
-			EFFECT_LPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(10, 20));
+			EFFECT_LPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(10, 0));
 	}
 }
 

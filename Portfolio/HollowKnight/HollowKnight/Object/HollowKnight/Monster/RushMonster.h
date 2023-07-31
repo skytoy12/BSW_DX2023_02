@@ -24,12 +24,17 @@ public :
 	void SetAndResetState(State_RushMonster type);
 	void SetAndPlayState(State_RushMonster type);
 
+
+	void Turn();
+
+	void UnActiveIdle();
 	void Active();
 	void RightLeft();
 	void WalkChange();
 
 	void RushEvent();
 	void RushFinish();
+	void TurnEvent();
 
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
 
@@ -46,7 +51,9 @@ private :
 
 	shared_ptr<RectCollider> _col;
 	float _attackCoolTime = 0.0f;
+	float _turnCoolTime = 2.0f;
 	float _rushTime = 0.0f;
 	bool _isRush = false;
+	bool _isTurn = false;
 };
 

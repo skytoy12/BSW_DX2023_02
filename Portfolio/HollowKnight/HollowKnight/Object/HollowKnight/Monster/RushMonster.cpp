@@ -7,11 +7,14 @@ RushMonster::RushMonster()
 	_col = make_shared<RectCollider>(Vector2(95, 180));
 	_transform->SetParent(_col->GetTransform());
 	CreateAction(L"Resource/Monster/Rush/RushIdle.png", "Resource/Monster/Rush/RushIdle.xml", "Idle", Vector2(116, 195), Action::Type::LOOP);
+	_actions[IDLE]->SetSpeed(0.3);
 	CreateAction(L"Resource/Monster/Rush/RushWalk.png", "Resource/Monster/Rush/RushWalk.xml", "Idle", Vector2(136, 177), Action::Type::LOOP);
+	_actions[WALK]->SetSpeed(0.2);
 	CreateAction(L"Resource/Monster/Rush/RushReady.png", "Resource/Monster/Rush/RushReady.xml", "Idle", Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
 	CreateAction(L"Resource/Monster/Rush/RushRush.png", "Resource/Monster/Rush/RushRush.xml", "Idle", Vector2(180, 115), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Rush/RushEnd.png", "Resource/Monster/Rush/RushEnd.xml", "Idle", Vector2(131, 161), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle", Vector2(103, 195), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Rush/RushEnd1.png", "Resource/Monster/Rush/RushEnd1.xml", "Idle", Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle", Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
+	_actions[TURN]->SetSpeed(0.2);
 }
 
 RushMonster::~RushMonster()
@@ -35,6 +38,7 @@ void RushMonster::Update()
 		_col->SetGreen();
 
 	_attackCoolTime += DELTA_TIME;
+	_turnCoolTime += DELTA_TIME;
 	Gravity(_col);
 	_col->Update();
 	_transform->Update();
@@ -46,15 +50,8 @@ void RushMonster::Update()
 	if (_isActive == false)
 		_col->SetGreen();
 
-
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f) || _isRush == true)
-		_isActive = true;
-	else
-	{
-		_isActive = false;
-		_isRush = false;
-	}
+	if(_curstate == RUSH)
+		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
 	if (_isRush == false)
 	{
@@ -62,9 +59,10 @@ void RushMonster::Update()
 		_dir = _dir.NomalVector2();
 	}
 
-	RightLeft();
+	//RightLeft();
 	WalkChange();
 	Active();
+	UnActiveIdle();
 
 	if (_rushTime > 2.5f)
 		RushFinish();
@@ -92,11 +90,15 @@ void RushMonster::Render()
 void RushMonster::PostRender()
 {
 	ImGui::Text("SPEED : %f", _speed);
+	ImGui::Text("_isturn : %d", _isTurn);
+	ImGui::Text("_jmisleft : %d", _isLeft);
 }
 
 void RushMonster::Attack()
 {
 	if (_isRush == true)
+		return;
+	if (_isTurn == true)
 		return;
 	if (_attackCoolTime < 3.0f)
 		return;
@@ -133,11 +135,66 @@ void RushMonster::SetAndPlayState(State_RushMonster type)
 	_actions[_curstate]->Play();
 }
 
+void RushMonster::Turn()
+{
+	if (_isTurn == true)
+		return;
+	if (_isRush == true)
+		return;
+	if (_turnCoolTime < 0.4f)
+		return;
+
+	_actions[TURN]->Reset();
+	_actions[TURN]->Play();
+
+	if (_isLeft == true)
+	{
+		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x < 0)
+		{
+			_isTurn = true;
+			SetState(TURN);
+		}
+		return;
+	}
+
+	if (_isLeft == false)
+	{
+		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x > 0)
+		{
+			_isTurn = true;
+			SetState(TURN);
+		}
+		return;
+	}
+}
+
+void RushMonster::UnActiveIdle()
+{
+	if (_isActive == false)
+	{
+		if (_isTurn == true)
+			return;
+		if (_isRush == true)
+			return;
+		_actions[IDLE]->Update();
+		SetState(IDLE);
+		_col->SetGreen();
+	}
+}
+
 void RushMonster::Active()
 {
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 500.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f) || _isRush == true)
+		_isActive = true;
+	else
+	{
+		_isActive = false;
+		_isRush = false;
+	}
+
 	if (_isActive == true)
 	{
-		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 		if (_isRush == true)
 			return;
 		_speed = 100.0f;
@@ -156,7 +213,9 @@ void RushMonster::WalkChange()
 {
 	if (_isActive == true)
 	{
-
+		Turn();
+		if (_isTurn == true)
+			return;
 		if (_isRush == true)
 			return;
 		_speed = 100.0f;
@@ -171,10 +230,19 @@ void RushMonster::RushEvent()
 {
 	if (_curstate == RUSHREADY)
 	{
-		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
-		_dir = _dir.NomalVector2();
+		if (_isLeft == true)
+			_dir.x = -1.0f;
+		else
+			_dir.x = 1.0f;
 		_speed = 300.0f;
+		_transform->AddVector2(Vector2(0, -35));
 		SetAndResetState(RUSH);
+	}
+
+	if (_curstate == RUSHEND)
+	{
+		SetAndResetState(IDLE);
+		_isRush = false;
 	}
 }
 
@@ -182,12 +250,22 @@ void RushMonster::RushFinish()
 {
 	if (_curstate == RUSH)
 	{
-		SetAndResetState(IDLE);
+		_transform->AddVector2(Vector2(0, 35));
+		SetAndResetState(RUSHEND);
 		_speed = 0.0f;
-		_isRush = false;
 		_rushTime = 0.0f;
 		_attackCoolTime = 0.0f;
+
 	}
+}
+
+void RushMonster::TurnEvent()
+{
+	if (_isLeft == false)
+		SetLeft();
+	else
+		SetRight();
+	_isTurn = false;
 }
 
 void RushMonster::SetLeft()
@@ -201,5 +279,5 @@ void RushMonster::SetRight()
 {
 	_actions[_curstate]->Update();
 	_col->SetScale(Vector2(1, 1));
-	_isLeft = true;
+	_isLeft = false;
 }

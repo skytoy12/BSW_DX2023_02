@@ -6,7 +6,7 @@ RushMonster::RushMonster()
 	_speed = 100.0f;
 	_col = make_shared<RectCollider>(Vector2(95, 180));
 	_transform->SetParent(_col->GetTransform());
-	CreateAction(L"Resource/Monster/Rush/RushIdle.png", "Resource/Monster/Rush/RushIdle.xml", "Idle", Vector2(116, 195), Action::Type::END);
+	CreateAction(L"Resource/Monster/Rush/RushIdle.png", "Resource/Monster/Rush/RushIdle.xml", "Idle", Vector2(116, 195), Action::Type::LOOP);
 	CreateAction(L"Resource/Monster/Rush/RushWalk.png", "Resource/Monster/Rush/RushWalk.xml", "Idle", Vector2(136, 177), Action::Type::LOOP);
 	CreateAction(L"Resource/Monster/Rush/RushReady.png", "Resource/Monster/Rush/RushReady.xml", "Idle", Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
 	CreateAction(L"Resource/Monster/Rush/RushRush.png", "Resource/Monster/Rush/RushRush.xml", "Idle", Vector2(180, 115), Action::Type::LOOP);

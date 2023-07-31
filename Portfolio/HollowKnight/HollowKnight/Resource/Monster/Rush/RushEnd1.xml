@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:45aa5611e474ae2175c489338703c1da:2d8f22889a13f4dcd337bec6b68cd718:deb52362e1743ca3507f05459e7c1f53$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="RushReady.png" width="836" height="188">
+    <sprite n="RushReady5.png" x="668" y="0" w="168" h="187"/>
+    <sprite n="RushReady4.png" x="501" y="0" w="167" h="188"/>
+    <sprite n="RushReady3.png" x="333" y="0" w="168" h="187"/>
+    <sprite n="RushReady2.png" x="167" y="0" w="166" h="188"/>
+    <sprite n="RushReady1.png" x="0" y="0" w="167" h="187"/>
+</TextureAtlas>

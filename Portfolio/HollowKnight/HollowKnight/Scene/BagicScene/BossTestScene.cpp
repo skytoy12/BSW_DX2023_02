@@ -9,7 +9,7 @@ BossTestScene::BossTestScene()
 	_boss = make_shared<Boss>();
 	_boss->SetTarget(_player->GetTransform());
 	CAMERA->SetTarget(_player->GetTransform());
-	_col = make_shared<RectCollider>(Vector2(20000, 30));
+	_col = make_shared<RectCollider>(Vector2(20000, 300));
 	_col->SetPosition(Vector2(0, -250));
 }
 
@@ -24,7 +24,7 @@ void BossTestScene::Update()
 	_col->Update();
 	if (_col->Block(_player->GetCollider()))
 		_player->SetIsJump(false);
-	_col->Block(_boss->GetCollider());
+	_col->Block(_boss->GetGravityCollider());
 	CAMERA->SetScale(Vector2(_scale, _scale));
 }
 
@@ -38,4 +38,5 @@ void BossTestScene::Render()
 void BossTestScene::PostRender()
 {
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
+	_boss->PostRender();
 }

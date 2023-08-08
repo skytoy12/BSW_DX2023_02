@@ -6,7 +6,21 @@
 
 #define MAX_LOADSTRING 100
 
-// 전역 변수:
+ID3D11Device*        device;         // 무언가를 만들 때 사용, CPU를 다루는 객체 
+ID3D11DeviceContext* deviceContext;  // 무언가를 그릴 때 사용, GPU를 다루는 객체(RENDER, HDC)
+
+IDXGISwapChain*         swapChain;         // 더블버퍼링을 구현하는 객체
+ID3D11RenderTargetView* renderTargetView;  // 백버퍼를 관리하는 객체
+
+void Initialize();
+void Render();
+void Release();
+
+
+
+HWND hWnd;
+
+// 전역 변수: 
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
@@ -40,6 +54,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_PROJECT));
 
+    Initialize();
+
     MSG msg;
 
     while (true)
@@ -58,13 +74,47 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         else
         {
             // TODO : Update. Render
+            Render();
         }
     };
+
+    Release();
 
     return (int) msg.wParam;
 }
 
 
+
+void Initialize()
+{
+    DXGI_SWAP_CHAIN_DESC swapChainDesc = {};
+
+    swapChainDesc.BufferCount = 1; // 백버퍼가 몇개 있나
+    swapChainDesc.BufferDesc.Width = WIN_WIDTH;
+    swapChainDesc.BufferDesc.Height = WIN_HEIGHT;
+    swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
+    // RGBA 8비트 * 4개 = 32비트, UNORM = Unsigned Normal = 0~1
+
+    swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60; 
+    swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;  
+
+    swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
+
+    swapChainDesc.OutputWindow = hWnd;
+
+    swapChainDesc.SampleDesc.Count   = 1;
+    swapChainDesc.SampleDesc.Quality = 0;
+
+    swapChainDesc.Windowed = true;
+}
+
+void Render()
+{
+}
+
+void Release()
+{
+}
 
 //
 //  함수: MyRegisterClass()
@@ -106,8 +156,21 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   HWND hWnd = CreateWindowW(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, nullptr, nullptr, hInstance, nullptr);
+   RECT rect = { 0,0,WIN_WIDTH, WIN_HEIGHT };
+
+   AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+
+   HWND hWnd = CreateWindowW
+   (
+       szWindowClass,
+       szTitle,
+       WS_OVERLAPPEDWINDOW,
+       CW_USEDEFAULT,0,
+       rect.right - rect.left, rect.bottom - rect.top,
+       nullptr, nullptr, hInstance, nullptr
+   );
+
+   SetMenu(hWnd, nullptr);
 
    if (!hWnd)
    {

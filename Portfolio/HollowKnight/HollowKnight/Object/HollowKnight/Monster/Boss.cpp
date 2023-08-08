@@ -8,19 +8,26 @@ Boss::Boss()
 	_col = make_shared<CircleCollider>(130);
 	_transform->SetParent(_gravityCol->GetTransform());
 	_col->SetParent(_gravityCol->GetTransform());
-	_col->SetPosition(Vector2(0, -10));
-	LocationFix();
-	CreateAction(L"Resource/Monster/Boss/BossIdle.png", "Resource/Monster/Boss/BossIdle.xml", "Idle", Vector2(620, 393), Action::Type::LOOP);
-	_actions[IDLE]->SetSpeed(0.2f);
-	CreateAction(L"Resource/Monster/Boss/BossRunReady.png", "Resource/Monster/Boss/BossRunReady.xml", "RunReady", Vector2(571, 375), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossRun.png", "Resource/Monster/Boss/BossRun.xml", "Run", Vector2(617, 481), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossTurn.png", "Resource/Monster/Boss/BossTurn.xml", "Turn", Vector2(545, 388), Action::Type::END, std::bind(&Boss::TurnEvent, this));
+	_col->SetPosition(Vector2(0, 15));
+	LocationFix(IDLE);
+	CreateAction(L"Resource/Monster/Boss/BossIdle.png", "Resource/Monster/Boss/BossIdle.xml", "Idle", 
+	Vector2((float)(620 * 1.2), (float)(393 * 1.2)), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Boss/BossTurn.png", "Resource/Monster/Boss/BossTurn.xml", "Turn", 
+	Vector2((float)(545 * 1.2), (float)(388 * 1.2)), Action::Type::END, std::bind(&Boss::TurnEvent, this));
+	CreateAction(L"Resource/Monster/Boss/BossAttackReady.png", "Resource/Monster/Boss/BossAttackReady.xml", "AttackReady", 
+	Vector2((float)(578 * 1.2), (float)(399 * 1.2)), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Boss/BossAttack.png", "Resource/Monster/Boss/BossAttack.xml", "Attack", 
+	Vector2((float)(701 * 1.2), (float)(587 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
+	CreateAction(L"Resource/Monster/Boss/BossAttackFinish.png", "Resource/Monster/Boss/BossAttackFinish.xml", "AttackFinish", 
+	Vector2((float)(647 * 1.2), (float)(572 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
+	CreateAction(L"Resource/Monster/Boss/BossJumpReady.png", "Resource/Monster/Boss/BossJumpReady.xml", "JumpReady", 
+	Vector2((float)(605 * 1.2), (float)(381 * 1.2)), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Boss/BossJump.png", "Resource/Monster/Boss/BossJump.xml", "Jump", 
+	Vector2((float)(598 * 1.2), (float)(335 * 1.2)), Action::Type::LOOP);
+	_actions[IDLE]->SetSpeed(0.35f);
 	_actions[TURN]->SetSpeed(0.15f);
-	CreateAction(L"Resource/Monster/Boss/BossAttackReady.png", "Resource/Monster/Boss/BossAttackReady.xml", "AttackReady", Vector2(578, 399), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossAttack.png", "Resource/Monster/Boss/BossAttack.xml", "Attack", Vector2(701, 587), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossAttackFinish.png", "Resource/Monster/Boss/BossAttackFinish.xml", "AttackFinish", Vector2(647, 572), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossJumpReady.png", "Resource/Monster/Boss/BossJumpReady.xml", "JumpReady", Vector2(605, 381), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossJump.png", "Resource/Monster/Boss/BossJump.xml", "Jump", Vector2(598, 335), Action::Type::LOOP);
+	_actions[ATTACK]->SetSpeed(0.07f);
+	//_actions[ATTACKFINISH]->SetSpeed(1.0f);
 	_gravityCol->SetPosition(Vector2(500, 0));
 }
 
@@ -41,13 +48,20 @@ void Boss::Update()
 	_transform->Update();
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
-	_turnCoolTime += DELTA_TIME;
 
-	LocationFix(); // collider에 transform을 맞춰주는 함수
+
+	LocationFix(_curstate); // collider에 transform을 맞춰주는 함수
 	DirFix();
 	UnActiveIDle();
 	Turn(); 
-	//_col->SetPosition(_location);
+	AttackReadyEvent();
+	ShakeEvent();
+	if (KEY_DOWN('K'))
+	{
+		_actions[ATTACKREADY]->Play();
+		LandAttackPattern();
+	}
+	//_transform->SetPosition(_location);
 }
 
 void Boss::Render()
@@ -68,7 +82,7 @@ void Boss::PostRender()
 {
 	ImGui::SliderFloat("Location.x", (float*)&_location.x, -100.0f, 200.0f);
 	ImGui::SliderFloat("Location.y", (float*)&_location.y, -100.0f, 200.0f);
-	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 8);
+	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 6);
 	ImGui::Text("_isLeft : %d", _isLeft);
 	ImGui::Text("_isTurn : %d", _isTurn);
 }
@@ -104,8 +118,18 @@ void Boss::SetAndPlayState(State_Boss type)
 	_actions[_curstate]->Play();
 }
 
+void Boss::TotalUpdate(State_Boss type)
+{
+	LocationFix(type);
+	_transform->Update();
+	_actions[type]->Update();
+	_sprites[type]->Update();
+}
+
 void Boss::Turn()
 {
+	_turnCoolTime += DELTA_TIME;
+
 	if (_isTurn == true)
 		return;
 	if (_isAttack == true)
@@ -128,8 +152,8 @@ void Boss::Turn()
 				SetLeft();
 			else
 				SetRight();
+			TotalUpdate(TURN);
 			SetState(TURN);
-			LocationFix();
 		}
 		return;
 	}
@@ -144,8 +168,8 @@ void Boss::Turn()
 				SetLeft();
 			else
 				SetRight();
+			TotalUpdate(TURN);
 			SetState(TURN);
-			LocationFix();
 		}
 		return;
 	}
@@ -155,8 +179,8 @@ void Boss::UnActiveIDle()
 {
 	if (_isJump == false && _isAttack == false && _isTurn == false)
 	{
+		TotalUpdate(IDLE);
 		SetState(IDLE);
-		LocationFix();
 	}
 
 }	   
@@ -168,51 +192,87 @@ void Boss::TurnEvent()
 	_turnCoolTime = 0.0f;
 }
 
-void Boss::LocationFix()
+void Boss::AttackReadyEvent()
 {
-	if (_curstate == IDLE)
-	{
-		_transform->SetPosition(Vector2(61, 63));
-	}
+	if (_curstate != ATTACKREADY)
+		return;
 
-	if (_curstate == RUNREADY)
-	{
-		_transform->SetPosition(Vector2(112, 55));
-	}
+	_chargeTime += DELTA_TIME;
 
-	if (_curstate == RUN)
+	if (_chargeTime > 1.3f)
 	{
-		_transform->SetPosition(Vector2(112, 106));
+		TotalUpdate(ATTACK);
+		SetAndResetState(ATTACK);
+		_chargeTime = 0.0f;
 	}
+}
 
-	if (_curstate == TURN)
-	{
-		_transform->SetPosition(Vector2(0, 58));
-	}
-
-	if (_curstate == ATTACKREADY)
-	{
-		_transform->SetPosition(Vector2(116, 48));
-	}
-
+void Boss::AttackEvent()
+{
 	if (_curstate == ATTACK)
 	{
-		_transform->SetPosition(Vector2(-74, 138));
+		_shakeTiming = 0.0f;
+		TotalUpdate(ATTACKFINISH);
+		SetAndResetState(ATTACKFINISH);
+		return;
 	}
 
 	if (_curstate == ATTACKFINISH)
 	{
-		_transform->SetPosition(Vector2(0, 146));
+		TotalUpdate(IDLE);
+		SetAndResetState(IDLE);
+		_isAttack = false;
+		return;
 	}
 
-	if (_curstate == JUMPREADY)
+}
+
+void Boss::ShakeEvent()
+{
+	if (_curstate != ATTACK)
+		return;
+	_shakeTiming += DELTA_TIME;
+	if (_shakeTiming > 0.22f)
 	{
-		_transform->SetPosition(Vector2(53, 56));
+		CAMERA->ShakeStart(15.0f, 0.5f);
+	}
+}
+
+void Boss::LocationFix(State_Boss type)
+{
+	if (type == IDLE)
+	{
+		_transform->SetPosition(Vector2(68, 105));
 	}
 
-	if (_curstate == JUMP)
+	if (type == TURN)
 	{
-		_transform->SetPosition(Vector2(123, 37));
+		_transform->SetPosition(Vector2(0, 100));
+	}
+
+	if (type == ATTACKREADY)
+	{
+		_transform->SetPosition(Vector2(140, 90));
+	}
+
+	if (type == ATTACK)
+	{
+		_transform->SetPosition(Vector2(-98, 193));
+	}
+
+	if (type == ATTACKFINISH)
+	{
+		_transform->SetPosition(Vector2(-33, 193));
+	}
+
+	if (type == JUMPREADY)
+	{
+		_transform->SetPosition(Vector2(63, 98));
+	}
+
+	if (type == JUMP)
+	{
+		_transform->SetPosition(Vector2(160, 70));
 	}
 }
 
@@ -227,6 +287,9 @@ void Boss::DirFix()
 
 void Boss::LandAttackPattern()
 {
+	_isAttack = true;
+	TotalUpdate(ATTACKREADY);
+	SetState(ATTACKREADY);
 }
 
 void Boss::JumpAttackPattern()

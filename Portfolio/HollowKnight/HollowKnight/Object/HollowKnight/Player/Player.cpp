@@ -40,7 +40,7 @@ Player::Player()
 	_weaponCol->SetPosition(Vector2(80, -5));
 	_dashCol->SetParent(_col->GetTransform());
 	_dashCol->SetPosition(Vector2(0, -15));
-	_transform->SetPosition(Vector2(0, 9.876));
+	_transform->SetPosition(Vector2(0, 18));
 	_effect->GetTransform()->SetParent(_col->GetTransform());
 #pragma endregion
 

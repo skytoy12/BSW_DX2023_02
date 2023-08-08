@@ -5,8 +5,6 @@ public :
 	enum State_Boss
 	{
 		IDLE,
-		RUNREADY,
-		RUN,
 		TURN,
 		ATTACKREADY,
 		ATTACK,
@@ -26,9 +24,14 @@ public :
 	void SetAndResetState(State_Boss type);
 	void SetAndPlayState(State_Boss type);
 
+	void TotalUpdate(State_Boss type);
+
 	void TurnEvent();
+	void AttackReadyEvent();
+	void AttackEvent();
+	void ShakeEvent();
 #pragma region Update Function
-	void LocationFix();
+	void LocationFix(State_Boss type);
 	void DirFix();
 	void Turn();
 	void UnActiveIDle();
@@ -54,8 +57,11 @@ private :
 	State_Boss _curstate = IDLE;
 	State_Boss _oldstate = IDLE;
 
+	float _chargeTime = 0.0f;
+
 	float _turnCoolTime = 2.0f;
 	float _attackCoolTime = 0.0f;
+	float _shakeTiming = 0.0f;
 
 	Vector2 _location = { 0,0 };
 	float _jumpTime = 0.0f;

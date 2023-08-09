@@ -1,0 +1,34 @@
+Rendering Pipeline
+
+shader가 붙은 과정 : hlsl(high-level shader language)를 통해 프로그래머가 코딩해서 돌아가는 과정 ^^
+shader가 안붙은 과정 : GPU가 스스로 진행하는 과정 **
+
+
+*IA(Input Assembler)* : 입력된 데이터를 모으는 과정, GPU가 CPU로부터 데이터를 가져오는 과정
+
+
+^VS(Vertex Shader)^ : World Transform, View Transform, Projection Transform 
+부모자식 상속시 (자식의 행렬 X 부모의 행렬)
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+^HS(Hull Shader)^
+
+*TS(Tesselation Stage)*
+
+^DS(Domain Shader)^
+
+
+
+^GS(Geometry Shader)^
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+*RS(Rasterizer State)* : 3D 정점을 2D픽셀로 변경, RS이전의 작업들은 3D에서 해야하는 작업, 이후의 작업들은 2D로 해도 상관없는 작업
+
+^PS(Pixel Shader)^ : 색과 관련된 작업, 3D보다 2D에서의 작업이 더 유리함
+
+*OM(Output Merger)*

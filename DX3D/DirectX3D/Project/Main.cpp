@@ -6,10 +6,10 @@
 
 #define MAX_LOADSTRING 100
 
-ID3D11Device*        device;         // 무언가를 만들 때 사용, CPU를 다루는 객체 
+ID3D11Device* device;         // 무언가를 만들 때 사용, CPU를 다루는 객체 
 ID3D11DeviceContext* deviceContext;  // 무언가를 그릴 때 사용, GPU를 다루는 객체(RENDER, HDC)
 
-IDXGISwapChain*         swapChain;         // 더블버퍼링을 구현하는 객체
+IDXGISwapChain* swapChain;         // 더블버퍼링을 구현하는 객체
 ID3D11RenderTargetView* renderTargetView;  // 백버퍼를 관리하는 객체
 
 void Initialize();
@@ -32,9 +32,9 @@ LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
-                     _In_opt_ HINSTANCE hPrevInstance,
-                     _In_ LPWSTR    lpCmdLine,
-                     _In_ int       nCmdShow)
+    _In_opt_ HINSTANCE hPrevInstance,
+    _In_ LPWSTR    lpCmdLine,
+    _In_ int       nCmdShow)
 {
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
@@ -47,7 +47,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MyRegisterClass(hInstance);
 
     // 애플리케이션 초기화를 수행합니다:
-    if (!InitInstance (hInstance, nCmdShow))
+    if (!InitInstance(hInstance, nCmdShow))
     {
         return FALSE;
     }
@@ -80,7 +80,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Release();
 
-    return (int) msg.wParam;
+    return (int)msg.wParam;
 }
 
 
@@ -95,25 +95,62 @@ void Initialize()
     swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
     // RGBA 8비트 * 4개 = 32비트, UNORM = Unsigned Normal = 0~1
 
-    swapChainDesc.BufferDesc.RefreshRate.Numerator   = 60; 
-    swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;  
+    swapChainDesc.BufferDesc.RefreshRate.Numerator = 60;
+    swapChainDesc.BufferDesc.RefreshRate.Denominator = 1;
 
     swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
 
     swapChainDesc.OutputWindow = hWnd;
 
-    swapChainDesc.SampleDesc.Count   = 1;
+    swapChainDesc.SampleDesc.Count = 1;
     swapChainDesc.SampleDesc.Quality = 0;
 
     swapChainDesc.Windowed = true;
+
+    D3D11CreateDeviceAndSwapChain
+    (
+        nullptr,
+        D3D_DRIVER_TYPE_HARDWARE,
+        0,
+        D3D11_CREATE_DEVICE_DEBUG, // 속성
+        nullptr,
+        0,
+        D3D11_SDK_VERSION,
+        &swapChainDesc,
+        &swapChain,
+        &device,
+        nullptr,
+        &deviceContext
+    );
+
+    ID3D11Texture2D* backBuffer;
+
+    swapChain->GetBuffer(0, __uuidof(ID3D11Texture2D), (void**)&backBuffer);
+
+    device->CreateRenderTargetView(backBuffer, nullptr, &renderTargetView);
+
+    backBuffer->Release();
+
+    deviceContext->OMSetRenderTargets(1, &renderTargetView, nullptr); // 랜더링 파이프라인의 Output Merge 단계
 }
 
 void Render()
 {
+    float clearColor[4] = { 0.0f, 0.125f, 0.3f, 1.0f };
+
+    deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
+
+    //TODO : Render
+
+    swapChain->Present(0, 0);
 }
 
 void Release()
 {
+    device->Release();
+    deviceContext->Release();
+    swapChain->Release();
+    renderTargetView->Release();
 }
 
 //
@@ -127,17 +164,17 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 
     wcex.cbSize = sizeof(WNDCLASSEX);
 
-    wcex.style          = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc    = WndProc;
-    wcex.cbClsExtra     = 0;
-    wcex.cbWndExtra     = 0;
-    wcex.hInstance      = hInstance;
-    wcex.hIcon          = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_PROJECT));
-    wcex.hCursor        = LoadCursor(nullptr, IDC_ARROW);
-    wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.lpszMenuName   = MAKEINTRESOURCEW(IDC_PROJECT);
-    wcex.lpszClassName  = szWindowClass;
-    wcex.hIconSm        = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
+    wcex.style = CS_HREDRAW | CS_VREDRAW;
+    wcex.lpfnWndProc = WndProc;
+    wcex.cbClsExtra = 0;
+    wcex.cbWndExtra = 0;
+    wcex.hInstance = hInstance;
+    wcex.hIcon = LoadIcon(hInstance, MAKEINTRESOURCE(IDI_PROJECT));
+    wcex.hCursor = LoadCursor(nullptr, IDC_ARROW);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
+    wcex.lpszMenuName = MAKEINTRESOURCEW(IDC_PROJECT);
+    wcex.lpszClassName = szWindowClass;
+    wcex.hIconSm = LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
     return RegisterClassExW(&wcex);
 }
@@ -154,33 +191,33 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 //
 BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 {
-   hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
+    hInst = hInstance; // 인스턴스 핸들을 전역 변수에 저장합니다.
 
-   RECT rect = { 0,0,WIN_WIDTH, WIN_HEIGHT };
+    RECT rect = { 0,0,WIN_WIDTH, WIN_HEIGHT };
 
-   AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
+    AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, false);
 
-   HWND hWnd = CreateWindowW
-   (
-       szWindowClass,
-       szTitle,
-       WS_OVERLAPPEDWINDOW,
-       CW_USEDEFAULT,0,
-       rect.right - rect.left, rect.bottom - rect.top,
-       nullptr, nullptr, hInstance, nullptr
-   );
+  hWnd = CreateWindowW
+    (
+        szWindowClass,
+        szTitle,
+        WS_OVERLAPPEDWINDOW,
+        CW_USEDEFAULT, 0,
+        rect.right - rect.left, rect.bottom - rect.top,
+        nullptr, nullptr, hInstance, nullptr
+    );
 
-   SetMenu(hWnd, nullptr);
+    SetMenu(hWnd, nullptr);
 
-   if (!hWnd)
-   {
-      return FALSE;
-   }
+    if (!hWnd)
+    {
+        return FALSE;
+    }
 
-   ShowWindow(hWnd, nCmdShow);
-   UpdateWindow(hWnd);
+    ShowWindow(hWnd, nCmdShow);
+    UpdateWindow(hWnd);
 
-   return TRUE;
+    return TRUE;
 }
 
 //
@@ -198,30 +235,30 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     switch (message)
     {
     case WM_COMMAND:
+    {
+        int wmId = LOWORD(wParam);
+        // 메뉴 선택을 구문 분석합니다:
+        switch (wmId)
         {
-            int wmId = LOWORD(wParam);
-            // 메뉴 선택을 구문 분석합니다:
-            switch (wmId)
-            {
-            case IDM_ABOUT:
-                DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
-                break;
-            case IDM_EXIT:
-                DestroyWindow(hWnd);
-                break;
-            default:
-                return DefWindowProc(hWnd, message, wParam, lParam);
-            }
+        case IDM_ABOUT:
+            DialogBox(hInst, MAKEINTRESOURCE(IDD_ABOUTBOX), hWnd, About);
+            break;
+        case IDM_EXIT:
+            DestroyWindow(hWnd);
+            break;
+        default:
+            return DefWindowProc(hWnd, message, wParam, lParam);
         }
-        break;
+    }
+    break;
     case WM_PAINT:
-        {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-            EndPaint(hWnd, &ps);
-        }
-        break;
+    {
+        PAINTSTRUCT ps;
+        HDC hdc = BeginPaint(hWnd, &ps);
+        // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
+        EndPaint(hWnd, &ps);
+    }
+    break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;

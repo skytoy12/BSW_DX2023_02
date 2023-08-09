@@ -11,6 +11,10 @@ public :
 
 	void Gravity(shared_ptr<CircleCollider> col);
 	void Gravity(shared_ptr<RectCollider> col);
+
+	void HighGravity(shared_ptr<CircleCollider> col);
+	void HighGravity(shared_ptr<RectCollider> col);
+
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 protected :
 	int _hp = 0;

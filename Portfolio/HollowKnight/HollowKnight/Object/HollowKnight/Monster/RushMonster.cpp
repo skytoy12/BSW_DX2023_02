@@ -104,6 +104,7 @@ void RushMonster::Attack()
 		return;
 	_isRush = true;
 	_speed = 0.0f;
+	TotalUpdate(RUSHREADY);
 	SetAndPlayState(RUSHREADY);
 }
 
@@ -135,6 +136,13 @@ void RushMonster::SetAndPlayState(State_RushMonster type)
 	_actions[_curstate]->Play();
 }
 
+void RushMonster::TotalUpdate(State_RushMonster type)
+{
+	_transform->Update();
+	_actions[type]->Update();
+	_sprites[type]->Update();
+}
+
 void RushMonster::Turn()
 {
 	if (_isTurn == true)
@@ -152,6 +160,7 @@ void RushMonster::Turn()
 		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x < 0)
 		{
 			_isTurn = true;
+			TotalUpdate(TURN);
 			SetState(TURN);
 		}
 		return;
@@ -162,6 +171,7 @@ void RushMonster::Turn()
 		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x > 0)
 		{
 			_isTurn = true;
+			TotalUpdate(TURN);
 			SetState(TURN);
 		}
 		return;
@@ -176,7 +186,7 @@ void RushMonster::UnActiveIdle()
 			return;
 		if (_isRush == true)
 			return;
-		_actions[IDLE]->Update();
+		TotalUpdate(IDLE);
 		SetState(IDLE);
 		_col->SetGreen();
 	}
@@ -220,7 +230,7 @@ void RushMonster::WalkChange()
 			return;
 		_speed = 100.0f;
 
-		_actions[WALK]->Update();
+		TotalUpdate(WALK);
 		SetState(WALK);
 		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	}
@@ -236,11 +246,13 @@ void RushMonster::RushEvent()
 			_dir.x = 1.0f;
 		_speed = 300.0f;
 		_transform->AddVector2(Vector2(0, -35));
+		TotalUpdate(RUSH);
 		SetAndResetState(RUSH);
 	}
 
 	if (_curstate == RUSHEND)
 	{
+		TotalUpdate(IDLE);
 		SetAndResetState(IDLE);
 		_isRush = false;
 	}
@@ -251,6 +263,7 @@ void RushMonster::RushFinish()
 	if (_curstate == RUSH)
 	{
 		_transform->AddVector2(Vector2(0, 35));
+		TotalUpdate(RUSHEND);
 		SetAndResetState(RUSHEND);
 		_speed = 0.0f;
 		_rushTime = 0.0f;

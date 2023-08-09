@@ -11,6 +11,8 @@ BossTestScene::BossTestScene()
 	CAMERA->SetTarget(_player->GetTransform());
 	_col = make_shared<RectCollider>(Vector2(20000, 300));
 	_col->SetPosition(Vector2(0, -250));
+	CAMERA->SetLeftBottom(Vector2(-100000, -130));
+	CAMERA->SetRightTop(Vector2(100000, 100000));
 }
 
 BossTestScene::~BossTestScene()

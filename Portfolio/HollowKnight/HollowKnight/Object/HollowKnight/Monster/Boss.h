@@ -35,6 +35,8 @@ public :
 	void DirFix();
 	void Turn();
 	void UnActiveIDle();
+	void JumpMove();
+	void Down();
 #pragma endregion
 
 	void LandAttackPattern();
@@ -53,7 +55,7 @@ private :
 	void SetRight();
 	shared_ptr<CircleCollider> _col;
 	shared_ptr<RectCollider> _gravityCol;
-	shared_ptr<CircleCollider> _landPoint;
+	shared_ptr<RectCollider> _jumpLine;
 	State_Boss _curstate = IDLE;
 	State_Boss _oldstate = IDLE;
 
@@ -62,6 +64,8 @@ private :
 	float _turnCoolTime = 2.0f;
 	float _attackCoolTime = 0.0f;
 	float _shakeTiming = 0.0f;
+
+	Vector2 _landPoint = { 0.0f, 0.0f };
 
 	Vector2 _location = { 0,0 };
 	float _jumpTime = 0.0f;

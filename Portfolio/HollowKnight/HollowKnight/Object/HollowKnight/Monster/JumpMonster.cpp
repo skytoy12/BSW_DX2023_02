@@ -99,6 +99,7 @@ void JumpMonster::Attack()
 
 	_isAttack = true;
 	_actions[JUMPREADY]->Update();
+	TotalUpdate(JUMPREADY);
 	SetState(JUMPREADY);
 	_actions[JUMPREADY]->Play();
 }
@@ -130,6 +131,13 @@ void JumpMonster::SetAndPlayState(State_JumpMonster type)
 	_actions[_curstate]->Play();
 }
 
+void JumpMonster::TotalUpdate(State_JumpMonster type)
+{
+	_transform->Update();
+	_actions[type]->Update();
+	_sprites[type]->Update();
+}
+
 void JumpMonster::Turn()
 {
 	if (_isturn == true)
@@ -150,6 +158,7 @@ void JumpMonster::Turn()
 		{
 			_isturn = true;
 			_actions[TURN]->Update();
+			TotalUpdate(TURN);
 			SetState(TURN);
 		}
 		return;
@@ -160,6 +169,7 @@ void JumpMonster::Turn()
 		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x > 0)
 		{
 			_isturn = true;
+			TotalUpdate(TURN);
 			SetState(TURN);
 		}
 		return;
@@ -183,7 +193,7 @@ void JumpMonster::JumpEvent()
 	{
 		_isJump = true;
 		_landPoint->SetPosition(_target.lock()->GetWorldPosition());
-		_actions[JUMP]->Update();
+		TotalUpdate(JUMP);
 		SetAndResetState(JUMP);
 		//_actions[DOWN]->Reset();
 		_jumpPower = 800.0f;
@@ -193,6 +203,7 @@ void JumpMonster::JumpEvent()
 	{
 		_isJump = false;
 		_actions[LAND]->Update();
+		TotalUpdate(LAND);
 		SetAndResetState(LAND);
 	}
 }
@@ -200,6 +211,7 @@ void JumpMonster::JumpEvent()
 void JumpMonster::LandEvent()
 {
 	_actions[IDLE]->Update();
+	TotalUpdate(IDLE);
 	SetState(IDLE);
 	_attackCoolTime = 0.0f;
 	_isAttack = false;
@@ -214,6 +226,7 @@ void JumpMonster::UnActiveIDle()
 		if (_isAttack == true)
 			return;
 		_actions[IDLE]->Update();
+		TotalUpdate(IDLE);
 		SetState(IDLE);
 		_col->SetGreen();
 	}
@@ -227,6 +240,7 @@ void JumpMonster::LandMotionChange()
 			return;
 
 		_actions[DOWN]->Update();
+		TotalUpdate(DOWN);
 		SetState(DOWN);
 		_actions[DOWN]->Play();
 	}
@@ -292,6 +306,7 @@ void JumpMonster::WalkChange()
 		_speed = 100.0f;
 
 		_actions[WALK]->Update();
+		TotalUpdate(WALK);
 		SetState(WALK);
 		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	}

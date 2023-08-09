@@ -4,11 +4,17 @@
 Boss::Boss()
 {
 	_isLeft = true;
-	_gravityCol = make_shared<RectCollider>(Vector2(20, 260));
+	_gravityCol = make_shared<RectCollider>(Vector2(20, 300));
+	_jumpLine = make_shared<RectCollider>(Vector2(200, 40));
 	_col = make_shared<CircleCollider>(130);
+
+
 	_transform->SetParent(_gravityCol->GetTransform());
+	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
 	_col->SetParent(_gravityCol->GetTransform());
 	_col->SetPosition(Vector2(0, 15));
+
+
 	LocationFix(IDLE);
 	CreateAction(L"Resource/Monster/Boss/BossIdle.png", "Resource/Monster/Boss/BossIdle.xml", "Idle", 
 	Vector2((float)(620 * 1.2), (float)(393 * 1.2)), Action::Type::LOOP);
@@ -21,7 +27,7 @@ Boss::Boss()
 	CreateAction(L"Resource/Monster/Boss/BossAttackFinish.png", "Resource/Monster/Boss/BossAttackFinish.xml", "AttackFinish", 
 	Vector2((float)(647 * 1.2), (float)(572 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	CreateAction(L"Resource/Monster/Boss/BossJumpReady.png", "Resource/Monster/Boss/BossJumpReady.xml", "JumpReady", 
-	Vector2((float)(605 * 1.2), (float)(381 * 1.2)), Action::Type::LOOP);
+	Vector2((float)(605 * 1.2), (float)(381 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	CreateAction(L"Resource/Monster/Boss/BossJump.png", "Resource/Monster/Boss/BossJump.xml", "Jump", 
 	Vector2((float)(598 * 1.2), (float)(335 * 1.2)), Action::Type::LOOP);
 	_actions[IDLE]->SetSpeed(0.35f);
@@ -42,24 +48,33 @@ void Boss::Update()
 	if (_isAlive == false)
 		return;
 
-	Gravity(_gravityCol);
+	HighGravity(_gravityCol);
 	_col->Update();
 	_gravityCol->Update();
+	_jumpLine->Update();
 	_transform->Update();
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 
-
+	_jumpLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _jumpLine->GetTransform()->GetWorldPosition().y));
 	LocationFix(_curstate); // collider에 transform을 맞춰주는 함수
 	DirFix();
 	UnActiveIDle();
 	Turn(); 
 	AttackReadyEvent();
 	ShakeEvent();
+	JumpMove();
+	Down();
 	if (KEY_DOWN('K'))
 	{
 		_actions[ATTACKREADY]->Play();
 		LandAttackPattern();
+	}
+
+	if (KEY_DOWN('L'))
+	{
+		_actions[JUMPREADY]->Play();
+		JumpAttackPattern();
 	}
 	//_transform->SetPosition(_location);
 }
@@ -75,6 +90,7 @@ void Boss::Render()
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();
+	_jumpLine->Render();
 	_gravityCol->Render();
 }
 
@@ -183,7 +199,37 @@ void Boss::UnActiveIDle()
 		SetState(IDLE);
 	}
 
-}	   
+}
+
+void Boss::JumpMove()
+{
+	if (_isJump == true)
+	{
+		if (_jumpPower < 0)
+			return;
+		_speed = 100.0f;
+		if (_isLeft == true)
+			_dir.x = -1;
+		else
+			_dir.x = 1;
+
+		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+
+	}
+}
+
+void Boss::Down()
+{
+	if (_jumpLine->Block(_gravityCol))
+	{
+		if (_jumpPower < 120.0f)
+			return;
+		_jumpPower = 100.0f;
+	}
+
+	if (_jumpPower < -150.0f)
+		_jumpPower = -1900.0f;
+}
 
 void Boss::TurnEvent()
 {
@@ -225,6 +271,15 @@ void Boss::AttackEvent()
 		return;
 	}
 
+	if (_curstate == JUMPREADY)
+	{
+		_landPoint = _target.lock()->GetWorldPosition();
+		_isJump = true;
+		TotalUpdate(JUMP);
+		SetAndResetState(JUMP);
+		_jumpPower = 1900.0f;
+		return;
+	}
 }
 
 void Boss::ShakeEvent()
@@ -294,6 +349,9 @@ void Boss::LandAttackPattern()
 
 void Boss::JumpAttackPattern()
 {
+	_isAttack = true;
+	TotalUpdate(JUMPREADY);
+	SetState(JUMPREADY);
 }
 
 void Boss::AfterGroggyPattern()

@@ -24,6 +24,7 @@ public :
 	void SetAndResetState(State_RushMonster type);
 	void SetAndPlayState(State_RushMonster type);
 
+	void TotalUpdate(State_RushMonster type);
 
 	void Turn();
 

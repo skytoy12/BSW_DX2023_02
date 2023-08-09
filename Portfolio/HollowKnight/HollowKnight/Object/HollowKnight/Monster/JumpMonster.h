@@ -28,6 +28,8 @@ public :
 	void SetAndResetState(State_JumpMonster type);
 	void SetAndPlayState(State_JumpMonster type);
 
+	void TotalUpdate(State_JumpMonster type);
+
 	void Turn();
 
 	void TurnEvent();

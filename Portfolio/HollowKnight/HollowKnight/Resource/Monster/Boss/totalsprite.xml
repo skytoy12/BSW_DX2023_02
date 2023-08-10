@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:60f4a42e9b21a85a83475a6312f1f7be:7dff15851f6d469539acdd8d0fb2d3b1:6419bf175875e608f62af9a5396c95d8$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="totalsprite.png" width="1720" height="1702">
+    <sprite n="JumpAttack 11.png" x="0" y="0" w="860" h="646"/>
+    <sprite n="JumpAttack12.png" x="860" y="0" w="860" h="646"/>
+    <sprite n="JumpAttack21.png" x="0" y="646" w="491" h="612"/>
+    <sprite n="JumpAttack22.png" x="491" y="646" w="510" h="613"/>
+    <sprite n="JumpAttack31.png" x="1001" y="646" w="592" h="443"/>
+    <sprite n="JumpAttack32.png" x="0" y="1259" w="614" h="443"/>
+</TextureAtlas>

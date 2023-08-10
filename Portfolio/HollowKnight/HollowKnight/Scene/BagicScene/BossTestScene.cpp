@@ -28,6 +28,9 @@ void BossTestScene::Update()
 		_player->SetIsJump(false);
 	_col->Block(_boss->GetGravityCollider());
 	CAMERA->SetScale(Vector2(_scale, _scale));
+	CAMERA->SetLeftBottom(Vector2(-100000, -130));
+	CAMERA->SetRightTop(Vector2(100000, 100000));
+	CAMERA->SetTarget(_player->GetTransform());
 }
 
 void BossTestScene::Render()

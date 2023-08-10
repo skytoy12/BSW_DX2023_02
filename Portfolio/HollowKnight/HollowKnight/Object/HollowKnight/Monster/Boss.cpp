@@ -207,7 +207,7 @@ void Boss::JumpMove()
 	{
 		if (_jumpPower < 0)
 			return;
-		_speed = 100.0f;
+		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 		if (_isLeft == true)
 			_dir.x = -1;
 		else

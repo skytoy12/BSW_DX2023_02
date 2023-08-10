@@ -37,6 +37,9 @@ void TestScene::Update()
 	_col->Block(_mon2->GetCollider());
 	_col->Block(_mon3->GetCollider());
 	CAMERA->SetScale(Vector2(_scale, _scale));
+	CAMERA->SetLeftBottom(Vector2(-100000, -100000));
+	CAMERA->SetRightTop(Vector2(100000, 100000));
+	CAMERA->SetTarget(_player->GetTransform());
 }
 
 void TestScene::Render()

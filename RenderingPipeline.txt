@@ -3,6 +3,8 @@ Rendering Pipeline
 shader가 붙은 과정 : hlsl(high-level shader language)를 통해 프로그래머가 코딩해서 돌아가는 과정 ^^
 shader가 안붙은 과정 : GPU가 스스로 진행하는 과정 **
 
+inputLayout -> IA에게 전달할 input(정보)의 형식을 적어놓은것
+
 
 *IA(Input Assembler)* : 입력된 데이터를 모으는 과정, GPU가 CPU로부터 데이터를 가져오는 과정
 

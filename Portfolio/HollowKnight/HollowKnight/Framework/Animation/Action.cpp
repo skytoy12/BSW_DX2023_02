@@ -87,7 +87,7 @@ void Action::Pause()
 void Action::Stop()
 {
 	_isPlay = false;
-	_curClipIndex = 0;
+	_curClipIndex--;
 
 	if (_endEvent != nullptr)
 		_endEvent();

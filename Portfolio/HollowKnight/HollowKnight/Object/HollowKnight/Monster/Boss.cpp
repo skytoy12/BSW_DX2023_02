@@ -6,11 +6,13 @@ Boss::Boss()
 	_isLeft = true;
 	_gravityCol = make_shared<RectCollider>(Vector2(20, 300));
 	_jumpLine = make_shared<RectCollider>(Vector2(200, 40));
+	_landLine = make_shared<RectCollider>(Vector2(200, 40));
 	_col = make_shared<CircleCollider>(130);
 
 
 	_transform->SetParent(_gravityCol->GetTransform());
 	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
+	_landLine->SetPosition(Vector2(0, -85));
 	_col->SetParent(_gravityCol->GetTransform());
 	_col->SetPosition(Vector2(0, 15));
 
@@ -30,10 +32,18 @@ Boss::Boss()
 	Vector2((float)(605 * 1.2), (float)(381 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	CreateAction(L"Resource/Monster/Boss/BossJump.png", "Resource/Monster/Boss/BossJump.xml", "Jump", 
 	Vector2((float)(598 * 1.2), (float)(335 * 1.2)), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Boss/BossJumpAttack.png", "Resource/Monster/Boss/BossJumpAttack.xml", "JumpAttack",
+	Vector2((float)(860 * 1.2), (float)(646 * 1.2)), Action::Type::END);
+	CreateAction(L"Resource/Monster/Boss/BackStep.png", "Resource/Monster/Boss/BackStep.xml", "BackStep",
+	Vector2((float)(500 * 1.2), (float)(613 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
+	CreateAction(L"Resource/Monster/Boss/JumpAttackToIdle.png", "Resource/Monster/Boss/JumpAttackToIdle.xml", "BackStep",
+	Vector2((float)(600 * 1.2), (float)(443 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	_actions[IDLE]->SetSpeed(0.35f);
 	_actions[TURN]->SetSpeed(0.15f);
 	_actions[ATTACK]->SetSpeed(0.07f);
-	//_actions[ATTACKFINISH]->SetSpeed(1.0f);
+	_actions[BACKSTEP]->SetSpeed(0.1f);
+	_actions[JUMPTOIDLE]->SetSpeed(0.1f);
+	//_actions[JUMPATTACK]->SetSpeed(1.0f);
 	_gravityCol->SetPosition(Vector2(500, 0));
 }
 
@@ -52,11 +62,20 @@ void Boss::Update()
 	_col->Update();
 	_gravityCol->Update();
 	_jumpLine->Update();
+	_landLine->Update();
 	_transform->Update();
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 
 	_jumpLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _jumpLine->GetTransform()->GetWorldPosition().y));
+	_landLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _landLine->GetTransform()->GetWorldPosition().y));
+
+	if (_curstate == JUMPATTACK)
+		_jumpAttackTime += DELTA_TIME;
+
+	if (_landLine->IsCollision(_col))
+		_speed = 0.0f;
+
 	LocationFix(_curstate); // collider에 transform을 맞춰주는 함수
 	DirFix();
 	UnActiveIDle();
@@ -65,6 +84,8 @@ void Boss::Update()
 	ShakeEvent();
 	JumpMove();
 	Down();
+	LandChange();
+	JumpToIdle();
 	if (KEY_DOWN('K'))
 	{
 		_actions[ATTACKREADY]->Play();
@@ -77,6 +98,7 @@ void Boss::Update()
 		JumpAttackPattern();
 	}
 	//_transform->SetPosition(_location);
+	//_landLine->SetPosition(Vector2(0.0f, _location.y));
 }
 
 void Boss::Render()
@@ -91,14 +113,15 @@ void Boss::Render()
 	_sprites[_curstate]->Render();
 	_col->Render();
 	_jumpLine->Render();
+	_landLine->Render();
 	_gravityCol->Render();
 }
 
 void Boss::PostRender()
 {
-	ImGui::SliderFloat("Location.x", (float*)&_location.x, -100.0f, 200.0f);
-	ImGui::SliderFloat("Location.y", (float*)&_location.y, -100.0f, 200.0f);
-	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 6);
+	ImGui::SliderFloat("Location.x", (float*)&_location.x, -200.0f, 300.0f);
+	ImGui::SliderFloat("Location.y", (float*)&_location.y, -200.0f, 300.0f);
+	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 9);
 	ImGui::Text("_isLeft : %d", _isLeft);
 	ImGui::Text("_isTurn : %d", _isTurn);
 }
@@ -205,9 +228,18 @@ void Boss::JumpMove()
 {
 	if (_isJump == true)
 	{
-		if (_jumpPower < 0)
-			return;
-		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		//if (_jumpPower < 0)
+			//return;
+		if (_isLeft == true)
+		{
+			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x + 100.0f, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		}
+
+		else
+		{
+			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x - 100.0f, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		}
+
 		if (_isLeft == true)
 			_dir.x = -1;
 		else
@@ -227,8 +259,40 @@ void Boss::Down()
 		_jumpPower = 100.0f;
 	}
 
-	if (_jumpPower < -150.0f)
+	if (_jumpPower < -750.0f)
 		_jumpPower = -1900.0f;
+}
+
+void Boss::LandChange()
+{
+	if (_isJump == true && _jumpPower < -1000)
+	{
+		if (_curstate == JUMPATTACK)
+			return;
+
+		_actions[JUMPATTACK]->Update();
+		TotalUpdate(JUMPATTACK);
+		SetState(JUMPATTACK);
+		_actions[JUMPATTACK]->Play();
+	}
+}
+
+void Boss::BackStep()
+{
+	if (_curstate != JUMPATTACK)
+		return;
+	_isJump = false;
+	TotalUpdate(BACKSTEP);
+	SetAndResetState(BACKSTEP);
+}
+
+void Boss::JumpToIdle()
+{
+	if (_jumpAttackTime > 0.2f)
+	{
+		_jumpAttackTime = 0.0f;
+		BackStep();
+	}
 }
 
 void Boss::TurnEvent()
@@ -280,6 +344,21 @@ void Boss::AttackEvent()
 		_jumpPower = 1900.0f;
 		return;
 	}
+
+	if (_curstate == BACKSTEP)
+	{
+		TotalUpdate(JUMPTOIDLE);
+		SetAndResetState(JUMPTOIDLE);
+		return;
+	}
+
+	if (_curstate == JUMPTOIDLE)
+	{
+		_isAttack = false;
+		TotalUpdate(IDLE);
+		SetAndResetState(IDLE);
+		return;
+	}
 }
 
 void Boss::ShakeEvent()
@@ -328,6 +407,21 @@ void Boss::LocationFix(State_Boss type)
 	if (type == JUMP)
 	{
 		_transform->SetPosition(Vector2(160, 70));
+	}
+
+	if (type == JUMPATTACK)
+	{
+		_transform->SetPosition(Vector2(-120, 250));
+	}
+
+	if (type == BACKSTEP)
+	{
+		_transform->SetPosition(Vector2(107, 206));
+	}
+
+	if (type == JUMPTOIDLE)
+	{
+		_transform->SetPosition(Vector2(25, 115));
 	}
 }
 

@@ -10,7 +10,10 @@ public :
 		ATTACK,
 		ATTACKFINISH,
 		JUMPREADY,
-		JUMP
+		JUMP,
+		JUMPATTACK,
+		BACKSTEP,
+		JUMPTOIDLE
 	};
 	Boss();
 	~Boss();
@@ -37,6 +40,9 @@ public :
 	void UnActiveIDle();
 	void JumpMove();
 	void Down();
+	void LandChange();
+	void BackStep();
+	void JumpToIdle();
 #pragma endregion
 
 	void LandAttackPattern();
@@ -56,6 +62,7 @@ private :
 	shared_ptr<CircleCollider> _col;
 	shared_ptr<RectCollider> _gravityCol;
 	shared_ptr<RectCollider> _jumpLine;
+	shared_ptr<RectCollider> _landLine;
 	State_Boss _curstate = IDLE;
 	State_Boss _oldstate = IDLE;
 
@@ -64,6 +71,7 @@ private :
 	float _turnCoolTime = 2.0f;
 	float _attackCoolTime = 0.0f;
 	float _shakeTiming = 0.0f;
+	float _jumpAttackTime = 0.0f;
 
 	Vector2 _landPoint = { 0.0f, 0.0f };
 

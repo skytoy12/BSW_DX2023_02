@@ -1,4 +1,11 @@
-float4 main() : SV_TARGET
+
+struct VertexOutput
 {
-	return float4(1.0f, 1.0f, 1.0f, 1.0f);
+    float4 pos : SV_POSITION;
+    float4 color : COLOR;
+};
+
+float4 main(VertexOutput input) : SV_TARGET
+{
+	return input.color;
 }

@@ -34,3 +34,21 @@ inputLayout -> IA에게 전달할 input(정보)의 형식을 적어놓은것
 ^PS(Pixel Shader)^ : 색과 관련된 작업, 3D보다 2D에서의 작업이 더 유리함
 
 *OM(Output Merger)*
+
+
+
+WVP 렌더링 파이프라인 -> 상대적인 NDC좌표계를 절대적인 화면좌표계로 바꾸는 과정
+
+NDC 좌표계
+Normalized Device Coordinate
+화면 가운데가 (0,0) 인 정규화된 좌표계 
+
+PrimitiveTopology에서 list와 strip
+
+list : 하나의 도형을 완성하면 그다음 정점으로 부터 새로운 도형을 그림 
+strip : 쉬지않고 계속 정점마다 연결해서 그림
+
+
+back face culling 최적화를 위해 뒷면(반시계방향으로 그린것)은 render되지 않는 기법
+
+선형보간법

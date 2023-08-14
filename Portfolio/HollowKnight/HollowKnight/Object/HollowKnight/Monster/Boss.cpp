@@ -8,12 +8,14 @@ Boss::Boss()
 	_jumpLine = make_shared<RectCollider>(Vector2(200, 40));
 	_landLine = make_shared<RectCollider>(Vector2(200, 40));
 	_col = make_shared<CircleCollider>(130);
+	_weaponCol = make_shared<CircleCollider>(80);
 
 
 	_transform->SetParent(_gravityCol->GetTransform());
 	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
 	_landLine->SetPosition(Vector2(0, -85));
 	_col->SetParent(_gravityCol->GetTransform());
+	_weaponCol->SetParent(_col->GetTransform());
 	_col->SetPosition(Vector2(0, 15));
 
 
@@ -45,6 +47,7 @@ Boss::Boss()
 	_actions[ATTACK]->SetSpeed(0.07f);
 	_actions[BACKSTEP]->SetSpeed(0.1f);
 	_actions[JUMPTOIDLE]->SetSpeed(0.1f);
+	_actions[GROGYATTACK]->SetSpeed(0.06f);
 	//_actions[JUMPATTACK]->SetSpeed(1.0f);
 	_gravityCol->SetPosition(Vector2(500, 0));
 }
@@ -62,6 +65,7 @@ void Boss::Update()
 
 	HighGravity(_gravityCol);
 	_col->Update();
+	_weaponCol->Update();
 	_gravityCol->Update();
 	_jumpLine->Update();
 	_landLine->Update();
@@ -77,7 +81,7 @@ void Boss::Update()
 
 	if (_landLine->IsCollision(_col))
 		_speed = 0.0f;
-
+	
 	LocationFix(_curstate); // collider에 transform을 맞춰주는 함수
 	DirFix();
 	UnActiveIDle();
@@ -120,6 +124,7 @@ void Boss::Render()
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();
+	_weaponCol->Render();
 	_jumpLine->Render();
 	_landLine->Render();
 	_gravityCol->Render();
@@ -226,7 +231,7 @@ void Boss::Turn()
 
 void Boss::UnActiveIDle()
 {
-	if (_isJump == false && _isAttack == false && _isTurn == false)
+	if (_isJump == false && _isAttack == false && _isTurn == false && _isGrogyAttack == false)
 	{
 		TotalUpdate(IDLE);
 		SetState(IDLE);
@@ -319,10 +324,16 @@ void Boss::AttackReadyEvent()
 
 	_chargeTime += DELTA_TIME;
 
-	if (_chargeTime > 1.3f)
+	if (_chargeTime > 1.3f && _isGrogyAttack == false)
 	{
 		TotalUpdate(ATTACK);
 		SetAndResetState(ATTACK);
+		_chargeTime = 0.0f;
+	}
+	else if (_chargeTime > 1.3f && _isGrogyAttack == true)
+	{
+		TotalUpdate(GROGYATTACK);
+		SetAndResetState(GROGYATTACK);
 		_chargeTime = 0.0f;
 	}
 }
@@ -378,7 +389,9 @@ void Boss::AttackEvent()
 			SetRight();
 		else
 			SetLeft();
-		SetAndResetState(GROGYATTACK);
+		_actions[GROGYATTACK]->Reset();
+		SetAndPlayState(GROGYATTACK);
+		return;
 	}
 }
 
@@ -444,6 +457,11 @@ void Boss::LocationFix(State_Boss type)
 	{
 		_transform->SetPosition(Vector2(25, 115));
 	}
+
+	if (type == GROGYATTACK)
+	{
+		_transform->SetPosition(Vector2(-93, 198));
+	}
 }
 
 void Boss::DirFix()
@@ -471,9 +489,10 @@ void Boss::JumpAttackPattern()
 
 void Boss::AfterGroggyPattern()
 {
-	TotalUpdate(GROGYATTACK);
-	_actions[GROGYATTACK]->Reset();
-	SetAndPlayState(GROGYATTACK);
+	_isGrogyAttack = true;
+	TotalUpdate(ATTACKREADY);
+	_actions[ATTACKREADY]->Reset();
+	SetAndPlayState(ATTACKREADY);
 }
 
 void Boss::SetLeft()

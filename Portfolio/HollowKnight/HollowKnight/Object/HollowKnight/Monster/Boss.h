@@ -61,6 +61,7 @@ private :
 	void SetLeft();
 	void SetRight();
 	shared_ptr<CircleCollider> _col;
+	shared_ptr<CircleCollider> _weaponCol;
 	shared_ptr<RectCollider> _gravityCol;
 	shared_ptr<RectCollider> _jumpLine;
 	shared_ptr<RectCollider> _landLine;

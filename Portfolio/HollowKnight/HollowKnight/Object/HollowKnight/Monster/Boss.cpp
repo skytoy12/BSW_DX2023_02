@@ -26,7 +26,7 @@ Boss::Boss()
 	Vector2((float)(545 * 1.2), (float)(388 * 1.2)), Action::Type::END, std::bind(&Boss::TurnEvent, this));
 	CreateAction(L"Resource/Monster/Boss/BossAttackReady.png", "Resource/Monster/Boss/BossAttackReady.xml", "AttackReady", 
 	Vector2((float)(578 * 1.2), (float)(399 * 1.2)), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Boss/BossAttack.png", "Resource/Monster/Boss/BossAttack.xml", "Attack", 
+	CreateAction(L"Resource/Monster/Boss/BossAttack.png", "Resource/Monster/Boss/BossAttack.xml", "Attack",
 	Vector2((float)(701 * 1.2), (float)(587 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	CreateAction(L"Resource/Monster/Boss/BossAttackFinish.png", "Resource/Monster/Boss/BossAttackFinish.xml", "AttackFinish", 
 	Vector2((float)(647 * 1.2), (float)(572 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
@@ -50,6 +50,7 @@ Boss::Boss()
 	_actions[GROGYATTACK]->SetSpeed(0.06f);
 	//_actions[JUMPATTACK]->SetSpeed(1.0f);
 	_gravityCol->SetPosition(Vector2(500, 0));
+	_weaponCol->SetPosition(Vector2(-386, -108));
 }
 
 Boss::~Boss()
@@ -65,7 +66,8 @@ void Boss::Update()
 
 	HighGravity(_gravityCol);
 	_col->Update();
-	_weaponCol->Update();
+	if (_isAttack == true || _isGrogyAttack == true)
+		_weaponCol->Update();
 	_gravityCol->Update();
 	_jumpLine->Update();
 	_landLine->Update();
@@ -92,6 +94,8 @@ void Boss::Update()
 	Down();
 	LandChange();
 	JumpToIdle();
+	if (_isWeaponMove == true)
+		WeaponcolMove();
 	if (KEY_DOWN('K'))
 	{
 		_actions[ATTACKREADY]->Play();
@@ -110,6 +114,8 @@ void Boss::Update()
 		AfterGroggyPattern();
 	}
 	//_transform->SetPosition(_location);
+	//_weaponCol->SetPosition(_location);
+	//_col->GetTransform()->SetAngle(_location.y);
 	//_landLine->SetPosition(Vector2(0.0f, _location.y));
 }
 
@@ -124,7 +130,8 @@ void Boss::Render()
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();
-	_weaponCol->Render();
+	if(_isAttack == true || _isGrogyAttack == true)
+		_weaponCol->Render();
 	_jumpLine->Render();
 	_landLine->Render();
 	_gravityCol->Render();
@@ -132,11 +139,13 @@ void Boss::Render()
 
 void Boss::PostRender()
 {
-	ImGui::SliderFloat("Location.x", (float*)&_location.x, -200.0f, 300.0f);
-	ImGui::SliderFloat("Location.y", (float*)&_location.y, -200.0f, 300.0f);
+	ImGui::SliderFloat("Location.x", (float*)&_location.x, -600.0f, 600.0f);
+	ImGui::SliderFloat("Location.y", (float*)&_location.y, -4.0f, 4.0f);
 	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 9);
 	ImGui::Text("_isLeft : %d", _isLeft);
 	ImGui::Text("_isTurn : %d", _isTurn);
+	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
+	ImGui::Text("_Setangle : %f", _col->GetTransform()->GetAngle());
 }
 
 void Boss::Attack()
@@ -310,6 +319,23 @@ void Boss::JumpToIdle()
 	}
 }
 
+void Boss::WeaponcolMove()
+{
+	if (_weaponMove._weaponAngle < -2.3f)
+		_weaponMove._isPositive = true;
+
+	else if (_weaponMove._weaponAngle > 0.0f)
+		_weaponMove._isPositive = false;
+
+	if (_weaponMove._isPositive == true)
+		_weaponMove._weaponAngle += 0.1f;
+
+	else if (_weaponMove._isPositive == false)
+		_weaponMove._weaponAngle -= 0.1f;
+
+	_col->GetTransform()->SetAngle(_weaponMove._weaponAngle);
+}
+
 void Boss::TurnEvent()
 {
 	_actions[IDLE]->Update();
@@ -326,6 +352,10 @@ void Boss::AttackReadyEvent()
 
 	if (_chargeTime > 1.3f && _isGrogyAttack == false)
 	{
+		_col->GetTransform()->SetAngle(-2.0);
+		_col->Update();
+		_weaponMove._weaponAngle = 1.0f;
+		_isWeaponMove = true;
 		TotalUpdate(ATTACK);
 		SetAndResetState(ATTACK);
 		_chargeTime = 0.0f;
@@ -352,6 +382,7 @@ void Boss::AttackEvent()
 	{
 		TotalUpdate(IDLE);
 		SetAndResetState(IDLE);
+		_isWeaponMove = false;
 		_isAttack = false;
 		return;
 	}
@@ -404,6 +435,11 @@ void Boss::ShakeEvent()
 	{
 		CAMERA->ShakeStart(15.0f, 0.5f);
 	}
+}
+
+void Boss::WeaponColEvent()
+{
+
 }
 
 void Boss::LocationFix(State_Boss type)
@@ -476,6 +512,7 @@ void Boss::DirFix()
 void Boss::LandAttackPattern()
 {
 	_isAttack = true;
+	_col->GetTransform()->SetAngle(-3.7f);
 	TotalUpdate(ATTACKREADY);
 	SetState(ATTACKREADY);
 }

@@ -10,8 +10,8 @@ SceneManager* SceneManager::_instance = nullptr;
 SceneManager::SceneManager()
 {
 
-	_scenes.push_back(make_shared<TestScene>());
 	_scenes.push_back(make_shared<BossTestScene>());
+	_scenes.push_back(make_shared<TestScene>());
 }
 
 SceneManager::~SceneManager()

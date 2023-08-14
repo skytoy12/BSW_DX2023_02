@@ -16,6 +16,13 @@ public :
 		JUMPTOIDLE,
 		GROGYATTACK
 	};
+
+	struct WeaponMove
+	{
+		float _weaponAngle;
+		bool _isPositive;
+	};
+
 	Boss();
 	~Boss();
 
@@ -23,6 +30,8 @@ public :
 	virtual void Render() override;
 	virtual void PostRender() override;
 	virtual void Attack() override;
+
+	float Angle(float angle) { return angle * (PI / 180); }
 
 	void SetState(State_Boss type);
 	void SetAndResetState(State_Boss type);
@@ -34,6 +43,8 @@ public :
 	void AttackReadyEvent();
 	void AttackEvent();
 	void ShakeEvent();
+	void WeaponColEvent();
+
 #pragma region Update Function
 	void LocationFix(State_Boss type);
 	void DirFix();
@@ -44,6 +55,7 @@ public :
 	void LandChange();
 	void BackStep();
 	void JumpToIdle();
+	void WeaponcolMove();
 #pragma endregion
 
 	void LandAttackPattern();
@@ -75,6 +87,8 @@ private :
 	float _shakeTiming = 0.0f;
 	float _jumpAttackTime = 0.0f;
 
+	WeaponMove _weaponMove = { 1.0f, false };
+
 	Vector2 _landPoint = { 0.0f, 0.0f };
 
 	Vector2 _location = { 0,0 };
@@ -83,6 +97,7 @@ private :
 	bool _isAttack = false;
 	bool _isGrogyAttack = false;
 	bool _isTurn = false;
+	bool _isWeaponMove = false;
 
 };
 

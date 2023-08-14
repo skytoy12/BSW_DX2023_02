@@ -13,7 +13,8 @@ public :
 		JUMP,
 		JUMPATTACK,
 		BACKSTEP,
-		JUMPTOIDLE
+		JUMPTOIDLE,
+		GROGYATTACK
 	};
 	Boss();
 	~Boss();
@@ -79,6 +80,7 @@ private :
 	float _jumpTime = 0.0f;
 	bool _isJump = false;
 	bool _isAttack = false;
+	bool _isGrogyAttack = false;
 	bool _isTurn = false;
 
 };

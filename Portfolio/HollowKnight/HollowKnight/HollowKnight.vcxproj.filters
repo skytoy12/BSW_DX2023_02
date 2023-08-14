@@ -516,6 +516,9 @@
     <Image Include="Resource\Monster\Boss\totalsprite.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Boss\GrogyAttack.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -593,5 +596,6 @@
     <Xml Include="Resource\Monster\Boss\Grogy.xml" />
     <Xml Include="Resource\Monster\Boss\JumpAttackToIdle.xml" />
     <Xml Include="Resource\Monster\Boss\totalsprite.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyAttack.xml" />
   </ItemGroup>
 </Project>

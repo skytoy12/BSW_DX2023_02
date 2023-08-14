@@ -294,6 +294,7 @@
     <Image Include="Resource\Monster\Boss\BossRunReady.png" />
     <Image Include="Resource\Monster\Boss\BossTurn.png" />
     <Image Include="Resource\Monster\Boss\Grogy.png" />
+    <Image Include="Resource\Monster\Boss\GrogyAttack.png" />
     <Image Include="Resource\Monster\Boss\JumpAttackToIdle.png" />
     <Image Include="Resource\Monster\Boss\totalsprite.png" />
     <Image Include="Resource\Monster\Fly\FLYDEATH1.png" />
@@ -537,6 +538,7 @@
     <Xml Include="Resource\Monster\Boss\BossRunReady.xml" />
     <Xml Include="Resource\Monster\Boss\BossTurn.xml" />
     <Xml Include="Resource\Monster\Boss\Grogy.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyAttack.xml" />
     <Xml Include="Resource\Monster\Boss\JumpAttackToIdle.xml" />
     <Xml Include="Resource\Monster\Boss\totalsprite.xml" />
     <Xml Include="Resource\Monster\Fly\FLYDEATH1.xml" />

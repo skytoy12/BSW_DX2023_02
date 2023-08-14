@@ -38,6 +38,8 @@ Boss::Boss()
 	Vector2((float)(500 * 1.2), (float)(613 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	CreateAction(L"Resource/Monster/Boss/JumpAttackToIdle.png", "Resource/Monster/Boss/JumpAttackToIdle.xml", "BackStep",
 	Vector2((float)(600 * 1.2), (float)(443 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
+	CreateAction(L"Resource/Monster/Boss/GrogyAttack.png", "Resource/Monster/Boss/GrogyAttack.xml", "GrogyAttack",
+	Vector2((float)(700 * 1.2), (float)(586 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	_actions[IDLE]->SetSpeed(0.35f);
 	_actions[TURN]->SetSpeed(0.15f);
 	_actions[ATTACK]->SetSpeed(0.07f);
@@ -96,6 +98,12 @@ void Boss::Update()
 	{
 		_actions[JUMPREADY]->Play();
 		JumpAttackPattern();
+	}
+
+	if (KEY_DOWN('J'))
+	{
+		_actions[GROGYATTACK]->Play();
+		AfterGroggyPattern();
 	}
 	//_transform->SetPosition(_location);
 	//_landLine->SetPosition(Vector2(0.0f, _location.y));
@@ -172,6 +180,8 @@ void Boss::Turn()
 	if (_isTurn == true)
 		return;
 	if (_isAttack == true)
+		return;
+	if (_isGrogyAttack == true)
 		return;
 	if (_isJump == true)
 		return;
@@ -359,6 +369,17 @@ void Boss::AttackEvent()
 		SetAndResetState(IDLE);
 		return;
 	}
+
+	if (_curstate == GROGYATTACK)
+	{
+		_isGrogyAttack = true;
+		TotalUpdate(GROGYATTACK);
+		if (_isLeft == true)
+			SetRight();
+		else
+			SetLeft();
+		SetAndResetState(GROGYATTACK);
+	}
 }
 
 void Boss::ShakeEvent()
@@ -450,6 +471,9 @@ void Boss::JumpAttackPattern()
 
 void Boss::AfterGroggyPattern()
 {
+	TotalUpdate(GROGYATTACK);
+	_actions[GROGYATTACK]->Reset();
+	SetAndPlayState(GROGYATTACK);
 }
 
 void Boss::SetLeft()

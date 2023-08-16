@@ -21,6 +21,7 @@ public :
 	{
 		float _weaponAngle;
 		bool _isPositive;
+		int _count;
 	};
 
 	Boss();
@@ -87,7 +88,7 @@ private :
 	float _shakeTiming = 0.0f;
 	float _jumpAttackTime = 0.0f;
 
-	WeaponMove _weaponMove = { 1.0f, false };
+	WeaponMove _weaponMove = { -2.29f, true, 0 };
 
 	Vector2 _landPoint = { 0.0f, 0.0f };
 
@@ -98,6 +99,7 @@ private :
 	bool _isGrogyAttack = false;
 	bool _isTurn = false;
 	bool _isWeaponMove = false;
+	bool _isWeaponActive = false;
 
 };
 

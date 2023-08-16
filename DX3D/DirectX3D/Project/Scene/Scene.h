@@ -49,18 +49,12 @@ protected :
     vector<VertexColor> vertices;
     vector<UINT>    indices;
 
-    ID3D11Device* device;         // 무언가를 만들 때 사용, CPU를 다루는 객체 
-    ID3D11DeviceContext* deviceContext;  // 무언가를 그릴 때 사용, GPU를 다루는 객체(RENDER, HDC)
-
-    IDXGISwapChain* swapChain;         // 더블버퍼링을 구현하는 객체
-    ID3D11RenderTargetView* renderTargetView;  // 백버퍼를 관리하는 객체
+   
 
     //////////////////////////////////////////////////////////////////////////
 
-    ID3D11VertexShader* vertexShader;
-    ID3D11PixelShader* pixelShader;
 
-    ID3D11InputLayout* inputLayout;
+
 
     ID3D11Buffer* vertexBuffer;
     ID3D11Buffer* indexBuffer;

@@ -84,6 +84,11 @@ void Boss::Update()
 	if (_landLine->IsCollision(_col))
 		_speed = 0.0f;
 	
+	if (_isWeaponActive == false)
+		_weaponCol->SetRed();
+	else
+		_weaponCol->SetGreen();
+
 	LocationFix(_curstate); // collider에 transform을 맞춰주는 함수
 	DirFix();
 	UnActiveIDle();
@@ -140,10 +145,12 @@ void Boss::Render()
 void Boss::PostRender()
 {
 	ImGui::SliderFloat("Location.x", (float*)&_location.x, -600.0f, 600.0f);
-	ImGui::SliderFloat("Location.y", (float*)&_location.y, -4.0f, 4.0f);
+	ImGui::SliderFloat("Location.y", (float*)&_location.y, 0.0f, 0.2f);
 	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 9);
 	ImGui::Text("_isLeft : %d", _isLeft);
 	ImGui::Text("_isTurn : %d", _isTurn);
+	ImGui::Text("_isActive : %d", _isWeaponActive);
+	ImGui::Text("count : %d", _weaponMove._count);
 	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
 	ImGui::Text("_Setangle : %f", _col->GetTransform()->GetAngle());
 }
@@ -322,16 +329,26 @@ void Boss::JumpToIdle()
 void Boss::WeaponcolMove()
 {
 	if (_weaponMove._weaponAngle < -2.3f)
+	{
 		_weaponMove._isPositive = true;
+		_weaponMove._count += 1;
+	}
+
 
 	else if (_weaponMove._weaponAngle > 0.0f)
+	{
 		_weaponMove._isPositive = false;
+		_weaponMove._count += 1;
+	}
 
 	if (_weaponMove._isPositive == true)
-		_weaponMove._weaponAngle += 0.1f;
+		_weaponMove._weaponAngle += 0.145;
 
 	else if (_weaponMove._isPositive == false)
-		_weaponMove._weaponAngle -= 0.1f;
+		_weaponMove._weaponAngle -= 0.145;
+
+	if (_weaponMove._count >= 2)
+		_isWeaponActive = false;
 
 	_col->GetTransform()->SetAngle(_weaponMove._weaponAngle);
 }
@@ -352,10 +369,12 @@ void Boss::AttackReadyEvent()
 
 	if (_chargeTime > 1.3f && _isGrogyAttack == false)
 	{
-		_col->GetTransform()->SetAngle(-2.0);
+		_col->GetTransform()->SetAngle(-2.29);
 		_col->Update();
-		_weaponMove._weaponAngle = 1.0f;
+		_weaponMove._count = 0;
+		_weaponMove._weaponAngle = -2.29;
 		_isWeaponMove = true;
+		_isWeaponActive = true;
 		TotalUpdate(ATTACK);
 		SetAndResetState(ATTACK);
 		_chargeTime = 0.0f;
@@ -389,7 +408,10 @@ void Boss::AttackEvent()
 
 	if (_curstate == JUMPREADY)
 	{
-		_landPoint = _target.lock()->GetWorldPosition();
+		if(_isLeft == true)
+		_landPoint = _target.lock()->GetWorldPosition() + Vector2(400, 0);
+		else
+		_landPoint = _target.lock()->GetWorldPosition() - Vector2(400, 0);
 		_isJump = true;
 		TotalUpdate(JUMP);
 		SetAndResetState(JUMP);
@@ -513,6 +535,7 @@ void Boss::LandAttackPattern()
 {
 	_isAttack = true;
 	_col->GetTransform()->SetAngle(-3.7f);
+	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);
 	SetState(ATTACKREADY);
 }

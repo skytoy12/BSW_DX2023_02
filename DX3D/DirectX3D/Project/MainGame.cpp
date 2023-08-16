@@ -5,14 +5,12 @@ MainGame::MainGame()
 {
 	Initialize();
 
-
 	scene = new TutorialScene();
 }
 
 MainGame::~MainGame()
 {
 	delete scene;
-
 
 	Release();
 }
@@ -26,15 +24,21 @@ void MainGame::Render()
 {
 	scene->PreRender();
 
+	Device::GetInstance()->Clear();
+
 	scene->Render();
 
 	scene->PostRender();
+
+	Device::GetInstance()->Present();
 }
 
 void MainGame::Initialize()
 {
+	Device::GetInstance();
 }
 
 void MainGame::Release()
 {
+	Device::Delete();
 }

@@ -263,12 +263,12 @@ void Boss::JumpMove()
 			//return;
 		if (_isLeft == true)
 		{
-			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x + 100.0f, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 		}
 
 		else
 		{
-			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x - 100.0f, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 		}
 
 		if (_isLeft == true)
@@ -409,9 +409,9 @@ void Boss::AttackEvent()
 	if (_curstate == JUMPREADY)
 	{
 		if(_isLeft == true)
-		_landPoint = _target.lock()->GetWorldPosition() + Vector2(400, 0);
+		_landPoint = _target.lock()->GetWorldPosition() + Vector2(300, 0);
 		else
-		_landPoint = _target.lock()->GetWorldPosition() - Vector2(400, 0);
+		_landPoint = _target.lock()->GetWorldPosition() - Vector2(300, 0);
 		_isJump = true;
 		TotalUpdate(JUMP);
 		SetAndResetState(JUMP);

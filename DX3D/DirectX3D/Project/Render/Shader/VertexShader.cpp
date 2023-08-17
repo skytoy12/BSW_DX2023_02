@@ -5,7 +5,6 @@ VertexShader::VertexShader(wstring file)
 {
     DWORD flags = D3DCOMPILE_ENABLE_STRICTNESS | D3DCOMPILE_DEBUG;
 
-    file = L"_Shader/" + file + L".hlsl";
 
     // blob : 파일정보를 불러와서 저장해놓은 객체
     D3DCompileFromFile

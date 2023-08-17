@@ -68,7 +68,7 @@ void Device::CreateBackBuffer()
 
 void Device::Clear()
 {
-    float clearColor[4] = { 0.33f, 0.33f, 0.4f, 1.0f };
+    float clearColor[4] = { 0.33f, 0.33f, 0.4f, 1.0f }; 
 
     deviceContext->ClearRenderTargetView(renderTargetView, clearColor);
 }

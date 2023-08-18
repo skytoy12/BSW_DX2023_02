@@ -300,8 +300,9 @@ void Boss::LandChange()
 	{
 		if (_curstate == JUMPATTACK)
 			return;
-
+		_col->GetTransform()->SetAngle(0.0f);
 		_actions[JUMPATTACK]->Update();
+		_isWeaponActive = true;
 		TotalUpdate(JUMPATTACK);
 		SetState(JUMPATTACK);
 		_actions[JUMPATTACK]->Play();
@@ -315,6 +316,7 @@ void Boss::BackStep()
 	_isJump = false;
 	TotalUpdate(BACKSTEP);
 	SetAndResetState(BACKSTEP);
+	_isWeaponActive = false;
 }
 
 void Boss::JumpToIdle()
@@ -342,12 +344,12 @@ void Boss::WeaponcolMove()
 	}
 
 	if (_weaponMove._isPositive == true)
-		_weaponMove._weaponAngle += 0.145;
+		_weaponMove._weaponAngle += _weaponMove._speed;
 
 	else if (_weaponMove._isPositive == false)
-		_weaponMove._weaponAngle -= 0.145;
+		_weaponMove._weaponAngle -= _weaponMove._speed;
 
-	if (_weaponMove._count >= 2)
+	if (_weaponMove._count >= 2 && _isGrogyAttack == false)
 		_isWeaponActive = false;
 
 	_col->GetTransform()->SetAngle(_weaponMove._weaponAngle);
@@ -372,7 +374,8 @@ void Boss::AttackReadyEvent()
 		_col->GetTransform()->SetAngle(-2.29);
 		_col->Update();
 		_weaponMove._count = 0;
-		_weaponMove._weaponAngle = -2.29;
+		_weaponMove._weaponAngle = -2.29f;
+		_weaponMove._speed = 0.145f;
 		_isWeaponMove = true;
 		_isWeaponActive = true;
 		TotalUpdate(ATTACK);
@@ -381,6 +384,13 @@ void Boss::AttackReadyEvent()
 	}
 	else if (_chargeTime > 1.3f && _isGrogyAttack == true)
 	{
+		_col->GetTransform()->SetAngle(-2.29f);
+		_col->Update();
+		_weaponMove._count = 0;
+		_weaponMove._weaponAngle = -2.29;
+		_weaponMove._speed = 0.45f;
+		_isWeaponMove = true;
+		_isWeaponActive = true;
 		TotalUpdate(GROGYATTACK);
 		SetAndResetState(GROGYATTACK);
 		_chargeTime = 0.0f;
@@ -550,6 +560,8 @@ void Boss::JumpAttackPattern()
 void Boss::AfterGroggyPattern()
 {
 	_isGrogyAttack = true;
+	_col->GetTransform()->SetAngle(-3.7f);
+	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);
 	_actions[ATTACKREADY]->Reset();
 	SetAndPlayState(ATTACKREADY);

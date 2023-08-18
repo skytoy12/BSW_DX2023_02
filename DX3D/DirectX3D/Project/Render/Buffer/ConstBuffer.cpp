@@ -1,16 +1,15 @@
 #include "Framework.h"
 #include "ConstBuffer.h"
 
-
 ConstBuffer::ConstBuffer(void* data, UINT dataSize)
     :data(data), dataSize(dataSize)
 {
     D3D11_BUFFER_DESC bufferDesc = {};
 
     bufferDesc.ByteWidth           = dataSize;
-    bufferDesc.Usage               = D3D11_USAGE_DEFAULT; // 버퍼의 용도를 물어보는 것
+    bufferDesc.Usage               = D3D11_USAGE_DYNAMIC; // 버퍼의 용도를 물어보는 것
     bufferDesc.BindFlags           = D3D11_BIND_CONSTANT_BUFFER;
-    bufferDesc.CPUAccessFlags      = 0;
+    bufferDesc.CPUAccessFlags      = D3D11_CPU_ACCESS_WRITE;
     bufferDesc.MiscFlags           = 0;
     bufferDesc.StructureByteStride = 0;
 
@@ -38,5 +37,12 @@ void ConstBuffer::SetPSBuffer(UINT slot)
 
 void ConstBuffer::UpdateSubResource()
 {
-    DC->UpdateSubresource(constBuffer, 0, nullptr, data, 0, 0); //cbuffer로 실시간으로 정보를 보내주는 함수
+    // Map, Unmap
+    DC->Map(constBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &subResource);
+
+    memcpy(subResource.pData, data, dataSize);
+
+    DC->Unmap(constBuffer, 0);
+
+   // DC->UpdateSubresource(constBuffer, 0, nullptr, data, 0, 0); //cbuffer로 실시간으로 정보를 보내주는 함수
 }

@@ -47,7 +47,7 @@ Boss::Boss()
 	_actions[ATTACK]->SetSpeed(0.07f);
 	_actions[BACKSTEP]->SetSpeed(0.1f);
 	_actions[JUMPTOIDLE]->SetSpeed(0.1f);
-	_actions[GROGYATTACK]->SetSpeed(0.06f);
+	_actions[GROGYATTACK]->SetSpeed(0.08f);
 	//_actions[JUMPATTACK]->SetSpeed(1.0f);
 	_gravityCol->SetPosition(Vector2(500, 0));
 	_weaponCol->SetPosition(Vector2(-386, -108));
@@ -301,6 +301,8 @@ void Boss::LandChange()
 		if (_curstate == JUMPATTACK)
 			return;
 		_col->GetTransform()->SetAngle(0.0f);
+		_weaponMove._weaponAngle = 0.0f;
+		_weaponMove._speed = 0.0f;
 		_actions[JUMPATTACK]->Update();
 		_isWeaponActive = true;
 		TotalUpdate(JUMPATTACK);
@@ -452,15 +454,53 @@ void Boss::AttackEvent()
 			SetRight();
 		else
 			SetLeft();
-		_actions[GROGYATTACK]->Reset();
-		SetAndPlayState(GROGYATTACK);
-		return;
+
+		if (_weaponMove._count < 26)
+		{
+			_actions[GROGYATTACK]->Reset();
+			SetAndPlayState(GROGYATTACK);
+			return;
+		}
+		else
+		{
+			_isGrogyAttack = false;
+			_weaponMove._speed = 0.0f;
+			_weaponMove._count = 0;
+			TotalUpdate(IDLE);
+			SetAndResetState(IDLE);
+			return;
+		}
 	}
 }
 
 void Boss::ShakeEvent()
 {
+	LandAttackShakeEvent();
+	GrogyAttackShakeEvent();
+	JumpAttackShakeEvent();
+}
+
+void Boss::LandAttackShakeEvent()
+{
 	if (_curstate != ATTACK)
+		return;
+	_shakeTiming += DELTA_TIME;
+	if (_shakeTiming > 0.22f)
+	{
+		CAMERA->ShakeStart(15.0f, 0.7f);
+	}
+}
+
+void Boss::GrogyEndEvent()
+{
+	if (_weaponMove._count < 26)
+		return;
+
+}
+
+void Boss::GrogyAttackShakeEvent()
+{
+	if (_curstate != GROGYATTACK)
 		return;
 	_shakeTiming += DELTA_TIME;
 	if (_shakeTiming > 0.22f)
@@ -469,9 +509,11 @@ void Boss::ShakeEvent()
 	}
 }
 
-void Boss::WeaponColEvent()
+void Boss::JumpAttackShakeEvent()
 {
-
+	if (_curstate != JUMPATTACK)
+		return;
+	CAMERA->ShakeStart(15.0f, 0.5f);
 }
 
 void Boss::LocationFix(State_Boss type)

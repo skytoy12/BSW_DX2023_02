@@ -41,11 +41,15 @@ public :
 
 	void TotalUpdate(State_Boss type);
 
+	void ShakeEvent();
+
 	void TurnEvent();
 	void AttackReadyEvent();
 	void AttackEvent();
-	void ShakeEvent();
-	void WeaponColEvent();
+	void LandAttackShakeEvent();
+	void GrogyAttackShakeEvent();
+	void JumpAttackShakeEvent();
+	void GrogyEndEvent();
 
 #pragma region Update Function
 	void LocationFix(State_Boss type);

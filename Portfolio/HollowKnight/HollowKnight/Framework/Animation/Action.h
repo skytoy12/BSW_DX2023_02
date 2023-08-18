@@ -43,6 +43,7 @@ public :
 
 	void SetEndEvent(CallBack endEvent) { _endEvent = endEvent; }
 	void SetAlmostEvent(CallBack almostEvent) { _almostEnd = almostEvent; }
+	void SetLoopEvent(CallBack loopEvent) { _loopEvent = loopEvent; }
 
 
 private :
@@ -61,6 +62,7 @@ private :
 
 	CallBack _almostEnd = nullptr;
 	CallBack _endEvent = nullptr;
+	CallBack _loopEvent = nullptr;
 
 };
 

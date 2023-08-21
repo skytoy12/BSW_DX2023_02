@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="BossHead.h" />
     <ClInclude Include="Scene\BagicScene\BossTestScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h" />
     <ClInclude Include="Object\HollowKnight\Monster\Boss.h" />
@@ -216,6 +217,7 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BossHead.cpp" />
     <ClCompile Include="Scene\BagicScene\BossTestScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\Boss.cpp" />
@@ -286,6 +288,8 @@
     <Image Include="Resource\Monster\Boss\BossAttack.png" />
     <Image Include="Resource\Monster\Boss\BossAttackFinish.png" />
     <Image Include="Resource\Monster\Boss\BossAttackReady.png" />
+    <Image Include="Resource\Monster\Boss\BossHead.png" />
+    <Image Include="Resource\Monster\Boss\BossHeadHit.png" />
     <Image Include="Resource\Monster\Boss\BossIdle.png" />
     <Image Include="Resource\Monster\Boss\BossJump.png" />
     <Image Include="Resource\Monster\Boss\BossJumpAttack.png" />
@@ -295,6 +299,9 @@
     <Image Include="Resource\Monster\Boss\BossTurn.png" />
     <Image Include="Resource\Monster\Boss\Grogy.png" />
     <Image Include="Resource\Monster\Boss\GrogyAttack.png" />
+    <Image Include="Resource\Monster\Boss\GrogyHead.png" />
+    <Image Include="Resource\Monster\Boss\GrogyRolling.png" />
+    <Image Include="Resource\Monster\Boss\GrogyStart.png" />
     <Image Include="Resource\Monster\Boss\JumpAttackToIdle.png" />
     <Image Include="Resource\Monster\Boss\totalsprite.png" />
     <Image Include="Resource\Monster\Fly\FLYDEATH1.png" />
@@ -530,6 +537,8 @@
     <Xml Include="Resource\Monster\Boss\BossAttack.xml" />
     <Xml Include="Resource\Monster\Boss\BossAttackFinish.xml" />
     <Xml Include="Resource\Monster\Boss\BossAttackReady.xml" />
+    <Xml Include="Resource\Monster\Boss\BossHead.xml" />
+    <Xml Include="Resource\Monster\Boss\BossHeadHit.xml" />
     <Xml Include="Resource\Monster\Boss\BossIdle.xml" />
     <Xml Include="Resource\Monster\Boss\BossJump.xml" />
     <Xml Include="Resource\Monster\Boss\BossJumpAttack.xml" />
@@ -539,6 +548,9 @@
     <Xml Include="Resource\Monster\Boss\BossTurn.xml" />
     <Xml Include="Resource\Monster\Boss\Grogy.xml" />
     <Xml Include="Resource\Monster\Boss\GrogyAttack.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyHead.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyRolling.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyStart.xml" />
     <Xml Include="Resource\Monster\Boss\JumpAttackToIdle.xml" />
     <Xml Include="Resource\Monster\Boss\totalsprite.xml" />
     <Xml Include="Resource\Monster\Fly\FLYDEATH1.xml" />

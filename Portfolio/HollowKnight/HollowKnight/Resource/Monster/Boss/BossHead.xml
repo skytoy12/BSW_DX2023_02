@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7a8827e2320c76add99e1ae1894c2baa:5b836ff738318d5d20a3b8f39bee91f4:9f35223d6bf8bea1f66beb22098640b4$ -->
+<!-- $TexturePacker:SmartUpdate:d17e1706d3ebca7e51409afc101e2b69:43f3e2da6ca7c322e73c81f0cf1e8226:5132e6a7b7388e8ed99665e8b8995b3c$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,10 +19,10 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Grogy.png" width="2047" height="468">
-    <sprite n="BossGrogy1.png" x="0" y="0" w="414" h="467"/>
-    <sprite n="BossGrogy2.png" x="414" y="0" w="412" h="468"/>
-    <sprite n="BossGrogy3.png" x="826" y="0" w="412" h="467"/>
-    <sprite n="BossGrogy4.png" x="1238" y="0" w="417" h="467"/>
-    <sprite n="BossGrogy5.png" x="1655" y="0" w="392" h="451"/>
+<TextureAtlas imagePath="BossHead.png" width="584" height="118">
+    <sprite n="Head1.png" x="0" y="0" w="116" h="118"/>
+    <sprite n="Head2.png" x="116" y="0" w="117" h="118"/>
+    <sprite n="Head3.png" x="233" y="0" w="117" h="118"/>
+    <sprite n="Head4.png" x="350" y="0" w="117" h="118"/>
+    <sprite n="Head5.png" x="467" y="0" w="117" h="118"/>
 </TextureAtlas>

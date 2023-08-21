@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
-<!-- $TexturePacker:SmartUpdate:7a8827e2320c76add99e1ae1894c2baa:5b836ff738318d5d20a3b8f39bee91f4:9f35223d6bf8bea1f66beb22098640b4$ -->
+<!-- $TexturePacker:SmartUpdate:06f23dc959e0a247018a338b48e877ad:cfabd9f93d3b488c56661a2d8b13cdc0:92b2e90aff24eb039b504a8ac4251834$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,10 +19,8 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="Grogy.png" width="2047" height="468">
-    <sprite n="BossGrogy1.png" x="0" y="0" w="414" h="467"/>
-    <sprite n="BossGrogy2.png" x="414" y="0" w="412" h="468"/>
-    <sprite n="BossGrogy3.png" x="826" y="0" w="412" h="467"/>
-    <sprite n="BossGrogy4.png" x="1238" y="0" w="417" h="467"/>
-    <sprite n="BossGrogy5.png" x="1655" y="0" w="392" h="451"/>
+<TextureAtlas imagePath="HitEffect.png" width="699" height="420">
+    <sprite n="hit_crack_simple0000.png" x="0" y="0" w="699" h="140"/>
+    <sprite n="hit_crack_simple0001.png" x="0" y="140" w="699" h="140"/>
+    <sprite n="hit_crack_simple0002.png" x="0" y="280" w="699" h="140"/>
 </TextureAtlas>

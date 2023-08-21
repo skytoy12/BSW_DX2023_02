@@ -204,6 +204,9 @@
     <ClInclude Include="Scene\BagicScene\BossTestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="BossHead.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -354,6 +357,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scene\BagicScene\BossTestScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="BossHead.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -519,6 +525,21 @@
     <Image Include="Resource\Monster\Boss\GrogyAttack.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Boss\BossHead.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Boss\BossHeadHit.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Boss\GrogyHead.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Boss\GrogyRolling.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Boss\GrogyStart.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -597,5 +618,10 @@
     <Xml Include="Resource\Monster\Boss\JumpAttackToIdle.xml" />
     <Xml Include="Resource\Monster\Boss\totalsprite.xml" />
     <Xml Include="Resource\Monster\Boss\GrogyAttack.xml" />
+    <Xml Include="Resource\Monster\Boss\BossHead.xml" />
+    <Xml Include="Resource\Monster\Boss\BossHeadHit.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyHead.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyRolling.xml" />
+    <Xml Include="Resource\Monster\Boss\GrogyStart.xml" />
   </ItemGroup>
 </Project>

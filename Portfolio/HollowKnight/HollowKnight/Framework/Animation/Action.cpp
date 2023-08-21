@@ -45,6 +45,11 @@ void Action::Update()
 		{
 			_curClipIndex++;
 			_curClipIndex %= _clips.size();
+			if (_curClipIndex == _clips.size() - 1)
+			{
+				if (_loopEvent != nullptr)
+					_loopEvent();
+			}
 			break;
 		}
 

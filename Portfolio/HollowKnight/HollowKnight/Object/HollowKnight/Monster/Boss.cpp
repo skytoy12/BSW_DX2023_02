@@ -3,6 +3,7 @@
 
 Boss::Boss()
 {
+#pragma region collider, transform등 생성 및 초기설정
 	_isLeft = true;
 	_gravityCol = make_shared<RectCollider>(Vector2(20, 300));
 	_jumpLine = make_shared<RectCollider>(Vector2(200, 40));
@@ -18,8 +19,13 @@ Boss::Boss()
 	_weaponCol->SetParent(_col->GetTransform());
 	_col->SetPosition(Vector2(0, 15));
 
+	_gravityCol->SetPosition(Vector2(500, 0));
+	_weaponCol->SetPosition(Vector2(-386, -108));
+#pragma endregion
 
-	LocationFix(IDLE);
+
+
+#pragma region Action제작 및 초기설정
 	CreateAction(L"Resource/Monster/Boss/BossIdle.png", "Resource/Monster/Boss/BossIdle.xml", "Idle", 
 	Vector2((float)(620 * 1.2), (float)(393 * 1.2)), Action::Type::LOOP);
 	CreateAction(L"Resource/Monster/Boss/BossTurn.png", "Resource/Monster/Boss/BossTurn.xml", "Turn", 
@@ -42,15 +48,19 @@ Boss::Boss()
 	Vector2((float)(600 * 1.2), (float)(443 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
 	CreateAction(L"Resource/Monster/Boss/GrogyAttack.png", "Resource/Monster/Boss/GrogyAttack.xml", "GrogyAttack",
 	Vector2((float)(700 * 1.2), (float)(586 * 1.2)), Action::Type::END, std::bind(&Boss::AttackEvent, this));
+
+#pragma endregion
+
+#pragma region Action 설정
 	_actions[IDLE]->SetSpeed(0.35f);
 	_actions[TURN]->SetSpeed(0.15f);
 	_actions[ATTACK]->SetSpeed(0.07f);
 	_actions[BACKSTEP]->SetSpeed(0.1f);
 	_actions[JUMPTOIDLE]->SetSpeed(0.1f);
-	_actions[GROGYATTACK]->SetSpeed(0.06f);
+	_actions[GROGYATTACK]->SetSpeed(0.08f);
 	//_actions[JUMPATTACK]->SetSpeed(1.0f);
-	_gravityCol->SetPosition(Vector2(500, 0));
-	_weaponCol->SetPosition(Vector2(-386, -108));
+
+#pragma endregion
 }
 
 Boss::~Boss()
@@ -149,6 +159,11 @@ void Boss::PostRender()
 	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 9);
 	ImGui::Text("_isLeft : %d", _isLeft);
 	ImGui::Text("_isTurn : %d", _isTurn);
+	ImGui::Text("_isJump : %d", _isJump);
+	ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
+	ImGui::Text("_isAttack : %d", _isAttack);
+	ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
+	ImGui::Text("_isreturn : %d", _isreturn);
 	ImGui::Text("_isActive : %d", _isWeaponActive);
 	ImGui::Text("count : %d", _weaponMove._count);
 	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
@@ -198,14 +213,11 @@ void Boss::Turn()
 {
 	_turnCoolTime += DELTA_TIME;
 
-	if (_isTurn == true)
+	_isreturn = Return();
+
+	if (_isreturn == 1)
 		return;
-	if (_isAttack == true)
-		return;
-	if (_isGrogyAttack == true)
-		return;
-	if (_isJump == true)
-		return;
+
 	if (_turnCoolTime < 0.4f)
 		return;
 
@@ -294,6 +306,22 @@ void Boss::Down()
 		_jumpPower = -1900.0f;
 }
 
+int Boss::Return()
+{
+	if (_isTurn == true)
+		return 1;
+	if (_isAttack == true)
+		return 1;
+	if (_isGrogyAttack == true)
+		return 1;
+	if (_isJumpAttack == true)
+		return 1;
+	if (_isJump == true)
+		return 1;
+
+	return 0;
+}
+
 void Boss::LandChange()
 {
 	if (_isJump == true && _jumpPower < -1000)
@@ -301,6 +329,8 @@ void Boss::LandChange()
 		if (_curstate == JUMPATTACK)
 			return;
 		_col->GetTransform()->SetAngle(0.0f);
+		_weaponMove._weaponAngle = 0.0f;
+		_weaponMove._speed = 0.0f;
 		_actions[JUMPATTACK]->Update();
 		_isWeaponActive = true;
 		TotalUpdate(JUMPATTACK);
@@ -438,7 +468,7 @@ void Boss::AttackEvent()
 
 	if (_curstate == JUMPTOIDLE)
 	{
-		_isAttack = false;
+		_isJumpAttack = false;
 		TotalUpdate(IDLE);
 		SetAndResetState(IDLE);
 		return;
@@ -452,15 +482,53 @@ void Boss::AttackEvent()
 			SetRight();
 		else
 			SetLeft();
-		_actions[GROGYATTACK]->Reset();
-		SetAndPlayState(GROGYATTACK);
-		return;
+
+		if (_weaponMove._count < 26)
+		{
+			_actions[GROGYATTACK]->Reset();
+			SetAndPlayState(GROGYATTACK);
+			return;
+		}
+		else
+		{
+			_isGrogyAttack = false;
+			_weaponMove._speed = 0.0f;
+			_weaponMove._count = 0;
+			TotalUpdate(IDLE);
+			SetAndResetState(IDLE);
+			return;
+		}
 	}
 }
 
 void Boss::ShakeEvent()
 {
+	LandAttackShakeEvent();
+	GrogyAttackShakeEvent();
+	JumpAttackShakeEvent();
+}
+
+void Boss::LandAttackShakeEvent()
+{
 	if (_curstate != ATTACK)
+		return;
+	_shakeTiming += DELTA_TIME;
+	if (_shakeTiming > 0.22f)
+	{
+		CAMERA->ShakeStart(15.0f, 0.7f);
+	}
+}
+
+void Boss::GrogyEndEvent()
+{
+	if (_weaponMove._count < 26)
+		return;
+
+}
+
+void Boss::GrogyAttackShakeEvent()
+{
+	if (_curstate != GROGYATTACK)
 		return;
 	_shakeTiming += DELTA_TIME;
 	if (_shakeTiming > 0.22f)
@@ -469,9 +537,11 @@ void Boss::ShakeEvent()
 	}
 }
 
-void Boss::WeaponColEvent()
+void Boss::JumpAttackShakeEvent()
 {
-
+	if (_curstate != JUMPATTACK)
+		return;
+	CAMERA->ShakeStart(15.0f, 0.5f);
 }
 
 void Boss::LocationFix(State_Boss type)
@@ -543,6 +613,11 @@ void Boss::DirFix()
 
 void Boss::LandAttackPattern()
 {
+
+	_isreturn = Return();
+
+	if (_isreturn == 1)
+		return;
 	_isAttack = true;
 	_col->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
@@ -552,13 +627,22 @@ void Boss::LandAttackPattern()
 
 void Boss::JumpAttackPattern()
 {
-	_isAttack = true;
+
+	_isreturn = Return();
+
+	if (_isreturn == 1)
+		return;
+	_isJumpAttack = true;
 	TotalUpdate(JUMPREADY);
 	SetState(JUMPREADY);
 }
 
 void Boss::AfterGroggyPattern()
 {
+	_isreturn = Return();
+
+	if (_isreturn == 1)
+		return;
 	_isGrogyAttack = true;
 	_col->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;

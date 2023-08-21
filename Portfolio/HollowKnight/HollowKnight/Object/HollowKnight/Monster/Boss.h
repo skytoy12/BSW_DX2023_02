@@ -41,11 +41,17 @@ public :
 
 	void TotalUpdate(State_Boss type);
 
+	void ShakeEvent();
+
 	void TurnEvent();
 	void AttackReadyEvent();
 	void AttackEvent();
-	void ShakeEvent();
-	void WeaponColEvent();
+	void LandAttackShakeEvent();
+	void GrogyAttackShakeEvent();
+	void JumpAttackShakeEvent();
+	void GrogyEndEvent();
+
+	int Return();
 
 #pragma region Update Function
 	void LocationFix(State_Boss type);
@@ -97,10 +103,12 @@ private :
 	float _jumpTime = 0.0f;
 	bool _isJump = false;
 	bool _isAttack = false;
+	bool _isJumpAttack = false;
 	bool _isGrogyAttack = false;
 	bool _isTurn = false;
 	bool _isWeaponMove = false;
 	bool _isWeaponActive = false;
+	int _isreturn = 0;
 
 };
 

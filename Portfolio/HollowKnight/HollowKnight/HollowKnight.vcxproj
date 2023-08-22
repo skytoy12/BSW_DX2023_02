@@ -283,6 +283,7 @@
     <Image Include="Resource\Bullet\BulletEnd.png" />
     <Image Include="Resource\Effect\ChargeEffect.png" />
     <Image Include="Resource\Effect\DashEffect.png" />
+    <Image Include="Resource\Effect\HitEffect.png" />
     <Image Include="Resource\Effect\SlashEffect.png" />
     <Image Include="Resource\Monster\Boss\BackStep.png" />
     <Image Include="Resource\Monster\Boss\BossAttack.png" />
@@ -532,6 +533,7 @@
     <Xml Include="Resource\Bullet\BulletEnd.xml" />
     <Xml Include="Resource\Effect\ChargeEffect.xml" />
     <Xml Include="Resource\Effect\DashEffect.xml" />
+    <Xml Include="Resource\Effect\HitEffect.xml" />
     <Xml Include="Resource\Effect\SlashEffect.xml" />
     <Xml Include="Resource\Monster\Boss\BackStep.xml" />
     <Xml Include="Resource\Monster\Boss\BossAttack.xml" />

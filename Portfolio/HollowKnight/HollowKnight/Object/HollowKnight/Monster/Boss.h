@@ -14,7 +14,11 @@ public :
 		JUMPATTACK,
 		BACKSTEP,
 		JUMPTOIDLE,
-		GROGYATTACK
+		GROGYATTACK,
+		GROGYSTART,
+		GROGYROLLING,
+		GROGY,
+		GROGYHEAD
 	};
 
 	struct WeaponMove
@@ -46,12 +50,19 @@ public :
 	void TurnEvent();
 	void AttackReadyEvent();
 	void AttackEvent();
+	void GrogyEvent();
+
+	void SetActionSpeed(State_Boss type, float speed);
+
 	void LandAttackShakeEvent();
 	void GrogyAttackShakeEvent();
 	void JumpAttackShakeEvent();
 	void GrogyEndEvent();
 
+
 	int Return();
+
+	void AllStop();
 
 #pragma region Update Function
 	void LocationFix(State_Boss type);
@@ -69,6 +80,8 @@ public :
 	void LandAttackPattern();
 	void JumpAttackPattern();
 	void AfterGroggyPattern();
+	void Grogy();
+	void GrogyRollingFinish();
 
 	void SetTarget(shared_ptr<Transform> target) { _target = target; }
 
@@ -88,12 +101,14 @@ private :
 	State_Boss _curstate = IDLE;
 	State_Boss _oldstate = IDLE;
 
-	float _chargeTime = 0.0f;
+	float _chargeTime = 0.0f; // 보스가 공격준비모션에서 공격모션까지 차지하는 시간
 
-	float _turnCoolTime = 2.0f;
-	float _attackCoolTime = 0.0f;
-	float _shakeTiming = 0.0f;
-	float _jumpAttackTime = 0.0f;
+	float _turnCoolTime = 2.0f; // 보스의 턴모션의 쿨타임(무한정 좌우가 바뀌는것을 막기 위한 쿨타임)
+	float _attackCoolTime = 0.0f; // 보스의 패턴사이 간격
+	float _shakeTiming = 0.0f; // 보스의 무기가 땅에 내려치는 순간에 shake 효과를 주기위해 만든 타이머
+	float _jumpAttackTime = 0.0f; // 보스가 점프공격을 할 때 무기를 내려치는 순간을 조절하기 위한 타이머
+	float _rollingTime = 0.0f; // 보스가 그로기상태가 될 때 얼마나 구를지를 조정하기 위한 타이머
+	float _GrogyStopTime = 0.0f; // 보스가 누워있는 자세에서 머리가 빠져나오는 모션으로 바뀌기 까지의 시간을 조절하기 위한 타이머
 
 	WeaponMove _weaponMove = { -2.29f, true, 0 , 0.0f};
 
@@ -104,10 +119,14 @@ private :
 	bool _isJump = false;
 	bool _isAttack = false;
 	bool _isJumpAttack = false;
+	bool _isJustJump = false;
 	bool _isGrogyAttack = false;
 	bool _isTurn = false;
 	bool _isWeaponMove = false;
 	bool _isWeaponActive = false;
+
+	bool _isGrogy = false;
+
 	int _isreturn = 0;
 
 };

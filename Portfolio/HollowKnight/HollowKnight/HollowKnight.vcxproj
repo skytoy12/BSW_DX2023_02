@@ -151,7 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="BossHead.h" />
+    <ClInclude Include="Object\HollowKnight\Monster\BossHead.h" />
     <ClInclude Include="Scene\BagicScene\BossTestScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h" />
     <ClInclude Include="Object\HollowKnight\Monster\Boss.h" />
@@ -217,7 +217,7 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BossHead.cpp" />
+    <ClCompile Include="Object\HollowKnight\Monster\BossHead.cpp" />
     <ClCompile Include="Scene\BagicScene\BossTestScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\Boss.cpp" />

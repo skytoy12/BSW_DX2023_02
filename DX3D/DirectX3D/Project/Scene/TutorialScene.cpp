@@ -18,6 +18,7 @@ void TutorialScene::Update()
 
 void TutorialScene::PreRender()
 {
+
 }
 
 void TutorialScene::Render()
@@ -27,4 +28,5 @@ void TutorialScene::Render()
 
 void TutorialScene::PostRender()
 {
+	cube->Debug();
 }

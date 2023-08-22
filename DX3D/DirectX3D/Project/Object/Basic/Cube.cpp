@@ -3,9 +3,45 @@
 
 Cube::Cube()
 {
-    vertexShader = Shader::GetVS(L"Tutorial");
-    pixelShader = Shader::GetPS(L"Tutorial");
+    material = new Material(L"Tutorial");
 
+
+    CreateMesh();
+
+    worldBuffer = new MatrixBuffer();
+
+}
+
+Cube::~Cube()
+{
+    delete mesh;
+    delete material;
+    delete worldBuffer;
+}
+
+void Cube::Update()
+{
+    S = XMMatrixScaling(scale.x, scale.y, scale.z);
+    R = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
+    T = XMMatrixTranslation(translation.x, translation.y, translation.z);
+
+    world = S * R * T;
+
+    worldBuffer->SetData(world);
+}
+
+void Cube::Render()
+{
+    material->SetMaterial();
+        mesh->SetMesh();
+
+    worldBuffer->SetVSBuffer(0);
+
+    DC->DrawIndexed(indices.size(), 0, 0);
+}
+
+void Cube::CreateMesh()
+{
     vertices =
     {
         VertexColor({ -1.0f, +1.0f, -1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }),
@@ -20,9 +56,9 @@ Cube::Cube()
     };
 
     //VertexBuffer
-    vertexBuffer = new VertexBuffer(vertices);
 
     // IndexBuffer
+  
     indices =
     {
         //Front
@@ -50,41 +86,20 @@ Cube::Cube()
         6, 3, 7
     };
 
-    indexBuffer = new IndexBuffer(indices);
-
-    worldBuffer = new MatrixBuffer();
-
+    mesh = new Mesh(vertices, indices);
 }
 
-Cube::~Cube()
+void Cube::Debug()
 {
-    delete vertexBuffer;
-    delete indexBuffer;
+    if (ImGui::BeginMenu("Cube"))
+    {
+        ImGui::DragFloat3("Scale", (float*)&scale,             0.01f,      0.01f,    100.0f);
+        // ImGui::DragFloat3("Lotation", (float*)&rotation,       0.01f,    -XM_2PI,    XM_2PI);
+        ImGui::SliderAngle("RotationX", &rotation.x);
+        ImGui::SliderAngle("RotationY", &rotation.y);
+        ImGui::SliderAngle("RotationZ", &rotation.z);
 
-    delete worldBuffer;
-}
-
-void Cube::Update()
-{
-    static float angle = 0.0f;
-
-    angle += 0.0001f;
-
-    XMMATRIX world = XMMatrixRotationRollPitchYaw(angle, angle, 0.0f); 
-
-    worldBuffer->SetData(world);
-}
-
-void Cube::Render()
-{
-
-    vertexShader->SetShader();
-    pixelShader->SetShader();
-
-    vertexBuffer->IASetBuffer();
-    indexBuffer->IASetBuffer();
-
-    worldBuffer->SetVSBuffer(0);
-
-    DC->DrawIndexed(indices.size(), 0, 0);
+        ImGui::DragFloat3("Translation", (float*)&translation, 0.01f, -WIN_WIDTH, WIN_WIDTH);
+        ImGui::EndMenu();
+    }
 }

@@ -58,6 +58,7 @@ public :
 	void GrogyAttackShakeEvent();
 	void JumpAttackShakeEvent();
 	void GrogyEndEvent();
+	void GrogyKnockBack();
 
 
 	int Return();
@@ -80,6 +81,8 @@ public :
 	void LandAttackPattern();
 	void JumpAttackPattern();
 	void AfterGroggyPattern();
+	void JustJumpPattern();
+
 	void Grogy();
 	void GrogyRollingFinish();
 
@@ -98,6 +101,9 @@ private :
 	shared_ptr<RectCollider> _gravityCol;
 	shared_ptr<RectCollider> _jumpLine;
 	shared_ptr<RectCollider> _landLine;
+
+	shared_ptr<class BossHead> _head;
+
 	State_Boss _curstate = IDLE;
 	State_Boss _oldstate = IDLE;
 
@@ -109,6 +115,7 @@ private :
 	float _jumpAttackTime = 0.0f; // 보스가 점프공격을 할 때 무기를 내려치는 순간을 조절하기 위한 타이머
 	float _rollingTime = 0.0f; // 보스가 그로기상태가 될 때 얼마나 구를지를 조정하기 위한 타이머
 	float _GrogyStopTime = 0.0f; // 보스가 누워있는 자세에서 머리가 빠져나오는 모션으로 바뀌기 까지의 시간을 조절하기 위한 타이머
+	float _grogySpeed = 0.0f; // 보스 그로기시 굴러갈때 속도
 
 	WeaponMove _weaponMove = { -2.29f, true, 0 , 0.0f};
 

@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "Boss.h"
+#include "BossHead.h"
 
 Boss::Boss()
 {
@@ -10,17 +11,21 @@ Boss::Boss()
 	_landLine = make_shared<RectCollider>(Vector2(200, 40));
 	_col = make_shared<CircleCollider>(150);
 	_weaponCol = make_shared<CircleCollider>(80);
+	_head = make_shared<BossHead>();
 
 
-	_transform->SetParent(_gravityCol->GetTransform());
 	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
 	_landLine->SetPosition(Vector2(0, -85));
+
+	_transform->SetParent(_gravityCol->GetTransform());
 	_col->SetParent(_gravityCol->GetTransform());
 	_weaponCol->SetParent(_col->GetTransform());
-	_col->SetPosition(Vector2(0, 15));
+	_head->GetCollider()->GetTransform()->SetParent(_gravityCol->GetTransform());
 
+	_col->SetPosition(Vector2(0, 15));
 	_gravityCol->SetPosition(Vector2(500, 0));
 	_weaponCol->SetPosition(Vector2(-386, -108));
+	_head->GetCollider()->SetPosition(Vector2(-169.0f, -67.0f));
 #pragma endregion
 
 
@@ -55,7 +60,7 @@ Boss::Boss()
 	CreateAction(L"Resource/Monster/Boss/Grogy.png", "Resource/Monster/Boss/Grogy.xml", "Grogy",
 	Vector2((float)(412 * 1.2), (float)(467 * 1.2)), Action::Type::END);
 	CreateAction(L"Resource/Monster/Boss/GrogyHead.png", "Resource/Monster/Boss/GrogyHead.xml", "GrogyHead",
-	Vector2((float)(392 * 1.2), (float)(451 * 1.2)), Action::Type::END);
+	Vector2((float)(392 * 1.2), (float)(451 * 1.2)), Action::Type::END, std::bind(&Boss::GrogyEvent, this));
 
 #pragma endregion
 
@@ -67,7 +72,9 @@ Boss::Boss()
 	SetActionSpeed(BACKSTEP, 0.1f);
 	SetActionSpeed(JUMPTOIDLE, 0.1f);
 	SetActionSpeed(GROGYATTACK, 0.08f);
-	SetActionSpeed(GROGYHEAD, 0.15f);
+	SetActionSpeed(GROGYHEAD, 0.1f);
+	SetActionSpeed(GROGYROLLING, 0.08f);
+	_actions[GROGYROLLING]->SetLoopEvent(std::bind(&Boss::GrogyEvent, this));
 	//_actions[JUMPATTACK]->SetSpeed(1.0f);
 
 #pragma endregion
@@ -94,6 +101,7 @@ void Boss::Update()
 	_transform->Update();
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
+	_head->Update();
 
 	_jumpLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _jumpLine->GetTransform()->GetWorldPosition().y));
 	_landLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _landLine->GetTransform()->GetWorldPosition().y));
@@ -120,28 +128,47 @@ void Boss::Update()
 	LandChange();
 	JumpToIdle();
 	GrogyRollingFinish();
+	GrogyKnockBack();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
 	if (KEY_DOWN('K'))
 	{
+
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
 		_actions[ATTACKREADY]->Play();
 		LandAttackPattern();
 	}
 
 	if (KEY_DOWN('L'))
 	{
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
 		_actions[JUMPREADY]->Play();
 		JumpAttackPattern();
 	}
 
 	if (KEY_DOWN('J'))
 	{
+
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
 		_actions[GROGYATTACK]->Play();
 		AfterGroggyPattern();
 	}
 
 	if (KEY_DOWN('H'))
 	{
+
 		_actions[GROGYSTART]->Play();
 		Grogy();
 	}
@@ -156,6 +183,7 @@ void Boss::Update()
 	//_weaponCol->SetPosition(_location);
 	//_col->GetTransform()->SetAngle(_location.y);
 	//_landLine->SetPosition(Vector2(0.0f, _location.y));
+
 }
 
 void Boss::Render()
@@ -169,6 +197,7 @@ void Boss::Render()
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();
+	_head->Render();
 	if(_isAttack == true || _isGrogyAttack == true)
 		_weaponCol->Render();
 	_jumpLine->Render();
@@ -286,6 +315,7 @@ void Boss::UnActiveIDle()
 {
 	if (Return() != 1)
 	{
+		_head->_isActive = false;
 		TotalUpdate(IDLE);
 		SetState(IDLE);
 	}
@@ -363,12 +393,27 @@ void Boss::GrogyEvent()
 		return;
 	}
 
+	if (_curstate == GROGYROLLING)
+	{
+		if (_rollingTime < 1.0f)
+			return;
+		TotalUpdate(GROGY);
+		SetAndResetState(GROGY);
+		TotalUpdate(GROGY);
+		_rollingTime = 0.0f;
+		return;
+	}
 
 	if (_curstate == GROGY)
 	{
 		TotalUpdate(GROGYHEAD);
 		SetAndResetState(GROGYHEAD);
 		return;
+	}
+
+	if (_curstate == GROGYHEAD)
+	{
+		_head->_isActive = true;
 	}
 }
 
@@ -659,12 +704,12 @@ void Boss::LocationFix(State_Boss type)
 
 	if (type == GROGYROLLING)
 	{
-		_transform->SetPosition(Vector2(-33, 155));
+		_transform->SetPosition(Vector2(-33, 145));
 	}
 
 	if (type == GROGY)
 	{
-		_transform->SetPosition(Vector2(0, 150));
+		_transform->SetPosition(Vector2(40, 135));
 	}
 
 	if (type == GROGYHEAD)
@@ -703,6 +748,7 @@ void Boss::LandAttackPattern()
 
 	if (_isreturn == 1)
 		return;
+
 	_isAttack = true;
 	_col->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
@@ -718,10 +764,17 @@ void Boss::JumpAttackPattern()
 
 	if (_isreturn == 1)
 		return;
+
 	_isJumpAttack = true;
 	TotalUpdate(JUMPREADY);
 	SetState(JUMPREADY);
 }
+
+void Boss::JustJumpPattern()
+{
+	//TODO
+}
+
 
 void Boss::AfterGroggyPattern()
 {
@@ -729,12 +782,36 @@ void Boss::AfterGroggyPattern()
 
 	if (_isreturn == 1)
 		return;
+
+
 	_isGrogyAttack = true;
 	_col->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);
 	_actions[ATTACKREADY]->Reset();
 	SetAndPlayState(ATTACKREADY);
+}
+
+void Boss::GrogyKnockBack()
+{
+	if (_curstate == GROGYSTART || _curstate == GROGYROLLING)
+	{
+		if (_isLeft == true)
+			_dir.x = 1;
+		else
+			_dir.x = -1;
+		if (_gravityCol->IsCollision(_landLine))
+		{
+			_grogySpeed -= 1.0f;
+
+			if (_grogySpeed < 0.0f)
+				_grogySpeed = 0.0f;
+
+			if (_jumpPower < 0.0f)
+				_jumpPower = -1000.0f;
+		}
+		_gravityCol->GetTransform()->AddVector2(_dir * _grogySpeed * DELTA_TIME);
+	}
 }
 
 void Boss::SetLeft()
@@ -757,9 +834,12 @@ void Boss::Grogy()
 		return;
 	_isGrogy = true;
 	AllStop();
+	_grogySpeed = 200.0f;
+	_jumpPower = 300.0f;
 	TotalUpdate(GROGYSTART);
 	SetAndResetState(GROGYSTART);
 }
+
 void Boss::SetActionSpeed(State_Boss type, float speed)
 {
 	_actions[type]->SetSpeed(speed);
@@ -770,12 +850,6 @@ void Boss::GrogyRollingFinish()
 	if (_curstate == GROGYROLLING)
 	{
 		_rollingTime += DELTA_TIME;
-
-		if (_rollingTime < 2.0f)
-			return;
-		TotalUpdate(GROGY);
-		SetAndResetState(GROGY);
-		_rollingTime = 0.0f;
 	}
 
 	if (_curstate == GROGY)
@@ -785,6 +859,8 @@ void Boss::GrogyRollingFinish()
 			return;
 		TotalUpdate(GROGYHEAD);
 		SetAndResetState(GROGYHEAD);
-		_rollingTime = 0.0f;
+		_GrogyStopTime = 0.0f;
 	}
 }
+
+

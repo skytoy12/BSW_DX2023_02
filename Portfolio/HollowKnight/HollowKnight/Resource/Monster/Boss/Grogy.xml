@@ -24,5 +24,4 @@ triangles  => sprite triangulation, 3 vertex indices per triangle
     <sprite n="BossGrogy2.png" x="414" y="0" w="412" h="468"/>
     <sprite n="BossGrogy3.png" x="826" y="0" w="412" h="467"/>
     <sprite n="BossGrogy4.png" x="1238" y="0" w="417" h="467"/>
-    <sprite n="BossGrogy5.png" x="1655" y="0" w="392" h="451"/>
 </TextureAtlas>

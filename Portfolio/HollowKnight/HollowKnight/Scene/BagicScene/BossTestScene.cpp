@@ -35,8 +35,8 @@ void BossTestScene::Update()
 
 void BossTestScene::Render()
 {
-	_player->Render();
 	_boss->Render();
+	_player->Render();
 	_col->Render();
 }
 

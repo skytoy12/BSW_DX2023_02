@@ -1,15 +1,18 @@
 #include "Framework.h"
 #include "Cube.h"
-
-Cube::Cube()
+int Cube::count = 0;
+Cube::Cube(Vector4 color)
 {
     material = new Material(L"Tutorial");
 
 
-    CreateMesh();
+    CreateMesh(color);
 
     worldBuffer = new MatrixBuffer();
 
+    count++;
+
+    label = "Cube" + to_string(count);
 }
 
 Cube::~Cube()
@@ -21,11 +24,7 @@ Cube::~Cube()
 
 void Cube::Update()
 {
-    S = XMMatrixScaling(scale.x, scale.y, scale.z);
-    R = XMMatrixRotationRollPitchYaw(rotation.x, rotation.y, rotation.z);
-    T = XMMatrixTranslation(translation.x, translation.y, translation.z);
-
-    world = S * R * T;
+    Transform::Update();
 
     worldBuffer->SetData(world);
 }
@@ -40,19 +39,19 @@ void Cube::Render()
     DC->DrawIndexed(indices.size(), 0, 0);
 }
 
-void Cube::CreateMesh()
+void Cube::CreateMesh(Vector4 color)
 {
     vertices =
     {
-        VertexColor({ -1.0f, +1.0f, -1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }),
-        VertexColor({ +1.0f, +1.0f, -1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }),
-        VertexColor({ -1.0f, -1.0f, -1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }),
-        VertexColor({ +1.0f, -1.0f, -1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f }),
+        VertexColor({ -1.0f, +1.0f, -1.0f }, color),
+        VertexColor({ +1.0f, +1.0f, -1.0f }, color),
+        VertexColor({ -1.0f, -1.0f, -1.0f }, color),
+        VertexColor({ +1.0f, -1.0f, -1.0f }, color),
 
-        VertexColor({ -1.0f, +1.0f, +1.0f }, { 1.0f, 0.0f, 0.0f, 1.0f }),
-        VertexColor({ +1.0f, +1.0f, +1.0f }, { 0.0f, 1.0f, 0.0f, 1.0f }),
-        VertexColor({ -1.0f, -1.0f, +1.0f }, { 0.0f, 0.0f, 1.0f, 1.0f }),
-        VertexColor({ +1.0f, -1.0f, +1.0f }, { 1.0f, 1.0f, 0.0f, 1.0f }),
+        VertexColor({ -1.0f, +1.0f, +1.0f }, color),
+        VertexColor({ +1.0f, +1.0f, +1.0f }, color),
+        VertexColor({ -1.0f, -1.0f, +1.0f }, color),
+        VertexColor({ +1.0f, -1.0f, +1.0f }, color),
     };
 
     //VertexBuffer
@@ -91,10 +90,11 @@ void Cube::CreateMesh()
 
 void Cube::Debug()
 {
-    if (ImGui::BeginMenu("Cube"))
+    if (ImGui::BeginMenu(label.c_str()))
     {
         ImGui::DragFloat3("Scale", (float*)&scale,             0.01f,      0.01f,    100.0f);
         // ImGui::DragFloat3("Lotation", (float*)&rotation,       0.01f,    -XM_2PI,    XM_2PI);
+
         ImGui::SliderAngle("RotationX", &rotation.x);
         ImGui::SliderAngle("RotationY", &rotation.y);
         ImGui::SliderAngle("RotationZ", &rotation.z);

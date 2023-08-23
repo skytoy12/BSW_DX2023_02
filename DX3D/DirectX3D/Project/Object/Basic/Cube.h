@@ -1,14 +1,14 @@
 #pragma once
-class Cube
+class Cube : public Transform
 {
 public:
-	Cube();
+	Cube(Vector4 color);
 	~Cube();
 
     void Update();
     void Render();
 
-    void CreateMesh();
+    void CreateMesh(Vector4 color);
 
     void Debug();
 
@@ -23,16 +23,8 @@ private:
     vector<VertexColor> vertices;
     vector<UINT>         indices;
 
-    //SRT
+    static int count;
+    string label = "";
 
-    XMFLOAT3 scale       = { 1.0f, 1.0f, 1.0f };
-    XMFLOAT3 rotation    = { 0.0f, 0.0f, 0.0f };
-    XMFLOAT3 translation = { 0.0f, 0.0f, 0.0f };
-
-    XMMATRIX S;
-    XMMATRIX R;
-    XMMATRIX T;
-
-    XMMATRIX world;
 };
 

@@ -33,7 +33,7 @@ inputLayout -> IA에게 전달할 input(정보)의 형식을 적어놓은것
 
 ^PS(Pixel Shader)^ : 색과 관련된 작업, 3D보다 2D에서의 작업이 더 유리함
 
-*OM(Output Merger)*
+*OM(Output Merger)* : DepthStrencil과정
 
 
 

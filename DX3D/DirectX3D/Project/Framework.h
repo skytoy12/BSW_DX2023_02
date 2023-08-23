@@ -36,7 +36,13 @@ using namespace DirectX;
 #define DEVICE Device::GetInstance()->GetDevice()
 #define DC     Device::GetInstance()->GetDC()
 
+typedef XMMATRIX Matrix;
+typedef XMFLOAT4 Vector4;
+
+#include "Utility/Vector3.h"
 #include "Utility/Singleton.h"
+
+#include "Object/Transform.h"
 
 #include "System/Device.h"
 

@@ -145,6 +145,13 @@ void Boss::Update()
 		_actions[GROGYSTART]->Play();
 		Grogy();
 	}
+
+	if (KEY_DOWN(VK_F3))
+	{
+		_isGrogy = false;
+		TotalUpdate(IDLE);
+		SetAndResetState(IDLE);
+	}
 	//_transform->SetPosition(_location);
 	//_weaponCol->SetPosition(_location);
 	//_col->GetTransform()->SetAngle(_location.y);

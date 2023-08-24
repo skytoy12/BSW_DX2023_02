@@ -166,6 +166,18 @@ void Boss::Update()
 		AfterGroggyPattern();
 	}
 
+	if (KEY_DOWN('O'))
+	{
+
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
+		_actions[JUMPREADY]->Play();
+		JustJumpPattern();
+	}
+
 	if (KEY_DOWN('H'))
 	{
 
@@ -357,7 +369,7 @@ void Boss::Down()
 		_jumpPower = 100.0f;
 	}
 
-	if (_jumpPower < -750.0f)
+	if (_jumpPower < -750.0f && _isJumpAttack == true)
 		_jumpPower = -1900.0f;
 }
 
@@ -419,7 +431,7 @@ void Boss::GrogyEvent()
 
 void Boss::LandChange()
 {
-	if (_isJump == true && _jumpPower < -1000)
+	if (_isJump == true && _jumpPower < -1000 && _isJumpAttack == true)
 	{
 		if (_curstate == JUMPATTACK)
 			return;
@@ -772,7 +784,14 @@ void Boss::JumpAttackPattern()
 
 void Boss::JustJumpPattern()
 {
-	//TODO
+	_isreturn = Return();
+
+	if (_isreturn == 1)
+		return;
+
+	_isJustJump = true;
+	TotalUpdate(JUMPREADY);
+	SetState(JUMPREADY);
 }
 
 

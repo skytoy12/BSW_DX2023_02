@@ -18,6 +18,9 @@ MainGame::~MainGame()
 void MainGame::Update()
 {
 	scene->Update();
+
+	    Time::GetInstance()->Update();
+	Keyboard::GetInstance()->Update();
 }
 
 void MainGame::Render()
@@ -43,30 +46,26 @@ void MainGame::Render()
 
 void MainGame::Initialize()
 {
-	Device::GetInstance();
+	     Device::GetInstance();
 	Environment::GetInstance();
+	   Keyboard::GetInstance();
+	       Time::GetInstance();
 
-	// Setup Dear ImGui context
+
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO(); (void)io;
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-	// Setup Dear ImGui style
 	ImGui::StyleColorsDark();
-	//ImGui::StyleColorsLight();
-
-	// Setup Platform/Renderer backends
 	ImGui_ImplWin32_Init(hWnd);
 	ImGui_ImplDX11_Init(DEVICE, DC);
 }
 
 void MainGame::Release()
 {
-	Device::Delete();
-	Shader::Delete();
+	     Device::Delete();
+	     Shader::Delete();
 	Environment::Delete();
+	   Keyboard::Delete();
+	       Time::Delete();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();

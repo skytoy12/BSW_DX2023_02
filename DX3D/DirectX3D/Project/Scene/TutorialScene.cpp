@@ -22,7 +22,7 @@ void TutorialScene::Update()
 	cube1->Update();
 	cube2->Update();
 
-	//cube1->rotation.y += 0.0001f;
+	cube1->rotation.y += 0.0001f;
 
 	if (KEY_PRESS(VK_LEFT))
 		cube1->translation += cube1->Left() * Time::Delta();

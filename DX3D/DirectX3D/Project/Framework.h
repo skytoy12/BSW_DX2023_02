@@ -20,6 +20,7 @@
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+#pragma comment(lib, "dxguid.lib")
 
 using namespace std;
 using namespace DirectX;
@@ -29,6 +30,11 @@ using namespace DirectX;
 #include "imgui_impl_dx11.h"
 
 #pragma comment(lib, "ImGui.lib")
+
+#include "DirectXTex.h"
+#include "DirectXTex.inl"
+
+#pragma comment(lib, "DirectXtex.lib")
 
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
@@ -71,6 +77,7 @@ typedef XMFLOAT4 Vector4;
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"
+#include "Scene/TextureScene.h"
 
 #include "MainGame.h"
 

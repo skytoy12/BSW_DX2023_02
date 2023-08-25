@@ -74,7 +74,7 @@ void Bullet::Shoot(Vector2 startPos, Vector2 dir)
 	_actions[IDLE]->Play();
 
 	_col->GetTransform()->SetPosition(startPos);
-	_dir = dir.NomalVector2();
+	_dir = dir.NormalVector2();
 }
 
 void Bullet::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)

@@ -70,8 +70,8 @@ RectCollider::OBBRectinfo RectCollider::GetOBBInfo()
     info.direction[0] = { matrix._11, matrix._12 };
     info.direction[1] = { matrix._21, matrix._22 };
 
-    info.direction[0].Nomallize();
-    info.direction[1].Nomallize();
+    info.direction[0].Normallize();
+    info.direction[1].Normallize();
 
     info.length[0] = GetWorldSize().x * 0.5f;
     info.length[1] = GetWorldSize().y * 0.5f;
@@ -255,7 +255,7 @@ bool RectCollider::Block(shared_ptr<RectCollider> moveable)
 
     Vector2 fixedPos = moveable->GetTransform()->GetPos();
 
-    dir.Nomallize();
+    dir.Normallize();
 
     if (overlap.x > overlap.y)
     {
@@ -291,7 +291,7 @@ bool RectCollider::Block(shared_ptr<CircleCollider> moveable)
 
     Vector2 fixedPos = moveable->GetTransform()->GetPos();
 
-    dir.Nomallize();
+    dir.Normallize();
 
     if (overlap.x > overlap.y)
     {

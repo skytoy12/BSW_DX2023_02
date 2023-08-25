@@ -126,13 +126,20 @@ private :
 	bool _isJump = false;
 	bool _isAttack = false;
 	bool _isJumpAttack = false;
+
 	bool _isJustJump = false;
+	bool _isJumpAndLandAttack = false;
+	bool _isJumpAndGrogyAttack = false;
+
 	bool _isGrogyAttack = false;
 	bool _isTurn = false;
 	bool _isWeaponMove = false;
 	bool _isWeaponActive = false;
 
 	bool _isGrogy = false;
+
+	int _oldAttackType = 0;
+	int _curAttackType = 0;
 
 	int _isreturn = 0;
 

@@ -129,30 +129,12 @@ void Boss::Update()
 	JumpToIdle();
 	GrogyRollingFinish();
 	GrogyKnockBack();
+	Attack();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
-	if (KEY_DOWN('K'))
-	{
+	
 
-		_isreturn = Return();
-
-		if (_isreturn == 1)
-			return;
-
-		_actions[ATTACKREADY]->Play();
-		LandAttackPattern();
-	}
-
-	if (KEY_DOWN('L'))
-	{
-		_isreturn = Return();
-
-		if (_isreturn == 1)
-			return;
-
-		_actions[JUMPREADY]->Play();
-		JumpAttackPattern();
-	}
+	
 
 	if (KEY_DOWN('J'))
 	{
@@ -166,7 +148,9 @@ void Boss::Update()
 		AfterGroggyPattern();
 	}
 
-	if (KEY_DOWN('O'))
+	
+
+	if (KEY_DOWN('P'))
 	{
 
 		_isreturn = Return();
@@ -174,6 +158,7 @@ void Boss::Update()
 		if (_isreturn == 1)
 			return;
 
+		_isJumpAndGrogyAttack = true;
 		_actions[JUMPREADY]->Play();
 		JustJumpPattern();
 	}
@@ -222,15 +207,22 @@ void Boss::PostRender()
 	ImGui::SliderFloat("Location.x", (float*)&_location.x, -600.0f, 600.0f);
 	ImGui::SliderFloat("Location.y", (float*)&_location.y, -600.0f, 600.0f);
 	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 14);
-	ImGui::Text("_isLeft : %d", _isLeft);
-	ImGui::Text("_isTurn : %d", _isTurn);
-	ImGui::Text("_isJump : %d", _isJump);
-	ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
-	ImGui::Text("_isAttack : %d", _isAttack);
-	ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
+	ImGui::Text("landpoint : %f", _landPoint.x);
+	ImGui::Text("target : %f", _target.lock()->GetWorldPosition().x);
+	//ImGui::Text("_isLeft : %d", _isLeft);
+	//ImGui::Text("_isTurn : %d", _isTurn);
+	//ImGui::Text("_isJump : %d", _isJump);
+	//ImGui::Text("_isJump : %d", _isJustJump);
+	//ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
+	//ImGui::Text("_isAttack : %d", _isAttack);
+	//ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
 	ImGui::Text("_isreturn : %d", _isreturn);
-	ImGui::Text("_isActive : %d", _isWeaponActive);
+	//ImGui::Text("_isActive : %d", _isWeaponActive);
+	//ImGui::Text("_isGrogy : %d", _isGrogy);
+	ImGui::Text("_isJAL : %d", _isJumpAndLandAttack);
+	ImGui::Text("_isJAG : %d", _isJumpAndGrogyAttack);
 	ImGui::Text("_isGrogy : %d", _isGrogy);
+	ImGui::Text("Type : %d", _curAttackType);
 	ImGui::Text("count : %d", _weaponMove._count);
 	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
 	ImGui::Text("_Setangle : %f", _col->GetTransform()->GetAngle());
@@ -238,6 +230,62 @@ void Boss::PostRender()
 
 void Boss::Attack()
 {
+	_isreturn = Return();
+
+	if (_isreturn == 1)
+		return;
+
+	_oldAttackType = _curAttackType;
+	_curAttackType = MyMath::RandomInt(1, 4);
+	if (_curAttackType == _oldAttackType)
+		return;
+	if (_attackCoolTime < 3.0f)
+		return;
+
+	if (_curAttackType == 1)
+	{
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
+		_actions[ATTACKREADY]->Play();
+		LandAttackPattern();
+	}
+
+	if (_curAttackType == 2)
+	{
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
+		_actions[JUMPREADY]->Play();
+		JumpAttackPattern();
+	}
+
+	if (_curAttackType == 3)
+	{
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
+		_isJumpAndLandAttack = true;
+		_actions[JUMPREADY]->Play();
+		JustJumpPattern();
+	}
+
+	if (_curAttackType == 4)
+	{
+		_isreturn = Return();
+
+		if (_isreturn == 1)
+			return;
+
+		_actions[JUMPREADY]->Play();
+		JustJumpPattern();
+	}
 }
 
 void Boss::SetState(State_Boss type)
@@ -328,6 +376,7 @@ void Boss::UnActiveIDle()
 	if (Return() != 1)
 	{
 		_head->_isActive = false;
+		_attackCoolTime += DELTA_TIME;
 		TotalUpdate(IDLE);
 		SetState(IDLE);
 	}
@@ -336,24 +385,44 @@ void Boss::UnActiveIDle()
 
 void Boss::JumpMove()
 {
-	if (_isJump == true)
-	{
-		//if (_jumpPower < 0)
-			//return;
-		if (_isLeft == true)
-		{
-			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
-		}
 
-		else
-		{
-			_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
-		}
+	if (_isJump == false)
+		return;
+
+	if (_isJumpAttack == true )
+	{
+		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 
 		if (_isLeft == true)
 			_dir.x = -1;
 		else
 			_dir.x = 1;
+
+		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+
+	}
+
+	if (_isJumpAndLandAttack == true && _isJustJump == true)
+	{
+		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+
+		Vector2 direct = Vector2(_landPoint.x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
+
+		_dir = direct.NormalVector2();
+
+		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+	}
+
+	if (_isJumpAndGrogyAttack == true)
+	{
+		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+
+		if (_col->GetTransform()->GetWorldPosition().x < CENTER.x - 30.0f)
+			_dir.x = 1;
+		else if (_col->GetTransform()->GetWorldPosition().x > CENTER.x + 30.0f)
+			_dir.x = -1;
+		else
+			_dir.x = 0;
 
 		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
@@ -386,6 +455,10 @@ int Boss::Return()
 	if (_isJump == true)
 		return 1;
 	if (_isJustJump == true)
+		return 1;
+	if (_isJumpAndLandAttack == true)
+		return 1;
+	if (_isJumpAndGrogyAttack == true)
 		return 1;
 	if (_isGrogy == true)
 		return 1;
@@ -462,6 +535,16 @@ void Boss::JumpToIdle()
 	{
 		_jumpAttackTime = 0.0f;
 		BackStep();
+		return;
+	}
+
+	if (_isJump == true && _isJustJump == true && _gravityCol->IsCollision(_landLine) && _jumpPower < 0.0f)
+	{
+		if (_curstate != JUMP)
+			return;
+		CAMERA->ShakeStart(5.0f, 0.5f);
+		TotalUpdate(JUMPTOIDLE);
+		SetAndResetState(JUMPTOIDLE);
 	}
 }
 
@@ -550,15 +633,58 @@ void Boss::AttackEvent()
 		SetAndResetState(IDLE);
 		_isWeaponMove = false;
 		_isAttack = false;
+		_isJumpAndLandAttack = false;
 		return;
 	}
 
 	if (_curstate == JUMPREADY)
 	{
-		if(_isLeft == true)
-		_landPoint = _target.lock()->GetWorldPosition() + Vector2(300, 0);
-		else
-		_landPoint = _target.lock()->GetWorldPosition() - Vector2(300, 0);
+		if (_isJumpAttack == true)
+		{
+			if (_isLeft == true)
+				_landPoint = _target.lock()->GetWorldPosition() + Vector2(300, 0);
+			else
+				_landPoint = _target.lock()->GetWorldPosition() - Vector2(300, 0);
+		}
+
+		else if (_isJustJump == true || _isJumpAndLandAttack == true)
+		{
+			float distance = abs(_target.lock()->GetWorldPosition().x - _col->GetTransform()->GetWorldPosition().x);
+
+			if (_isLeft == true)
+			{
+				if (distance < 100 || distance > 400)
+				{
+					_landPoint = _target.lock()->GetWorldPosition() + Vector2(MyMath::RandomFloat(700, 750), 0.0f);
+				}													
+				else												
+				{													
+					_landPoint = _target.lock()->GetWorldPosition() + Vector2(300, 0);
+				}
+			}
+
+			else
+			{
+				if (distance < 100 || distance > 400)
+				{
+					_landPoint = _target.lock()->GetWorldPosition() - Vector2(MyMath::RandomFloat(700, 750), 0.0f);
+				}
+				else
+				{
+					_landPoint = _target.lock()->GetWorldPosition() - Vector2(300, 0);
+				}
+			}
+
+		}
+
+		else if (_isJumpAndGrogyAttack == true)
+		{
+			if (_isLeft == true)
+				_landPoint = CENTER;
+			else
+				_landPoint = CENTER;
+		}
+
 		_isJump = true;
 		TotalUpdate(JUMP);
 		SetAndResetState(JUMP);
@@ -573,11 +699,36 @@ void Boss::AttackEvent()
 		return;
 	}
 
-	if (_curstate == JUMPTOIDLE)
+	if (_curstate == JUMPTOIDLE && _isJumpAttack == true)
 	{
 		_isJumpAttack = false;
 		TotalUpdate(IDLE);
 		SetAndResetState(IDLE);
+		return;
+	}
+
+	if (_curstate == JUMPTOIDLE && _isJustJump == true && _isJumpAndGrogyAttack == false && _isJumpAndLandAttack == false)
+	{
+		_isJump = false;
+		_isJustJump = false;
+		TotalUpdate(IDLE);
+		SetAndResetState(IDLE);
+		return;
+	}
+
+	if (_curstate == JUMPTOIDLE && _isJumpAndLandAttack == true)
+	{
+		_isJump = false;
+		_isJustJump = false;
+		LandAttackPattern();
+		return;
+	}
+
+	if (_curstate == JUMPTOIDLE && _isJumpAndGrogyAttack == true)
+	{
+		_isJump = false;
+		_isJustJump = false;
+		AfterGroggyPattern();
 		return;
 	}
 
@@ -599,6 +750,7 @@ void Boss::AttackEvent()
 		else
 		{
 			_isGrogyAttack = false;
+			_isJumpAndGrogyAttack = false;
 			_weaponMove._speed = 0.0f;
 			_weaponMove._count = 0;
 			TotalUpdate(IDLE);
@@ -735,7 +887,7 @@ void Boss::DirFix()
 	if (_isJump == false && _dir.Length() != 0)
 	{
 		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f);
-		_dir = _dir.NomalVector2();
+		_dir = _dir.NormalVector2();
 	}
 }
 
@@ -765,7 +917,7 @@ void Boss::LandAttackPattern()
 	_col->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);
-	SetState(ATTACKREADY);
+	SetAndResetState(ATTACKREADY);
 }
 
 

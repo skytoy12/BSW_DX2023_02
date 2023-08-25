@@ -93,7 +93,7 @@ bool CircleCollider::Block(shared_ptr<CircleCollider> moveable)
     float blockRaduius = GetWorldRadius();
 
     float scalar = abs((moveableRaduius + blockRaduius) - dir.Length());
-    dir.Nomallize();
+    dir.Normallize();
 
     moveable->GetTransform()->AddVector2(dir * scalar * DELTA_TIME);
 
@@ -112,7 +112,7 @@ bool CircleCollider::Block(shared_ptr<RectCollider> moveable)
 
     Vector2 fixedPos = moveable->GetTransform()->GetPos();
 
-    dir.Nomallize();
+    dir.Normallize();
 
     if (overlap.x > overlap.y)
     {

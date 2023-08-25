@@ -56,7 +56,7 @@ void RushMonster::Update()
 	if (_isRush == false)
 	{
 		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
-		_dir = _dir.NomalVector2();
+		_dir = _dir.NormalVector2();
 	}
 
 	//RightLeft();

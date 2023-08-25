@@ -82,7 +82,7 @@ void FlyMonster::Attack()
 	CreateRandomPos();
 
 	_dir = _randomPos - _col->GetTransform()->GetWorldPosition();
-	_dir = _dir.NomalVector2();
+	_dir = _dir.NormalVector2();
 	_speed = 200.0f;
 
 	_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);

@@ -141,6 +141,7 @@
     <ClInclude Include="Render\Buffer\GlobalBuffer.h" />
     <ClInclude Include="Render\Buffer\ConstBuffer.h" />
     <ClInclude Include="Render\Buffer\IndexBuffer.h" />
+    <ClInclude Include="Scene\RobotScene.h" />
     <ClInclude Include="System\Environment.h" />
     <ClInclude Include="Render\Shader\PixelShader.h" />
     <ClInclude Include="Render\Shader\Shader.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Object\Basic\Cube.cpp" />
     <ClCompile Include="Render\Buffer\ConstBuffer.cpp" />
     <ClCompile Include="Render\Buffer\IndexBuffer.cpp" />
+    <ClCompile Include="Scene\RobotScene.cpp" />
     <ClCompile Include="System\Environment.cpp" />
     <ClCompile Include="Render\Shader\PixelShader.cpp" />
     <ClCompile Include="Render\Shader\Shader.cpp" />

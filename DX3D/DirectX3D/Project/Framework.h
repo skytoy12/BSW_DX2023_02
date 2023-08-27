@@ -78,6 +78,7 @@ typedef XMFLOAT4 Vector4;
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"
 #include "Scene/TextureScene.h"
+#include "Scene/RobotScene.h"
 
 #include "MainGame.h"
 

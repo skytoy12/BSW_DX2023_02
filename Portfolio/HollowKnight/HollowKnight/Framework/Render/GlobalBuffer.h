@@ -191,3 +191,26 @@ public:
 
 	Data _data;
 };
+
+class MonsterBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		Vector2 startPos;
+		Vector2 size;
+		Vector2 imageSize;
+		int isRight = 0;
+		int state = 0;
+	};
+
+	MonsterBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+
+	}
+	virtual ~MonsterBuffer() {}
+
+
+	Data _data;
+};

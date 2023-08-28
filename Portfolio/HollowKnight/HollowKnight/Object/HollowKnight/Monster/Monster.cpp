@@ -6,6 +6,7 @@ using namespace tinyxml2;
 Monster::Monster()
 {
 	_transform = make_shared<Transform>();
+	_monsterBuffer = make_shared<MonsterBuffer>();
 }
 
 
@@ -90,7 +91,7 @@ void Monster::CreateAction(wstring srvPath, string xmmlPath, string actionName, 
 	action->SetEndEvent(event);
 	shared_ptr<Sprite> sprite = make_shared<Sprite>(srvPath, size);
 
-	sprite->SetPS(ADD_PS(L"Shader/NonRedPS.hlsl"));
+	sprite->SetPS(ADD_PS(L"Shader/MonsterPS.hlsl"));
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }

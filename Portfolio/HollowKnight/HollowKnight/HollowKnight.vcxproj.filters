@@ -569,6 +569,7 @@
     <FxCompile Include="Shader\PlayerPS.hlsl" />
     <FxCompile Include="Shader\NonRedPS.hlsl" />
     <FxCompile Include="Shader\RatioPS.hlsl" />
+    <FxCompile Include="Shader\MonsterPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Player\Run.xml" />

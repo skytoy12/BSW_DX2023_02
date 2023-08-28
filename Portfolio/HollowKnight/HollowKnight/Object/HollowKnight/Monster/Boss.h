@@ -138,7 +138,7 @@ private :
 
 	bool _isGrogy = false;
 
-	int _oldAttackType = 0;
+	int _oldAttackType = 1;
 	int _curAttackType = 0;
 
 	int _isreturn = 0;

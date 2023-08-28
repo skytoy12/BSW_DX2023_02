@@ -31,5 +31,6 @@ protected :
 	vector<shared_ptr<Sprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;
 
+	shared_ptr<MonsterBuffer> _monsterBuffer;
 };
 

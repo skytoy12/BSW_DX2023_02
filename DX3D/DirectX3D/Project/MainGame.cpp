@@ -6,8 +6,8 @@ MainGame::MainGame()
 	Initialize();
 
 	//scene = new TutorialScene();
-	//scene = new TextureScene();
-	scene = new RobotScene();
+	scene = new TextureScene();
+	//scene = new RobotScene();
 }
 
 MainGame::~MainGame()

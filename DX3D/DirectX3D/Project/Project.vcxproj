@@ -134,7 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Quad.h" />
+    <ClInclude Include="Object\Basic\Quad.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\Material.h" />
     <ClInclude Include="Object\Basic\Cube.h" />
@@ -173,7 +173,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Quad.cpp" />
+    <ClCompile Include="Object\Basic\Quad.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\Material.cpp" />
     <ClCompile Include="Object\Basic\Cube.cpp" />

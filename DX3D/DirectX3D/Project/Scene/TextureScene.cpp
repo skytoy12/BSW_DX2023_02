@@ -4,17 +4,20 @@
 
 TextureScene::TextureScene()
 {
-	quad = new Quad();
+	//quad = new Quad();
+	box = new Box();
 }
 
 TextureScene::~TextureScene()
 {
-	delete quad;
+	//delete quad;
+	delete box;
 }
 
 void TextureScene::Update()
 {
-	quad->Update();
+	//quad->Update();
+	box->Update();
 }
 
 void TextureScene::PreRender()
@@ -23,7 +26,8 @@ void TextureScene::PreRender()
 
 void TextureScene::Render()
 {
-	quad->Render();
+	//quad->Render();
+	box->Render();
 }
 
 void TextureScene::PostRender()

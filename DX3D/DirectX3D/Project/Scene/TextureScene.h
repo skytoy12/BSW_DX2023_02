@@ -16,5 +16,6 @@ public:
 
 private:
 	Quad* quad;
+	Box* box;
 
 };

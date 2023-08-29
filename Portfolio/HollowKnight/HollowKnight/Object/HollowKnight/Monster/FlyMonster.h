@@ -16,7 +16,7 @@ public :
 	virtual void PostRender() override;
 	virtual void Attack() override;
 
-	void SetTarget(shared_ptr<Transform> target) { _target = target; }
+	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
 	shared_ptr<CircleCollider> GetCollider() { return _col; }
 

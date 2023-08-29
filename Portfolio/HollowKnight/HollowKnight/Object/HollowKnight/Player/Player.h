@@ -2,7 +2,7 @@
 class Player
 {
 public :
-
+	friend class Monster;
 	enum State_Player
 	{
 		IDLE,
@@ -22,6 +22,8 @@ public :
 	void PostRender();
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
+
+	void SetEnemy(shared_ptr<class Monster> enemy);
 
 #pragma region Player Move & Attack
 	void Move(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos * DELTA_TIME * _speed); }
@@ -45,6 +47,7 @@ public :
 #pragma region Player Get Info
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<RectCollider> GetCollider() { return _col; }
+	shared_ptr<RectCollider> GetWeaponcol() { return _weaponCol; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -72,6 +75,11 @@ private :
 	bool _isChargeAndFire = false;
 #pragma endregion
 
+#pragma region INFO
+	int _maxHp = 5;
+	int _hp = 5;
+#pragma endregion
+
 	State_Player _oldstate = Player::State_Player::IDLE;
 	State_Player _curstate = Player::State_Player::IDLE;
 
@@ -81,6 +89,8 @@ private :
 	shared_ptr<RectCollider> _col;
 	shared_ptr<RectCollider> _weaponCol;
 	shared_ptr<CircleCollider> _dashCol;
+
+	vector<weak_ptr<class Monster>> _enemies;
 
 	shared_ptr<class Bullet> _bullet;
 	shared_ptr<class ChargeEffect> _effect;

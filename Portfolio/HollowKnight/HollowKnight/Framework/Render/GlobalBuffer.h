@@ -197,11 +197,10 @@ class MonsterBuffer : public ConstantBuffer
 public:
 	struct Data
 	{
-		Vector2 startPos;
-		Vector2 size;
-		Vector2 imageSize;
-		int isRight = 0;
 		int state = 0;
+		float R = 0;
+		float G = 0;
+		float B = 0;
 	};
 
 	MonsterBuffer()

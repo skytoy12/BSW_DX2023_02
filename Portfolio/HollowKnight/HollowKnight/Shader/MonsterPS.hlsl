@@ -2,13 +2,21 @@
 Texture2D map : register(t0);
 SamplerState samp : register(s0);
 
-cbuffer MonsterBuffer : register(b0)
+cbuffer ActionBuffer : register(b0)
 {
 	float2 startPos;
 	float2 size;
 	float2 imageSize;
 	int isRight;
-	int state;
+	int padding;
+}
+
+cbuffer MonsterBuffer : register(b1)
+{
+	int value1;
+	float value2;
+	float value3;
+	float value4;
 }
 
 
@@ -34,21 +42,17 @@ float4 PS(PixelInput input) : SV_TARGET
 		return float4(0, 0, 0, 0);
 
 	[branch]
-	if (state == 0)
+	if (value1 == 0)
 	{
 		return color;
 	}
-	else if (state == 1)
+	else if (value1 == 1)
 	{
-		//color.x += 0.5f;
-		//color.y += 0.5f;
-		//color.z += 0.5f;
+		color.x += value2;
+		color.y += value3;
+		color.z += value4;
 
-		color.x = 1.0f;
-		color.y = 1.0f;
-		color.z = 1.0f;
-
-		return  float4(0, 0, 0, 0);
+		return  color;
 	}
 
 	return color;

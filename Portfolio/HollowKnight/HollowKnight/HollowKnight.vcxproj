@@ -199,7 +199,7 @@
     <ClInclude Include="Library\FMOD\inc\fmod_dsp_effects.h" />
     <ClInclude Include="Library\FMOD\inc\fmod_errors.h" />
     <ClInclude Include="Library\FMOD\inc\fmod_output.h" />
-    <ClInclude Include="Object\HollowKnight\Monster\Monster.h" />
+    <ClInclude Include="Object\HollowKnight\Monster\_Monster.h" />
     <ClInclude Include="Object\HollowKnight\Player\Player.h" />
     <ClInclude Include="Object\HollowKnight\Monster\RushMonster.h" />
     <ClInclude Include="Scene\BagicScene\MapTool.h" />
@@ -260,7 +260,7 @@
     <ClCompile Include="Framework\Utility\tinyxml2.cpp" />
     <ClCompile Include="HollowKnight.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\JumpMonster.cpp" />
-    <ClCompile Include="Object\HollowKnight\Monster\Monster.cpp" />
+    <ClCompile Include="Object\HollowKnight\Monster\_Monster.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\Player.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\RushMonster.cpp" />
     <ClCompile Include="Scene\BagicScene\MapTool.cpp" />

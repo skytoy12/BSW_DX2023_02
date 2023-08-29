@@ -28,7 +28,7 @@ JumpMonster::~JumpMonster()
 
 void JumpMonster::Update()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 	if (_isAlive == false)
 		return;
@@ -64,7 +64,7 @@ void JumpMonster::Update()
 
 void JumpMonster::Render()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 
 	if (_isAlive == false)
@@ -154,7 +154,7 @@ void JumpMonster::Turn()
 
 	if (_isLeft == true)
 	{
-		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x < 0)
+		if (_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x < 0)
 		{
 			_isturn = true;
 			_actions[TURN]->Update();
@@ -166,7 +166,7 @@ void JumpMonster::Turn()
 
 	if (_isLeft == false)
 	{
-		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x > 0)
+		if (_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x > 0)
 		{
 			_isturn = true;
 			TotalUpdate(TURN);
@@ -192,7 +192,7 @@ void JumpMonster::JumpEvent()
 	if (_curstate == JUMPREADY)
 	{
 		_isJump = true;
-		_landPoint->SetPosition(_target.lock()->GetWorldPosition());
+		_landPoint->SetPosition(_targetPlayer.lock()->GetTransform()->GetWorldPosition());
 		TotalUpdate(JUMP);
 		SetAndResetState(JUMP);
 		//_actions[DOWN]->Reset();
@@ -248,8 +248,8 @@ void JumpMonster::LandMotionChange()
 
 void JumpMonster::Active()
 {
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f) || _isJump == true)
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isJump == true)
 		_isActive = true;
 	else
 	{
@@ -260,8 +260,8 @@ void JumpMonster::Active()
 
 void JumpMonster::AttackStart()
 {
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 250.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f) || _isJump == true)
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 250.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isJump == true)
 	{
 		if (_isAttack == true)
 			return;
@@ -289,7 +289,7 @@ void JumpMonster::DirFix()
 {
 	if (_isJump == false && _dir.Length() != 0)
 	{
-		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
+		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
 		_dir = _dir.NormalVector2();
 	}
 }

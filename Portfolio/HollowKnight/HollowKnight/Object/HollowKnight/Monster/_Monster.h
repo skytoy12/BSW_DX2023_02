@@ -1,6 +1,7 @@
 #pragma once
 class Monster
 {
+	friend class Player;
 public :
 	Monster();
 	virtual ~Monster() {}
@@ -26,11 +27,11 @@ protected :
 	bool _isActive = false;
 	bool _isLeft = false;
 
-	weak_ptr<Transform> _target;
+	//weak_ptr<Transform> _target;
+	weak_ptr<class Player> _targetPlayer;
+
 	shared_ptr<Transform> _transform;
 	vector<shared_ptr<Sprite>> _sprites;
 	vector<shared_ptr<Action>> _actions;
-
-	shared_ptr<MonsterBuffer> _monsterBuffer;
 };
 

@@ -7,7 +7,7 @@ BossTestScene::BossTestScene()
 {
 	_player = make_shared<Player>();
 	_boss = make_shared<Boss>();
-	_boss->SetTarget(_player->GetTransform());
+	_boss->SetPlayer(_player);
 	CAMERA->SetTarget(_player->GetTransform());
 	_col = make_shared<RectCollider>(Vector2(20000, 300));
 	_col->SetPosition(Vector2(0, -250));

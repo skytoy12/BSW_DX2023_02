@@ -13,6 +13,8 @@ Boss::Boss()
 	_weaponCol = make_shared<CircleCollider>(80);
 	_head = make_shared<BossHead>();
 
+	_monsterBuffer = make_shared<MonsterBuffer>();
+	_monsterBuffer->_data.state = 1;
 
 	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
 	_landLine->SetPosition(Vector2(0, -85));
@@ -79,7 +81,7 @@ Boss::Boss()
 
 #pragma endregion
 
-	_monsterBuffer->_data.state = 1;
+
 }
 
 Boss::~Boss()
@@ -88,7 +90,7 @@ Boss::~Boss()
 
 void Boss::Update()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 	if (_isAlive == false)
 		return;
@@ -133,10 +135,11 @@ void Boss::Update()
 	GrogyRollingFinish();
 	GrogyKnockBack();
 	Attack();
+	Hitted();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
-	
 
+	
 	
 	if (KEY_DOWN('J'))
 	{
@@ -202,13 +205,14 @@ void Boss::Update()
 
 void Boss::Render()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 	if (_isAlive == false)
 		return;
 
 	_transform->SetBuffer(0);
-	_monsterBuffer->SetPSBuffer(0);
+	_monsterBuffer->SetPSBuffer(1);
+
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();
@@ -226,7 +230,7 @@ void Boss::PostRender()
 	ImGui::SliderFloat("Location.y", (float*)&_location.y, -600.0f, 600.0f);
 	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 14);
 	ImGui::Text("landpoint : %f", _landPoint.x);
-	ImGui::Text("target : %f", _target.lock()->GetWorldPosition().x);
+	ImGui::Text("target : %f", _targetPlayer.lock()->GetTransform()->GetWorldPosition().x);
 	//ImGui::Text("_isLeft : %d", _isLeft);
 	//ImGui::Text("_isTurn : %d", _isTurn);
 	//ImGui::Text("_isJump : %d", _isJump);
@@ -361,7 +365,7 @@ void Boss::Turn()
 
 	if (_isLeft == true)
 	{
-		if (_gravityCol->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x < 0)
+		if (_gravityCol->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x < 0)
 		{
 			_isTurn = true;
 			_actions[TURN]->Update();
@@ -377,7 +381,7 @@ void Boss::Turn()
 
 	if (_isLeft == false)
 	{
-		if (_gravityCol->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x > 0)
+		if (_gravityCol->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x > 0)
 		{
 			_isTurn = true;
 			_actions[TURN]->Update();
@@ -672,24 +676,24 @@ void Boss::AttackEvent()
 		if (_isJumpAttack == true)
 		{
 			if (_isLeft == true)
-				_landPoint = _target.lock()->GetWorldPosition() + Vector2(300, 0);
+				_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition() + Vector2(300, 0);
 			else
-				_landPoint = _target.lock()->GetWorldPosition() - Vector2(300, 0);
+				_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition() - Vector2(300, 0);
 		}
 
 		else if (_isJustJump == true && _isJumpAndLandAttack == true)
 		{
-			float distance = abs(_target.lock()->GetWorldPosition().x - _col->GetTransform()->GetWorldPosition().x);
+			float distance = abs(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x - _col->GetTransform()->GetWorldPosition().x);
 
 			if (_isLeft == true)
 			{
 				if (distance < 100 || distance > 400)
 				{
-					_landPoint = _target.lock()->GetWorldPosition() + Vector2(MyMath::RandomFloat(700, 750), 0.0f);
+					_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition() + Vector2(MyMath::RandomFloat(700, 750), 0.0f);
 				}													
 				else												
 				{													
-					_landPoint = _target.lock()->GetWorldPosition() + Vector2(300, 0);
+					_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition() + Vector2(300, 0);
 				}
 			}
 
@@ -697,11 +701,11 @@ void Boss::AttackEvent()
 			{
 				if (distance < 100 || distance > 400)
 				{
-					_landPoint = _target.lock()->GetWorldPosition() - Vector2(MyMath::RandomFloat(700, 750), 0.0f);
+					_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition() - Vector2(MyMath::RandomFloat(700, 750), 0.0f);
 				}
 				else
 				{
-					_landPoint = _target.lock()->GetWorldPosition() - Vector2(300, 0);
+					_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition() - Vector2(300, 0);
 				}
 			}
 
@@ -709,7 +713,7 @@ void Boss::AttackEvent()
 
 		if (_isJustJump == true && _isJumpAndLandAttack == false)
 		{
-			_landPoint = _target.lock()->GetWorldPosition();
+			_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition();
 		}
 
 		else if (_isJumpAndGrogyAttack == true)
@@ -923,7 +927,7 @@ void Boss::DirFix()
 {
 	if (_isJump == false && _dir.Length() != 0)
 	{
-		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f);
+		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f);
 		_dir = _dir.NormalVector2();
 	}
 }
@@ -998,6 +1002,19 @@ void Boss::AfterGroggyPattern()
 	TotalUpdate(ATTACKREADY);
 	_actions[ATTACKREADY]->Reset();
 	SetAndPlayState(ATTACKREADY);
+}
+
+void Boss::Hitted()
+{
+	if (_targetPlayer.expired() == true)
+		return;
+	if (_col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+	{
+		EFFECT_LPLAY("Hitted", _col->GetTransform()->GetWorldPosition());
+		_monsterBuffer->_data.R = 0.5f;
+		_monsterBuffer->_data.G = 0.5f;
+		_monsterBuffer->_data.B = 0.5f;
+	}
 }
 
 void Boss::GrogyKnockBack()

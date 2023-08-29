@@ -23,7 +23,7 @@ RushMonster::~RushMonster()
 
 void RushMonster::Update()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 
 	if (_isAlive == false)
@@ -55,7 +55,7 @@ void RushMonster::Update()
 
 	if (_isRush == false)
 	{
-		_dir = Vector2(_target.lock()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
+		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
 		_dir = _dir.NormalVector2();
 	}
 
@@ -67,8 +67,8 @@ void RushMonster::Update()
 	if (_rushTime > 2.5f)
 		RushFinish();
 
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 300.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f) || _isRush == true)
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 300.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isRush == true)
 	{
 		Attack();
 	}
@@ -76,7 +76,7 @@ void RushMonster::Update()
 
 void RushMonster::Render()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 
 	if (_isAlive == false)
@@ -157,7 +157,7 @@ void RushMonster::Turn()
 
 	if (_isLeft == true)
 	{
-		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x < 0)
+		if (_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x < 0)
 		{
 			_isTurn = true;
 			TotalUpdate(TURN);
@@ -168,7 +168,7 @@ void RushMonster::Turn()
 
 	if (_isLeft == false)
 	{
-		if (_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x > 0)
+		if (_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x > 0)
 		{
 			_isTurn = true;
 			TotalUpdate(TURN);
@@ -194,8 +194,8 @@ void RushMonster::UnActiveIdle()
 
 void RushMonster::Active()
 {
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f) || _isRush == true)
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isRush == true)
 		_isActive = true;
 	else
 	{

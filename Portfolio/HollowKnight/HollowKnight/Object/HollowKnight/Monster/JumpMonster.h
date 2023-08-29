@@ -45,7 +45,7 @@ public :
 	void WalkChange();
 #pragma endregion
 
-	void SetTarget(shared_ptr<Transform> target) { _target = target; }
+	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 

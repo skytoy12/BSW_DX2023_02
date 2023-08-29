@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Bullet.h"
 #include "ChargeEffect.h"
+#include "../Monster/_Monster.h"
 
 using namespace tinyxml2;
 
@@ -407,6 +408,11 @@ void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, V
 	sprite->Update();
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
+}
+
+void Player::SetEnemy(shared_ptr<class Monster> enemy)
+{
+	_enemies.push_back(enemy);
 }
 
 

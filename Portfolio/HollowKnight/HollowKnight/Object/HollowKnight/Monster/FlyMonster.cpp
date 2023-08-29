@@ -21,7 +21,7 @@ FlyMonster::~FlyMonster()
 
 void FlyMonster::Update()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 	if (_isAlive == false)
 		return;
@@ -56,7 +56,7 @@ void FlyMonster::Update()
 
 void FlyMonster::Render()
 {
-	if (_target.expired() == true)
+	if (_targetPlayer.expired() == true)
 		return;
 
 	if (_isAlive == false)
@@ -134,8 +134,8 @@ void FlyMonster::UnActive()
 
 void FlyMonster::Active()
 {
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _target.lock()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _target.lock()->GetWorldPosition().y < 500.0f))
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f))
 	{
 		_isActive = true;
 		_actions[IDLE]->SetSpeed(0.10f);
@@ -163,8 +163,8 @@ void FlyMonster::CreateRandomPos()
 	Vector2 RandPos;
 	float Pos;
 
-	RandPos.x = _target.lock()->GetWorldPosition().x + MyMath::RandomFloat(-100, 100);
-	RandPos.y = _target.lock()->GetWorldPosition().y + MyMath::RandomFloat(0, 70);
+	RandPos.x = _targetPlayer.lock()->GetTransform()->GetWorldPosition().x + MyMath::RandomFloat(-100, 100);
+	RandPos.y = _targetPlayer.lock()->GetTransform()->GetWorldPosition().y + MyMath::RandomFloat(0, 70);
 	Pos = (_randomPos - RandPos).Length();
 	if (_randomPos != Vector2(0, 0))
 	{

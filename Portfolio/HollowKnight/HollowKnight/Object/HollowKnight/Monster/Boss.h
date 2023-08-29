@@ -60,6 +60,7 @@ public :
 	void GrogyEndEvent();
 	void GrogyKnockBack();
 
+	void Hitted();
 
 	int Return();
 
@@ -86,7 +87,7 @@ public :
 	void Grogy();
 	void GrogyRollingFinish();
 
-	void SetTarget(shared_ptr<Transform> target) { _target = target; }
+	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
 	shared_ptr<CircleCollider> GetCollider() { return _col; }
 	shared_ptr<RectCollider> GetGravityCollider() { return _gravityCol; }
@@ -136,6 +137,8 @@ private :
 	bool _isWeaponMove = false;
 	bool _isWeaponActive = false;
 
+
+
 	bool _isGrogy = false;
 
 	int _oldAttackType = 1;
@@ -143,5 +146,6 @@ private :
 
 	int _isreturn = 0;
 
+	shared_ptr<MonsterBuffer> _monsterBuffer;
 };
 

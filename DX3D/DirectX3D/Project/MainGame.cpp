@@ -48,9 +48,10 @@ void MainGame::Render()
 
 void MainGame::Initialize()
 {
-	     Device::GetInstance();
+   StateManager::GetInstance();
 	Environment::GetInstance();
 	   Keyboard::GetInstance();
+	     Device::GetInstance();
 	       Time::GetInstance();
 
 
@@ -63,11 +64,12 @@ void MainGame::Initialize()
 
 void MainGame::Release()
 {
+	       Time::Delete();
 	     Device::Delete();
 	     Shader::Delete();
-	Environment::Delete();
 	   Keyboard::Delete();
-	       Time::Delete();
+	Environment::Delete();
+   StateManager::Delete();
 
 	ImGui_ImplDX11_Shutdown();
 	ImGui_ImplWin32_Shutdown();

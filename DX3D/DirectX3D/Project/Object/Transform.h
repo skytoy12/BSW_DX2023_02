@@ -19,6 +19,9 @@ public:
 	Vector3       Up() { return up          ; }
 	Vector3     Down() { return up      * -1; }
 
+	void Debug();
+	void SetLabel(string label) { this->label = label; }
+
 public:
 	Vector3 scale       = { 1.0f, 1.0f, 1.0f };
 	Vector3 rotation    = { 0.0f, 0.0f, 0.0f };
@@ -36,6 +39,8 @@ protected :
 	Vector3 globalPosition;
 
 	Vector3 right, up, forward;
+
+	string label = "";
 };
 
 

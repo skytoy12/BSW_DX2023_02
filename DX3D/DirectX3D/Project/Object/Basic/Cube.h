@@ -10,7 +10,6 @@ public:
 
     void CreateMesh(Vector4 color);
 
-    void Debug();
 
 private:
     Material* material;
@@ -24,7 +23,7 @@ private:
     vector<UINT>         indices;
 
     static int count;
-    string label = "";
+
 
 };
 

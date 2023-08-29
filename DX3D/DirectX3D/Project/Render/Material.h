@@ -12,9 +12,12 @@ public:
 	void SetShader(wstring file);
 
 	void SetMaterial();
+
+	void SetDuffuseMap(wstring file);
 private:
 	VertexShader* vertexShader = nullptr;
 	 PixelShader* pixelShader = nullptr;
+	 Texture* diffuseMap = nullptr;
 };
 
 

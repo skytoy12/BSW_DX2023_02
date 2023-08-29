@@ -5,31 +5,34 @@
 TextureScene::TextureScene()
 {
 	//quad = new Quad();
-	box = new Box();
+	cube = new TextureCube();
+	cube->SetLabel("cube");
 }
 
 TextureScene::~TextureScene()
 {
 	//delete quad;
-	delete box;
+	delete cube;
 }
 
 void TextureScene::Update()
 {
 	//quad->Update();
-	box->Update();
+	cube->Update();
 }
 
 void TextureScene::PreRender()
 {
+
 }
 
 void TextureScene::Render()
 {
 	//quad->Render();
-	box->Render();
+	cube->Render();
 }
 
 void TextureScene::PostRender()
 {
+	cube->Debug();
 }

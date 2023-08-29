@@ -15,8 +15,5 @@ private:
 	vector<VertexTexture> vertices;
 	vector<UINT>           indices;
 
-	ID3D11ShaderResourceView*    srv = nullptr;
-	ID3D11SamplerState* samplerState = nullptr;
-
 	MatrixBuffer* worldBuffer = nullptr;
 };

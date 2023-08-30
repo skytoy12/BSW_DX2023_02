@@ -36,6 +36,10 @@ public :
 
 	void RightPlay(string name, Vector2 pos);
 
+	void SetPosition(string name, Vector2 pos);
+	void SetScale(string name, Vector2 scale);
+	void SetAngle(string name, float angle);
+
 private :
 	UINT _poolCount = 30;
 

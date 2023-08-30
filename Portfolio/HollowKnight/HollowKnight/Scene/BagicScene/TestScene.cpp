@@ -22,6 +22,7 @@ TestScene::TestScene()
 
 TestScene::~TestScene()
 {
+
 }
 
 void TestScene::Update()
@@ -33,9 +34,9 @@ void TestScene::Update()
 	_col->Update();
 	if (_col->Block(_player->GetCollider()))
 		_player->SetIsJump(false);
-	_col->Block(_mon1->GetCollider());
-	_col->Block(_mon2->GetCollider());
-	_col->Block(_mon3->GetCollider());
+	_col->Block(RECT(_mon1->GetCollider()));
+	_col->Block(RECT(_mon2->GetCollider()));
+	_col->Block(RECT(_mon3->GetCollider()));
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	CAMERA->SetLeftBottom(Vector2(-100000, -100000));
 	CAMERA->SetRightTop(Vector2(100000, 100000));

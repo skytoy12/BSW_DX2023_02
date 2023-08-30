@@ -47,14 +47,14 @@ public :
 
 	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
-	shared_ptr<RectCollider> GetCollider() { return _col; }
+	shared_ptr<Collider> GetCollider() { return _col; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 private :
 	void SetLeft();
 	void SetRight();
-	shared_ptr<RectCollider> _col;
-	shared_ptr<CircleCollider> _landPoint;
+
+	shared_ptr<Collider> _landPoint;
 	State_JumpMonster _curstate = IDLE;
 	State_JumpMonster _oldstate = IDLE;
 

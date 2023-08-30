@@ -21,6 +21,8 @@
 #define PI 3.141592
 #define GRAVITY 0.098f
 
+#define RADIAN(n) n * (XM_PI / 180)
+
 #define DEVICE Device::GetInstance()->GetDevice()
 #define DC Device::GetInstance()->GetDC()
 
@@ -43,8 +45,17 @@
 #define ADD_PS(k) ShaderManager::GetInstance()->AddPS(k)
 #define ADD_SRV(k) SRVManager::GetInstance()->Add_SRV(k)
 
+#define RECT(c) static_pointer_cast<RectCollider>(c)
+#define CIRCLE(c) static_pointer_cast<CircleCollider>(c)
+
 #define EFFECT_LPLAY(n,p) EffectManager::GetInstance()->LeftPlay(n,p)
 #define EFFECT_RPLAY(n,p) EffectManager::GetInstance()->RightPlay(n,p)
+
+#define EFFECT_S(n,p) EffectManager::GetInstance()->SetScale(n,p)
+#define EFFECT_R(n,p) EffectManager::GetInstance()->SetAngle(n,p)
+#define EFFECT_T(n,p) EffectManager::GetInstance()->SetPosition(n,p)
+
+
 #define SOUND Sound::GetInstance()
 #define CAMERA Camera::GetInstance()
 

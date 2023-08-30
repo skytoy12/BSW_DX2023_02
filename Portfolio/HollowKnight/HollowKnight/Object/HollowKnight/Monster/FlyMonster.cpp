@@ -25,6 +25,9 @@ void FlyMonster::Update()
 		return;
 	if (_isAlive == false)
 		return;
+
+	Monster::Update();
+
 	_col->Update();
 	_rangePoint->Update();
 	_transform->Update();
@@ -62,6 +65,7 @@ void FlyMonster::Render()
 	if (_isAlive == false)
 		return;
 
+	Monster::Render();
 	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
@@ -185,7 +189,8 @@ void FlyMonster::SetLeft()
 {
 	if (_turnCoolTime < 0.2f)
 		return;
-	_col->reverseScale();
+	
+	static_pointer_cast<CircleCollider>(_col)->reverseScale();
 	_isLeft = true;
 	_turnCoolTime = 0.0f;
 }
@@ -194,7 +199,7 @@ void FlyMonster::SetRight()
 {
 	if (_turnCoolTime < 0.2f)
 		return;
-	_col->OriginScale();
+	static_pointer_cast<CircleCollider>(_col)->OriginScale();
 	_isLeft = false;
 	_turnCoolTime = 0.0f;
 }

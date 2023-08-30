@@ -18,7 +18,7 @@ public :
 
 	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
-	shared_ptr<CircleCollider> GetCollider() { return _col; }
+	shared_ptr<Collider> GetCollider() { return _col; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
@@ -34,8 +34,7 @@ public :
 private :
 	void SetLeft();
 	void SetRight();
-	shared_ptr<CircleCollider> _col;
-	shared_ptr<CircleCollider> _rangePoint;
+	shared_ptr<Collider> _rangePoint;
 	State_FlyMonster _curstate = IDLE;
 	State_FlyMonster _oldstate = IDLE;
 	Vector2 _originPos = { 0,0 };

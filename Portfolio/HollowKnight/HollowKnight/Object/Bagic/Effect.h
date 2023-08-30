@@ -13,6 +13,10 @@ public :
 	void SetLeft();
 	void SetRight();
 
+	void SetPosition(Vector2 pos) { _transform->SetPosition(pos); }
+	void SetScale(Vector2 scale) { _transform->SetScale(scale); }
+	void SetAngle(float angle) { _transform->SetAngle(RADIAN(angle)); }
+
 	bool _isActive = false;
 
 private :

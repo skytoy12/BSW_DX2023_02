@@ -74,3 +74,29 @@ void EffectManager::RightPlay(string name, Vector2 pos)
 		}
 	}
 }
+
+void EffectManager::SetPosition(string name, Vector2 pos)
+{
+	if (_effectTable.count(name) == 0)
+		return;
+	for (auto effect : _effectTable[name])
+	{
+		effect->SetPosition(pos);
+	}
+}
+
+void EffectManager::SetScale(string name, Vector2 scale)
+{
+	for (auto effect : _effectTable[name])
+	{
+		effect->SetScale(scale);
+	}
+}
+
+void EffectManager::SetAngle(string name, float angle)
+{
+	for (auto effect : _effectTable[name])
+	{
+		effect->SetAngle(angle);
+	}
+}

@@ -39,7 +39,7 @@ public :
 
 	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
-	shared_ptr<RectCollider> GetCollider() { return _col; }
+	shared_ptr<Collider> GetCollider() { return _col; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
@@ -50,7 +50,7 @@ private :
 	State_RushMonster _curstate = IDLE;
 	State_RushMonster _oldstate = IDLE;
 
-	shared_ptr<RectCollider> _col;
+
 	float _attackCoolTime = 0.0f;
 	float _turnCoolTime = 2.0f;
 	float _rushTime = 0.0f;

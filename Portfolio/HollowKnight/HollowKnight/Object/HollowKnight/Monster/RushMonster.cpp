@@ -29,6 +29,8 @@ void RushMonster::Update()
 	if (_isAlive == false)
 		return;
 
+	Monster::Update();
+
 	if (_isRush == true)
 		_rushTime += DELTA_TIME;
 
@@ -81,6 +83,8 @@ void RushMonster::Render()
 
 	if (_isAlive == false)
 		return;
+
+	Monster::Render();
 	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
@@ -284,13 +288,13 @@ void RushMonster::TurnEvent()
 void RushMonster::SetLeft()
 {
 	_actions[_curstate]->Update();
-	_col->SetScale(Vector2(-1, 1));
+	static_pointer_cast<RectCollider>(_col)->SetScale(Vector2(-1, 1));
 	_isLeft = true;
 }
 
 void RushMonster::SetRight()
 {
 	_actions[_curstate]->Update();
-	_col->SetScale(Vector2(1, 1));
+	static_pointer_cast<RectCollider>(_col)->SetScale(Vector2(1, 1));
 	_isLeft = false;
 }

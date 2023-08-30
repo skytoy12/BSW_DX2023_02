@@ -33,6 +33,8 @@ void JumpMonster::Update()
 	if (_isAlive == false)
 		return;
 
+	Monster::Update();
+
 	Gravity(_col);
 	_col->Update();
 	_landPoint->Update();
@@ -70,6 +72,7 @@ void JumpMonster::Render()
 	if (_isAlive == false)
 		return;
 
+	Monster::Render();
 	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
@@ -317,13 +320,13 @@ void JumpMonster::WalkChange()
 void JumpMonster::SetLeft()
 {
 	_actions[_curstate]->Update();
-	_col->SetScale(Vector2(-1, 1));
+	static_pointer_cast<RectCollider>(_col)->SetScale(Vector2(-1, 1));
 	_isLeft = true;
 }
 
 void JumpMonster::SetRight()
 {
 	_actions[_curstate]->Update();
-	_col->SetScale(Vector2(1, 1));
+	static_pointer_cast<RectCollider>(_col)->SetScale(Vector2(1, 1));
 	_isLeft = false;
 }

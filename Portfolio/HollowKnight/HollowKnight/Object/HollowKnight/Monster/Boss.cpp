@@ -6,26 +6,24 @@ Boss::Boss()
 {
 #pragma region collider, transform등 생성 및 초기설정
 	_isLeft = true;
-	_gravityCol = make_shared<RectCollider>(Vector2(20, 300));
+	_col = make_shared<RectCollider>(Vector2(20, 300));
 	_jumpLine = make_shared<RectCollider>(Vector2(200, 40));
 	_landLine = make_shared<RectCollider>(Vector2(200, 40));
-	_col = make_shared<CircleCollider>(150);
+	_heatBox = make_shared<CircleCollider>(150);
 	_weaponCol = make_shared<CircleCollider>(80);
 	_head = make_shared<BossHead>();
 
-	_monsterBuffer = make_shared<MonsterBuffer>();
-	_monsterBuffer->_data.state = 1;
 
 	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
 	_landLine->SetPosition(Vector2(0, -85));
 
-	_transform->SetParent(_gravityCol->GetTransform());
-	_col->SetParent(_gravityCol->GetTransform());
-	_weaponCol->SetParent(_col->GetTransform());
-	_head->GetCollider()->GetTransform()->SetParent(_gravityCol->GetTransform());
+	_transform->SetParent(_col->GetTransform());
+	_heatBox->SetParent(_col->GetTransform());
+	_weaponCol->SetParent(_heatBox->GetTransform());
+	_head->GetCollider()->GetTransform()->SetParent(_col->GetTransform());
 
-	_col->SetPosition(Vector2(0, 15));
-	_gravityCol->SetPosition(Vector2(500, 0));
+	_heatBox->SetPosition(Vector2(0, 15));
+	_col->SetPosition(Vector2(500, 0));
 	_weaponCol->SetPosition(Vector2(-386, -108));
 	_head->GetCollider()->SetPosition(Vector2(-169.0f, -67.0f));
 #pragma endregion
@@ -95,26 +93,26 @@ void Boss::Update()
 	if (_isAlive == false)
 		return;
 
-	_monsterBuffer->Update();
-	HighGravity(_gravityCol);
+	Monster::Update();
+	HighGravity(_col);
 	_col->Update();
+	_heatBox->Update();
 	if (_isAttack == true || _isGrogyAttack == true)
 		_weaponCol->Update();
-	_gravityCol->Update();
 	_jumpLine->Update();
 	_landLine->Update();
-	_transform->Update();
+
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 	_head->Update();
 
-	_jumpLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _jumpLine->GetTransform()->GetWorldPosition().y));
-	_landLine->SetPosition(Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, _landLine->GetTransform()->GetWorldPosition().y));
+	_jumpLine->SetPosition(Vector2(_col->GetTransform()->GetWorldPosition().x, _jumpLine->GetTransform()->GetWorldPosition().y));
+	_landLine->SetPosition(Vector2(_col->GetTransform()->GetWorldPosition().x, _landLine->GetTransform()->GetWorldPosition().y));
 
 	if (_curstate == JUMPATTACK)
 		_jumpAttackTime += DELTA_TIME;
 
-	if (_landLine->IsCollision(_col))
+	if (_landLine->IsCollision(_heatBox))
 		_speed = 0.0f;
 	
 	if (_isWeaponActive == false)
@@ -135,7 +133,7 @@ void Boss::Update()
 	GrogyRollingFinish();
 	GrogyKnockBack();
 	Attack();
-	Hitted();
+	Hitted(_heatBox);
 	UnbeatableToIdle();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
@@ -211,18 +209,15 @@ void Boss::Render()
 	if (_isAlive == false)
 		return;
 
-	_transform->SetBuffer(0);
-	_monsterBuffer->SetPSBuffer(1);
-
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
-	_col->Render();
+	_heatBox->Render();
 	_head->Render();
 	if(_isAttack == true || _isGrogyAttack == true)
 		_weaponCol->Render();
 	_jumpLine->Render();
 	_landLine->Render();
-	_gravityCol->Render();
+	_col->Render();
 }
 
 void Boss::PostRender()
@@ -251,7 +246,7 @@ void Boss::PostRender()
 	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
 	ImGui::Text("_unbeatableTime : %f", _unbeatableTime);
 	ImGui::Text("cooltime : %f", _attackCoolTime);
-	ImGui::Text("_Setangle : %f", _col->GetTransform()->GetAngle());
+	ImGui::Text("_Setangle : %f", _heatBox->GetTransform()->GetAngle());
 }
 
 void Boss::Attack()
@@ -368,7 +363,7 @@ void Boss::Turn()
 
 	if (_isLeft == true)
 	{
-		if (_gravityCol->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x < 0)
+		if (_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x < 0)
 		{
 			_isTurn = true;
 			_actions[TURN]->Update();
@@ -384,7 +379,7 @@ void Boss::Turn()
 
 	if (_isLeft == false)
 	{
-		if (_gravityCol->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x > 0)
+		if (_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x > 0)
 		{
 			_isTurn = true;
 			_actions[TURN]->Update();
@@ -419,59 +414,59 @@ void Boss::JumpMove()
 
 	if (_isJumpAttack == true )
 	{
-		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		_speed = (Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 
 		if (_isLeft == true)
 			_dir.x = -1;
 		else
 			_dir.x = 1;
 
-		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
 	}
 
 	if (_isJumpAndLandAttack == false && _isJustJump == true)
 	{
-		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		_speed = (Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 
-		Vector2 direct = Vector2(_landPoint.x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
+		Vector2 direct = Vector2(_landPoint.x, 0.0f) - Vector2(_heatBox->GetTransform()->GetWorldPosition().x, 0.0f);
 
 		_dir = direct.NormalVector2();
 
-		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
 	}
 
 	if (_isJumpAndLandAttack == true && _isJustJump == true)
 	{
-		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		_speed = (Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 
-		Vector2 direct = Vector2(_landPoint.x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
+		Vector2 direct = Vector2(_landPoint.x, 0.0f) - Vector2(_heatBox->GetTransform()->GetWorldPosition().x, 0.0f);
 
 		_dir = direct.NormalVector2();
 
-		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 	}
 
 	if (_isJumpAndGrogyAttack == true)
 	{
-		_speed = (Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
+		_speed = (Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint.x, 0.0f)).Length();
 
-		if (_col->GetTransform()->GetWorldPosition().x < CENTER.x - 30.0f)
+		if (_heatBox->GetTransform()->GetWorldPosition().x < CENTER.x - 30.0f)
 			_dir.x = 1;
-		else if (_col->GetTransform()->GetWorldPosition().x > CENTER.x + 30.0f)
+		else if (_heatBox->GetTransform()->GetWorldPosition().x > CENTER.x + 30.0f)
 			_dir.x = -1;
 		else
 			_dir.x = 0;
 
-		_gravityCol->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
+		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
 	}
 }
 
 void Boss::Down()
 {
-	if (_jumpLine->Block(_gravityCol))
+	if (_jumpLine->Block(_col))
 	{
 		if (_jumpPower < 120.0f)
 			return;
@@ -544,7 +539,7 @@ void Boss::LandChange()
 	{
 		if (_curstate == JUMPATTACK)
 			return;
-		_col->GetTransform()->SetAngle(0.0f);
+		_heatBox->GetTransform()->SetAngle(0.0f);
 		_weaponMove._weaponAngle = 0.0f;
 		_weaponMove._speed = 0.0f;
 		_actions[JUMPATTACK]->Update();
@@ -574,7 +569,7 @@ void Boss::JumpToIdle()
 		return;
 	}
 
-	if (_isJump == true && _isJustJump == true && _gravityCol->IsCollision(_landLine) && _jumpPower < 0.0f)
+	if (_isJump == true && _isJustJump == true && _col->IsCollision(_landLine) && _jumpPower < 0.0f)
 	{
 		if (_curstate != JUMP)
 			return;
@@ -608,7 +603,7 @@ void Boss::WeaponcolMove()
 	if (_weaponMove._count >= 2 && _isGrogyAttack == false)
 		_isWeaponActive = false;
 
-	_col->GetTransform()->SetAngle(_weaponMove._weaponAngle);
+	_heatBox->GetTransform()->SetAngle(_weaponMove._weaponAngle);
 }
 
 void Boss::TurnEvent()
@@ -627,8 +622,8 @@ void Boss::AttackReadyEvent()
 
 	if (_chargeTime > 1.3f && _isGrogyAttack == false)
 	{
-		_col->GetTransform()->SetAngle(-2.29);
-		_col->Update();
+		_heatBox->GetTransform()->SetAngle(-2.29);
+		_heatBox->Update();
 		_weaponMove._count = 0;
 		_weaponMove._weaponAngle = -2.29f;
 		_weaponMove._speed = 0.145f;
@@ -640,8 +635,8 @@ void Boss::AttackReadyEvent()
 	}
 	else if (_chargeTime > 1.3f && _isGrogyAttack == true)
 	{
-		_col->GetTransform()->SetAngle(-2.29f);
-		_col->Update();
+		_heatBox->GetTransform()->SetAngle(-2.29f);
+		_heatBox->Update();
 		_weaponMove._count = 0;
 		_weaponMove._weaponAngle = -2.29;
 		_weaponMove._speed = 0.45f;
@@ -686,7 +681,7 @@ void Boss::AttackEvent()
 
 		else if (_isJustJump == true && _isJumpAndLandAttack == true)
 		{
-			float distance = abs(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x - _col->GetTransform()->GetWorldPosition().x);
+			float distance = abs(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x - _heatBox->GetTransform()->GetWorldPosition().x);
 
 			if (_isLeft == true)
 			{
@@ -930,7 +925,7 @@ void Boss::DirFix()
 {
 	if (_isJump == false && _dir.Length() != 0)
 	{
-		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_gravityCol->GetTransform()->GetWorldPosition().x, 0.0f);
+		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
 		_dir = _dir.NormalVector2();
 	}
 }
@@ -958,7 +953,7 @@ void Boss::LandAttackPattern()
 		return;
 
 	_isAttack = true;
-	_col->GetTransform()->SetAngle(-3.7f);
+	_heatBox->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);
 	SetAndResetState(ATTACKREADY);
@@ -1000,50 +995,13 @@ void Boss::AfterGroggyPattern()
 
 
 	_isGrogyAttack = true;
-	_col->GetTransform()->SetAngle(-3.7f);
+	_heatBox->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);
 	_actions[ATTACKREADY]->Reset();
 	SetAndPlayState(ATTACKREADY);
 }
 
-void Boss::Hitted()
-{
-	if (_col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
-		_targetPlayer.lock()->GetWeaponcol()->SetRed();
-
-	if (_targetPlayer.expired() == true)
-		return;
-	if (_isUnbeatable == true)
-		return;
-	if (_targetPlayer.lock()->GetWeaponActive() == false)
-		return;
-
-
-	if (_col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
-	{
-		EFFECT_LPLAY("Hitted", _col->GetTransform()->GetWorldPosition());
-		_monsterBuffer->_data.R = 0.5f;
-		_monsterBuffer->_data.G = 0.5f;
-		_monsterBuffer->_data.B = 0.5f;
-		_isUnbeatable = true;
-		_targetPlayer.lock()->SetWeaponActive(false);
-	}
-}
-
-void Boss::UnbeatableToIdle()
-{
-	if (_isUnbeatable == true)
-		_unbeatableTime += DELTA_TIME;
-
-	if (_unbeatableTime < 0.2f)
-		return;
-	_isUnbeatable = false;
-	_unbeatableTime = 0.0f;
-	_monsterBuffer->_data.R = 0.0f;
-	_monsterBuffer->_data.G = 0.0f;
-	_monsterBuffer->_data.B = 0.0f;
-}
 
 void Boss::GrogyKnockBack()
 {
@@ -1053,7 +1011,7 @@ void Boss::GrogyKnockBack()
 			_dir.x = 1;
 		else
 			_dir.x = -1;
-		if (_gravityCol->IsCollision(_landLine))
+		if (_col->IsCollision(_landLine))
 		{
 			_grogySpeed -= 1.0f;
 
@@ -1063,21 +1021,21 @@ void Boss::GrogyKnockBack()
 			if (_jumpPower < 0.0f)
 				_jumpPower = -1000.0f;
 		}
-		_gravityCol->GetTransform()->AddVector2(_dir * _grogySpeed * DELTA_TIME);
+		_col->GetTransform()->AddVector2(_dir * _grogySpeed * DELTA_TIME);
 	}
 }
 
 void Boss::SetLeft()
 {
 	_actions[_curstate]->Update();
-	_gravityCol->SetScale(Vector2(1, 1));
+	static_pointer_cast<RectCollider>(_col)->SetScale(Vector2(1, 1));
 	_isLeft = true;
 }
 
 void Boss::SetRight()
 {
 	_actions[_curstate]->Update();
-	_gravityCol->SetScale(Vector2(-1, 1));
+	static_pointer_cast<RectCollider>(_col)->SetScale(Vector2(-1, 1));
 	_isLeft = false;
 }
 

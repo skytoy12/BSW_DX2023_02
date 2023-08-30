@@ -30,7 +30,7 @@ void Environment::CreatePerspective()
     viewBuffer = new MatrixBuffer();
     projBuffer = new MatrixBuffer();
 
-    XMVECTOR   eyePos = XMVectorSet(+0.0f, +0.0f, -5.0f, +1.0f);
+    XMVECTOR   eyePos = XMVectorSet(+0.0f, +10.0f, -5.0f, +1.0f);
     XMVECTOR focusPos = XMVectorSet(+0.0f, +0.0f, +0.0f, +0.0f);
     XMVECTOR upVector = XMVectorSet(+0.0f, +1.0f, +0.0f, +0.0f);
 

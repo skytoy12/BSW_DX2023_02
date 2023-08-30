@@ -23,7 +23,7 @@ public :
 	void reverseScale() { _transform->SetScale({ -1, 1 }); }
 	void OriginScale() { _transform->SetScale({ 1, 1 }); }
 	float GetRadius() { return _radius; }
-	float GetWorldRadius() { return _radius * _transform->GetWorldScale().x; }
+	float GetWorldRadius() { return _radius * abs(_transform->GetWorldScale().x); }
 	
 	void SetIsActive(bool isActive) { _isActive = isActive; }
 	bool GetISActive() { return _isActive; }

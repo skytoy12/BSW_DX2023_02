@@ -1009,11 +1009,14 @@ void Boss::AfterGroggyPattern()
 
 void Boss::Hitted()
 {
+	if (_col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+		_targetPlayer.lock()->GetWeaponcol()->SetRed();
+
 	if (_targetPlayer.expired() == true)
 		return;
 	if (_isUnbeatable == true)
 		return;
-	if (_targetPlayer.lock()->GetIsAttack() == false)
+	if (_targetPlayer.lock()->GetWeaponActive() == false)
 		return;
 
 
@@ -1024,6 +1027,7 @@ void Boss::Hitted()
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
+		_targetPlayer.lock()->SetWeaponActive(false);
 	}
 }
 

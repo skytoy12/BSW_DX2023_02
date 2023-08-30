@@ -49,6 +49,7 @@ public :
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 	shared_ptr<RectCollider> GetWeaponcol() { return _weaponCol; }
 	bool GetIsAttack() { return _isAttack; }
+	bool GetWeaponActive() { return _isWeaponActive; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -56,6 +57,7 @@ public :
 	void SetIsJump(bool value) { _isJump = value; }
 	void SetState(State_Player type);
 	void SetAndResetState(State_Player type);
+	void SetWeaponActive(bool value) { _isWeaponActive = value; }
 #pragma endregion
 
 private :
@@ -72,6 +74,7 @@ private :
 	bool _isLeft = false;
 	bool _isJump = false;
 	bool _isAttack = false;
+	bool _isWeaponActive = false;
 	bool _isDash = false;
 	bool _isChargeAndFire = false;
 #pragma endregion

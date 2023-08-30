@@ -75,6 +75,11 @@ void Player::Update()
 	_bullet->Update();
 	_effect->Update();
 
+	if (_isWeaponActive == true)
+		_weaponCol->SetGreen();
+	else
+		_weaponCol->SetRed();
+
 	CoolTime();
 	if(_isDash == false)
 		Gravity();
@@ -248,6 +253,7 @@ void Player::Attack()
 	{
 		_weaponCol->Update();
 		_isAttack = true;
+		_isWeaponActive = true;
 		SetAndResetState(SLASH);
 		if(_isLeft == true)
 			EFFECT_RPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(-10, 0));

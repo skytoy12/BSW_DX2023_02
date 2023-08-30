@@ -48,6 +48,7 @@ public :
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 	shared_ptr<RectCollider> GetWeaponcol() { return _weaponCol; }
+	bool GetIsAttack() { return _isAttack; }
 #pragma endregion
 
 #pragma region Player Set Info

@@ -136,6 +136,7 @@ void Boss::Update()
 	GrogyKnockBack();
 	Attack();
 	Hitted();
+	UnbeatableToIdle();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
 
@@ -236,6 +237,7 @@ void Boss::PostRender()
 	//ImGui::Text("_isJump : %d", _isJump);
 	//ImGui::Text("_isJump : %d", _isJustJump);
 	//ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
+	ImGui::Text("_isUnbeatable : %d", _isUnbeatable);
 	//ImGui::Text("_isAttack : %d", _isAttack);
 	//ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
 	ImGui::Text("_isreturn : %d", _isreturn);
@@ -247,6 +249,7 @@ void Boss::PostRender()
 	ImGui::Text("Type : %d", _curAttackType);
 	ImGui::Text("count : %d", _weaponMove._count);
 	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
+	ImGui::Text("_unbeatableTime : %f", _unbeatableTime);
 	ImGui::Text("cooltime : %f", _attackCoolTime);
 	ImGui::Text("_Setangle : %f", _col->GetTransform()->GetAngle());
 }
@@ -1008,13 +1011,34 @@ void Boss::Hitted()
 {
 	if (_targetPlayer.expired() == true)
 		return;
+	if (_isUnbeatable == true)
+		return;
+	if (_targetPlayer.lock()->GetIsAttack() == false)
+		return;
+
+
 	if (_col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", _col->GetTransform()->GetWorldPosition());
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;
+		_isUnbeatable = true;
 	}
+}
+
+void Boss::UnbeatableToIdle()
+{
+	if (_isUnbeatable == true)
+		_unbeatableTime += DELTA_TIME;
+
+	if (_unbeatableTime < 0.2f)
+		return;
+	_isUnbeatable = false;
+	_unbeatableTime = 0.0f;
+	_monsterBuffer->_data.R = 0.0f;
+	_monsterBuffer->_data.G = 0.0f;
+	_monsterBuffer->_data.B = 0.0f;
 }
 
 void Boss::GrogyKnockBack()

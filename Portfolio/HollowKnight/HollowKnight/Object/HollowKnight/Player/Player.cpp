@@ -65,6 +65,10 @@ void Player::Update()
 	if (_isAlive == false)
 		return;
 
+	if (_isAttack == false)
+	{
+		_isWeaponActive = false;
+	}
 	_col->Update();
 	if (_isAttack == true)
 		_weaponCol->Update();
@@ -78,7 +82,7 @@ void Player::Update()
 	if (_isWeaponActive == true)
 		_weaponCol->SetGreen();
 	else
-		_weaponCol->SetRed();
+		_weaponCol->SetBlue();
 
 	CoolTime();
 	if(_isDash == false)
@@ -103,6 +107,8 @@ void Player::Render()
 
 void Player::PostRender()
 {
+	ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
+	ImGui::Text("_isAttack : %d", _isAttack);
 }
 
 #pragma endregion

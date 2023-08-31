@@ -55,6 +55,8 @@ void FlyMonster::Update()
 	RightLeft();
 	UnActive();
 	Active();
+	Hitted(_col);
+	UnbeatableToIdle();
 }
 
 void FlyMonster::Render()
@@ -66,7 +68,6 @@ void FlyMonster::Render()
 		return;
 
 	Monster::Render();
-	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 

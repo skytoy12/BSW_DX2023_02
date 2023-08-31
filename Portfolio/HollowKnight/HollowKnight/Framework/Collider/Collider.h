@@ -27,6 +27,7 @@ public :
 
 	void SetRed() { _colorBuffer->SetColor(RED); _colorBuffer->Update(); }
 	void SetGreen() { _colorBuffer->SetColor(GREEN); _colorBuffer->Update(); }
+	void SetBlue() { _colorBuffer->SetColor(BLUE); _colorBuffer->Update(); }
 
 
 

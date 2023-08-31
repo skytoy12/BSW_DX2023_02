@@ -38,7 +38,7 @@ void JumpMonster::Update()
 	Gravity(_col);
 	_col->Update();
 	_landPoint->Update();
-	_transform->Update();
+	//_transform->Update();
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 
@@ -61,7 +61,8 @@ void JumpMonster::Update()
 	JumpMove(); // 점프하는 동안 움직일 수 있게 해줌
 	DirFix(); // 타겟쪽으로 방향 전환 & 점프동안 방향고정
 	WalkChange(); // Active활성화 됬을 때 걷는 모션으로 변경 및 타겟으로 걸어가게 하기
-
+	Hitted(_col);
+	UnbeatableToIdle();
 }
 
 void JumpMonster::Render()
@@ -73,7 +74,6 @@ void JumpMonster::Render()
 		return;
 
 	Monster::Render();
-	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 

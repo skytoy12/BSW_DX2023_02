@@ -29,7 +29,7 @@ public :
 
 	void SetScale(Vector2 scale) { _transform->SetScale(scale); }
 
-	Vector2 GetWorldSize() { return { _size.x * _transform->GetWorldScale().x, _size.y * _transform->GetWorldScale().y }; }
+	Vector2 GetWorldSize() { return { _size.x * abs(_transform->GetWorldScale().x), _size.y * abs(_transform->GetWorldScale().y) }; }
 
 	AABBRectInfo GetAABBInfo();
 	OBBRectinfo GetOBBInfo();

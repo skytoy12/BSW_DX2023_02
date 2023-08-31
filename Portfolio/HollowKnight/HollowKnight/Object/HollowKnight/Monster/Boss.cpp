@@ -96,6 +96,7 @@ void Boss::Update()
 	Monster::Update();
 	HighGravity(_col);
 	_col->Update();
+	_transform->Update();
 	_heatBox->Update();
 	if (_isAttack == true || _isGrogyAttack == true)
 		_weaponCol->Update();
@@ -209,6 +210,7 @@ void Boss::Render()
 	if (_isAlive == false)
 		return;
 
+	Monster::Render();
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_heatBox->Render();

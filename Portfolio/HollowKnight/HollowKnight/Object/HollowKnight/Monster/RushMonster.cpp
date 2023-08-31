@@ -74,6 +74,8 @@ void RushMonster::Update()
 	{
 		Attack();
 	}
+	Hitted(_col);
+	UnbeatableToIdle();
 }
 
 void RushMonster::Render()
@@ -85,7 +87,6 @@ void RushMonster::Render()
 		return;
 
 	Monster::Render();
-	_transform->SetBuffer(0);
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();

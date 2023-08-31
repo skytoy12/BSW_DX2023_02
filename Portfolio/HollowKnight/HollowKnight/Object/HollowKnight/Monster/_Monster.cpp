@@ -18,6 +18,7 @@ void Monster::Update()
 	_transform->Update();
 	_monsterBuffer->Update();
 
+
 	EFFECT_R("Hitted", -30);
 }
 

@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="System\Camera.h" />
     <ClInclude Include="Object\Basic\Quad.h" />
     <ClInclude Include="Render\State\RasterizerState.h" />
     <ClInclude Include="Render\Mesh.h" />
@@ -179,6 +180,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="System\Camera.cpp" />
     <ClCompile Include="Object\Basic\Quad.cpp" />
     <ClCompile Include="Render\State\RasterizerState.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />

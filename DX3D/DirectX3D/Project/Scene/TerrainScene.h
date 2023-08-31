@@ -23,7 +23,9 @@ private:
 	UINT width  = 10;
 	UINT height = 10;
 
+	Texture* heightMap;
 
+	const float MAP_HEIGHT = 20.0f;
 };
 
 

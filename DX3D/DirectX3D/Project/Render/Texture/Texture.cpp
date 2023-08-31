@@ -53,3 +53,26 @@ void Texture::PSSetShaderResources(UINT slot)
 {
 	DC->PSSetShaderResources(slot, 1, &srv);
 }
+
+vector<Vector4> Texture::ReadPixels()
+{
+	unsigned char* pixels = image.GetPixels();
+
+	UINT size = image.GetPixelsSize() * 0.25f;
+
+	vector<Vector4> colors(size); // == color.resize(size);
+
+	float scale = 1.0f / 255.0f;
+
+	UINT count = 0;
+
+	for (Vector4& color : colors)
+	{
+		color.x = pixels[count++] * scale;
+		color.y = pixels[count++] * scale;
+		color.z = pixels[count++] * scale;
+		color.w = pixels[count++] * scale;
+	}
+
+	return colors;
+}

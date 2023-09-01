@@ -2,6 +2,7 @@
 #include "BossTestScene.h"
 #include "../../Object/HollowKnight/Player/Player.h"
 #include "../../Object/HollowKnight/Monster/Boss.h"
+#include "../../Object/HollowKnight/Monster/BossHead.h"
 
 BossTestScene::BossTestScene()
 {

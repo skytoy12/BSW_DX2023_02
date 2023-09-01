@@ -12,7 +12,7 @@ public :
 	virtual void PostRender() abstract;
 	virtual void Attack() abstract;
 
-	void Hitted(shared_ptr<Collider> col);
+	virtual void Hitted(shared_ptr<Collider> col);
 	void UnbeatableToIdle();
 	void SetRGB(float R, float G, float B);
 

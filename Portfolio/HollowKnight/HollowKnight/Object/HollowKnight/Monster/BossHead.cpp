@@ -1,5 +1,6 @@
 #include "framework.h"
 #include "BossHead.h"
+#include "Boss.h"
 
 using namespace tinyxml2;
 
@@ -7,6 +8,7 @@ BossHead::BossHead()
 {
 	_transform = make_shared<Transform>();
 	_col = make_shared<CircleCollider>(70);
+	_monsterBuffer = make_shared<MonsterBuffer>();
 
 	_transform->SetParent(_col->GetTransform());
 
@@ -28,10 +30,11 @@ void BossHead::Update()
 
 	_col->Update();
 	_transform->Update();
+	_monsterBuffer->Update();
 
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
-
+	hurt();
 }
 
 void BossHead::Render()
@@ -40,11 +43,36 @@ void BossHead::Render()
 		return;
 
 	_transform->SetBuffer(0);
+	_monsterBuffer->SetPSBuffer(1);
 
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 
 	_col->Render();
+}
+
+void BossHead::hurt()
+{
+	if (_col->IsCollision(_targetP.lock()->GetWeaponcol()))
+		_targetP.lock()->GetWeaponcol()->SetRed();
+
+	if (_targetP.expired() == true)
+		return;
+	if (_isUnbeatableH == true)
+		return;
+	if (_targetP.lock()->GetWeaponActive() == false)
+		return;
+
+
+	if (_col->IsCollision(_targetP.lock()->GetWeaponcol()))
+	{
+		EFFECT_LPLAY("Hitted", _col->GetTransform()->GetWorldPosition());
+		_monsterBuffer->_data.R = 0.5f;
+		_monsterBuffer->_data.G = 0.5f;
+		_monsterBuffer->_data.B = 0.5f;
+		_isUnbeatableH = true;
+		_targetP.lock()->SetWeaponActive(false);
+	}
 }
 
 void BossHead::CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event)
@@ -86,3 +114,5 @@ void BossHead::CreateAction(wstring srvPath, string xmmlPath, string actionName,
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }
+
+

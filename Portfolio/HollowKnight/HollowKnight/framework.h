@@ -102,6 +102,8 @@ using namespace Microsoft::WRL;
 #include "Object/Bagic/EffectManager.h"
 #include "Object/HollowKnight/Player/Player.h"
 #include "Object/HollowKnight/Monster/_Monster.h"
+#include "Object/HollowKnight/Monster/Boss.h"
+#include "Object/HollowKnight/Monster/BossHead.h"
 
 
 // UI

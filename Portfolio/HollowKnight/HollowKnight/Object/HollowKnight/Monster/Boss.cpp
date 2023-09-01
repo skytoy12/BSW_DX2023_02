@@ -1,6 +1,6 @@
 #include "framework.h"
-#include "Boss.h"
 #include "BossHead.h"
+#include "Boss.h"
 
 Boss::Boss()
 {
@@ -136,6 +136,7 @@ void Boss::Update()
 	Attack();
 	Hitted(_heatBox);
 	UnbeatableToIdle();
+	RealHitted();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
 
@@ -236,8 +237,9 @@ void Boss::PostRender()
 	//ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
 	ImGui::Text("_isUnbeatable : %d", _isUnbeatable);
 	//ImGui::Text("_isAttack : %d", _isAttack);
-	//ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
+	ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
 	ImGui::Text("_isreturn : %d", _isreturn);
+	ImGui::Text("_hitCount : %d", _hitCount);
 	//ImGui::Text("_isActive : %d", _isWeaponActive);
 	//ImGui::Text("_isGrogy : %d", _isGrogy);
 	ImGui::Text("_isJAL : %d", _isJumpAndLandAttack);
@@ -331,6 +333,7 @@ void Boss::SetAndResetState(State_Boss type)
 	_actions[_oldstate]->Reset();
 }
 
+
 void Boss::SetAndPlayState(State_Boss type)
 {
 	_oldstate = _curstate;
@@ -346,6 +349,39 @@ void Boss::TotalUpdate(State_Boss type)
 	_transform->Update();
 	_actions[type]->Update();
 	_sprites[type]->Update();
+}
+
+void Boss::RealHitted()
+{
+	if (_curstate != GROGYHEAD)
+		return;
+	if (_targetPlayer.lock()->GetWeaponActive() == false)
+		return;
+	if (_headHitCount >= 10)
+		return;
+	if (_isGrogyAttack == true)
+		return;
+
+	_grogyTime += DELTA_TIME;
+
+	if (_head->GetCollider()->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+	{
+		EFFECT_LPLAY("Hitted", _head->GetCollider()->GetTransform()->GetWorldPosition());
+		_targetPlayer.lock()->SetWeaponActive(false);
+		_head->hurt();
+		_headHitCount += 1;
+	}
+
+	if (_headHitCount >= 10 || _grogyTime > 10.0f)
+	{
+		_isGrogy = false;
+		_grogyTime = 0.0f;
+		_isJumpAndGrogyAttack = true;
+		_head->_isActive = false;
+		_actions[JUMPREADY]->Play();
+		JustJumpPattern();
+	}
+
 }
 
 void Boss::Turn()
@@ -716,7 +752,7 @@ void Boss::AttackEvent()
 			_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition();
 		}
 
-		else if (_isJumpAndGrogyAttack == true)
+		else if (_isJumpAndGrogyAttack == true && _isJustJump == true)
 		{
 			if (_isLeft == true)
 				_landPoint = CENTER;
@@ -794,6 +830,7 @@ void Boss::AttackEvent()
 			_isJumpAndGrogyAttack = false;
 			_weaponMove._speed = 0.0f;
 			_weaponMove._count = 0;
+			_attackCoolTime = 0.0f;
 			TotalUpdate(IDLE);
 			SetAndResetState(IDLE);
 			return;
@@ -955,7 +992,11 @@ void Boss::Hitted(shared_ptr<Collider> col)
 		return;
 	if (_isGrogy == true)
 		return;
+	if (_isGrogyAttack == true)
+		return;
 	if (_targetPlayer.lock()->GetWeaponActive() == false)
+		return;
+	if (_hitCount >= 6)
 		return;
 
 
@@ -967,10 +1008,10 @@ void Boss::Hitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
 		_targetPlayer.lock()->SetWeaponActive(false);
+		_armor -= 1;
+		_hitCount += 1;
 	}
 	
-	_armor -= 1;
-	_hitCount += 1;
 
 	if (_hitCount >= 6)
 		Grogy();
@@ -1027,6 +1068,8 @@ void Boss::AfterGroggyPattern()
 
 
 	_isGrogyAttack = true;
+	_hitCount = 0;
+	_headHitCount = 0;
 	_heatBox->GetTransform()->SetAngle(-3.7f);
 	_weaponMove._weaponAngle = -3.7f;
 	TotalUpdate(ATTACKREADY);

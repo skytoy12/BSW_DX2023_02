@@ -1,4 +1,6 @@
 #pragma once
+class BossHead;
+
 class Boss : public Monster
 {
 public :
@@ -38,6 +40,7 @@ public :
 	virtual void Attack() override;
 
 	virtual void Hitted(shared_ptr<Collider> col) override;
+	void RealHitted();
 
 	float Angle(float angle) { return angle * (PI / 180); }
 
@@ -88,7 +91,7 @@ public :
 	void Grogy();
 	void GrogyRollingFinish();
 
-	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
+	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; };
 
 	shared_ptr<Collider> GetCollider() { return _heatBox; }
 	shared_ptr<Collider> GetGravityCollider() { return _col; }
@@ -118,8 +121,10 @@ private :
 	float _rollingTime = 0.0f; // 보스가 그로기상태가 될 때 얼마나 구를지를 조정하기 위한 타이머
 	float _GrogyStopTime = 0.0f; // 보스가 누워있는 자세에서 머리가 빠져나오는 모션으로 바뀌기 까지의 시간을 조절하기 위한 타이머
 	float _grogySpeed = 0.0f; // 보스 그로기시 굴러갈때 속도
+	float _grogyTime = 0.0f; // 보스 그로기 지속 시간
 
 	int _hitCount = 0;
+	int _headHitCount = 0;
 	int _armor = 30;
 
 	WeaponMove _weaponMove = { -2.29f, true, 0 , 0.0f};

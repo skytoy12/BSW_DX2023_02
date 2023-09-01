@@ -29,12 +29,17 @@ void BossHead::Update()
 	if (_isActive == false)
 		return;
 
+	if (_isUnbeatableH == false)
+		SetRGB(0.0f, 0.0f, 0.0f);
+
 	_col->Update();
 	_transform->Update();
 	_monsterBuffer->Update();
 
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
+
+	UnbeatableToIdleH();
 
 }
 
@@ -92,6 +97,27 @@ void BossHead::CreateAction(wstring srvPath, string xmmlPath, string actionName,
 	_sprites.push_back(sprite);
 }
 
+void BossHead::SetRGB(float R, float G, float B)
+{
+	_monsterBuffer->_data.R = R;
+	_monsterBuffer->_data.G = G;
+	_monsterBuffer->_data.B = B;
+}
+
 void BossHead::hurt()
 {
+	_hp -= 1;
+	SetRGB(0.5f, 0.5f, 0.5f);
+}
+
+void BossHead::UnbeatableToIdleH()
+{
+	if (_isUnbeatableH == true)
+		_unbeatableTimeH += DELTA_TIME;
+
+	if (_unbeatableTimeH < 0.2f)
+		return;
+	_isUnbeatableH = false;
+	_unbeatableTimeH = 0.0f;
+	SetRGB(0.0f, 0.0f, 0.0f);
 }

@@ -134,7 +134,7 @@ void Boss::Update()
 	GrogyRollingFinish();
 	GrogyKnockBack();
 	Attack();
-	Boss::Hitted(_heatBox);
+	Hitted(_heatBox);
 	UnbeatableToIdle();
 	if (_isWeaponMove == true)
 		WeaponcolMove();
@@ -346,38 +346,6 @@ void Boss::TotalUpdate(State_Boss type)
 	_transform->Update();
 	_actions[type]->Update();
 	_sprites[type]->Update();
-}
-
-void Boss::Hitted(shared_ptr<Collider> col)
-{
-	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
-		_targetPlayer.lock()->GetWeaponcol()->SetRed();
-
-	if (_targetPlayer.expired() == true)
-		return;
-	if (_isUnbeatable == true)
-		return;
-	if (_targetPlayer.lock()->GetWeaponActive() == false)
-		return;
-	if (_isGrogy == true)
-		return;
-
-
-	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
-	{
-		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
-		_monsterBuffer->_data.R = 0.5f;
-		_monsterBuffer->_data.G = 0.5f;
-		_monsterBuffer->_data.B = 0.5f;
-		_isUnbeatable = true;
-		_targetPlayer.lock()->SetWeaponActive(false);
-	}
-
-	_armor -= 1;
-	_hitCount += 1;
-
-	if (_hitCount == 5)
-		Grogy();
 }
 
 void Boss::Turn()
@@ -976,7 +944,37 @@ void Boss::AllStop()
 	_isWeaponActive = false;
 }
 
+void Boss::Hitted(shared_ptr<Collider> col)
+{
+	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+		_targetPlayer.lock()->GetWeaponcol()->SetRed();
 
+	if (_targetPlayer.expired() == true)
+		return;
+	if (_isUnbeatable == true)
+		return;
+	if (_isGrogy == true)
+		return;
+	if (_targetPlayer.lock()->GetWeaponActive() == false)
+		return;
+
+
+	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+	{
+		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		_monsterBuffer->_data.R = 0.5f;
+		_monsterBuffer->_data.G = 0.5f;
+		_monsterBuffer->_data.B = 0.5f;
+		_isUnbeatable = true;
+		_targetPlayer.lock()->SetWeaponActive(false);
+	}
+	
+	_armor -= 1;
+	_hitCount += 1;
+
+	if (_hitCount >= 6)
+		Grogy();
+}
 
 void Boss::LandAttackPattern()
 {

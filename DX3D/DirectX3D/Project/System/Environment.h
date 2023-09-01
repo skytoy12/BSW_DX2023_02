@@ -10,10 +10,16 @@ private:
 	void CreatePerspective();
 
 public :
+	void SetEnvironment();
+
+	void PostRender();
 
 private:
 	MatrixBuffer* projBuffer;
 
+	LightBuffer* lightBuffer;
+
+	Vector3 lightDirection = V_DOWN;
 };
 
 

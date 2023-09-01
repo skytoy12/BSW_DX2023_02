@@ -37,6 +37,8 @@ public :
 	virtual void PostRender() override;
 	virtual void Attack() override;
 
+	virtual void Hitted(shared_ptr<Collider> col) override;
+
 	float Angle(float angle) { return angle * (PI / 180); }
 
 	void SetState(State_Boss type);
@@ -44,8 +46,6 @@ public :
 	void SetAndPlayState(State_Boss type);
 
 	void TotalUpdate(State_Boss type);
-
-	virtual void Hitted(shared_ptr<Collider> col) override;
 
 	void ShakeEvent();
 
@@ -88,12 +88,11 @@ public :
 	void Grogy();
 	void GrogyRollingFinish();
 
-	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; _head->BossHead::SetPlayerH(target); }
+	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 
 	shared_ptr<Collider> GetCollider() { return _heatBox; }
 	shared_ptr<Collider> GetGravityCollider() { return _col; }
-
-	shared_ptr<BossHead> GetHead() { return _head; }
+	shared_ptr<class BossHead> GetHead() { return _head; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
@@ -105,7 +104,7 @@ private :
 	shared_ptr<Collider> _jumpLine;
 	shared_ptr<Collider> _landLine;
 
-	shared_ptr<BossHead> _head;
+	shared_ptr<class BossHead> _head;
 
 	State_Boss _curstate = IDLE;
 	State_Boss _oldstate = IDLE;
@@ -120,8 +119,8 @@ private :
 	float _GrogyStopTime = 0.0f; // 보스가 누워있는 자세에서 머리가 빠져나오는 모션으로 바뀌기 까지의 시간을 조절하기 위한 타이머
 	float _grogySpeed = 0.0f; // 보스 그로기시 굴러갈때 속도
 
-	int _armor = 30;
 	int _hitCount = 0;
+	int _armor = 30;
 
 	WeaponMove _weaponMove = { -2.29f, true, 0 , 0.0f};
 

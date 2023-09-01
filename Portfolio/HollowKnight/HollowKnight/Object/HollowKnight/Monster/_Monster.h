@@ -13,6 +13,7 @@ public :
 	virtual void Attack() abstract;
 
 	virtual void Hitted(shared_ptr<Collider> col);
+
 	void UnbeatableToIdle();
 	void SetRGB(float R, float G, float B);
 

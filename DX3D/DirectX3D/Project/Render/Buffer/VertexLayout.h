@@ -40,9 +40,19 @@ struct VertexTexture
     VertexTexture(Vector3 pos, Vector2 uv)
         :pos(pos), uv(uv)
     {
-
     }
 
     Vector3 pos = {};
-    Vector2 uv  = {};
+    Vector2 uv = {};
+};
+
+struct VertexTextureNormal
+{
+    VertexTextureNormal()
+    {
+    }
+
+    Vector3 pos    = {};
+    Vector2 uv     = {};
+    Vector3 normal = {};
 };

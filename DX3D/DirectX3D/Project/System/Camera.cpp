@@ -6,6 +6,9 @@ Camera::Camera()
 	viewBuffer = new MatrixBuffer();
 	
 	transform = new Transform();
+
+	transform->translation = { 120.0f, 100.0f, -20.0f };
+	transform->rotation.x = 0.6f;
 }
 
 Camera::~Camera()
@@ -21,6 +24,11 @@ void Camera::Update()
 
 void Camera::PostRender()
 {
+	Vector3 pos = transform->translation;
+	Vector3 rot = transform->rotation;
+
+	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
+	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
 }
 
 void Camera::FreeMode()

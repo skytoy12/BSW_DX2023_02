@@ -85,6 +85,9 @@ typedef XMFLOAT2 Vector2;
 #include "Object/Basic/Cube.h"
 #include "Object/Basic/Quad.h"
 #include "Object/Basic/TextureCube.h"
+#include "Object/Basic/Robot.h"
+#include "Object/Basic/Circle.h"
+#include "Object/Basic/Sphere.h"
 
 #include "Object/LandScape/Terrain.h"
 
@@ -93,6 +96,7 @@ typedef XMFLOAT2 Vector2;
 #include "Scene/TextureScene.h"
 #include "Scene/RobotScene.h"
 #include "Scene/TerrainScene.h"
+#include "Scene/SphereScene.h"
 
 #include "MainGame.h"
 

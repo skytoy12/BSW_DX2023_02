@@ -1,31 +1,20 @@
-cbuffer World : register(b0)
-{
-    matrix world;
-};
+#include "Header.hlsli"
 
-cbuffer View : register(b1)
-{
-    matrix view;
-};
-
-cbuffer Proj : register(b2)
-{
-    matrix proj;
-};
-
-struct VertexInput
+struct VertexColorNormal
 {
     float4 pos   : POSITION;
     float4 color : COLOR;
+    float3 normal : NORMAL;
 };
 
 struct VertexOutput
 {
     float4 pos : SV_POSITION;
     float4 color : COLOR;
+    float diffuse : DIFFUSE;
 };
 
-VertexOutput main( VertexInput input )
+VertexOutput main(VertexColorNormal input)
 {
     VertexOutput output;
     
@@ -34,5 +23,10 @@ VertexOutput main( VertexInput input )
     output.pos = mul(output.pos, proj);
     
     output.color = input.color;
+    
+    float3 L = normalize(-lightDirection);
+    float3 N = normalize(mul(input.normal, (float3x3) world));
+    
+    output.diffuse = dot(N, L); // N dot L
 	return output;
 }

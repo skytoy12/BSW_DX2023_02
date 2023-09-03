@@ -1,17 +1,15 @@
 #pragma once
-class RobotScene : public Scene
+class SphereScene : public Scene
 {
-public:
-	RobotScene();
-	~RobotScene();
+public :
+	SphereScene();
+	~SphereScene();
 
 	void Update() override;
 	void PreRender() override;
 	void Render() override;
 	void PostRender() override;
-
-
-private:
-	Robot* robot;
+private :
+	Sphere* sphere;
 };
 

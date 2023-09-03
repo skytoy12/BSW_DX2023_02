@@ -9,6 +9,7 @@ public:
     void Render();
 
     void CreateMesh(Vector4 color);
+    void CreateNormal();
 
 
 private:
@@ -19,11 +20,9 @@ private:
     MatrixBuffer* worldBuffer;
 
 
-    vector<VertexColor> vertices;
+    vector<VertexColorNormal> vertices;
     vector<UINT>         indices;
 
     static int count;
-
-
 };
 

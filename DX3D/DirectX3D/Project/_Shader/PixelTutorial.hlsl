@@ -3,9 +3,10 @@ struct VertexOutput
 {
     float4 pos : SV_POSITION;
     float4 color : COLOR;
+    float diffuse : DIFFUSE;
 };
 
 float4 main(VertexOutput input) : SV_TARGET
 {
-	return input.color;
+    return input.color * input.diffuse;
 }

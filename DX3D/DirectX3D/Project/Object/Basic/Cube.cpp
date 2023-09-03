@@ -5,10 +5,12 @@ Cube::Cube(Vector4 color)
 {
     material = new Material(L"Tutorial");
 
+    worldBuffer = new MatrixBuffer();
 
     CreateMesh(color);
+    CreateNormal();
 
-    worldBuffer = new MatrixBuffer();
+    mesh = new Mesh(vertices, indices);
 
     count++;
 
@@ -43,15 +45,15 @@ void Cube::CreateMesh(Vector4 color)
 {
     vertices =
     {
-        VertexColor({ -1.0f, +1.0f, -1.0f }, color),
-        VertexColor({ +1.0f, +1.0f, -1.0f }, color),
-        VertexColor({ -1.0f, -1.0f, -1.0f }, color),
-        VertexColor({ +1.0f, -1.0f, -1.0f }, color),
+        VertexColorNormal({ -1.0f, +1.0f, -1.0f }, color),
+        VertexColorNormal({ +1.0f, +1.0f, -1.0f }, color),
+        VertexColorNormal({ -1.0f, -1.0f, -1.0f }, color),
+        VertexColorNormal({ +1.0f, -1.0f, -1.0f }, color),
 
-        VertexColor({ -1.0f, +1.0f, +1.0f }, color),
-        VertexColor({ +1.0f, +1.0f, +1.0f }, color),
-        VertexColor({ -1.0f, -1.0f, +1.0f }, color),
-        VertexColor({ +1.0f, -1.0f, +1.0f }, color),
+        VertexColorNormal({ -1.0f, +1.0f, +1.0f }, color),
+        VertexColorNormal({ +1.0f, +1.0f, +1.0f }, color),
+        VertexColorNormal({ -1.0f, -1.0f, +1.0f }, color),
+        VertexColorNormal({ +1.0f, -1.0f, +1.0f }, color),
     };
 
     //VertexBuffer
@@ -85,7 +87,30 @@ void Cube::CreateMesh(Vector4 color)
         6, 3, 7
     };
 
-    mesh = new Mesh(vertices, indices);
+
+}
+
+void Cube::CreateNormal()
+{
+    for (UINT i = 0; i < indices.size() / 3; i++)
+    {
+        UINT index0 = indices[i * 3 + 0];
+        UINT index1 = indices[i * 3 + 1];
+        UINT index2 = indices[i * 3 + 2];
+
+        Vector3 p0 = vertices[index0].pos;
+        Vector3 p1 = vertices[index1].pos;
+        Vector3 p2 = vertices[index2].pos;
+
+        Vector3 v01 = p1 - p0;
+        Vector3 v02 = p2 - p0;
+
+        Vector3 normal = Vector3::Cross(v01, v02).GetNormalized();
+
+        vertices[index0].normal += normal;
+        vertices[index1].normal += normal;
+        vertices[index2].normal += normal;
+    }
 }
 
 

@@ -4,6 +4,7 @@
 TerrainScene::TerrainScene()
 {
 	terrain = new Terrain(L"Landscape/Dirt.png", L"HeightMap/HeightMap.png");
+
 }
 
 TerrainScene::~TerrainScene()

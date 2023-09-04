@@ -543,6 +543,24 @@
     <Image Include="Resource\Effect\HitEffect.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Jump\JumpMAirDeath.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JumpMDeath.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Jump\JumpMEnd.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushMAirDeath.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushMDeath.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Rush\RushMEnd.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -628,5 +646,11 @@
     <Xml Include="Resource\Monster\Boss\GrogyRolling.xml" />
     <Xml Include="Resource\Monster\Boss\GrogyStart.xml" />
     <Xml Include="Resource\Effect\HitEffect.xml" />
+    <Xml Include="Resource\Monster\Jump\JumpMAirDeath.xml" />
+    <Xml Include="Resource\Monster\Jump\JumpMDeath.xml" />
+    <Xml Include="Resource\Monster\Jump\JumpMEnd.xml" />
+    <Xml Include="Resource\Monster\Rush\RushMAirDeath.xml" />
+    <Xml Include="Resource\Monster\Rush\RushMDeath.xml" />
+    <Xml Include="Resource\Monster\Rush\RushMEnd.xml" />
   </ItemGroup>
 </Project>

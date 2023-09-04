@@ -1,32 +1,39 @@
-#include "Header.hlsli"
-
-struct VertexColorNormal
+cbuffer World : register(b0)
 {
-    float4 pos   : POSITION;
-    float4 color : COLOR;
-    float3 normal : NORMAL;
+    matrix world;
 };
 
-struct VertexOutput
+cbuffer View : register(b1)
+{
+    matrix view;
+};
+
+cbuffer Projection : register(b2)
+{
+    matrix projection;
+};
+
+struct VertexInput
+{
+    float4 pos : POSITION;
+    float4 color : COLOR;
+};
+
+struct VertexOutPut
 {
     float4 pos : SV_POSITION;
     float4 color : COLOR;
-    float diffuse : DIFFUSE;
 };
 
-VertexOutput main(VertexColorNormal input)
+VertexOutPut main(VertexInput input)
 {
-    VertexOutput output;
+    VertexOutPut output;
     
     output.pos = mul(input.pos, world);
     output.pos = mul(output.pos, view);
-    output.pos = mul(output.pos, proj);
+    output.pos = mul(output.pos, projection);
     
     output.color = input.color;
     
-    float3 L = normalize(-lightDirection);
-    float3 N = normalize(mul(input.normal, (float3x3) world));
-    
-    output.diffuse = dot(N, L); // N dot L
-	return output;
+    return output;
 }

@@ -3,7 +3,7 @@
 int Cube::count = 0;
 Cube::Cube(Vector4 color)
 {
-    material = new Material(L"Tutorial");
+    material = new Material(L"Color");
 
     worldBuffer = new MatrixBuffer();
 
@@ -45,15 +45,15 @@ void Cube::CreateMesh(Vector4 color)
 {
     vertices =
     {
-        VertexColorNormal({ -1.0f, +1.0f, -1.0f }, color),
-        VertexColorNormal({ +1.0f, +1.0f, -1.0f }, color),
-        VertexColorNormal({ -1.0f, -1.0f, -1.0f }, color),
-        VertexColorNormal({ +1.0f, -1.0f, -1.0f }, color),
+        VertexType({ -0.5f, +0.5f, -0.5f }, color, Vector3()),
+        VertexType({ +0.5f, +0.5f, -0.5f }, color, Vector3()),
+        VertexType({ -0.5f, -0.5f, -0.5f }, color, Vector3()),
+        VertexType({ +0.5f, -0.5f, -0.5f }, color, Vector3()),
 
-        VertexColorNormal({ -1.0f, +1.0f, +1.0f }, color),
-        VertexColorNormal({ +1.0f, +1.0f, +1.0f }, color),
-        VertexColorNormal({ -1.0f, -1.0f, +1.0f }, color),
-        VertexColorNormal({ +1.0f, -1.0f, +1.0f }, color),
+        VertexType({ -0.5f, +0.5f, +0.5f }, color, Vector3()),
+        VertexType({ +0.5f, +0.5f, +0.5f }, color, Vector3()),
+        VertexType({ -0.5f, -0.5f, +0.5f }, color, Vector3()),
+        VertexType({ +0.5f, -0.5f, +0.5f }, color, Vector3()),
     };
 
     //VertexBuffer

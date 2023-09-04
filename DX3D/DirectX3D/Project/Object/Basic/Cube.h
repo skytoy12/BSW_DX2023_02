@@ -1,6 +1,8 @@
 #pragma once
 class Cube : public Transform
 {
+    typedef VertexColorNormal VertexType;
+
 public:
 	Cube(Vector4 color);
 	~Cube();
@@ -20,7 +22,7 @@ private:
     MatrixBuffer* worldBuffer;
 
 
-    vector<VertexColorNormal> vertices;
+    vector<VertexType> vertices;
     vector<UINT>         indices;
 
     static int count;

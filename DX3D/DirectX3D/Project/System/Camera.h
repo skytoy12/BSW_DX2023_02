@@ -9,6 +9,8 @@ public:
 	void Update();
 
 	void PostRender();
+
+	Transform* GetTransform() { return transform; }
 private:
 	void   FreeMode();
 	void TargetMode();

@@ -2,12 +2,12 @@
 
 struct VertexOutput
 {
-    float4 pos    : SV_POSITION;
-    float2 uv     : UV;
+    float4 pos : SV_POSITION;
+    float4 color : COLOR;
     float3 normal : NORMAL;
 };
 
-VertexOutput main(VertexTextureNormal input)
+VertexOutput main(VertexColorNormal input)
 {
     VertexOutput output;
     
@@ -15,9 +15,9 @@ VertexOutput main(VertexTextureNormal input)
     output.pos = mul(output.pos, view);
     output.pos = mul(output.pos, proj);
     
-    output.uv = input.uv;
+    output.color = input.color;
     
-    output.normal = normalize(mul(input.normal, (float3x3)world));
+    output.normal = normalize(mul(input.normal, (float3x3) world));
     
     return output;
 }

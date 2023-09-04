@@ -31,7 +31,7 @@ void Environment::CreatePerspective()
 {
     projBuffer = new MatrixBuffer();
 
-    XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV2, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
+    XMMATRIX projection = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
 
     projBuffer->SetData(projection);
 
@@ -40,7 +40,7 @@ void Environment::CreatePerspective()
 
 void Environment::SetEnvironment()
 {
-    lightBuffer->SetVSBuffer(3);
+    lightBuffer->SetPSBuffer(3);
     lightBuffer->SetData(lightDirection);
 }
 

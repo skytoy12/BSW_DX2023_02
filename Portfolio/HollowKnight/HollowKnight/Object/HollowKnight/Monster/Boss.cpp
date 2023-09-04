@@ -236,6 +236,7 @@ void Boss::PostRender()
 	//ImGui::Text("_isJump : %d", _isJustJump);
 	//ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
 	ImGui::Text("_isUnbeatable : %d", _isUnbeatable);
+	ImGui::Text("headPos : %.1f", _head->GetPos().y);
 	//ImGui::Text("_isAttack : %d", _isAttack);
 	ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
 	ImGui::Text("_isreturn : %d", _isreturn);
@@ -377,6 +378,9 @@ void Boss::RealHitted()
 		_isGrogy = false;
 		_grogyTime = 0.0f;
 		_isJumpAndGrogyAttack = true;
+		_head->SetIDLE();
+		_head->GetCollider()->SetPosition(Vector2(-169.0f, -67.0f));
+		_head->SetRGB(0.0f, 0.0f, 0.0f);
 		_head->_isActive = false;
 		_actions[JUMPREADY]->Play();
 		JustJumpPattern();
@@ -1065,7 +1069,6 @@ void Boss::AfterGroggyPattern()
 
 	if (_isreturn == 1)
 		return;
-
 
 	_isGrogyAttack = true;
 	_hitCount = 0;

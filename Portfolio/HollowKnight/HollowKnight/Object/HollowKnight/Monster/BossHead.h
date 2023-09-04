@@ -22,8 +22,11 @@ public:
 
 	int GetHP() { return _hp; }
 
+	Vector2 GetPos() { return _col->GetPos(); }
+
 	void UnbeatableToIdleH();
 
+	void SetIDLE() { _curstate = IDLE; }
 
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<CircleCollider> GetCollider() { return _col; }

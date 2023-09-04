@@ -109,6 +109,10 @@ void Player::PostRender()
 {
 	ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
 	ImGui::Text("_isAttack : %d", _isAttack);
+
+	ImGui::Text("world.x : %.1f, world.y : %.1f", _col->GetTransform()->GetWorldPosition().x, _col->GetTransform()->GetWorldPosition().y);
+	ImGui::Text("Camera.x : %.1f, Camera.y : %.1f", CAMERA->GetOringin().x, CAMERA->GetOringin().y);
+	ImGui::Text("Random.x : %.1f, Random.y : %.1f", CAMERA->GetRandomPos().x, CAMERA->GetRandomPos().y);
 }
 
 #pragma endregion

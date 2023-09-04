@@ -45,4 +45,5 @@ void BossTestScene::PostRender()
 {
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
 	_boss->PostRender();
+	_player->PostRender();
 }

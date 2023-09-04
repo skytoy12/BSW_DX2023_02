@@ -48,6 +48,8 @@
 #define RECT(c) static_pointer_cast<RectCollider>(c)
 #define CIRCLE(c) static_pointer_cast<CircleCollider>(c)
 
+#define WORLD GetTransform()->GetWorldPosition()
+
 #define EFFECT_LPLAY(n,p) EffectManager::GetInstance()->LeftPlay(n,p)
 #define EFFECT_RPLAY(n,p) EffectManager::GetInstance()->RightPlay(n,p)
 

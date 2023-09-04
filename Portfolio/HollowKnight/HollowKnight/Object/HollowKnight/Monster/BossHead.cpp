@@ -15,7 +15,7 @@ BossHead::BossHead()
 	Vector2((float)(117 * 1.3), (float)(118 * 1.3)), Action::Type::LOOP);
 
 	CreateAction(L"Resource/Monster/Boss/BossHeadHit.png", "Resource/Monster/Boss/BossHeadHit.xml", "BossHeadHit",
-	Vector2((float)(120 * 1.3), (float)(138 * 1.3)), Action::Type::LOOP);
+	Vector2((float)(120 * 1.4), (float)(138 * 1.4)), Action::Type::LOOP);
 
 	_monsterBuffer->_data.state = 1;
 }
@@ -106,8 +106,13 @@ void BossHead::SetRGB(float R, float G, float B)
 
 void BossHead::hurt()
 {
+	if (_isUnbeatableH == true)
+		return;
 	_hp -= 1;
-	SetRGB(0.5f, 0.5f, 0.5f);
+	_curstate = HIT;
+	SetRGB(0.2f, 0.2f, 0.2f);
+	_col->SetPosition(Vector2(-169.0f, -47.0f));
+	_isUnbeatableH = true;
 }
 
 void BossHead::UnbeatableToIdleH()
@@ -117,6 +122,8 @@ void BossHead::UnbeatableToIdleH()
 
 	if (_unbeatableTimeH < 0.2f)
 		return;
+	_curstate = IDLE;
+	_col->SetPosition(Vector2(-169.0f, -67.0f));
 	_isUnbeatableH = false;
 	_unbeatableTimeH = 0.0f;
 	SetRGB(0.0f, 0.0f, 0.0f);

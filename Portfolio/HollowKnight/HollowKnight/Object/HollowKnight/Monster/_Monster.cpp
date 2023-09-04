@@ -10,7 +10,6 @@ Monster::Monster()
 	_monsterBuffer->_data.state = 1;
 	EffectManager::GetInstance()->AddEffect("Hitted", L"Resource/Effect/HitEffect.png", Vector2(1, 3), Vector2(699, 140));
 	EFFECT_S("Hitted", Vector2(1.5f, 1.5f));
-
 }
 
 void Monster::Update()
@@ -42,7 +41,6 @@ void Monster::Hitted(shared_ptr<Collider> col)
 	if (_targetPlayer.lock()->GetWeaponActive() == false)
 		return;
 
-
 	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
@@ -51,6 +49,12 @@ void Monster::Hitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
 		_targetPlayer.lock()->SetWeaponActive(false);
+		_hp -= 1;
+		_jumpPower = 300.0f;
+		if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
+			_dir = Vector2(1, 0);
+		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
+			_dir = Vector2(-1, 0);
 	}
 }
 

@@ -87,7 +87,7 @@ void Camera::FollowMode()
 	if (targetPos.y > _rightTop.y - WIN_HEIGHT * 0.5f)
 		targetPos.y = _rightTop.y - WIN_HEIGHT * 0.5f;
 
-	Vector2 lerp = LERP( _view->GetPos(), -targetPos, DELTA_TIME * 5.0f);
+	Vector2 lerp = LERP( _view->GetWorldPosition(), -targetPos, DELTA_TIME * 5.0f);
 	_view->SetPosition(lerp);
 }
 
@@ -123,6 +123,10 @@ void Camera::Shake()
 	if (_target.expired() == false)
 	{
 		Vector2 targetPos = (_target.lock()->GetWorldPosition() - _offSet);
+
+		targetPos.x *= _view->GetScale().x;
+		targetPos.y *= _view->GetScale().y;
+
 		if (targetPos.x < _leftBottom.x + WIN_WIDTH * 0.5f)
 			targetPos.x = _leftBottom.x + WIN_WIDTH * 0.5f;
 
@@ -134,13 +138,16 @@ void Camera::Shake()
 
 		if (targetPos.y > _rightTop.y - WIN_HEIGHT * 0.5f)
 			targetPos.y = _rightTop.y - WIN_HEIGHT * 0.5f;
+
 		_originPos = targetPos;
+
 	}
 
 	Vector2 randPos;
 	randPos.x = _originPos.x + MyMath::RandomFloat(-_magnitude, _magnitude);
 	randPos.y = _originPos.y + MyMath::RandomFloat(-_magnitude, _magnitude);
 
+	_randomPos = randPos;
 	SetPosition(randPos);
 
 	if (_duration <= 0.0f)

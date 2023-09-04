@@ -47,6 +47,9 @@ public :
 
 	Vector2 GetWorldMousePos();
 
+	Vector2 GetOringin() { return _originPos; }
+	Vector2 GetRandomPos() { return _randomPos; }
+
 private :
 	void FollowMode();
 	void FreeMode();
@@ -60,7 +63,7 @@ private :
 
 	//FollowMode
 	weak_ptr<Transform> _target;
-	Vector2 _offSet;
+	Vector2 _offSet = {};
 	Vector2 _leftBottom = Vector2(-10000.0f, -10000.0f);
 	Vector2 _rightTop = Vector2(10000.0f, 10000.0f);
 
@@ -72,5 +75,6 @@ private :
 	float _reduceDamping = 0.0f;
 	
 	Vector2 _originPos;
+	Vector2 _randomPos;
 };
 

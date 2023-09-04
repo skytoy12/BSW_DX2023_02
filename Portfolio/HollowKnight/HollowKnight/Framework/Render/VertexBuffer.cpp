@@ -19,7 +19,7 @@ void VertexBuffer::CreateVertexBuffer()
 {
     D3D11_BUFFER_DESC bd = {};
     bd.Usage = D3D11_USAGE_DEFAULT;
-    bd.ByteWidth = sizeof(Vertex_Texture) * _count;
+    bd.ByteWidth = _stride * _count;
     bd.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
     D3D11_SUBRESOURCE_DATA initData = {};

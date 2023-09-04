@@ -10,7 +10,8 @@ public :
 		RUSH,
 		RUSHEND,
 		TURN,
-		DEATH
+		DEATH,
+		DEATHEND
 	};
 	RushMonster();
 	~RushMonster();
@@ -19,6 +20,8 @@ public :
 	virtual void Render() override;
 	virtual void PostRender() override;
 	virtual void Attack() override;
+
+	void AllStop();
 
 	void SetState(State_RushMonster type);
 	void SetAndResetState(State_RushMonster type);
@@ -56,5 +59,6 @@ private :
 	float _rushTime = 0.0f;
 	bool _isRush = false;
 	bool _isTurn = false;
+	bool _isDeath = false;
 };
 

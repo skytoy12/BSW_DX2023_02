@@ -4,6 +4,7 @@
 JumpMonster::JumpMonster()
 {
 	_speed = 100.0f;
+	_hp = 5;
 	_col = make_shared<RectCollider>(Vector2(95, 180));
 	_landPoint = make_shared<CircleCollider>(20);
 	_transform->SetParent(_col->GetTransform());

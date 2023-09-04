@@ -4,16 +4,29 @@
 RushMonster::RushMonster()
 {
 	_speed = 100.0f;
+	_hp = 5;
 	_col = make_shared<RectCollider>(Vector2(95, 180));
 	_transform->SetParent(_col->GetTransform());
-	CreateAction(L"Resource/Monster/Rush/RushIdle.png", "Resource/Monster/Rush/RushIdle.xml", "Idle", Vector2(116, 195), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Rush/RushIdle.png", "Resource/Monster/Rush/RushIdle.xml", "Idle",
+	Vector2(116, 195), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Rush/RushWalk.png", "Resource/Monster/Rush/RushWalk.xml", "Walk",
+	Vector2(136, 177), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Rush/RushReady.png", "Resource/Monster/Rush/RushReady.xml", "RushReady",
+	Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushRush.png", "Resource/Monster/Rush/RushRush.xml", "Rush",
+	Vector2(180, 115), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Rush/RushEnd1.png", "Resource/Monster/Rush/RushEnd1.xml", "End1",
+	Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Turn",
+	Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle",
+	Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle",
+	Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
+
+
 	_actions[IDLE]->SetSpeed(0.3);
-	CreateAction(L"Resource/Monster/Rush/RushWalk.png", "Resource/Monster/Rush/RushWalk.xml", "Idle", Vector2(136, 177), Action::Type::LOOP);
 	_actions[WALK]->SetSpeed(0.2);
-	CreateAction(L"Resource/Monster/Rush/RushReady.png", "Resource/Monster/Rush/RushReady.xml", "Idle", Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
-	CreateAction(L"Resource/Monster/Rush/RushRush.png", "Resource/Monster/Rush/RushRush.xml", "Idle", Vector2(180, 115), Action::Type::LOOP);
-	CreateAction(L"Resource/Monster/Rush/RushEnd1.png", "Resource/Monster/Rush/RushEnd1.xml", "Idle", Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
-	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle", Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
 	_actions[TURN]->SetSpeed(0.2);
 }
 
@@ -26,8 +39,16 @@ void RushMonster::Update()
 	if (_targetPlayer.expired() == true)
 		return;
 
+	if (_hp < 0)
+	{
+		_hp = 0;
+		_isAlive = false;
+	}
+
 	if (_isAlive == false)
+	{
 		return;
+	}
 
 	Monster::Update();
 
@@ -83,9 +104,6 @@ void RushMonster::Render()
 	if (_targetPlayer.expired() == true)
 		return;
 
-	if (_isAlive == false)
-		return;
-
 	Monster::Render();
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
@@ -111,6 +129,12 @@ void RushMonster::Attack()
 	_speed = 0.0f;
 	TotalUpdate(RUSHREADY);
 	SetAndPlayState(RUSHREADY);
+}
+
+void RushMonster::AllStop()
+{
+	_isRush = false;
+	_isTurn = false;
 }
 
 void RushMonster::SetState(State_RushMonster type)

@@ -3,6 +3,8 @@
 
 FlyMonster::FlyMonster(Vector2 pos)
 {
+	_hp = 3;
+
 	_col = make_shared<CircleCollider>(40);
 	_rangePoint = make_shared<CircleCollider>(20);
 	CreateAction(L"Resource/Monster/Fly/FLYIDLE.png", "Resource/Monster/Fly/FLYIDLE.xml", "Idle", Vector2(95, 115), Action::Type::LOOP);

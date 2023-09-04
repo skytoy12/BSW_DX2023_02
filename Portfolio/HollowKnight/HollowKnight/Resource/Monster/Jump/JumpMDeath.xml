@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:1693c564f49433e42f7facf3a974dec4:b2ce44ac6c35ccc9d5aa6f89e525be9e:ae3c9dabeab89cdfc8f959bede13ef22$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="JumpMDeath.png" width="423" height="401">
+    <sprite n="JumpMDeath1.png" x="209" y="266" w="209" h="135"/>
+    <sprite n="JumpMDeath2.png" x="0" y="0" w="212" h="133"/>
+    <sprite n="JumpMDeath3.png" x="212" y="0" w="211" h="133"/>
+    <sprite n="JumpMDeath4.png" x="0" y="133" w="211" h="133"/>
+    <sprite n="JumpMDeath5.png" x="211" y="133" w="208" h="133"/>
+    <sprite n="JumpMDeath6.png" x="0" y="266" w="209" h="134"/>
+</TextureAtlas>

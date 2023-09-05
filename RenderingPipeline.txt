@@ -85,3 +85,5 @@ Specular   (정반사)
 Diffuse     (난반사)
 
 Ambient(주변반사)
+
+template을 cpp에 정의하면 링커에서 오류가 발생함

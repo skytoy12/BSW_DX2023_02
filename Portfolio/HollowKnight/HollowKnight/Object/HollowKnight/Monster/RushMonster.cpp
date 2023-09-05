@@ -19,15 +19,18 @@ RushMonster::RushMonster()
 	Vector2(167, 188), Action::Type::END, std::bind(&RushMonster::RushEvent, this));
 	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Turn",
 	Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
-	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle",
-	Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
-	CreateAction(L"Resource/Monster/Rush/RushTurn.png", "Resource/Monster/Rush/RushTurn.xml", "Idle",
-	Vector2(103, 195), Action::Type::END, std::bind(&RushMonster::TurnEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushMAirDeath.png", "Resource/Monster/Rush/RushMAirDeath.xml", "AirDeath",
+	Vector2(152, 130), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Rush/RushMDeath.png", "Resource/Monster/Rush/RushMDeath.xml", "Death",
+	Vector2(189, 128), Action::Type::END, std::bind(&RushMonster::DeathEvent, this));
+	CreateAction(L"Resource/Monster/Rush/RushMEnd.png", "Resource/Monster/Rush/RushMEnd.xml", "End",
+	Vector2(190, 126), Action::Type::END, std::bind(&RushMonster::DeathEvent, this));
 
 
 	_actions[IDLE]->SetSpeed(0.3);
 	_actions[WALK]->SetSpeed(0.2);
 	_actions[TURN]->SetSpeed(0.2);
+
 }
 
 RushMonster::~RushMonster()
@@ -47,7 +50,9 @@ void RushMonster::Update()
 
 	if (_isAlive == false)
 	{
-		return;
+		DeathStart();
+		if (_isDeath == true)
+			return;
 	}
 
 	Monster::Update();
@@ -82,11 +87,11 @@ void RushMonster::Update()
 		_dir = _dir.NormalVector2();
 	}
 
-	//RightLeft();
 	WalkChange();
 	Active();
 	UnActiveIdle();
 
+	//RightLeft();
 	if (_rushTime > 2.5f)
 		RushFinish();
 
@@ -170,6 +175,15 @@ void RushMonster::TotalUpdate(State_RushMonster type)
 	_transform->Update();
 	_actions[type]->Update();
 	_sprites[type]->Update();
+}
+
+void RushMonster::DeathStart()
+{
+	if (_hp > 0)
+		return;
+
+	AllStop();
+	SetState(DEATH);
 }
 
 void RushMonster::Turn()
@@ -308,6 +322,19 @@ void RushMonster::TurnEvent()
 	else
 		SetRight();
 	_isTurn = false;
+}
+
+void RushMonster::DeathEvent()
+{
+	if (_curstate == DEATH)
+	{
+		SetRGB(-0.5, -0.5, -0.5);
+		SetAndResetState(DEATHEND);
+		return;
+	}
+
+	if (_curstate == DEATHEND)
+		_isDeath = true;
 }
 
 void RushMonster::SetLeft()

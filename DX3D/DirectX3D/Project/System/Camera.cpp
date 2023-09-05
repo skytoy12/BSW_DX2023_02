@@ -3,7 +3,7 @@
 
 Camera::Camera()
 {
-	viewBuffer = new MatrixBuffer();
+	viewBuffer = new ViewBuffer();
 	
 	transform = new Transform();
 
@@ -72,12 +72,14 @@ void Camera::SetView()
 {
 	transform->Update();
 
-	XMVECTOR   eyePos = transform->translation;
-	XMVECTOR focusPos = transform->translation + transform->Forward();
-	XMVECTOR upVector = transform->Up();
+	//XMVECTOR   eyePos = transform->translation;
+	//XMVECTOR focusPos = transform->translation + transform->Forward();
+	//XMVECTOR upVector = transform->Up();
 
-	viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
+	//viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
 
-	viewBuffer->SetData(viewMatrix);
+	viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+
+	viewBuffer->SetData(viewMatrix, transform->GetWorld());
 	viewBuffer->SetVSBuffer(1);
 }

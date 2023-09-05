@@ -159,9 +159,6 @@
     <ClInclude Include="Object\Basic\Circle.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\SphereScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -263,9 +260,6 @@
     <ClCompile Include="Object\Basic\Circle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\SphereScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -362,6 +356,8 @@
     <FxCompile Include="_Shader\PixelDiffuse.hlsl" />
     <FxCompile Include="_Shader\VertexColor.hlsl" />
     <FxCompile Include="_Shader\PixelColor.hlsl" />
+    <FxCompile Include="_Shader\VertexSpecular.hlsl" />
+    <FxCompile Include="_Shader\PixelSpecular.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

@@ -19,6 +19,7 @@ private :
 	} data;
 };
 
+
 class LightBuffer : public ConstBuffer
 {
 public:
@@ -38,5 +39,29 @@ private:
 		Vector3 direction;
 
 		float padding;
+	} data;
+};
+
+class ViewBuffer : public ConstBuffer
+{
+public:
+	ViewBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+		data.view = XMMatrixIdentity();
+		data.invView = XMMatrixIdentity();
+	}
+
+	void SetData(Matrix view, Matrix invView)
+	{
+		data.view = XMMatrixTranspose(view);
+		data.invView = XMMatrixTranspose(invView);
+	}
+
+private:
+	struct Data
+	{
+		Matrix view;
+		Matrix invView;
 	} data;
 };

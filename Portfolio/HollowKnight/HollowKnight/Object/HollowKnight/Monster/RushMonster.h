@@ -10,6 +10,7 @@ public :
 		RUSH,
 		RUSHEND,
 		TURN,
+		AIRDEATH,
 		DEATH,
 		DEATHEND
 	};
@@ -29,6 +30,8 @@ public :
 
 	void TotalUpdate(State_RushMonster type);
 
+	void DeathStart();
+
 	void Turn();
 
 	void UnActiveIdle();
@@ -39,6 +42,7 @@ public :
 	void RushEvent();
 	void RushFinish();
 	void TurnEvent();
+	void DeathEvent();
 
 	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
 

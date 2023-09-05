@@ -3,6 +3,8 @@
 
 RushMonster::RushMonster()
 {
+	_monsterType = Monster::MonsterType::RUSH;
+
 	_speed = 100.0f;
 	_hp = 5;
 	_col = make_shared<RectCollider>(Vector2(95, 180));
@@ -42,6 +44,9 @@ void RushMonster::Update()
 	if (_targetPlayer.expired() == true)
 		return;
 
+	if (_isDeath == true)
+		return;
+
 	if (_hp < 0)
 	{
 		_hp = 0;
@@ -51,8 +56,6 @@ void RushMonster::Update()
 	if (_isAlive == false)
 	{
 		DeathStart();
-		if (_isDeath == true)
-			return;
 	}
 
 	Monster::Update();
@@ -81,11 +84,20 @@ void RushMonster::Update()
 	if(_curstate == RUSH)
 		_col->GetTransform()->AddVector2(_dir * _speed * DELTA_TIME);
 
+	if (_isSpeedUP == true)
+	{
+		_speed += 5.0f;
+		if (_speed > 300.0f)
+			_speed = 300.0f;
+	}
+
+
 	if (_isRush == false)
 	{
 		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
 		_dir = _dir.NormalVector2();
 	}
+
 
 	WalkChange();
 	Active();
@@ -100,8 +112,12 @@ void RushMonster::Update()
 	{
 		Attack();
 	}
-	Hitted(_col);
-	UnbeatableToIdle();
+	if (_isAlive == true)
+	{
+		Hitted(_col);
+		HitKnockBack(_col);
+		UnbeatableToIdle();
+	}
 }
 
 void RushMonster::Render()
@@ -118,12 +134,15 @@ void RushMonster::Render()
 void RushMonster::PostRender()
 {
 	ImGui::Text("SPEED : %f", _speed);
-	ImGui::Text("_isturn : %d", _isTurn);
-	ImGui::Text("_jmisleft : %d", _isLeft);
+	ImGui::Text("_curstate : %d", _curstate);
+	ImGui::Text("_jmDeath : %d", _isDeath);
+	ImGui::Text("JP : %f", _jumpPower);
 }
 
 void RushMonster::Attack()
 {
+	if (_isAlive == false)
+		return;
 	if (_isRush == true)
 		return;
 	if (_isTurn == true)
@@ -131,7 +150,7 @@ void RushMonster::Attack()
 	if (_attackCoolTime < 3.0f)
 		return;
 	_isRush = true;
-	_speed = 0.0f;
+	_speed = 100.0f;
 	TotalUpdate(RUSHREADY);
 	SetAndPlayState(RUSHREADY);
 }
@@ -140,6 +159,7 @@ void RushMonster::AllStop()
 {
 	_isRush = false;
 	_isTurn = false;
+	_isActive = false;
 }
 
 void RushMonster::SetState(State_RushMonster type)
@@ -181,9 +201,9 @@ void RushMonster::DeathStart()
 {
 	if (_hp > 0)
 		return;
-
 	AllStop();
 	SetState(DEATH);
+	LocationFix(DEATH);
 }
 
 void RushMonster::Turn()
@@ -223,6 +243,9 @@ void RushMonster::Turn()
 
 void RushMonster::UnActiveIdle()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isActive == false)
 	{
 		if (_isTurn == true)
@@ -237,6 +260,9 @@ void RushMonster::UnActiveIdle()
 
 void RushMonster::Active()
 {
+	if (_isAlive == false)
+		return;
+
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
 		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isRush == true)
 		_isActive = true;
@@ -264,6 +290,9 @@ void RushMonster::RightLeft()
 
 void RushMonster::WalkChange()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isActive == true)
 	{
 		Turn();
@@ -287,7 +316,8 @@ void RushMonster::RushEvent()
 			_dir.x = -1.0f;
 		else
 			_dir.x = 1.0f;
-		_speed = 300.0f;
+
+		_isSpeedUP = true;
 		_transform->AddVector2(Vector2(0, -35));
 		TotalUpdate(RUSH);
 		SetAndResetState(RUSH);
@@ -297,7 +327,10 @@ void RushMonster::RushEvent()
 	{
 		TotalUpdate(IDLE);
 		SetAndResetState(IDLE);
+
+		_isSpeedUP = false;
 		_isRush = false;
+		_speed = 0.0f;
 	}
 }
 
@@ -330,11 +363,20 @@ void RushMonster::DeathEvent()
 	{
 		SetRGB(-0.5, -0.5, -0.5);
 		SetAndResetState(DEATHEND);
+		LocationFix(DEATHEND);
 		return;
 	}
 
 	if (_curstate == DEATHEND)
 		_isDeath = true;
+}
+
+void RushMonster::LocationFix(State_RushMonster type)
+{
+	if (type == DEATH)
+		_transform->SetPosition(Vector2(0, -30));
+	if (type == DEATHEND)
+		_transform->SetPosition(Vector2(0, -30));
 }
 
 void RushMonster::SetLeft()

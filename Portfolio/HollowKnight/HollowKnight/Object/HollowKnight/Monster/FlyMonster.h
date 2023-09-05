@@ -22,6 +22,10 @@ public :
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
+
+	void DeathStart();
+	void DeathEvent();
+
 #pragma region Update Function
 	void RightLeft();
 	void CreateRangePoint();
@@ -42,5 +46,6 @@ private :
 	float _searchRange = 0.0f;
 	float _SRCoolTime = 0.0f;
 	float _turnCoolTime = 0.0f;
+	bool _isDeath = false;
 };
 

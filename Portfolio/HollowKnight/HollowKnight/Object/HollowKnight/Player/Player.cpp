@@ -264,6 +264,7 @@ void Player::Attack()
 		_weaponCol->Update();
 		_isAttack = true;
 		_isWeaponActive = true;
+		ActiveOn();
 		SetAndResetState(SLASH);
 		if(_isLeft == true)
 			EFFECT_RPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(-10, 0));
@@ -330,6 +331,14 @@ void Player::ChargeAndFire()
 
 		_isChargeAndFire = false;
 	}
+}
+
+void Player::ActiveOn()
+{
+	_isWeaponActiveB = true;
+	_isWeaponActiveF = true;
+	_isWeaponActiveJ = true;
+	_isWeaponActiveR = true;
 }
 
 void Player::EndEvent()

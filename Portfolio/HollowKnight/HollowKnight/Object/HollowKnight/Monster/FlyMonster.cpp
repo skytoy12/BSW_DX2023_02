@@ -3,18 +3,27 @@
 
 FlyMonster::FlyMonster(Vector2 pos)
 {
+	_monsterType = Monster::MonsterType::FLY;
+
 	_hp = 3;
 
 	_col = make_shared<CircleCollider>(40);
 	_rangePoint = make_shared<CircleCollider>(20);
-	CreateAction(L"Resource/Monster/Fly/FLYIDLE.png", "Resource/Monster/Fly/FLYIDLE.xml", "Idle", Vector2(95, 115), Action::Type::LOOP);
-	_actions[IDLE]->SetSpeed(0.20f);
-	CreateAction(L"Resource/Monster/Fly/FLYDEATH2.png", "Resource/Monster/Fly/FLYDEATH2.xml", "Idle", Vector2(110, 97), Action::Type::END);
-	CreateAction(L"Resource/Monster/Fly/FLYDEATH1.png", "Resource/Monster/Fly/FLYDEATH1.xml", "Idle", Vector2(90, 87), Action::Type::END);
+
+	CreateAction(L"Resource/Monster/Fly/FLYIDLE.png", "Resource/Monster/Fly/FLYIDLE.xml", "Idle",
+	Vector2(95, 115), Action::Type::LOOP);
+
+	CreateAction(L"Resource/Monster/Fly/FLYDEATH2.png", "Resource/Monster/Fly/FLYDEATH2.xml", "Idle",
+	Vector2(110, 97), Action::Type::END, std::bind(&FlyMonster::DeathEvent, this));
+
+	CreateAction(L"Resource/Monster/Fly/FLYDEATH1.png", "Resource/Monster/Fly/FLYDEATH1.xml", "Idle",
+	Vector2(90, 87), Action::Type::END, std::bind(&FlyMonster::DeathEvent, this));
+
 	_transform->SetParent(_col->GetTransform());
 	_col->SetPosition(pos);
 	_originPos = pos;
 	_rangePoint->SetPosition(_originPos);
+	_actions[IDLE]->SetSpeed(0.20f);
 }
 
 FlyMonster::~FlyMonster()
@@ -25,8 +34,21 @@ void FlyMonster::Update()
 {
 	if (_targetPlayer.expired() == true)
 		return;
-	if (_isAlive == false)
+
+	if (_isDeath == true)
 		return;
+
+	if (_hp < 0)
+	{
+		_hp = 0;
+		_isAlive = false;
+	}
+
+	if (_isAlive == false)
+	{
+		DeathStart();
+	}
+
 
 	Monster::Update();
 
@@ -57,8 +79,14 @@ void FlyMonster::Update()
 	RightLeft();
 	UnActive();
 	Active();
-	Hitted(_col);
-	UnbeatableToIdle();
+
+	if (_isAlive == true)
+	{
+		Hitted(_col);
+		UnbeatableToIdle();
+		HitKnockBack(_col);
+	}
+
 }
 
 void FlyMonster::Render()
@@ -66,8 +94,6 @@ void FlyMonster::Render()
 	if (_targetPlayer.expired() == true)
 		return;
 
-	if (_isAlive == false)
-		return;
 
 	Monster::Render();
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
@@ -81,11 +107,14 @@ void FlyMonster::PostRender()
 {
 	ImGui::Text("_dir.x : %f", _dir.x);
 	ImGui::Text("_dir.y : %f", _dir.y);
-	ImGui::Text("_cooltime : %f", _turnCoolTime);
+	ImGui::Text("state : %d", _curstate);
 }
 
 void FlyMonster::Attack()
 {
+	if (_isAlive == false)
+		return;
+
 	CreateRandomPos();
 
 	_dir = _randomPos - _col->GetTransform()->GetWorldPosition();
@@ -97,8 +126,32 @@ void FlyMonster::Attack()
 
 #pragma region Update Function
 
+void FlyMonster::DeathStart()
+{
+	if (_hp > 0)
+		return;
+
+	_curstate = AIRDEATH;
+}
+
+void FlyMonster::DeathEvent()
+{
+	if (_curstate == AIRDEATH)
+	{
+		SetRGB(-0.5, -0.5, -0.5);
+		_curstate = LANDDEATH;
+		return;
+	}
+
+	if (_curstate == LANDDEATH)
+		_isDeath = true;
+}
+
 void FlyMonster::RightLeft()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_dir.x < 0.0f)
 		SetLeft();
 	else
@@ -129,6 +182,9 @@ void FlyMonster::CreateRangePoint()
 
 void FlyMonster::UnActive()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isActive == true)
 		return;
 
@@ -141,6 +197,9 @@ void FlyMonster::UnActive()
 
 void FlyMonster::Active()
 {
+	if (_isAlive == false)
+		return;
+
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
 		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f))
 	{

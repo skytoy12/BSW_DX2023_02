@@ -5,6 +5,8 @@
 Boss::Boss()
 {
 #pragma region collider, transform등 생성 및 초기설정
+	_monsterType = Monster::MonsterType::BOSS;
+
 	_isLeft = true;
 	_col = make_shared<RectCollider>(Vector2(20, 300));
 	_jumpLine = make_shared<RectCollider>(Vector2(200, 40));

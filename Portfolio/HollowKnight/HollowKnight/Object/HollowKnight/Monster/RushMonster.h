@@ -50,6 +50,8 @@ public :
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
+	void LocationFix(State_RushMonster type);
+
 private :
 	void SetLeft();
 	void SetRight();
@@ -64,5 +66,6 @@ private :
 	bool _isRush = false;
 	bool _isTurn = false;
 	bool _isDeath = false;
+	bool _isSpeedUP = false;
 };
 

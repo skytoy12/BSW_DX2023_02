@@ -36,7 +36,7 @@ public :
 	void Dash();
 	void Attack();
 	void ChargeAndFire();
-
+	void ActiveOn();
 	void Gravity();
 #pragma endregion
 
@@ -60,6 +60,11 @@ public :
 	void SetWeaponActive(bool value) { _isWeaponActive = value; }
 #pragma endregion
 
+	bool _isWeaponActiveB = false;
+	bool _isWeaponActiveF = false;
+	bool _isWeaponActiveJ = false;
+	bool _isWeaponActiveR = false;
+
 private :
 	void SetLeft();
 	void SetRight();
@@ -74,7 +79,9 @@ private :
 	bool _isLeft = false;
 	bool _isJump = false;
 	bool _isAttack = false;
+
 	bool _isWeaponActive = false;
+
 	bool _isDash = false;
 	bool _isChargeAndFire = false;
 #pragma endregion

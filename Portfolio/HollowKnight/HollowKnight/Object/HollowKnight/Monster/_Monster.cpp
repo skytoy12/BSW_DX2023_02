@@ -38,8 +38,29 @@ void Monster::Hitted(shared_ptr<Collider> col)
 		return;
 	if (_isUnbeatable == true)
 		return;
-	if (_targetPlayer.lock()->GetWeaponActive() == false)
-		return;
+	if (_monsterType == BOSS)
+	{
+		if (_targetPlayer.lock()->_isWeaponActiveB == false)
+			return;
+	}
+
+	if (_monsterType == FLY)
+	{
+		if (_targetPlayer.lock()->_isWeaponActiveF == false)
+			return;
+	}
+
+	if (_monsterType == JUMP)
+	{
+		if (_targetPlayer.lock()->_isWeaponActiveJ == false)
+			return;
+	}
+
+	if (_monsterType == RUSH)
+	{
+		if (_targetPlayer.lock()->_isWeaponActiveR == false)
+			return;
+	}
 
 	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
@@ -49,19 +70,50 @@ void Monster::Hitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
 		_targetPlayer.lock()->SetWeaponActive(false);
-		_hp -= 1;
+		WeaponActive();
 		_jumpPower = 300.0f;
+		if (_monsterType == RUSH)
+			_speed = 100.0f;
+
 		if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
-			_dir = Vector2(1, 0);
+			_KBdir = Vector2(1, 0);
 		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
-			_dir = Vector2(-1, 0);
+			_KBdir = Vector2(-1, 0);
+		_KBspeed = 600;
+		if (_hp == 0 && _monsterType != FLY)
+			_KBspeed = 16000;
+		_hp -= 1;
 	}
+}
+
+void Monster::HitKnockBack(shared_ptr<Collider> col)
+{
+	if(_isUnbeatable == true)
+		col->GetTransform()->AddVector2(_KBdir * _KBspeed * DELTA_TIME);
+}
+
+void Monster::WeaponActive()
+{
+	if (_monsterType == BOSS)
+		_targetPlayer.lock()->_isWeaponActiveB = false;
+
+	if (_monsterType == FLY)
+		_targetPlayer.lock()->_isWeaponActiveF = false;
+
+	if (_monsterType == JUMP)
+		_targetPlayer.lock()->_isWeaponActiveJ = false;
+
+	if (_monsterType == RUSH)
+		_targetPlayer.lock()->_isWeaponActiveR = false;
 }
 
 void Monster::UnbeatableToIdle()
 {
 	if (_isUnbeatable == true)
 		_unbeatableTime += DELTA_TIME;
+
+	if (_unbeatableTime > 0.1f && _unbeatableTime < 0.2f)
+		_jumpPower = -400.0f;
 
 	if (_unbeatableTime < 0.2f)
 		return;

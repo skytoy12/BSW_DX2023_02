@@ -3,6 +3,16 @@ class Monster
 {
 	friend class Player;
 public :
+
+	enum MonsterType
+	{
+		BOSS,
+		FLY,
+		JUMP,
+		RUSH,
+		NONE
+	};
+
 	Monster();
 	virtual ~Monster() {}
 
@@ -13,6 +23,8 @@ public :
 	virtual void Attack() abstract;
 
 	virtual void Hitted(shared_ptr<Collider> col);
+	virtual void HitKnockBack(shared_ptr<Collider> col);
+	void WeaponActive();
 
 	void UnbeatableToIdle();
 	void SetRGB(float R, float G, float B);
@@ -25,11 +37,16 @@ public :
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 protected :
+
+	MonsterType _monsterType = NONE;
+
 	int _hp = 0;
 	float _jumpPower = 0.0f;
 	float _speed = 150.0f;
+	float _KBspeed = 150.0f;
 	float _unbeatableTime = 0.0f; // 몬스터 피격시 잠시 무적이 되는 시간
 	Vector2 _dir = { 1,0 };
+	Vector2 _KBdir = { 1,0 };
 
 	bool _isAlive = true;
 	bool _isActive = false;

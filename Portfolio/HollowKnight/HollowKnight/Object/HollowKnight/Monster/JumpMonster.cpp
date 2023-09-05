@@ -3,6 +3,7 @@
 
 JumpMonster::JumpMonster()
 {
+	_monsterType = Monster::MonsterType::JUMP;
 	_speed = 100.0f;
 	_hp = 5;
 	_col = make_shared<RectCollider>(Vector2(95, 180));
@@ -62,8 +63,13 @@ void JumpMonster::Update()
 	JumpMove(); // 점프하는 동안 움직일 수 있게 해줌
 	DirFix(); // 타겟쪽으로 방향 전환 & 점프동안 방향고정
 	WalkChange(); // Active활성화 됬을 때 걷는 모션으로 변경 및 타겟으로 걸어가게 하기
-	Hitted(_col);
-	UnbeatableToIdle();
+	if (_isAlive == true)
+	{
+		Hitted(_col);
+		UnbeatableToIdle();
+		HitKnockBack(_col);
+	}
+
 }
 
 void JumpMonster::Render()

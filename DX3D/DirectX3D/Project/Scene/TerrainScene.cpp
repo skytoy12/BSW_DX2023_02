@@ -3,8 +3,7 @@
 
 TerrainScene::TerrainScene()
 {
-	terrain = new Terrain(L"Landscape/Dirt.png", L"HeightMap/HeightMap.png");
-
+	terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"HeightMap/HeightMap.png");
 }
 
 TerrainScene::~TerrainScene()
@@ -29,4 +28,5 @@ void TerrainScene::Render()
 
 void TerrainScene::PostRender()
 {
+	terrain->GetMaterial()->PostRender();
 }

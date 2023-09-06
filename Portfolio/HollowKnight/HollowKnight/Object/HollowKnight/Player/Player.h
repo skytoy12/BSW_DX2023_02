@@ -36,7 +36,7 @@ public :
 	void Dash();
 	void Attack();
 	void ChargeAndFire();
-	void ActiveOn();
+	void ActiveOn(bool value);
 	void Gravity();
 #pragma endregion
 

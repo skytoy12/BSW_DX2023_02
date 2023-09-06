@@ -27,18 +27,17 @@ public:
 		:ConstBuffer(&data, sizeof(Data))
 	{
 		data.direction = V_DOWN;
-	}
-	void SetData(Vector3 direction)
-	{
-		data.direction = direction;
+		data.padding = 0.0f;
+		data.ambientLight = Vector4(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 
-private:
 	struct Data
 	{
 		Vector3 direction;
 
 		float padding;
+
+		Vector4 ambientLight;
 	} data;
 };
 
@@ -63,5 +62,28 @@ private:
 	{
 		Matrix view;
 		Matrix invView;
+	} data;
+};
+
+class MaterialBuffer : public ConstBuffer
+{
+public:
+	MaterialBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+
+	}
+
+	struct Data
+	{
+		Vector4 diffuse  = Vector4(1, 1, 1, 1);
+		Vector4 specular = Vector4(1, 1, 1, 1);
+		Vector4 ambient  = Vector4(1, 1, 1, 1);
+
+		int hasDiffuseMap   = 0;
+		int hasSpecularMap  = 0;
+		int hasNormalMap    = 0;
+
+		float shininess = 24.0f;
 	} data;
 };

@@ -46,6 +46,9 @@ private :
 	float _searchRange = 0.0f;
 	float _SRCoolTime = 0.0f;
 	float _turnCoolTime = 0.0f;
+
+	float _deathTime = 0.0f;
+
 	bool _isDeath = false;
 };
 

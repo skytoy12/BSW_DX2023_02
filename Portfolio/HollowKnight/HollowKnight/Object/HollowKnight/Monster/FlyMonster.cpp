@@ -36,7 +36,16 @@ void FlyMonster::Update()
 		return;
 
 	if (_isDeath == true)
+	{
+		if (_deathTime > 1.0f)
+			return;
+		_deathTime += DELTA_TIME;
+		Gravity(_col);
+		_col->Update();
+		_transform->Update();
 		return;
+	}
+
 
 	if (_hp < 0)
 	{
@@ -107,7 +116,7 @@ void FlyMonster::PostRender()
 {
 	ImGui::Text("_dir.x : %f", _dir.x);
 	ImGui::Text("_dir.y : %f", _dir.y);
-	ImGui::Text("state : %d", _curstate);
+	ImGui::Text("FLYJP : %f", _jumpPower);
 }
 
 void FlyMonster::Attack()
@@ -130,7 +139,9 @@ void FlyMonster::DeathStart()
 {
 	if (_hp > 0)
 		return;
-
+	if (_curstate == AIRDEATH || _curstate == LANDDEATH)
+		return;
+	_jumpPower = 0.0f;
 	_curstate = AIRDEATH;
 }
 
@@ -140,6 +151,7 @@ void FlyMonster::DeathEvent()
 	{
 		SetRGB(-0.5, -0.5, -0.5);
 		_curstate = LANDDEATH;
+		_transform->SetPosition(Vector2(0, 40));
 		return;
 	}
 

@@ -201,6 +201,8 @@ void RushMonster::DeathStart()
 {
 	if (_hp > 0)
 		return;
+	if (_curstate == DEATH || _curstate == DEATHEND)
+		return;
 	AllStop();
 	SetState(DEATH);
 	LocationFix(DEATH);
@@ -361,7 +363,7 @@ void RushMonster::DeathEvent()
 {
 	if (_curstate == DEATH)
 	{
-		SetRGB(-0.5, -0.5, -0.5);
+		SetRGB(-0.2, -0.2, -0.2);
 		SetAndResetState(DEATHEND);
 		LocationFix(DEATHEND);
 		return;
@@ -374,9 +376,9 @@ void RushMonster::DeathEvent()
 void RushMonster::LocationFix(State_RushMonster type)
 {
 	if (type == DEATH)
-		_transform->SetPosition(Vector2(0, -30));
+		_transform->SetPosition(Vector2(0, -40));
 	if (type == DEATHEND)
-		_transform->SetPosition(Vector2(0, -30));
+		_transform->SetPosition(Vector2(0, -40));
 }
 
 void RushMonster::SetLeft()

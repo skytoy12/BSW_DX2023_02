@@ -14,6 +14,8 @@ TextureScene::TextureScene()
 
 	sphere = new Sphere();
 	sphere->translation.x = -2;
+	sphere->GetMaterial()->SetDuffuseMap(L"LandScape/Fieldstone_DM.tga");
+	sphere->GetMaterial()->SetSpecularMap(L"LandScape/Fieldstone_SM.tga");
 }
 
 TextureScene::~TextureScene()
@@ -51,4 +53,5 @@ void TextureScene::Render()
 void TextureScene::PostRender()
 {
 	cube->Debug();
+	sphere->GetMaterial()->PostRender();
 }

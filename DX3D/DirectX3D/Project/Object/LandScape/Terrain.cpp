@@ -1,11 +1,12 @@
 #include "Framework.h"
 #include "Terrain.h"
 
-Terrain::Terrain(wstring diffuseFile, wstring heightFile)
+Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring heightFile)
 {
 	material = new Material();
-	material->SetShader(L"Diffuse");
+	material->SetShader(L"Specular");
 	material->SetDuffuseMap(diffuseFile);
+	material->SetSpecularMap(specularFile);
 
 	worldBuffer = new MatrixBuffer();
 
@@ -33,6 +34,8 @@ void Terrain::Render()
 
 	DC->DrawIndexed(indices.size(), 0, 0);
 }
+
+
 
 void Terrain::CreateMesh()
 {

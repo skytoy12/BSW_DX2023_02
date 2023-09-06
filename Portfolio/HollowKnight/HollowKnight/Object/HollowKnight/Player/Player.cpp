@@ -68,6 +68,7 @@ void Player::Update()
 	if (_isAttack == false)
 	{
 		_isWeaponActive = false;
+		ActiveOn(false);
 	}
 	_col->Update();
 	if (_isAttack == true)
@@ -264,7 +265,7 @@ void Player::Attack()
 		_weaponCol->Update();
 		_isAttack = true;
 		_isWeaponActive = true;
-		ActiveOn();
+		ActiveOn(true);
 		SetAndResetState(SLASH);
 		if(_isLeft == true)
 			EFFECT_RPLAY("Slash", _weaponCol->GetTransform()->GetWorldPosition() + Vector2(-10, 0));
@@ -333,12 +334,12 @@ void Player::ChargeAndFire()
 	}
 }
 
-void Player::ActiveOn()
+void Player::ActiveOn(bool value)
 {
-	_isWeaponActiveB = true;
-	_isWeaponActiveF = true;
-	_isWeaponActiveJ = true;
-	_isWeaponActiveR = true;
+	_isWeaponActiveB = value;
+	_isWeaponActiveF = value;
+	_isWeaponActiveJ = value;
+	_isWeaponActiveR = value;
 }
 
 void Player::EndEvent()

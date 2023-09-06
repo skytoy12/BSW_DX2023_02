@@ -2,10 +2,12 @@
 class Terrain : public Transform
 {
 public:
-	Terrain(wstring diffuseFile, wstring heightFile);
+	Terrain(wstring diffuseFile, wstring specularFile, wstring heightFile);
 	~Terrain();
 
 	void Render();
+
+	Material* GetMaterial() { return material; }
 
 private :
 	void CreateMesh();

@@ -80,7 +80,39 @@ void Monster::Hitted(shared_ptr<Collider> col)
 		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
 			_KBdir = Vector2(-1, 0);
 		_KBspeed = 600;
-		if (_hp == 0 && _monsterType != FLY)
+		if (_hp == 1 && _monsterType != FLY)
+			_KBspeed = 16000;
+		_hp -= 1;
+	}
+}
+
+void Monster::BulletHitted(shared_ptr<Collider> col)
+{
+
+	if (_targetPlayer.expired() == true)
+		return;
+	if (_isUnbeatable == true)
+		return;
+	
+	if (col->IsCollision(_targetPlayer.lock()->GetBulletcol()))
+	{
+		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		_monsterBuffer->_data.R = 0.5f;
+		_monsterBuffer->_data.G = 0.5f;
+		_monsterBuffer->_data.B = 0.5f;
+		_isUnbeatable = true;
+		_targetPlayer.lock()->SetWeaponActive(false);
+		WeaponActive();
+		_jumpPower = 300.0f;
+		if (_monsterType == RUSH)
+			_speed = 100.0f;
+
+		if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
+			_KBdir = Vector2(1, 0);
+		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
+			_KBdir = Vector2(-1, 0);
+		_KBspeed = 600;
+		if (_hp == 1 && _monsterType != FLY)
 			_KBspeed = 16000;
 		_hp -= 1;
 	}
@@ -112,7 +144,7 @@ void Monster::UnbeatableToIdle()
 	if (_isUnbeatable == true)
 		_unbeatableTime += DELTA_TIME;
 
-	if (_unbeatableTime > 0.1f && _unbeatableTime < 0.2f)
+	if (_unbeatableTime > 0.1f && _unbeatableTime < 0.2f && _monsterType != BOSS)
 		_jumpPower = -400.0f;
 
 	if (_unbeatableTime < 0.2f)

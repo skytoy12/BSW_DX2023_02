@@ -45,10 +45,10 @@ void TestScene::Update()
 
 void TestScene::Render()
 {
-	_player->Render();
 	_mon1->Render();
 	_mon2->Render();
 	_mon3->Render();
+	_player->Render();
 	_col->Render();
 }
 
@@ -56,6 +56,6 @@ void TestScene::PostRender()
 {
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
 	_player->PostRender();
-	_mon2->PostRender();
+	_mon1->PostRender();
 	_mon3->PostRender();
 }

@@ -16,6 +16,7 @@ Player::Player()
 	_dashCol = make_shared<CircleCollider>(10);
 	_transform = make_shared<Transform>();
 	_bullet = make_shared<Bullet>();
+	_bulletCol = make_shared<CircleCollider>(50);
 	_effect = make_shared<ChargeEffect>();
 #pragma endregion
 #pragma region CreateAction
@@ -23,11 +24,11 @@ Player::Player()
 	CreateAction(L"Resource/Player/RunStart.png", "Resource/Player/RunStart.xml", "RunStart", Vector2(86, 130), Action::Type::END, std::bind(&Player::EndEvent, this));
 	CreateAction(L"Resource/Player/Running.png", "Resource/Player/Running.xml", "Running", Vector2(86, 130), Action::Type::LOOP);
 	CreateAction(L"Resource/Player/Dash.png", "Resource/Player/Dash.xml", "Dash", Vector2(192, 117), Action::Type::END, std::bind(&Player::EndEvent, this));
-	_actions[DASH]->SetSpeed(0.05f);
 	CreateAction(L"Resource/Player/DNSlash.png", "Resource/Player/DNSlash.xml", "Slash", Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
-	_actions[SLASH]->SetSpeed(0.03f);
 	CreateAction(L"Resource/Player/Charge.png", "Resource/Player/Charge.xml", "Charge", Vector2(114, 127), Action::Type::LOOP);
 	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Death", Vector2(116, 131), Action::Type::END, std::bind(&Player::EndEvent, this));
+	_actions[DASH]->SetSpeed(0.05f);
+	_actions[SLASH]->SetSpeed(0.03f);
 #pragma endregion
 
 #pragma region CREAT EFFECT
@@ -42,6 +43,7 @@ Player::Player()
 	_dashCol->SetParent(_col->GetTransform());
 	_dashCol->SetPosition(Vector2(0, -15));
 	_transform->SetPosition(Vector2(0, 18));
+	_bulletCol->SetParent(_bullet->GetCollider()->GetTransform());
 	_effect->GetTransform()->SetParent(_col->GetTransform());
 #pragma endregion
 
@@ -79,6 +81,8 @@ void Player::Update()
 	_transform->Update();
 	_bullet->Update();
 	_effect->Update();
+	if (_bullet->_isActive == true)
+		_bulletCol->Update();
 
 	if (_isWeaponActive == true)
 		_weaponCol->SetGreen();
@@ -104,6 +108,9 @@ void Player::Render()
 		_weaponCol->Render();
 	_bullet->Render();
 	_effect->Render();
+	if(_bullet->_isActive == true)
+		_bulletCol->Render();
+
 }
 
 void Player::PostRender()

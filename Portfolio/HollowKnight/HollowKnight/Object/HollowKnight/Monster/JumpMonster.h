@@ -12,7 +12,8 @@ public :
 		JUMP,
 		DOWN,
 		LAND,
-		DEATH
+		DEATH,
+		DEATHEND
 	};
 
 
@@ -24,17 +25,28 @@ public :
 	virtual void PostRender() override;
 	virtual void Attack() override;
 
+	virtual void Hitted(shared_ptr<Collider> col) override;
+	virtual void UnbeatableToIdle() override;
+
 	void SetState(State_JumpMonster type);
 	void SetAndResetState(State_JumpMonster type);
 	void SetAndPlayState(State_JumpMonster type);
 
 	void TotalUpdate(State_JumpMonster type);
 
+	void LocationFix(State_JumpMonster type);
+
+	void AllStop();
+
+	void DeathStart();
+
 	void Turn();
 
 	void TurnEvent();
 	void JumpEvent();
 	void LandEvent();
+	void DeathEvent();
+
 #pragma region Update Function
 	void UnActiveIDle();
 	void LandMotionChange();
@@ -65,5 +77,6 @@ private :
 	bool _isJump = false;
 	bool _isAttack = false;
 	bool _isturn = false;
+	bool _isDeath = false;
 };
 

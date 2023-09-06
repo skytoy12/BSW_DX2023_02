@@ -23,6 +23,8 @@ public :
 	void SetPlayState(State_Bullet type);
 	void SetAndResetState(State_Bullet type);
 
+	shared_ptr<CircleCollider> GetCollider() { return _col; }
+
 	bool _isActive = false;
 private :
 	bool _isLeft = false;

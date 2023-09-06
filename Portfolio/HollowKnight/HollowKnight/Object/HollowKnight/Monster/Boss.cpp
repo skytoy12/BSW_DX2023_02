@@ -253,6 +253,7 @@ void Boss::PostRender()
 	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
 	ImGui::Text("_unbeatableTime : %f", _unbeatableTime);
 	ImGui::Text("cooltime : %f", _attackCoolTime);
+	ImGui::Text("JP : %f", _jumpPower);
 	ImGui::Text("_Setangle : %f", _heatBox->GetTransform()->GetAngle());
 }
 

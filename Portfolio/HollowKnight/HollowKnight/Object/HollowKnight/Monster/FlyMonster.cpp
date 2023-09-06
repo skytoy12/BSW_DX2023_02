@@ -47,7 +47,7 @@ void FlyMonster::Update()
 	}
 
 
-	if (_hp < 0)
+	if (_hp <= 0)
 	{
 		_hp = 0;
 		_isAlive = false;
@@ -92,10 +92,9 @@ void FlyMonster::Update()
 	if (_isAlive == true)
 	{
 		Hitted(_col);
-		UnbeatableToIdle();
 		HitKnockBack(_col);
 	}
-
+	UnbeatableToIdle();
 }
 
 void FlyMonster::Render()

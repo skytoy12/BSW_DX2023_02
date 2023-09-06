@@ -12,6 +12,7 @@ Bullet::Bullet()
 	CreateAction(L"Resource/Bullet/BulletEnd.png", "Resource/Bullet/BulletEnd.xml", "BulletEnd", Vector2(207, 85), Action::Type::END, std::bind(&Bullet::EndEvent, this));
 
 	_transform->SetParent(_col->GetTransform());
+	_transform->SetPosition(Vector2(70.0f, 0.0f));
 }
 
 Bullet::~Bullet()
@@ -26,6 +27,11 @@ void Bullet::Update()
 		SetState(IDLE);
 		_actions[IDLE]->Reset();
 		_actions[END]->Reset();
+
+		for (auto action : _actions)
+			action->Update();
+		for (auto sprite : _sprites)
+			sprite->Update();
 		return;
 	}
 

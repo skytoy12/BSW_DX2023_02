@@ -48,6 +48,7 @@ public :
 	shared_ptr<Transform> GetTransform() { return _transform; }
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 	shared_ptr<RectCollider> GetWeaponcol() { return _weaponCol; }
+	shared_ptr<CircleCollider> GetBulletcol() { return _bulletCol; }
 	bool GetIsAttack() { return _isAttack; }
 	bool GetWeaponActive() { return _isWeaponActive; }
 #pragma endregion
@@ -99,6 +100,7 @@ private :
 	vector<shared_ptr<Action>> _actions;
 	shared_ptr<RectCollider> _col;
 	shared_ptr<RectCollider> _weaponCol;
+	shared_ptr<CircleCollider> _bulletCol;
 	shared_ptr<CircleCollider> _dashCol;
 
 	vector<weak_ptr<class Monster>> _enemies;

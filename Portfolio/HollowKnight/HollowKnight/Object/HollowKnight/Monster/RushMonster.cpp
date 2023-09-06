@@ -47,7 +47,7 @@ void RushMonster::Update()
 	if (_isDeath == true)
 		return;
 
-	if (_hp < 0)
+	if (_hp <= 0)
 	{
 		_hp = 0;
 		_isAlive = false;
@@ -116,8 +116,8 @@ void RushMonster::Update()
 	{
 		Hitted(_col);
 		HitKnockBack(_col);
-		UnbeatableToIdle();
 	}
+	UnbeatableToIdle();
 }
 
 void RushMonster::Render()

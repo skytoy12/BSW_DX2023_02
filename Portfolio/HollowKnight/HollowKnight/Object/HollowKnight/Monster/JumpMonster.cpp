@@ -9,18 +9,30 @@ JumpMonster::JumpMonster()
 	_col = make_shared<RectCollider>(Vector2(95, 180));
 	_landPoint = make_shared<CircleCollider>(20);
 	_transform->SetParent(_col->GetTransform());
-	CreateAction(L"Resource/Monster/Jump/JM_Idle.png", "Resource/Monster/Jump/JM_Idle.xml", "Idle", Vector2(95, 207), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Jump/JM_Idle.png", "Resource/Monster/Jump/JM_Idle.xml", "Idle",
+	Vector2(95, 207), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Jump/JM_Walk.png", "Resource/Monster/Jump/JM_Walk.xml", "Walk", 
+	Vector2(134, 194), Action::Type::LOOP);
+	CreateAction(L"Resource/Monster/Jump/JM_Turn.png", "Resource/Monster/Jump/JM_Turn.xml", "Turn", 
+	Vector2(81, 207), Action::Type::END, std::bind(&JumpMonster::TurnEvent, this));
+	CreateAction(L"Resource/Monster/Jump/JM_JumpReady.png", "Resource/Monster/Jump/JM_JumpReady.xml", "Ready", 
+	Vector2(176, 200), Action::Type::END, std::bind(&JumpMonster::JumpEvent, this));
+	CreateAction(L"Resource/Monster/Jump/JM_Jump.png", "Resource/Monster/Jump/JM_Jump.xml", "Jump", 
+	Vector2(176, 200), Action::Type::END);
+	CreateAction(L"Resource/Monster/Jump/JM_Down.png", "Resource/Monster/Jump/JM_Down.xml", "Down", 
+	Vector2(178, 203), Action::Type::END, std::bind(&JumpMonster::JumpEvent, this));
+	CreateAction(L"Resource/Monster/Jump/JM_Land.png", "Resource/Monster/Jump/JM_Land.xml", "Land", 
+	Vector2(131, 166), Action::Type::END, std::bind(&JumpMonster::LandEvent, this));
+	CreateAction(L"Resource/Monster/Jump/JumpMDeath.png", "Resource/Monster/Jump/JumpMDeath.xml", "Death",
+	Vector2(210, 133), Action::Type::END, std::bind(&JumpMonster::DeathEvent, this));
+	CreateAction(L"Resource/Monster/Jump/JumpMEnd.png", "Resource/Monster/Jump/JumpMEnd.xml", "DeathEnd",
+	Vector2(210, 133), Action::Type::END, std::bind(&JumpMonster::DeathEvent, this));
+
 	_actions[0]->SetSpeed(0.3);
-	CreateAction(L"Resource/Monster/Jump/JM_Walk.png", "Resource/Monster/Jump/JM_Walk.xml", "Idle", Vector2(134, 194), Action::Type::LOOP);
 	_actions[1]->SetSpeed(0.2);
-	CreateAction(L"Resource/Monster/Jump/JM_Turn.png", "Resource/Monster/Jump/JM_Turn.xml", "Idle", Vector2(81, 207), Action::Type::END, std::bind(&JumpMonster::TurnEvent, this));
 	_actions[2]->SetSpeed(0.2);
-	CreateAction(L"Resource/Monster/Jump/JM_JumpReady.png", "Resource/Monster/Jump/JM_JumpReady.xml", "Idle", Vector2(176, 200), Action::Type::END, std::bind(&JumpMonster::JumpEvent, this));
-	CreateAction(L"Resource/Monster/Jump/JM_Jump.png", "Resource/Monster/Jump/JM_Jump.xml", "Idle", Vector2(176, 200), Action::Type::END);
 	_actions[4]->SetSpeed(0.25);
-	CreateAction(L"Resource/Monster/Jump/JM_Down.png", "Resource/Monster/Jump/JM_Down.xml", "Idle", Vector2(178, 203), Action::Type::END, std::bind(&JumpMonster::JumpEvent, this));
 	_actions[5]->SetSpeed(0.15);
-	CreateAction(L"Resource/Monster/Jump/JM_Land.png", "Resource/Monster/Jump/JM_Land.xml", "Idle", Vector2(131, 166), Action::Type::END, std::bind(&JumpMonster::LandEvent, this));
 	_actions[6]->SetSpeed(0.2);
 }
 
@@ -32,8 +44,20 @@ void JumpMonster::Update()
 {
 	if (_targetPlayer.expired() == true)
 		return;
-	if (_isAlive == false)
+
+	if (_isDeath == true)
 		return;
+
+	if (_hp <= 0)
+	{
+		_hp = 0;
+		_isAlive = false;
+	}
+
+	if (_isAlive == false)
+	{
+		DeathStart();
+	}
 
 	Monster::Update();
 
@@ -66,18 +90,17 @@ void JumpMonster::Update()
 	if (_isAlive == true)
 	{
 		Hitted(_col);
-		UnbeatableToIdle();
-		HitKnockBack(_col);
+		if(_isAttack == false)
+			HitKnockBack(_col);
+		if (_KBspeed > 10000)
+			HitKnockBack(_col);
 	}
-
+	UnbeatableToIdle();
 }
 
 void JumpMonster::Render()
 {
 	if (_targetPlayer.expired() == true)
-		return;
-
-	if (_isAlive == false)
 		return;
 
 	Monster::Render();
@@ -95,7 +118,7 @@ void JumpMonster::PostRender()
 	ImGui::Text("_isJump : %d", _isJump);
 	ImGui::Text("_isActive : %d", _isActive);
 	ImGui::Text("_isLeft : %d", _isLeft);
-	ImGui::Text("_isTurn : %d", _isturn);
+	ImGui::Text("WAJ : %d", _targetPlayer.lock()->_isWeaponActiveJ);
 	ImGui::Text("_dir : %f", _dir.x);
 
 }
@@ -112,6 +135,56 @@ void JumpMonster::Attack()
 	TotalUpdate(JUMPREADY);
 	SetState(JUMPREADY);
 	_actions[JUMPREADY]->Play();
+}
+
+void JumpMonster::Hitted(shared_ptr<Collider> col)
+{
+	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+		_targetPlayer.lock()->GetWeaponcol()->SetRed();
+
+	if (_targetPlayer.expired() == true)
+		return;
+	if (_isUnbeatable == true)
+		return;
+	if (_targetPlayer.lock()->_isWeaponActiveJ == false)
+		return;
+
+	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
+	{
+		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		_monsterBuffer->_data.R = 0.5f;
+		_monsterBuffer->_data.G = 0.5f;
+		_monsterBuffer->_data.B = 0.5f;
+		_isUnbeatable = true;
+		_targetPlayer.lock()->SetWeaponActive(false);
+		WeaponActive();
+		if(_isJump == false)
+			_jumpPower = 300.0f;
+
+		if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
+			_KBdir = Vector2(1, 0);
+		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
+			_KBdir = Vector2(-1, 0);
+		_KBspeed = 600;
+		if (_hp == 1 && _monsterType != FLY)
+			_KBspeed = 16000;
+		_hp -= 1;
+	}
+}
+
+void JumpMonster::UnbeatableToIdle()
+{
+	if (_isUnbeatable == true)
+		_unbeatableTime += DELTA_TIME;
+
+	if (_unbeatableTime > 0.1f && _unbeatableTime < 0.2f && _isJump == false)
+		_jumpPower = -400.0f;
+
+	if (_unbeatableTime < 0.2f)
+		return;
+	_isUnbeatable = false;
+	_unbeatableTime = 0.0f;
+	SetRGB(0.0f, 0.0f, 0.0f);
 }
 
 void JumpMonster::SetState(State_JumpMonster type)
@@ -146,6 +219,32 @@ void JumpMonster::TotalUpdate(State_JumpMonster type)
 	_transform->Update();
 	_actions[type]->Update();
 	_sprites[type]->Update();
+}
+
+void JumpMonster::LocationFix(State_JumpMonster type)
+{
+	if (type == DEATH)
+		_transform->SetPosition(Vector2(0, -50));
+	if (type == DEATHEND)
+		_transform->SetPosition(Vector2(0, -50));
+}
+
+void JumpMonster::AllStop()
+{
+	_isJump = false;
+	_isAttack = false;
+	_isturn = false;
+}
+
+void JumpMonster::DeathStart()
+{
+	if (_hp > 0)
+		return;
+	if (_curstate == DEATH || _curstate == DEATHEND)
+		return;
+	AllStop();
+	SetState(DEATH);
+	LocationFix(DEATH);
 }
 
 void JumpMonster::Turn()
@@ -226,9 +325,27 @@ void JumpMonster::LandEvent()
 	_attackCoolTime = 0.0f;
 	_isAttack = false;
 }
+
+void JumpMonster::DeathEvent()
+{
+	if (_curstate == DEATH)
+	{
+		SetRGB(-0.2, -0.2, -0.2);
+		SetAndResetState(DEATHEND);
+		LocationFix(DEATHEND);
+		return;
+	}
+
+	if (_curstate == DEATHEND)
+		_isDeath = true;
+}
+
 #pragma region Update Finction
 void JumpMonster::UnActiveIDle()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isActive == false)
 	{
 		if (_isturn == true)
@@ -244,6 +361,9 @@ void JumpMonster::UnActiveIDle()
 
 void JumpMonster::LandMotionChange()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isJump == true && _jumpPower < 0)
 	{
 		if (_curstate == DOWN)
@@ -258,6 +378,9 @@ void JumpMonster::LandMotionChange()
 
 void JumpMonster::Active()
 {
+	if (_isAlive == false)
+		return;
+
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
 		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isJump == true)
 		_isActive = true;
@@ -270,6 +393,9 @@ void JumpMonster::Active()
 
 void JumpMonster::AttackStart()
 {
+	if (_isAlive == false)
+		return;
+
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 250.0f &&
 		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isJump == true)
 	{
@@ -283,6 +409,9 @@ void JumpMonster::AttackStart()
 
 void JumpMonster::JumpMove()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isJump == true)
 	{
 		_speed = (Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_landPoint->GetTransform()->GetWorldPosition().x, 0.0f)).Length();
@@ -297,6 +426,9 @@ void JumpMonster::JumpMove()
 
 void JumpMonster::DirFix()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isJump == false && _dir.Length() != 0)
 	{
 		_dir = Vector2(_targetPlayer.lock()->GetTransform()->GetWorldPosition().x, 0.0f) - Vector2(_col->GetTransform()->GetWorldPosition().x, 0.0f);
@@ -306,6 +438,9 @@ void JumpMonster::DirFix()
 
 void JumpMonster::WalkChange()
 {
+	if (_isAlive == false)
+		return;
+
 	if (_isActive == true)
 	{
 		Turn();

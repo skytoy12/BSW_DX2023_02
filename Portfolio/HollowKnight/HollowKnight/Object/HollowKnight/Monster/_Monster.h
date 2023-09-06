@@ -23,10 +23,12 @@ public :
 	virtual void Attack() abstract;
 
 	virtual void Hitted(shared_ptr<Collider> col);
+	virtual void BulletHitted(shared_ptr<Collider> col);
 	virtual void HitKnockBack(shared_ptr<Collider> col);
+	virtual void UnbeatableToIdle();
+
 	void WeaponActive();
 
-	void UnbeatableToIdle();
 	void SetRGB(float R, float G, float B);
 
 	void EffectSetting();

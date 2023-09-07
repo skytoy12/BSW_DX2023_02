@@ -1,7 +1,7 @@
 #pragma once
 class Sphere : public Transform
 {
-	typedef VertexTextureNormal VertexType;
+	typedef VertexTextureNormalTangent VertexType;
 public :
 	Sphere(float radius = 1.0f, UINT sliceCount = 20, UINT stackCount = 10);
 	~Sphere();
@@ -12,6 +12,7 @@ public :
 
 private :
 	void CreateMesh();
+	void CreateTangent();
 
 private :
 	Material* material = nullptr;

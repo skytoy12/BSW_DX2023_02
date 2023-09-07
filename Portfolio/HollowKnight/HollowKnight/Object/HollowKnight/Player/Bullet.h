@@ -26,6 +26,7 @@ public :
 	shared_ptr<CircleCollider> GetCollider() { return _col; }
 
 	bool _isActive = false;
+	bool _isAttack = false;
 private :
 	bool _isLeft = false;
 	Vector2 _dir = { 1,0 };

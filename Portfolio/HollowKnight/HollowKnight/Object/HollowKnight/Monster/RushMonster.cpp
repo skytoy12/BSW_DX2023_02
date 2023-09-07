@@ -116,6 +116,7 @@ void RushMonster::Update()
 	{
 		Hitted(_col);
 		HitKnockBack(_col);
+		BulletHitted(_col);
 	}
 	UnbeatableToIdle();
 }

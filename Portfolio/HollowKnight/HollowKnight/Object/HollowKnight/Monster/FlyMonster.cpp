@@ -82,7 +82,7 @@ void FlyMonster::Update()
 		_col->SetRed();
 		Attack();
 	}
-	// 몬스터가 가까이있을때 떨리는 현상 _dir이 1이하일때 스피드 0으로 해서 해결해보기
+
 
 	CreateRangePoint();
 	RightLeft();
@@ -93,6 +93,7 @@ void FlyMonster::Update()
 	{
 		Hitted(_col);
 		HitKnockBack(_col);
+		BulletHitted(_col);
 	}
 	UnbeatableToIdle();
 }

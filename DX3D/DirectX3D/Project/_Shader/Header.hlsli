@@ -60,7 +60,16 @@ struct VertexTextureNormal
     float3 normal : NORMAL;
 };
 
-Texture2D diffusemap : register(t0);
+struct VertexTextureNormalTangent
+{
+    float4 pos : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+};
+
+Texture2D  diffusemap : register(t0);
 Texture2D specularmap : register(t1);
+Texture2D   normalmap : register(t2);
 
 SamplerState    samp : register(s0);

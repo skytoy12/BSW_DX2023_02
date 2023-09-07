@@ -51,6 +51,7 @@ public :
 	shared_ptr<CircleCollider> GetBulletcol() { return _bulletCol; }
 	bool GetIsAttack() { return _isAttack; }
 	bool GetWeaponActive() { return _isWeaponActive; }
+	bool GetBulletActive() { return _isBulletActive; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -59,6 +60,7 @@ public :
 	void SetState(State_Player type);
 	void SetAndResetState(State_Player type);
 	void SetWeaponActive(bool value) { _isWeaponActive = value; }
+	void SetBulletActive(bool value) { _isBulletActive = value; }
 #pragma endregion
 
 	bool _isWeaponActiveB = false;
@@ -82,6 +84,7 @@ private :
 	bool _isAttack = false;
 
 	bool _isWeaponActive = false;
+	bool _isBulletActive = false;
 
 	bool _isDash = false;
 	bool _isChargeAndFire = false;

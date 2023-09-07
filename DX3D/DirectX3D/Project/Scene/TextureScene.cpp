@@ -14,8 +14,10 @@ TextureScene::TextureScene()
 
 	sphere = new Sphere();
 	sphere->translation.x = -2;
+	//sphere->GetMaterial()->SetDuffuseMap(L"LandScape/Dirt3.png");
 	sphere->GetMaterial()->SetDuffuseMap(L"LandScape/Fieldstone_DM.tga");
 	sphere->GetMaterial()->SetSpecularMap(L"LandScape/Fieldstone_SM.tga");
+	sphere->GetMaterial()->SetNormalMap(L"LandScape/Fieldstone_NM.tga");
 }
 
 TextureScene::~TextureScene()

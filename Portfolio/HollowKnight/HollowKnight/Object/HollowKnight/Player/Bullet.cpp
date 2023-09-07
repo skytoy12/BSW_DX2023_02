@@ -27,6 +27,7 @@ void Bullet::Update()
 		SetState(IDLE);
 		_actions[IDLE]->Reset();
 		_actions[END]->Reset();
+		_isAttack = false;
 
 		for (auto action : _actions)
 			action->Update();
@@ -59,6 +60,14 @@ void Bullet::Update()
 		_speed = 0.0f;
 	}
 
+	if (_isAttack == false)
+	{
+		if (_curstate == END)
+			return;
+		SetState(END);
+		_actions[END]->Play();
+		_speed = 0.0f;
+	}
 }
 
 void Bullet::Render()

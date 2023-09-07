@@ -81,6 +81,11 @@ void Player::Update()
 	_transform->Update();
 	_bullet->Update();
 	_effect->Update();
+	if (_isBulletActive == false)
+	{
+		_bullet->_isAttack = false;
+	}
+
 	if (_bullet->_isActive == true)
 		_bulletCol->Update();
 
@@ -117,6 +122,11 @@ void Player::PostRender()
 {
 	ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
 	ImGui::Text("_isAttack : %d", _isAttack);
+
+	ImGui::Text("_isBulletActive : %d", _isBulletActive);
+	ImGui::Text("_isActiveB : %d", _bullet->_isActive);
+	ImGui::Text("_isAttackB : %d", _bullet->_isAttack);
+
 
 	ImGui::Text("world.x : %.1f, world.y : %.1f", _col->GetTransform()->GetWorldPosition().x, _col->GetTransform()->GetWorldPosition().y);
 	ImGui::Text("Camera.x : %.1f, Camera.y : %.1f", CAMERA->GetOringin().x, CAMERA->GetOringin().y);
@@ -322,12 +332,15 @@ void Player::ChargeAndFire()
 		}
 
 
+
 		if (_isLeft == false)
 		{
 			_chargeTime = 0.0f;
 			_bulletCoolTime = 0.0f;
 			_bullet->Update();
 			_bullet->Shoot(_col->GetTransform()->GetWorldPosition());
+			_isBulletActive = true;
+			_bullet->_isAttack = true;
 		}
 		else
 		{
@@ -335,6 +348,8 @@ void Player::ChargeAndFire()
 			_bulletCoolTime = 0.0f;
 			_bullet->Update();
 			_bullet->Shoot(_col->GetTransform()->GetWorldPosition(), Vector2(-1, 0));
+			_isBulletActive = true;
+			_bullet->_isAttack = true;
 		}
 
 		_isChargeAndFire = false;

@@ -15,6 +15,7 @@ public:
 
 	void SetDuffuseMap(wstring file);
 	void SetSpecularMap(wstring file);
+	void SetNormalMap(wstring file);
 
 	MaterialBuffer* GetBuffer() { return buffer; }
 
@@ -26,6 +27,7 @@ private:
 
 	 Texture* diffuseMap = nullptr;
 	 Texture* specularMap = nullptr;
+	 Texture* normalMap = nullptr;
 
 	 MaterialBuffer* buffer = nullptr;
 };

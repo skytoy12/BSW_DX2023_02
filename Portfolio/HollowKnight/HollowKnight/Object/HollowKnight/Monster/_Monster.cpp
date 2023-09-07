@@ -93,6 +93,8 @@ void Monster::BulletHitted(shared_ptr<Collider> col)
 		return;
 	if (_isUnbeatable == true)
 		return;
+	if (_targetPlayer.lock()->GetBulletActive() == false)
+		return;
 	
 	if (col->IsCollision(_targetPlayer.lock()->GetBulletcol()))
 	{
@@ -101,8 +103,7 @@ void Monster::BulletHitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
-		_targetPlayer.lock()->SetWeaponActive(false);
-		WeaponActive();
+		_targetPlayer.lock()->SetBulletActive(false);
 		_jumpPower = 300.0f;
 		if (_monsterType == RUSH)
 			_speed = 100.0f;
@@ -112,9 +113,13 @@ void Monster::BulletHitted(shared_ptr<Collider> col)
 		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
 			_KBdir = Vector2(-1, 0);
 		_KBspeed = 600;
-		if (_hp == 1 && _monsterType != FLY)
+
+		_hp -= 5;
+		if (_hp <= 0)
+			_hp = 0;
+
+		if (_hp == 0 && _monsterType != FLY)
 			_KBspeed = 16000;
-		_hp -= 1;
 	}
 }
 

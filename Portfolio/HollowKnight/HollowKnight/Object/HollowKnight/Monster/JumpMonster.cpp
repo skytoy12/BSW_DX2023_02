@@ -90,6 +90,7 @@ void JumpMonster::Update()
 	if (_isAlive == true)
 	{
 		Hitted(_col);
+		BulletHitted(_col);
 		if(_isAttack == false)
 			HitKnockBack(_col);
 		if (_KBspeed > 10000)
@@ -185,6 +186,40 @@ void JumpMonster::UnbeatableToIdle()
 	_isUnbeatable = false;
 	_unbeatableTime = 0.0f;
 	SetRGB(0.0f, 0.0f, 0.0f);
+}
+
+void JumpMonster::BulletHitted(shared_ptr<Collider> col)
+{
+
+	if (_targetPlayer.expired() == true)
+		return;
+	if (_isUnbeatable == true)
+		return;
+	if (_targetPlayer.lock()->GetBulletActive() == false)
+		return;
+
+	if (col->IsCollision(_targetPlayer.lock()->GetBulletcol()))
+	{
+		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		_monsterBuffer->_data.R = 0.5f;
+		_monsterBuffer->_data.G = 0.5f;
+		_monsterBuffer->_data.B = 0.5f;
+		_isUnbeatable = true;
+		_targetPlayer.lock()->SetBulletActive(false);
+
+		if (_isJump == false)
+			_jumpPower = 300.0f;
+
+		if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
+			_KBdir = Vector2(1, 0);
+		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
+			_KBdir = Vector2(-1, 0);
+		_KBspeed = 600;
+
+		_hp -= 5;
+		if (_hp <= 0)
+			_hp = 0;
+	}
 }
 
 void JumpMonster::SetState(State_JumpMonster type)

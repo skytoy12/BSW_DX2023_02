@@ -27,6 +27,7 @@ public :
 
 	virtual void Hitted(shared_ptr<Collider> col) override;
 	virtual void UnbeatableToIdle() override;
+	virtual void BulletHitted(shared_ptr<Collider> col) override;
 
 	void SetState(State_JumpMonster type);
 	void SetAndResetState(State_JumpMonster type);

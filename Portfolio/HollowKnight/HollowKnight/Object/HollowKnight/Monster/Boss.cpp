@@ -19,6 +19,7 @@ Boss::Boss()
 	_jumpLine->SetPosition(Vector2(0, WIN_HEIGHT + 80));
 	_landLine->SetPosition(Vector2(0, -85));
 
+	_col->SetObjectType(Collider::ObjectType::MONSTER);
 	_transform->SetParent(_col->GetTransform());
 	_heatBox->SetParent(_col->GetTransform());
 	_weaponCol->SetParent(_heatBox->GetTransform());
@@ -109,14 +110,18 @@ void Boss::Update()
 	_col->Update();
 	_transform->Update();
 	_heatBox->Update();
-	if (_isAttack == true || _isGrogyAttack == true)
-		_weaponCol->Update();
+	_weaponCol->Update();
 	_jumpLine->Update();
 	_landLine->Update();
 
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 	_head->Update();
+
+	if (_isColActive == true)
+		_heatBox->SetGreen();
+	else
+		_heatBox->SetRed();
 
 	_jumpLine->SetPosition(Vector2(_col->GetTransform()->GetWorldPosition().x, _jumpLine->GetTransform()->GetWorldPosition().y));
 	_landLine->SetPosition(Vector2(_col->GetTransform()->GetWorldPosition().x, _landLine->GetTransform()->GetWorldPosition().y));
@@ -146,6 +151,13 @@ void Boss::Update()
 	GrogyKnockBack();
 	Attack();
 	Hitted(_heatBox);
+
+	if(_isColActive == true)
+		targetHit(_heatBox);
+
+	if(_isWeaponActive == true)
+		ExtraHit(_weaponCol, _heatBox);
+
 	UnbeatableToIdle();
 	RealHitted();
 	if (_isWeaponMove == true)
@@ -227,8 +239,7 @@ void Boss::Render()
 	_sprites[_curstate]->Render();
 	_heatBox->Render();
 	_head->Render();
-	if(_isAttack == true || _isGrogyAttack == true)
-		_weaponCol->Render();
+	_weaponCol->Render();
 	_jumpLine->Render();
 	_landLine->Render();
 	_col->Render();
@@ -236,34 +247,34 @@ void Boss::Render()
 
 void Boss::PostRender()
 {
-	ImGui::SliderFloat("Location.x", (float*)&_location.x, -600.0f, 600.0f);
-	ImGui::SliderFloat("Location.y", (float*)&_location.y, -600.0f, 600.0f);
-	ImGui::SliderInt("CurState", (int*)&_curstate, 0, 14);
-	ImGui::Text("landpoint : %f", _landPoint.x);
-	ImGui::Text("target : %f", _targetPlayer.lock()->GetTransform()->GetWorldPosition().x);
+	//ImGui::SliderFloat("Location.x", (float*)&_location.x, -600.0f, 600.0f);
+	//ImGui::SliderFloat("Location.y", (float*)&_location.y, -600.0f, 600.0f);
+	//ImGui::SliderInt("CurState", (int*)&_curstate, 0, 14);
+	//ImGui::Text("landpoint : %f", _landPoint.x);
+	//ImGui::Text("target : %f", _targetPlayer.lock()->GetTransform()->GetWorldPosition().x);
 	//ImGui::Text("_isLeft : %d", _isLeft);
 	//ImGui::Text("_isTurn : %d", _isTurn);
 	//ImGui::Text("_isJump : %d", _isJump);
 	//ImGui::Text("_isJump : %d", _isJustJump);
 	//ImGui::Text("_isJumpAttack : %d", _isJumpAttack);
-	ImGui::Text("_isUnbeatable : %d", _isUnbeatable);
-	ImGui::Text("headPos : %.1f", _head->GetPos().y);
+	//ImGui::Text("_isUnbeatable : %d", _isUnbeatable);
+	//ImGui::Text("headPos : %.1f", _head->GetPos().y);
 	//ImGui::Text("_isAttack : %d", _isAttack);
-	ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
-	ImGui::Text("_isreturn : %d", _isreturn);
-	ImGui::Text("_hitCount : %d", _hitCount);
+	//ImGui::Text("_isGrogyAttack : %d", _isGrogyAttack);
+	//ImGui::Text("_isreturn : %d", _isreturn);
+	//ImGui::Text("_hitCount : %d", _hitCount);
 	//ImGui::Text("_isActive : %d", _isWeaponActive);
 	//ImGui::Text("_isGrogy : %d", _isGrogy);
-	ImGui::Text("_isJAL : %d", _isJumpAndLandAttack);
-	ImGui::Text("_isJAG : %d", _isJumpAndGrogyAttack);
-	ImGui::Text("_isGrogy : %d", _isGrogy);
-	ImGui::Text("Type : %d", _curAttackType);
-	ImGui::Text("count : %d", _weaponMove._count);
-	ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
-	ImGui::Text("_unbeatableTime : %f", _unbeatableTime);
-	ImGui::Text("cooltime : %f", _attackCoolTime);
-	ImGui::Text("JP : %f", _jumpPower);
-	ImGui::Text("_Setangle : %f", _heatBox->GetTransform()->GetAngle());
+	//ImGui::Text("_isJAL : %d", _isJumpAndLandAttack);
+	//ImGui::Text("_isJAG : %d", _isJumpAndGrogyAttack);
+	//ImGui::Text("_isGrogy : %d", _isGrogy);
+	//ImGui::Text("Type : %d", _curAttackType);
+	//ImGui::Text("count : %d", _weaponMove._count);
+	//ImGui::Text("_angle : %f", _weaponMove._weaponAngle);
+	//ImGui::Text("_unbeatableTime : %f", _unbeatableTime);
+	//ImGui::Text("cooltime : %f", _attackCoolTime);
+	//ImGui::Text("JP : %f", _jumpPower);
+	//ImGui::Text("_Setangle : %f", _heatBox->GetTransform()->GetAngle());
 }
 
 void Boss::Attack()
@@ -834,6 +845,7 @@ void Boss::AttackEvent()
 	if (_curstate == GROGYATTACK)
 	{
 		_isGrogyAttack = true;
+		_isColActive = true;
 		TotalUpdate(GROGYATTACK);
 		if (_isLeft == true)
 			SetRight();
@@ -851,6 +863,7 @@ void Boss::AttackEvent()
 		{
 			_isGrogyAttack = false;
 			_isJumpAndGrogyAttack = false;
+			_isWeaponActive = false;
 			_weaponMove._speed = 0.0f;
 			_weaponMove._count = 0;
 			_attackCoolTime = 0.0f;
@@ -1142,6 +1155,7 @@ void Boss::Grogy()
 	if (_isGrogy == true)
 		return;
 	_isGrogy = true;
+	_isColActive = false;
 	AllStop();
 	_grogySpeed = 200.0f;
 	_jumpPower = 300.0f;

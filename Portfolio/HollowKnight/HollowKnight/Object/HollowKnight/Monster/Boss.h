@@ -42,6 +42,7 @@ public :
 	virtual void Hitted(shared_ptr<Collider> col) override;
 	void RealHitted();
 
+
 	float Angle(float angle) { return angle * (PI / 180); }
 
 	void SetState(State_Boss type);
@@ -136,7 +137,6 @@ private :
 	bool _isJump = false;
 	bool _isAttack = false;
 	bool _isJumpAttack = false;
-
 	bool _isJustJump = false;
 	bool _isJumpAndLandAttack = false;
 	bool _isJumpAndGrogyAttack = false;
@@ -145,6 +145,8 @@ private :
 	bool _isTurn = false;
 	bool _isWeaponMove = false;
 	bool _isWeaponActive = false;
+	bool _isColActive = true;
+
 
 	bool _isGrogy = false;
 

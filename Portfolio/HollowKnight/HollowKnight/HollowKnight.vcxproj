@@ -151,8 +151,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\UI\MainString.h" />
+    <ClInclude Include="Scene\GameScene\MainScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\BossHead.h" />
-    <ClInclude Include="Scene\BagicScene\BossTestScene.h" />
+    <ClInclude Include="Scene\TestScene\BossTestScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h" />
     <ClInclude Include="Object\HollowKnight\Monster\Boss.h" />
     <ClInclude Include="Object\HollowKnight\Monster\FlyMonster.h" />
@@ -202,7 +204,7 @@
     <ClInclude Include="Object\HollowKnight\Monster\_Monster.h" />
     <ClInclude Include="Object\HollowKnight\Player\Player.h" />
     <ClInclude Include="Object\HollowKnight\Monster\RushMonster.h" />
-    <ClInclude Include="Scene\BagicScene\MapTool.h" />
+    <ClInclude Include="Scene\TestScene\MapTool.h" />
     <ClInclude Include="Object\Bagic\Effect.h" />
     <ClInclude Include="Object\Bagic\EffectManager.h" />
     <ClInclude Include="Object\Bagic\Quad.h" />
@@ -213,12 +215,14 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="Scene\BagicScene\TestScene.h" />
+    <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\UI\MainString.cpp" />
+    <ClCompile Include="Scene\GameScene\MainScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\BossHead.cpp" />
-    <ClCompile Include="Scene\BagicScene\BossTestScene.cpp" />
+    <ClCompile Include="Scene\TestScene\BossTestScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\Boss.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\FlyMonster.cpp" />
@@ -263,7 +267,7 @@
     <ClCompile Include="Object\HollowKnight\Monster\_Monster.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\Player.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\RushMonster.cpp" />
-    <ClCompile Include="Scene\BagicScene\MapTool.cpp" />
+    <ClCompile Include="Scene\TestScene\MapTool.cpp" />
     <ClCompile Include="Object\Bagic\Effect.cpp" />
     <ClCompile Include="Object\Bagic\EffectManager.cpp" />
     <ClCompile Include="Object\Bagic\Quad.cpp" />
@@ -272,7 +276,7 @@
     <ClCompile Include="Program\Program.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
-    <ClCompile Include="Scene\BagicScene\TestScene.cpp" />
+    <ClCompile Include="Scene\TestScene\TestScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />

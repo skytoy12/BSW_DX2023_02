@@ -3,7 +3,7 @@
 
 TerrainScene::TerrainScene()
 {
-	terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"HeightMap/HeightMap.png");
+	terrain = new Terrain(L"LandScape/Wall.png", L"LandScape/Wall_specular.png", L"LandScape/Wall_normal.png", L"LandScape/Floor.png");
 }
 
 TerrainScene::~TerrainScene()

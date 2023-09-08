@@ -10,6 +10,7 @@ FlyMonster::FlyMonster(Vector2 pos)
 	_col = make_shared<CircleCollider>(40);
 	_rangePoint = make_shared<CircleCollider>(20);
 
+
 	CreateAction(L"Resource/Monster/Fly/FLYIDLE.png", "Resource/Monster/Fly/FLYIDLE.xml", "Idle",
 	Vector2(95, 115), Action::Type::LOOP);
 
@@ -19,6 +20,7 @@ FlyMonster::FlyMonster(Vector2 pos)
 	CreateAction(L"Resource/Monster/Fly/FLYDEATH1.png", "Resource/Monster/Fly/FLYDEATH1.xml", "Idle",
 	Vector2(90, 87), Action::Type::END, std::bind(&FlyMonster::DeathEvent, this));
 
+	_col->SetObjectType(Collider::ObjectType::MONSTER);
 	_transform->SetParent(_col->GetTransform());
 	_col->SetPosition(pos);
 	_originPos = pos;
@@ -88,6 +90,9 @@ void FlyMonster::Update()
 	RightLeft();
 	UnActive();
 	Active();
+
+
+	targetHit(_col);
 
 	if (_isAlive == true)
 	{

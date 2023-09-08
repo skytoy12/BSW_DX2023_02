@@ -2,7 +2,7 @@
 class Terrain : public Transform
 {
 public:
-	Terrain(wstring diffuseFile, wstring specularFile, wstring heightFile);
+	Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile);
 	~Terrain();
 
 	void Render();
@@ -12,9 +12,9 @@ public:
 private :
 	void CreateMesh();
 	void CreateNormal();
-
+	void CreateTangent();
 private:
-	vector<VertexTextureNormal> vertices;
+	vector<VertexTextureNormalTangent> vertices;
 	vector<UINT>           indices;
 
 	Material* material;

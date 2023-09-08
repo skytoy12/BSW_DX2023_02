@@ -28,7 +28,8 @@ void Bullet::Update()
 		_actions[IDLE]->Reset();
 		_actions[END]->Reset();
 		_isAttack = false;
-
+		_col->Update();
+		_transform->Update();
 		for (auto action : _actions)
 			action->Update();
 		for (auto sprite : _sprites)

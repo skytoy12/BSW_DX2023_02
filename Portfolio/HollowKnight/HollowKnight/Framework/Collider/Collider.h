@@ -12,9 +12,15 @@ protected :
 		CIRCLE,
 		RECT
 	};
-
 public :
 
+	enum ObjectType
+	{
+		PLAYER,
+		MONSTER,
+		WALL,
+		NONE
+	};
 
 	Collider(ColliderType type);
 	virtual ~Collider();
@@ -50,6 +56,8 @@ public :
 
 	void SetParent(shared_ptr<Transform> transform) { _transform->SetParent(transform); }
 
+	ObjectType GetObjectType() { return _objectType; }
+	void SetObjectType(ObjectType type) { _objectType = type; }
 	
 	static bool _isDebug;
 
@@ -70,6 +78,7 @@ protected :
 	shared_ptr<ColorBuffer> _colorBuffer;
 
 	ColliderType _type;
+	ObjectType _objectType = NONE;
 
 };
 

@@ -1,15 +1,16 @@
 #include "framework.h"
 #include "SceneManager.h"
 
-#include "BagicScene/MapTool.h"
-#include "BagicScene/TestScene.h"
-#include "BagicScene/BossTestScene.h"
+#include "TestScene/MapTool.h"
+#include "TestScene/TestScene.h"
+#include "TestScene/BossTestScene.h"
 
+#include "GameScene/MainScene.h"
 
 SceneManager* SceneManager::_instance = nullptr;
+
 SceneManager::SceneManager()
 {
-
 	_scenes.push_back(make_shared<BossTestScene>());
 	_scenes.push_back(make_shared<TestScene>());
 }

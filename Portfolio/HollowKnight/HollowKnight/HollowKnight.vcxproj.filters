@@ -165,13 +165,13 @@
     <ClInclude Include="Scene\SceneManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\BagicScene\MapTool.h">
+    <ClInclude Include="Scene\TestScene\MapTool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\HollowKnight\Player\Player.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\BagicScene\TestScene.h">
+    <ClInclude Include="Scene\TestScene\TestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\HollowKnight\Monster\_Monster.h">
@@ -201,10 +201,16 @@
     <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\BagicScene\BossTestScene.h">
+    <ClInclude Include="Scene\TestScene\BossTestScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\HollowKnight\Monster\BossHead.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene\MainScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\UI\MainString.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -320,13 +326,13 @@
     <ClCompile Include="Scene\SceneManager.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\BagicScene\MapTool.cpp">
+    <ClCompile Include="Scene\TestScene\MapTool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\HollowKnight\Player\Player.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\BagicScene\TestScene.cpp">
+    <ClCompile Include="Scene\TestScene\TestScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\HollowKnight\Monster\_Monster.cpp">
@@ -356,10 +362,16 @@
     <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\BagicScene\BossTestScene.cpp">
+    <ClCompile Include="Scene\TestScene\BossTestScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\HollowKnight\Monster\BossHead.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\MainScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\MainString.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

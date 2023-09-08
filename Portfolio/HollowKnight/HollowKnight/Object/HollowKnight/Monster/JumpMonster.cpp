@@ -34,6 +34,8 @@ JumpMonster::JumpMonster()
 	_actions[4]->SetSpeed(0.25);
 	_actions[5]->SetSpeed(0.15);
 	_actions[6]->SetSpeed(0.2);
+
+	_col->SetObjectType(Collider::ObjectType::MONSTER);
 }
 
 JumpMonster::~JumpMonster()
@@ -87,6 +89,9 @@ void JumpMonster::Update()
 	JumpMove(); // 점프하는 동안 움직일 수 있게 해줌
 	DirFix(); // 타겟쪽으로 방향 전환 & 점프동안 방향고정
 	WalkChange(); // Active활성화 됬을 때 걷는 모션으로 변경 및 타겟으로 걸어가게 하기
+
+	targetHit(_col);
+
 	if (_isAlive == true)
 	{
 		Hitted(_col);

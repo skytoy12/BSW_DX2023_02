@@ -22,6 +22,8 @@ public :
 	virtual void PostRender() abstract;
 	virtual void Attack() abstract;
 
+	virtual void targetHit(shared_ptr<Collider> col);
+	virtual void ExtraHit(shared_ptr<Collider> hitcol, shared_ptr<Collider> dircol);
 	virtual void Hitted(shared_ptr<Collider> col);
 	virtual void BulletHitted(shared_ptr<Collider> col);
 	virtual void HitKnockBack(shared_ptr<Collider> col);
@@ -54,6 +56,7 @@ protected :
 	bool _isActive = false;
 	bool _isLeft = false;
 	bool _isUnbeatable = false;
+
 
 	//weak_ptr<Transform> _target;
 	weak_ptr<class Player> _targetPlayer;

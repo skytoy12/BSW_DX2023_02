@@ -20,15 +20,22 @@ Player::Player()
 	_effect = make_shared<ChargeEffect>();
 #pragma endregion
 #pragma region CreateAction
-	CreateAction(L"Resource/Player/Idle.png", "Resource/Player/Idle.xml", "Idle", Vector2(61, 130), Action::Type::LOOP);
-	CreateAction(L"Resource/Player/RunStart.png", "Resource/Player/RunStart.xml", "RunStart", Vector2(86, 130), Action::Type::END, std::bind(&Player::EndEvent, this));
-	CreateAction(L"Resource/Player/Running.png", "Resource/Player/Running.xml", "Running", Vector2(86, 130), Action::Type::LOOP);
-	CreateAction(L"Resource/Player/Dash.png", "Resource/Player/Dash.xml", "Dash", Vector2(192, 117), Action::Type::END, std::bind(&Player::EndEvent, this));
-	CreateAction(L"Resource/Player/DNSlash.png", "Resource/Player/DNSlash.xml", "Slash", Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
-	CreateAction(L"Resource/Player/Charge.png", "Resource/Player/Charge.xml", "Charge", Vector2(114, 127), Action::Type::LOOP);
-	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Death", Vector2(116, 131), Action::Type::END, std::bind(&Player::EndEvent, this));
-	_actions[DASH]->SetSpeed(0.05f);
-	_actions[SLASH]->SetSpeed(0.03f);
+	CreateAction(L"Resource/Player/Idle.png", "Resource/Player/Idle.xml", "Idle", 
+	Vector2(61, 130), Action::Type::LOOP);
+	CreateAction(L"Resource/Player/RunStart.png", "Resource/Player/RunStart.xml", "RunStart", 
+	Vector2(86, 130), Action::Type::END, std::bind(&Player::EndEvent, this));
+	CreateAction(L"Resource/Player/Running.png", "Resource/Player/Running.xml", "Running", 
+	Vector2(86, 130), Action::Type::LOOP);
+	CreateAction(L"Resource/Player/Dash.png", "Resource/Player/Dash.xml", "Dash", 
+	Vector2(192, 117), Action::Type::END, std::bind(&Player::EndEvent, this));
+	CreateAction(L"Resource/Player/DNSlash.png", "Resource/Player/DNSlash.xml", "Slash", 
+	Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
+	CreateAction(L"Resource/Player/Charge.png", "Resource/Player/Charge.xml", "Charge", 
+	Vector2(114, 127), Action::Type::LOOP);
+	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Hitted", 
+	Vector2(116, 131), Action::Type::END, std::bind(&Player::UnbeatableToIdle, this));
+	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Death",
+	Vector2(116, 131), Action::Type::END, std::bind(&Player::EndEvent, this));
 #pragma endregion
 
 #pragma region CREAT EFFECT
@@ -45,10 +52,13 @@ Player::Player()
 	_transform->SetPosition(Vector2(0, 18));
 	_bulletCol->SetParent(_bullet->GetCollider()->GetTransform());
 	_effect->GetTransform()->SetParent(_col->GetTransform());
+	_actions[DASH]->SetSpeed(0.05f);
+	_actions[SLASH]->SetSpeed(0.03f);
 #pragma endregion
 
 #pragma region TEST
 	//SetState(DASH);
+
 #pragma endregion
 }
 
@@ -64,7 +74,9 @@ void Player::Update()
 		_isAlive = true;
 	}
 
-	if (_isAlive == false)
+
+
+	if (_isDeath == true)
 		return;
 
 	if (_isAttack == false)
@@ -94,15 +106,21 @@ void Player::Update()
 	else
 		_weaponCol->SetBlue();
 
-	CoolTime();
-	if(_isDash == false)
-		Gravity();
-	Select();
+	if (_isAlive == true)
+	{
+		CoolTime();
+		if (_isDash == false)
+			Gravity();
+		if (_isUnbeatable == false)
+			Select();
+		HitKnockBack();
+	}
+
 }
 
 void Player::Render()
 {
-	if (_isAlive == false)
+	if (_isDeath == true)
 		return;
 
 	_transform->SetBuffer(0);
@@ -122,6 +140,9 @@ void Player::PostRender()
 {
 	ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
 	ImGui::Text("_isAttack : %d", _isAttack);
+	ImGui::Text("Death : %d", _isDeath);
+	ImGui::Text("state : %d", _curstate);
+	ImGui::Text("HP : %d", _hp);
 
 	ImGui::Text("_isBulletActive : %d", _isBulletActive);
 	ImGui::Text("_isActiveB : %d", _bullet->_isActive);
@@ -146,7 +167,11 @@ void Player::Select()
 	if(_bulletCoolTime > 2.9f)
 		ChargeAndFire();
 	if (KEY_DOWN(VK_F4))
+	{
+		AllStop();
 		SetAndResetState(DEATH);
+	}
+
 }
 
 #pragma endregion
@@ -389,7 +414,7 @@ void Player::EndEvent()
 
 	if (_curstate == DEATH)
 	{
-		_isAlive = false;
+		_isDeath = true;
 		return;
 	}
 }
@@ -461,6 +486,62 @@ void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, V
 void Player::SetEnemy(shared_ptr<class Monster> enemy)
 {
 	_enemies.push_back(enemy);
+}
+
+void Player::AllStop()
+{
+	_isWeaponActiveB = false;
+	_isWeaponActiveF = false;
+	_isWeaponActiveJ = false;
+	_isWeaponActiveR = false;
+	_isJump = false;
+	_isAttack = false;
+	_isWeaponActive = false;
+	_isDash = false;
+	_isChargeAndFire = false;
+	_effect->_isActive = false;
+}
+
+void Player::Hitted()
+{
+	if (_isUnbeatable == true)
+		return;
+	if (_isAlive == false)
+		return;
+	AllStop();
+	_isUnbeatable = true;
+
+	_jumpPower = 300.0f;
+
+	_KBspeed = 600;
+	_hp -= 1;
+	if (_hp <= 0)
+		_hp = 0;
+
+	if (_hp == 0)
+	{
+		_isAlive = false;
+		_isUnbeatable = false;
+		SetAndResetState(DEATH);
+		return;
+	}
+
+	SetAndResetState(HITTED);
+}
+
+void Player::HitKnockBack()
+{
+	if (_isUnbeatable == true)
+		_col->GetTransform()->AddVector2(_KBdir * _KBspeed * DELTA_TIME);
+
+	if (_unbeatableTime > 0.1f && _unbeatableTime < 0.2f)
+		_jumpPower = -400.0f;
+}
+
+void Player::UnbeatableToIdle()
+{
+	_isUnbeatable = false;
+	SetAndResetState(IDLE);
 }
 
 

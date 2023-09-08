@@ -33,6 +33,7 @@ RushMonster::RushMonster()
 	_actions[WALK]->SetSpeed(0.2);
 	_actions[TURN]->SetSpeed(0.2);
 
+	_col->SetObjectType(Collider::ObjectType::MONSTER);
 }
 
 RushMonster::~RushMonster()
@@ -102,6 +103,7 @@ void RushMonster::Update()
 	WalkChange();
 	Active();
 	UnActiveIdle();
+	targetHit(_col);
 
 	//RightLeft();
 	if (_rushTime > 2.5f)

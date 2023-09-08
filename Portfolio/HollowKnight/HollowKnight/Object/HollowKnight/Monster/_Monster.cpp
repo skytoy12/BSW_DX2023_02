@@ -29,6 +29,36 @@ void Monster::Render()
 
 
 
+void Monster::targetHit(shared_ptr<Collider> col)
+{
+	if (_targetPlayer.lock()->_isUnbeatable == true)
+		return;
+
+	if (col->IsCollision(_targetPlayer.lock()->GetCollider()))
+	{
+		if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
+			_targetPlayer.lock()->SetKBdir(Vector2(-1, 0));
+		else if ((_targetPlayer.lock()->WORLD.x - col->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
+			_targetPlayer.lock()->SetKBdir(Vector2(1, 0));
+		_targetPlayer.lock()->Hitted();
+	}
+}
+
+void Monster::ExtraHit(shared_ptr<Collider> hitcol, shared_ptr<Collider> dircol)
+{
+	if (_targetPlayer.lock()->_isUnbeatable == true)
+		return;
+
+	if (hitcol->IsCollision(_targetPlayer.lock()->GetCollider()))
+	{
+		if ((_targetPlayer.lock()->WORLD.x - dircol->WORLD.x) < 0) // 몬스터가 플레이어보다 오른쪽에 있을 때
+			_targetPlayer.lock()->SetKBdir(Vector2(-1, 0));
+		else if ((_targetPlayer.lock()->WORLD.x - dircol->WORLD.x) > 0) // 몬스터가 플레이어보다 왼쪽에 있을 때
+			_targetPlayer.lock()->SetKBdir(Vector2(1, 0));
+		_targetPlayer.lock()->Hitted();
+	}
+}
+
 void Monster::Hitted(shared_ptr<Collider> col)
 {
 	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))

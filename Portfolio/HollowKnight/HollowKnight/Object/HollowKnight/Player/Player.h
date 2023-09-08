@@ -11,6 +11,7 @@ public :
 		DASH,
 		SLASH,
 		CHARGE,
+		HITTED,
 		DEATH
 	};
 
@@ -24,6 +25,12 @@ public :
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
 	void SetEnemy(shared_ptr<class Monster> enemy);
+
+	void AllStop();
+
+	void Hitted();
+	void HitKnockBack();
+	void UnbeatableToIdle();
 
 #pragma region Player Move & Attack
 	void Move(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos * DELTA_TIME * _speed); }
@@ -61,6 +68,7 @@ public :
 	void SetAndResetState(State_Player type);
 	void SetWeaponActive(bool value) { _isWeaponActive = value; }
 	void SetBulletActive(bool value) { _isBulletActive = value; }
+	void SetKBdir(Vector2 value) { _KBdir = value; }
 #pragma endregion
 
 	bool _isWeaponActiveB = false;
@@ -77,14 +85,22 @@ private :
 	float _chargeTime = 0.0f;
 	float _bulletCoolTime = 10.0f;
 
+	float _unbeatableTime = 0.0f;
+
+	Vector2 _KBdir = { 1,0 };
+	float _KBspeed = 150.0f;
+	
 #pragma region STATE
 	bool _isAlive = true;
+	bool _isDeath = false;
 	bool _isLeft = false;
 	bool _isJump = false;
 	bool _isAttack = false;
 
 	bool _isWeaponActive = false;
 	bool _isBulletActive = false;
+
+	bool _isUnbeatable = false;
 
 	bool _isDash = false;
 	bool _isChargeAndFire = false;

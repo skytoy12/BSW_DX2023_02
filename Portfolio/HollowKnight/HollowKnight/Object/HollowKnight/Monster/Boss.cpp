@@ -81,7 +81,16 @@ Boss::Boss()
 
 #pragma endregion
 
+#pragma region Sound ¼³Á¤
+	SOUND->Add("ArmourHit", "Resource/Sound/Boss/false_knight_damage_armour.wav");
+	SOUND->Add("HeadHit", "Resource/Sound/Boss/false_knight_head_damage_2.wav");
+	SOUND->Add("Jump", "Resource/Sound/Boss/false_knight_jump.wav");
+	SOUND->Add("Land", "Resource/Sound/Boss/false_knight_land.wav");
+	SOUND->Add("Roll", "Resource/Sound/Boss/false_knight_roll.wav");
+	SOUND->Add("LandAttack", "Resource/Sound/Boss/false_knight_strike_ground.wav");
+	SOUND->Add("GrogyAttack", "Resource/Sound/Boss/false_knight_ceiling_break.wav");
 
+#pragma endregion
 }
 
 Boss::~Boss()
@@ -371,6 +380,7 @@ void Boss::RealHitted()
 	if (_head->GetCollider()->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", _head->GetCollider()->GetTransform()->GetWorldPosition());
+		SOUND->Play("HeadHit");
 		_targetPlayer.lock()->SetWeaponActive(false);
 		_head->hurt();
 		_headHitCount += 1;
@@ -551,6 +561,7 @@ void Boss::GrogyEvent()
 	{
 		TotalUpdate(GROGYROLLING);
 		SetAndResetState(GROGYROLLING);
+		SOUND->Play("Roll");
 		return;
 	}
 
@@ -592,6 +603,7 @@ void Boss::LandChange()
 		TotalUpdate(JUMPATTACK);
 		SetState(JUMPATTACK);
 		_actions[JUMPATTACK]->Play();
+		SOUND->Play("LandAttack");
 	}
 }
 
@@ -619,6 +631,7 @@ void Boss::JumpToIdle()
 		if (_curstate != JUMP)
 			return;
 		CAMERA->ShakeStart(5.0f, 0.5f);
+		SOUND->Play("Land");
 		TotalUpdate(JUMPTOIDLE);
 		SetAndResetState(JUMPTOIDLE);
 	}
@@ -676,6 +689,7 @@ void Boss::AttackReadyEvent()
 		_isWeaponActive = true;
 		TotalUpdate(ATTACK);
 		SetAndResetState(ATTACK);
+		SOUND->Play("LandAttack");
 		_chargeTime = 0.0f;
 	}
 	else if (_chargeTime > 1.3f && _isGrogyAttack == true)
@@ -770,6 +784,7 @@ void Boss::AttackEvent()
 		_isJump = true;
 		TotalUpdate(JUMP);
 		SetAndResetState(JUMP);
+		SOUND->Play("Jump");
 		_jumpPower = 1900.0f;
 		return;
 	}
@@ -829,6 +844,7 @@ void Boss::AttackEvent()
 		{
 			_actions[GROGYATTACK]->Reset();
 			SetAndPlayState(GROGYATTACK);
+			SOUND->Play("GrogyAttack");
 			return;
 		}
 		else
@@ -1010,6 +1026,7 @@ void Boss::Hitted(shared_ptr<Collider> col)
 	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		SOUND->Play("ArmourHit");
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;

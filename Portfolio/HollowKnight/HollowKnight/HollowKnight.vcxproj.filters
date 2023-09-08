@@ -653,4 +653,93 @@
     <Xml Include="Resource\Monster\Rush\RushMDeath.xml" />
     <Xml Include="Resource\Monster\Rush\RushMEnd.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\BGM\S19 Crossroads Bass.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\BGM\S19 Crossroads Main.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_01.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_02.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_03.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_04.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_05.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_ceiling_break.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_damage_armour.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_damage_armour_final.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_head_damage_2.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_jump.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_land.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_land_1st_time.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_roll.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_strike_ground.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Boss\false_knight_swing.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\Abyss-01.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\button.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\gg_main_menu_atmos.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\Hollow Shade Music.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\Iselda_Shop_Open.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\Iselda_Shop_talk_01.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\etc\Iselda_Shop_talk_03.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Player\enemy_damage.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Player\health_cocoon_break.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Player\hero_jump.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Player\hero_wings.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+    <Media Include="Resource\Sound\Player\sword_hit_reject.wav">
+      <Filter>리소스 파일</Filter>
+    </Media>
+  </ItemGroup>
 </Project>

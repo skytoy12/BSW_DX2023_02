@@ -606,6 +606,37 @@
     <Xml Include="Resource\Player\ShadowDash.xml" />
     <Xml Include="Resource\Player\Slash.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <Media Include="Resource\Sound\BGM\S19 Crossroads Bass.wav" />
+    <Media Include="Resource\Sound\BGM\S19 Crossroads Main.wav" />
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_01.wav" />
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_02.wav" />
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_03.wav" />
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_04.wav" />
+    <Media Include="Resource\Sound\Boss\False_Knight_Attack_New_05.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_ceiling_break.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_damage_armour.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_damage_armour_final.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_head_damage_2.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_jump.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_land.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_land_1st_time.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_roll.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_strike_ground.wav" />
+    <Media Include="Resource\Sound\Boss\false_knight_swing.wav" />
+    <Media Include="Resource\Sound\etc\Abyss-01.wav" />
+    <Media Include="Resource\Sound\etc\button.wav" />
+    <Media Include="Resource\Sound\etc\gg_main_menu_atmos.wav" />
+    <Media Include="Resource\Sound\etc\Hollow Shade Music.wav" />
+    <Media Include="Resource\Sound\etc\Iselda_Shop_Open.wav" />
+    <Media Include="Resource\Sound\etc\Iselda_Shop_talk_01.wav" />
+    <Media Include="Resource\Sound\etc\Iselda_Shop_talk_03.wav" />
+    <Media Include="Resource\Sound\Player\enemy_damage.wav" />
+    <Media Include="Resource\Sound\Player\health_cocoon_break.wav" />
+    <Media Include="Resource\Sound\Player\hero_jump.wav" />
+    <Media Include="Resource\Sound\Player\hero_wings.wav" />
+    <Media Include="Resource\Sound\Player\sword_hit_reject.wav" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

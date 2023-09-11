@@ -24,3 +24,7 @@ void MapTool::Render()
 void MapTool::PostRender()
 {
 }
+
+void MapTool::PreRender()
+{
+}

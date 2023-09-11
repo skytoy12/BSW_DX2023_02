@@ -14,10 +14,14 @@ public :
 
 	void PostRender();
 
+	Matrix GetProjMatrix() { return projMatrix; }
+
 private:
 	MatrixBuffer* projBuffer;
+	Matrix        projMatrix;
 
 	LightBuffer* lightBuffer;
+
 
 };
 

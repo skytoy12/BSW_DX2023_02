@@ -17,9 +17,13 @@ MainString::~MainString()
 
 void MainString::Update()
 {
-
+	_transform->Update();
+	_collider->Update();
 }
 
 void MainString::PostRender()
 {
+	_transform->SetBuffer(0);
+	_quad->Render();
+	_collider->Render();
 }

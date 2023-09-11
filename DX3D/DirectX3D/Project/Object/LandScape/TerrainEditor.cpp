@@ -1,17 +1,13 @@
 #include "Framework.h"
-#include "Terrain.h"
+#include "TerrainEditor.h"
 
-Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile)
+TerrainEditor::TerrainEditor(UINT height, UINT width)
+	:height(height), width(width)
 {
 	material = new Material();
 	material->SetShader(L"NormalMapping");
-	material->SetDuffuseMap(diffuseFile);
-	material->SetSpecularMap(specularFile);
-	material->SetNormalMap(NormalFile);
 
 	worldBuffer = new MatrixBuffer();
-
-	heightMap = Texture::Get(heightFile);
 
 	CreateMesh();
 	CreateNormal();
@@ -20,14 +16,18 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	mesh = new Mesh(vertices, indices);
 }
 
-Terrain::~Terrain()
+TerrainEditor::~TerrainEditor()
 {
 	delete mesh;
 	delete worldBuffer;
 	delete material;
 }
 
-void Terrain::Render()
+void TerrainEditor::Update()
+{
+}
+
+void TerrainEditor::Render()
 {
 	worldBuffer->SetData(world);
 	worldBuffer->SetVSBuffer(0);
@@ -38,29 +38,63 @@ void Terrain::Render()
 	DC->DrawIndexed(indices.size(), 0, 0);
 }
 
-
-
-void Terrain::CreateMesh()
+void TerrainEditor::Debug()
 {
-	width = heightMap->GetSize().x;
-	height = heightMap->GetSize().y;
+}
 
-	vector<Vector4> colors = heightMap->ReadPixels();
+bool TerrainEditor::Picking(OUT Vector3* position)
+{
+	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+
+	for (UINT z = 0; z < height - 1; z++)
+	{
+		for (UINT x = 0; x < width - 1; x++)
+		{
+			UINT index[4];
+			index[0] = (x + 0) + width * (z + 0);
+			index[1] = (x + 1) + width * (z + 0);
+			index[2] = (x + 0) + width * (z + 1);
+			index[3] = (x + 1) + width * (z + 1);
+
+			Vector3 pos[4];
+			for (UINT i = 0; i < 4; i++)
+			{
+				pos[i] = vertices[index[i]].pos;
+			}
+
+			float distance = 0.0f;
+
+			if (TriangleTests::Intersects(ray.origin, ray.direction, pos[0], pos[1], pos[2], distance))
+			{
+				*position = ray.origin + ray.direction * distance;
+				return true;
+			}
+
+			if (TriangleTests::Intersects(ray.origin, ray.direction, pos[2], pos[1], pos[3], distance))
+			{
+				*position = ray.origin + ray.direction * distance;
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+void TerrainEditor::CreateMesh()
+{
 
 	//Vertices
 	for (float z = 0; z < height; z++)
 	{
 		for (float x = 0; x < width; x++)
 		{
-			VertexTextureNormalTangent vertex;
+			VertexType vertex;
 			vertex.pos = Vector3(x, 0, z);
 
 			vertex.uv.x = x / (width - 1);
 			vertex.uv.y = 1 - z / (height - 1);
 
-			//HeightMap
-			UINT index = x + z * width;
-			vertex.pos.y = colors[index].x * MAP_HEIGHT;
 
 			vertices.push_back(vertex);
 		}
@@ -82,7 +116,7 @@ void Terrain::CreateMesh()
 	}
 }
 
-void Terrain::CreateNormal()
+void TerrainEditor::CreateNormal()
 {
 	for (UINT i = 0; i < indices.size() / 3; i++)
 	{
@@ -103,10 +137,9 @@ void Terrain::CreateNormal()
 		vertices[index1].normal += normal;
 		vertices[index2].normal += normal;
 	}
-
 }
 
-void Terrain::CreateTangent()
+void TerrainEditor::CreateTangent()
 {
 	for (UINT i = 0; i < indices.size() / 3; i++)
 	{

@@ -59,3 +59,7 @@ void TestScene::PostRender()
 	_mon1->PostRender();
 	_mon3->PostRender();
 }
+
+void TestScene::PreRender()
+{
+}

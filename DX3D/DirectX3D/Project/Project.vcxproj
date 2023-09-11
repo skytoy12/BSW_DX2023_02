@@ -164,6 +164,8 @@
     <ClInclude Include="Object\Basic\TextureCube.h" />
     <ClInclude Include="Scene\TerrainScene.h" />
     <ClInclude Include="Object\LandScape\Terrain.h" />
+    <ClInclude Include="Scene\TerrainEditorScene.h" />
+    <ClInclude Include="Object\LandScape\TerrainEditor.h" />
     <ClInclude Include="Utility\Utility.h" />
     <ClInclude Include="Utility\Keyboard.h" />
     <ClInclude Include="Utility\Singleton.h" />
@@ -217,6 +219,8 @@
     <ClCompile Include="Object\Basic\TextureCube.cpp" />
     <ClCompile Include="Scene\TerrainScene.cpp" />
     <ClCompile Include="Object\LandScape\Terrain.cpp" />
+    <ClCompile Include="Scene\TerrainEditorScene.cpp" />
+    <ClCompile Include="Object\LandScape\TerrainEditor.cpp" />
     <ClCompile Include="Utility\Utility.cpp" />
     <ClCompile Include="Utility\Keyboard.cpp" />
     <ClCompile Include="Utility\Time.cpp" />

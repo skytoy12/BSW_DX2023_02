@@ -31,6 +31,39 @@ void Camera::PostRender()
 	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
 }
 
+Ray Camera::ScreenPointToRay(Vector3 screenPos)
+{
+	Ray ray;
+	ray.origin = transform->translation;
+
+	///////////////////InvViewport//////////////////////
+
+	Vector3 point;
+
+	point.x = +(2.0f * screenPos.x) / WIN_WIDTH - 1.0f;
+	point.y = -(2.0f * screenPos.y) / WIN_HEIGHT + 1.0f;
+	point.z =   1.0f; // farZ
+
+	///////////////////InvProjection////////////////////
+
+	Matrix projection = Environment::GetInstance()->GetProjMatrix();
+
+	XMFLOAT4X4 proj;
+	XMStoreFloat4x4(&proj, projection);
+
+	point.x /= proj._11;
+	point.y /= proj._22;
+
+	///////////////////InvView////////////////////
+
+	Matrix invView = transform->GetWorld(); // camea의 view자체가 역행열이므로 view의 역행열은 그냥 World
+
+	ray.direction = point * invView;
+	ray.direction.Normalize();
+
+	return ray;
+}
+
 void Camera::FreeMode()
 {
 	if (KEY_PRESS(VK_RBUTTON))

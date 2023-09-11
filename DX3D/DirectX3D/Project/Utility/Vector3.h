@@ -110,6 +110,13 @@ struct Vector3
 		this->z /= value;
 	}
 
+	Vector3 operator*(const Matrix& value)
+	{
+		/// TODO : coord버전 구분하기
+
+		return XMVector3TransformNormal(*this, value);
+	}
+
 	float x = 0.0f;
 	float y = 0.0f;
 	float z = 0.0f;

@@ -108,6 +108,7 @@ using namespace Microsoft::WRL;
 
 // UI
 #include "Object/UI/Button.h"
+#include "Object/UI/MainString.h"
 
 // Scene
 #include "Scene/Scene.h"

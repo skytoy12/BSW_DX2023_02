@@ -1,4 +1,11 @@
 #pragma once
+
+struct Ray
+{
+	Vector3 origin;
+	Vector3 direction;
+};
+
 class Camera : public Singleton<Camera>
 {
 	friend class Singleton;
@@ -11,6 +18,8 @@ public:
 	void PostRender();
 
 	Transform* GetTransform() { return transform; }
+
+	Ray ScreenPointToRay(Vector3 screenPos);
 private:
 	void   FreeMode();
 	void TargetMode();

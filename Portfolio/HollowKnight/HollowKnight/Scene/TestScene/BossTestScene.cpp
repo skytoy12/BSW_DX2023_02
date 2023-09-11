@@ -50,3 +50,7 @@ void BossTestScene::PostRender()
 	_boss->PostRender();
 	_player->PostRender();
 }
+
+void BossTestScene::PreRender()
+{
+}

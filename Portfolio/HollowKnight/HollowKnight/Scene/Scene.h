@@ -11,8 +11,8 @@ public :
 	virtual void Update() abstract;
 	virtual void Render() abstract;
 
-	virtual void PostRender() {}
-	virtual void PreRender() {}
+	virtual void PostRender() abstract;
+	virtual void PreRender()  abstract;
 
 private :
 	

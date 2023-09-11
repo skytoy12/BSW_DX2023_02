@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:5a5e9b601acda9d41d12742c9c7c983b:abaa23c1846f1811693fbc3a372f65fa:98c908a7540e42205dced84101f6dc00$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="SelectCursor.png" width="340" height="71">
+    <sprite n="Stag_List_Selection_Cursor0000.png" x="0" y="0" w="68" h="71"/>
+    <sprite n="Stag_List_Selection_Cursor0001.png" x="68" y="0" w="68" h="71"/>
+    <sprite n="Stag_List_Selection_Cursor0002.png" x="136" y="0" w="68" h="71"/>
+    <sprite n="Stag_List_Selection_Cursor0003.png" x="204" y="0" w="68" h="71"/>
+    <sprite n="Stag_List_Selection_Cursor0004.png" x="272" y="0" w="68" h="71"/>
+</TextureAtlas>

@@ -32,8 +32,8 @@ Player::Player()
 	Vector2(283, 136), Action::Type::END, std::bind(&Player::EndEvent, this));
 	CreateAction(L"Resource/Player/Charge.png", "Resource/Player/Charge.xml", "Charge", 
 	Vector2(114, 127), Action::Type::LOOP);
-	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Hitted", 
-	Vector2(116, 131), Action::Type::END, std::bind(&Player::UnbeatableToIdle, this));
+	CreateAction(L"Resource/Player/Recoil.png", "Resource/Player/Recoil.xml", "Recoil", 
+	Vector2(124, 137), Action::Type::END, std::bind(&Player::UnbeatableToIdle, this));
 	CreateAction(L"Resource/Player/Death.png", "Resource/Player/Death.xml", "Death",
 	Vector2(116, 131), Action::Type::END, std::bind(&Player::EndEvent, this));
 #pragma endregion
@@ -526,7 +526,7 @@ void Player::Hitted()
 		return;
 	}
 
-	SetAndResetState(HITTED);
+	SetAndResetState(RECOIL);
 }
 
 void Player::HitKnockBack()

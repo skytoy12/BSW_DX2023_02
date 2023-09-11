@@ -213,6 +213,12 @@
     <ClInclude Include="Object\UI\MainString.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\HollowKnight\HK_UI\SelectImage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene\GameScene1.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -372,6 +378,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\UI\MainString.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\HK_UI\SelectImage.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\GameScene1.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -573,6 +585,15 @@
     <Image Include="Resource\Monster\Rush\RushMEnd.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\UI\SelectCursor.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\UI\Title.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Player\Recoil.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -664,6 +685,8 @@
     <Xml Include="Resource\Monster\Rush\RushMAirDeath.xml" />
     <Xml Include="Resource\Monster\Rush\RushMDeath.xml" />
     <Xml Include="Resource\Monster\Rush\RushMEnd.xml" />
+    <Xml Include="Resource\UI\SelectCursor.xml" />
+    <Xml Include="Resource\Player\Recoil.xml" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\BGM\S19 Crossroads Bass.wav">

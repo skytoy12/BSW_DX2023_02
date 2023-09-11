@@ -13,6 +13,8 @@ public :
 
 	void SetTarget(shared_ptr<Collider> target) { _target = target; }
 
+	Vector2 GetPos() { return _transform->GetWorldPosition(); }
+
 	shared_ptr<Collider> GetCollider() { return _collider; }
 
 private :

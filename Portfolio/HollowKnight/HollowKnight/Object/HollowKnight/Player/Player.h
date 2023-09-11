@@ -11,7 +11,7 @@ public :
 		DASH,
 		SLASH,
 		CHARGE,
-		HITTED,
+		RECOIL,
 		DEATH
 	};
 

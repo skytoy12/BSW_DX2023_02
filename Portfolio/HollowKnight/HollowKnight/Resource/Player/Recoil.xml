@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker https://www.codeandweb.com/texturepacker -->
+<!-- $TexturePacker:SmartUpdate:83216fad92710997cfa17b0a6ce35254:fd0b59718140046937f538a4cb256204:11c3cee4c7836f0ae213c00f6ec994c9$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="Recoil.png" width="124" height="1096">
+    <sprite n="021-00-060.png" x="0" y="0" w="124" h="137"/>
+    <sprite n="021-01-060.png" x="0" y="137" w="124" h="137"/>
+    <sprite n="021-02-056.png" x="0" y="274" w="124" h="137"/>
+    <sprite n="021-03-056.png" x="0" y="411" w="124" h="137"/>
+    <sprite n="021-04-057.png" x="0" y="548" w="124" h="137"/>
+    <sprite n="021-05-059.png" x="0" y="685" w="124" h="137"/>
+    <sprite n="021-06-058.png" x="0" y="822" w="124" h="137"/>
+    <sprite n="021-07-058.png" x="0" y="959" w="124" h="137"/>
+</TextureAtlas>

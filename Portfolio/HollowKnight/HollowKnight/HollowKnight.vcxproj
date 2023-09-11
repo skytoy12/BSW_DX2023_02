@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\GameScene\GameScene1.h" />
     <ClInclude Include="Object\UI\MainString.h" />
     <ClInclude Include="Scene\GameScene\MainScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\BossHead.h" />
@@ -214,11 +215,13 @@
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Object\HollowKnight\HK_UI\SelectImage.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\GameScene\GameScene1.cpp" />
     <ClCompile Include="Object\UI\MainString.cpp" />
     <ClCompile Include="Scene\GameScene\MainScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\BossHead.cpp" />
@@ -277,6 +280,7 @@
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TestScene\TestScene.cpp" />
+    <ClCompile Include="Object\HollowKnight\HK_UI\SelectImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />
@@ -339,12 +343,15 @@
     <Image Include="Resource\Player\DNSlash.png" />
     <Image Include="Resource\Player\DNSlashStart.png" />
     <Image Include="Resource\Player\Idle.png" />
+    <Image Include="Resource\Player\Recoil.png" />
     <Image Include="Resource\Player\Run.png" />
     <Image Include="Resource\Player\Running.png" />
     <Image Include="Resource\Player\RunStart.png" />
     <Image Include="Resource\Player\RunToIdle.png" />
     <Image Include="Resource\Player\ShadowDash.png" />
     <Image Include="Resource\Player\Slash.png" />
+    <Image Include="Resource\UI\SelectCursor.png" />
+    <Image Include="Resource\UI\Title.png" />
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -603,12 +610,14 @@
     <Xml Include="Resource\Player\DNSlash.xml" />
     <Xml Include="Resource\Player\DNSlashStart.xml" />
     <Xml Include="Resource\Player\Idle.xml" />
+    <Xml Include="Resource\Player\Recoil.xml" />
     <Xml Include="Resource\Player\Run.xml" />
     <Xml Include="Resource\Player\Running.xml" />
     <Xml Include="Resource\Player\RunStart.xml" />
     <Xml Include="Resource\Player\RunToIdle.xml" />
     <Xml Include="Resource\Player\ShadowDash.xml" />
     <Xml Include="Resource\Player\Slash.xml" />
+    <Xml Include="Resource\UI\SelectCursor.xml" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\BGM\S19 Crossroads Bass.wav" />

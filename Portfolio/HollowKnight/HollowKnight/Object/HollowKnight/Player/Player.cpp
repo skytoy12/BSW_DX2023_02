@@ -18,6 +18,11 @@ Player::Player()
 	_bullet = make_shared<Bullet>();
 	_bulletCol = make_shared<CircleCollider>(50);
 	_effect = make_shared<ChargeEffect>();
+	for (int i = 0; i < 10; i++)
+	{
+		shared_ptr<HPBar> hp = make_shared<HPBar>();
+		_hpBars.push_back(hp);
+	}
 #pragma endregion
 #pragma region CreateAction
 	CreateAction(L"Resource/Player/Idle.png", "Resource/Player/Idle.xml", "Idle", 
@@ -93,6 +98,10 @@ void Player::Update()
 	_transform->Update();
 	_bullet->Update();
 	_effect->Update();
+	for (auto hp : _hpBars)
+	{
+		hp->Update();
+	}
 	if (_isBulletActive == false)
 	{
 		_bullet->_isAttack = false;
@@ -134,10 +143,16 @@ void Player::Render()
 	if(_bullet->_isActive == true)
 		_bulletCol->Render();
 
+
 }
 
 void Player::PostRender()
 {
+	for (auto hp : _hpBars)
+	{
+		hp->PostRender();
+	}
+
 	ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
 	ImGui::Text("_isAttack : %d", _isAttack);
 	ImGui::Text("Death : %d", _isDeath);

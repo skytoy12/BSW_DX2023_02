@@ -12,6 +12,9 @@ public:
 
 private:
 	Terrain* terrain;
+	Robot* robot;
+
+	Vector3 pickedPos;
 };
 
 

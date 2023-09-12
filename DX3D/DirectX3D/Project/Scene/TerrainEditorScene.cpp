@@ -33,6 +33,7 @@ void TerrainEditorScene::Render()
 void TerrainEditorScene::PostRender()
 {
 	terrainEditor->Debug();
+	terrainEditor->GetMaterial()->SelectMap();
 
 	ImGui::Text("PickedPos : %.1f, %.1f,%.1f", pickedPos.x, pickedPos.y, pickedPos.z);
 }

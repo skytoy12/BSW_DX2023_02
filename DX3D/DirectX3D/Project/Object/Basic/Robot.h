@@ -26,6 +26,7 @@ public :
 
 	void Update();
 	void Render();
+	void PostRender();
 
 	void CreateRobot();
 
@@ -33,6 +34,8 @@ public :
 	void CubeSize();
 	void CubePosition();
 	void CubeAngle();
+
+	void SetPosition(Vector3 pos);
 
 
 	float Ridan(float value) { return value * XM_PI / 180; }

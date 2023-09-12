@@ -151,15 +151,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\UI\AnimationUI\HPBar.h" />
     <ClInclude Include="Scene\GameScene\GameScene1.h" />
-    <ClInclude Include="Object\UI\MainString.h" />
+    <ClInclude Include="Object\UI\QuadUI\MainString.h" />
     <ClInclude Include="Scene\GameScene\MainScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\BossHead.h" />
     <ClInclude Include="Scene\TestScene\BossTestScene.h" />
     <ClInclude Include="Object\HollowKnight\Monster\EliteMonster.h" />
     <ClInclude Include="Object\HollowKnight\Monster\Boss.h" />
     <ClInclude Include="Object\HollowKnight\Monster\FlyMonster.h" />
-    <ClInclude Include="Object\UI\BulletCoolTime.h" />
+    <ClInclude Include="Object\UI\QuadUI\BulletCoolTime.h" />
     <ClInclude Include="Object\HollowKnight\Player\ChargeEffect.h" />
     <ClInclude Include="Object\HollowKnight\Player\Bullet.h" />
     <ClInclude Include="framework.h" />
@@ -210,26 +211,27 @@
     <ClInclude Include="Object\Bagic\EffectManager.h" />
     <ClInclude Include="Object\Bagic\Quad.h" />
     <ClInclude Include="Object\Bagic\Sprite.h" />
-    <ClInclude Include="Object\UI\Button.h" />
+    <ClInclude Include="Object\UI\QuadUI\Button.h" />
     <ClInclude Include="Program\Program.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
-    <ClInclude Include="Object\HollowKnight\HK_UI\SelectImage.h" />
+    <ClInclude Include="Object\UI\AnimationUI\SelectImage.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\UI\AnimationUI\HPBar.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene1.cpp" />
-    <ClCompile Include="Object\UI\MainString.cpp" />
+    <ClCompile Include="Object\UI\QuadUI\MainString.cpp" />
     <ClCompile Include="Scene\GameScene\MainScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\BossHead.cpp" />
     <ClCompile Include="Scene\TestScene\BossTestScene.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\EliteMonster.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\Boss.cpp" />
     <ClCompile Include="Object\HollowKnight\Monster\FlyMonster.cpp" />
-    <ClCompile Include="Object\UI\BulletCoolTime.cpp" />
+    <ClCompile Include="Object\UI\QuadUI\BulletCoolTime.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\ChargeEffect.cpp" />
     <ClCompile Include="Object\HollowKnight\Player\Bullet.cpp" />
     <ClCompile Include="framework.cpp">
@@ -275,12 +277,12 @@
     <ClCompile Include="Object\Bagic\EffectManager.cpp" />
     <ClCompile Include="Object\Bagic\Quad.cpp" />
     <ClCompile Include="Object\Bagic\Sprite.cpp" />
-    <ClCompile Include="Object\UI\Button.cpp" />
+    <ClCompile Include="Object\UI\QuadUI\Button.cpp" />
     <ClCompile Include="Program\Program.cpp" />
     <ClCompile Include="Scene\Scene.cpp" />
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TestScene\TestScene.cpp" />
-    <ClCompile Include="Object\HollowKnight\HK_UI\SelectImage.cpp" />
+    <ClCompile Include="Object\UI\AnimationUI\SelectImage.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />
@@ -350,6 +352,10 @@
     <Image Include="Resource\Player\RunToIdle.png" />
     <Image Include="Resource\Player\ShadowDash.png" />
     <Image Include="Resource\Player\Slash.png" />
+    <Image Include="Resource\UI\HP\BrokenHP.png" />
+    <Image Include="Resource\UI\HP\FullHP.png" />
+    <Image Include="Resource\UI\HP\HPFrame.png" />
+    <Image Include="Resource\UI\HP\SoulOrb.png" />
     <Image Include="Resource\UI\SelectCursor.png" />
     <Image Include="Resource\UI\Title.png" />
     <Image Include="small.ico" />
@@ -617,6 +623,9 @@
     <Xml Include="Resource\Player\RunToIdle.xml" />
     <Xml Include="Resource\Player\ShadowDash.xml" />
     <Xml Include="Resource\Player\Slash.xml" />
+    <Xml Include="Resource\UI\HP\BrokenHP.xml" />
+    <Xml Include="Resource\UI\HP\FullHP.xml" />
+    <Xml Include="Resource\UI\HP\SoulOrb.xml" />
     <Xml Include="Resource\UI\SelectCursor.xml" />
   </ItemGroup>
   <ItemGroup>

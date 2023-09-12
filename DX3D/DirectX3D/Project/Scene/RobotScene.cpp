@@ -27,5 +27,6 @@ void RobotScene::Render()
 
 void RobotScene::PostRender()
 {
+	robot->PostRender();
 }
 

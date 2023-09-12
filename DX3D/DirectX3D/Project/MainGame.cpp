@@ -8,8 +8,8 @@ MainGame::MainGame()
 	//scene = new TutorialScene();
 	//scene = new TextureScene();
 	//scene = new RobotScene();
-	//scene = new TerrainScene();
-	scene = new TerrainEditorScene();
+	scene = new TerrainScene();
+	//scene = new TerrainEditorScene();
 	//scene = new SphereScene();
 }
 

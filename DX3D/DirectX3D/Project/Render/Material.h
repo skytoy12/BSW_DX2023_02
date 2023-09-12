@@ -21,6 +21,8 @@ public:
 
 	void PostRender();
 
+	void SelectMap();
+
 private:
 	VertexShader* vertexShader = nullptr;
 	 PixelShader* pixelShader = nullptr;
@@ -30,6 +32,10 @@ private:
 	 Texture* normalMap = nullptr;
 
 	 MaterialBuffer* buffer = nullptr;
+
+	 string projectDir;
+
+	 static string ID;
 };
 
 

@@ -4,6 +4,7 @@
 Robot::Robot()
 {
 	CreateRobot();
+	cubes[MAIN]->translation = Vector3(100, 90, 10);
 }
 
 Robot::~Robot()
@@ -22,6 +23,11 @@ void Robot::Update()
 	CubeSize();
 	CubePosition();
 	CubeAngle();
+
+	if (KEY_PRESS('I'))
+	{
+		SetPosition(Vector3(120, 90, -10));
+	}
 
 	if (KEY_PRESS('E'))
 	{
@@ -109,6 +115,12 @@ void Robot::Render()
 		cube->Render();
 }
 
+void Robot::PostRender()
+{
+	ImGui::Text("main scale : %.1f, %.1f, %.1f", cubes[MAIN]->scale.x, cubes[MAIN]->scale.y, cubes[MAIN]->scale.z);
+	ImGui::Text("head scale : %.1f, %.1f, %.1f", cubes[HEAD]->scale.x, cubes[HEAD]->scale.y, cubes[HEAD]->scale.z);
+}
+
 void Robot::CreateRobot()
 {
 	cubes.resize(15);
@@ -158,6 +170,7 @@ void Robot::CubeSize()
 
 	cubes[BODY]->scale.x = 0.7f;
 	cubes[BODY]->scale.z = 0.7f;
+	cubes[BODY]->scale.y = 1.0f;
 
 	cubes[LSHOULDER]->scale.x = 0.3f;
 	cubes[LSHOULDER]->scale.y = 0.3f;
@@ -169,9 +182,11 @@ void Robot::CubeSize()
 
 	cubes[LARM]->scale.x = 1.2f;
 	cubes[LARM]->scale.y = 2.5f;
+	cubes[LARM]->scale.z = 1.0f;
 
 	cubes[RARM]->scale.x = 1.2f;
 	cubes[RARM]->scale.y = 2.5f;
+	cubes[RARM]->scale.z = 1.0f;
 
 	cubes[LPELVIS]->scale.x = 0.3f;
 	cubes[LPELVIS]->scale.y = 0.3f;
@@ -184,25 +199,29 @@ void Robot::CubeSize()
 	cubes[LLEG]->scale.x = 1.2f;
 	cubes[LLEG]->scale.y = 2.5f;
 
+	cubes[LLEG]->scale.z = 1.0f;
+
 	cubes[RLEG]->scale.x = 1.2f;
 	cubes[RLEG]->scale.y = 2.5f;
 
+	cubes[RLEG]->scale.z = 1.0f;
+
 	cubes[LEYE]->scale.x = 0.25f;
 	cubes[LEYE]->scale.y = 0.03f;
-	cubes[LEYE]->scale.z = 0.6f;
+	cubes[LEYE]->scale.z = 0.6f ;
 
 	cubes[REYE]->scale.x = 0.25f;
 	cubes[REYE]->scale.y = 0.03f;
-	cubes[REYE]->scale.z = 0.6f;
+	cubes[REYE]->scale.z = 0.6f ;
 
 
 	cubes[MOUSE1]->scale.x = 0.25f;
 	cubes[MOUSE1]->scale.y = 0.03f;
-	cubes[MOUSE1]->scale.z = 0.6f;
+	cubes[MOUSE1]->scale.z = 0.6f ;
 
 	cubes[MOUSE2]->scale.x = 0.25f;
 	cubes[MOUSE2]->scale.y = 0.03f;
-	cubes[MOUSE2]->scale.z = 0.6f;
+	cubes[MOUSE2]->scale.z = 0.6f ;
 }
 
 void Robot::CubePosition()
@@ -265,4 +284,15 @@ void Robot::CubeAngle()
 	else if (cubes[LSHOULDER]->rotation.z < Ridan(-60.0f))
 		swing = 0.001f;
 }
+
+void Robot::SetPosition(Vector3 pos)
+{
+	cubes[MAIN]->translation = pos;
+}
+
+//void Robot::SetPosition(Vector3 pos)
+//{
+//	pos.y += Height;
+//	cubes[MAIN]->translation = pos;
+//}
 

@@ -122,6 +122,8 @@ private :
 	shared_ptr<CircleCollider> _bulletCol;
 	shared_ptr<CircleCollider> _dashCol;
 
+	vector<shared_ptr<class HPBar>> _hpBars;
+
 	vector<weak_ptr<class Monster>> _enemies;
 
 	shared_ptr<class Bullet> _bullet;

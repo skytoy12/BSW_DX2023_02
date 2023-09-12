@@ -100,7 +100,6 @@ using namespace Microsoft::WRL;
 #include "Object/Bagic/Sprite.h"
 #include "Object/Bagic/Effect.h"
 #include "Object/Bagic/EffectManager.h"
-#include "Object/HollowKnight/HK_UI/SelectImage.h"
 #include "Object/HollowKnight/Player/Player.h"
 #include "Object/HollowKnight/Monster/_Monster.h"
 #include "Object/HollowKnight/Monster/Boss.h"
@@ -108,8 +107,10 @@ using namespace Microsoft::WRL;
 
 
 // UI
-#include "Object/UI/Button.h"
-#include "Object/UI/MainString.h"
+#include "Object/UI//QuadUI/Button.h"
+#include "Object/UI/QuadUI/MainString.h"
+#include "Object/UI/AnimationUI/SelectImage.h"
+#include "Object/UI/AnimationUI/HPBar.h"
 
 // Scene
 #include "Scene/Scene.h"

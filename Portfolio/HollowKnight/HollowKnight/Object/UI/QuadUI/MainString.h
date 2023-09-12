@@ -9,9 +9,6 @@ public :
 	void PostRender();
 
 	void SetPosition(Vector2 pos) { _collider->SetPosition(pos); }
-	void SetEvent(CallBack callBack) { _event = callBack; }
-
-	void SetTarget(shared_ptr<Collider> target) { _target = target; }
 
 	Vector2 GetPos() { return _transform->GetWorldPosition(); }
 
@@ -22,8 +19,5 @@ private :
 	shared_ptr<Quad> _quad;
 	shared_ptr<Transform> _transform;
 
-	weak_ptr<Collider> _target;
-
-	CallBack _event;
 };
 

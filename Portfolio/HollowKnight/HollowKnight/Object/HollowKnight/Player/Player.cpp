@@ -18,6 +18,8 @@ Player::Player()
 	_bullet = make_shared<Bullet>();
 	_bulletCol = make_shared<CircleCollider>(50);
 	_effect = make_shared<ChargeEffect>();
+	_frame = make_shared<HPFrame>();
+	_orb = make_shared<SoulOrb>();
 	for (int i = 0; i < 10; i++)
 	{
 		shared_ptr<HPBar> hp = make_shared<HPBar>();
@@ -59,6 +61,14 @@ Player::Player()
 	_effect->GetTransform()->SetParent(_col->GetTransform());
 	_actions[DASH]->SetSpeed(0.05f);
 	_actions[SLASH]->SetSpeed(0.03f);
+
+	_frame->SetPosition(Vector2(-410, 265));
+	_orb->SetPosition(Vector2(-537, 255));
+	_orb->SetScale(Vector2(0.7f, 0.7f));
+	for (int i = 0; i < 10; i++)
+	{
+		_hpBars[i]->SetPosition(Vector2(-470 + (30 * i), 235));
+	}
 #pragma endregion
 
 #pragma region TEST
@@ -84,6 +94,8 @@ void Player::Update()
 	if (_isDeath == true)
 		return;
 
+	HPBarActive();
+
 	if (_isAttack == false)
 	{
 		_isWeaponActive = false;
@@ -98,10 +110,16 @@ void Player::Update()
 	_transform->Update();
 	_bullet->Update();
 	_effect->Update();
+
+	//////UI/////////////
+	_frame->Update();
+	_orb->Update();	
 	for (auto hp : _hpBars)
 	{
 		hp->Update();
 	}
+	/////////////////////
+
 	if (_isBulletActive == false)
 	{
 		_bullet->_isAttack = false;
@@ -148,25 +166,40 @@ void Player::Render()
 
 void Player::PostRender()
 {
+	//////UI/////////////
+	_frame->PostRender();
+	_orb->PostRender();
 	for (auto hp : _hpBars)
 	{
 		hp->PostRender();
 	}
+	/////////////////////
+	ImGui::SliderFloat("Location.x", (float*)&_test.x, -WIN_WIDTH * 0.5f, +WIN_WIDTH * 0.5f);
+    ImGui::SliderFloat("Location.y", (float*)&_test.y, -WIN_HEIGHT * 0.5f, +WIN_HEIGHT * 0.5f);
+    ImGui::SliderFloat("scale", (float*)&_testfloat, 0.0f, 2.0f);
 
-	ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
-	ImGui::Text("_isAttack : %d", _isAttack);
-	ImGui::Text("Death : %d", _isDeath);
-	ImGui::Text("state : %d", _curstate);
-	ImGui::Text("HP : %d", _hp);
+	ImGui::Text("hp1 : %d", _hpBars[0]->GetState());
+	ImGui::Text("hp2 : %d", _hpBars[1]->GetState());
+	ImGui::Text("hp3 : %d", _hpBars[2]->GetState());
+	ImGui::Text("hp4 : %d", _hpBars[3]->GetState());
+	ImGui::Text("hp5 : %d", _hpBars[4]->GetState());
+	ImGui::Text("hp6 : %d", _hpBars[5]->GetState());
+	ImGui::Text("hp7 : %d", _hpBars[6]->GetState());
 
-	ImGui::Text("_isBulletActive : %d", _isBulletActive);
-	ImGui::Text("_isActiveB : %d", _bullet->_isActive);
-	ImGui::Text("_isAttackB : %d", _bullet->_isAttack);
+	//ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
+	//ImGui::Text("_isAttack : %d", _isAttack);
+	//ImGui::Text("Death : %d", _isDeath);
+	//ImGui::Text("state : %d", _curstate);
+	//ImGui::Text("HP : %d", _hp);
+
+	//ImGui::Text("_isBulletActive : %d", _isBulletActive);
+	//ImGui::Text("_isActiveB : %d", _bullet->_isActive);
+	//ImGui::Text("_isAttackB : %d", _bullet->_isAttack);
 
 
-	ImGui::Text("world.x : %.1f, world.y : %.1f", _col->GetTransform()->GetWorldPosition().x, _col->GetTransform()->GetWorldPosition().y);
-	ImGui::Text("Camera.x : %.1f, Camera.y : %.1f", CAMERA->GetOringin().x, CAMERA->GetOringin().y);
-	ImGui::Text("Random.x : %.1f, Random.y : %.1f", CAMERA->GetRandomPos().x, CAMERA->GetRandomPos().y);
+	//ImGui::Text("world.x : %.1f, world.y : %.1f", _col->GetTransform()->GetWorldPosition().x, _col->GetTransform()->GetWorldPosition().y);
+	//ImGui::Text("Camera.x : %.1f, Camera.y : %.1f", CAMERA->GetOringin().x, CAMERA->GetOringin().y);
+	//ImGui::Text("Random.x : %.1f, Random.y : %.1f", CAMERA->GetRandomPos().x, CAMERA->GetRandomPos().y);
 }
 
 #pragma endregion
@@ -515,6 +548,19 @@ void Player::AllStop()
 	_isDash = false;
 	_isChargeAndFire = false;
 	_effect->_isActive = false;
+}
+
+void Player::HPBarActive()
+{
+	for (int i = 0; i < 10; i++)
+	{
+		if (i + 1 > _maxHp)
+			_hpBars[i]->SetState(HPBar::HPState::NONE);
+		else if (i + 1 > _hp && i + 1 <= _maxHp)
+			_hpBars[i]->SetState(HPBar::HPState::BROKEN);
+		else if (i + 1 <= _hp)
+			_hpBars[i]->SetState(HPBar::HPState::FULL);
+	}
 }
 
 void Player::Hitted()

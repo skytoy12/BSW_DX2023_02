@@ -8,10 +8,13 @@ HPBar::HPBar()
 	_transform = make_shared<Transform>();
 
 	CreateAction(L"Resource/UI/HP/FullHP.png", "Resource/UI/HP/FullHP.xml", "FullHP",
-	Vector2(228.0f * 0.1f, 305.0f * 0.1f), Action::Type::LOOP);
+	Vector2(228.0f * 0.1f, 305.0f * 0.1f), Action::Type::END);
 
 	CreateAction(L"Resource/UI/HP/BrokenHP.png", "Resource/UI/HP/BrokenHP.xml", "BrokenHP",
-	Vector2(228.0f * 0.1f, 305.0f * 0.1f), Action::Type::LOOP);
+	Vector2(228.0f * 0.1f, 305.0f * 0.1f), Action::Type::END);
+
+	CreateAction(L"Resource/UI/HP/FullHP.png", "Resource/UI/HP/FullHP.xml", "BrokenHP",
+	Vector2(228.0f * 0.1f, 305.0f * 0.1f), Action::Type::END);
 }
 
 HPBar::~HPBar()
@@ -24,8 +27,8 @@ void HPBar::Update()
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 
-	if (_curstate == FULL)
-		_actions[BROKEN]->Reset();
+	//if (_curstate == FULL)
+	//	_actions[BROKEN]->Reset();
 }
 
 void HPBar::PostRender()
@@ -78,3 +81,5 @@ void HPBar::CreateAction(wstring srvPath, string xmmlPath, string actionName, Ve
 	_actions.push_back(action);
 	_sprites.push_back(sprite);
 }
+
+

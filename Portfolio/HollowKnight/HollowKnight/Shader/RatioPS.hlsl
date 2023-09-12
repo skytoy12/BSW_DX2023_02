@@ -25,9 +25,9 @@ float4 PS(PixelInput input) : SV_TARGET
 
 	if (ratio > 1)
 		ratio = 1;
-	if (input.uv.x > ratio)
+	if (input.uv.y > ratio)
 	{
-		color.w = 0.5f;
+		color.w = 0.0f;
 		return color;
 	}
 

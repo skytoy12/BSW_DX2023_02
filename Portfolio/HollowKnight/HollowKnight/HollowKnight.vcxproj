@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\UI\QuadUI\HPFrame.h" />
     <ClInclude Include="Object\UI\AnimationUI\HPBar.h" />
     <ClInclude Include="Scene\GameScene\GameScene1.h" />
     <ClInclude Include="Object\UI\QuadUI\MainString.h" />
@@ -217,11 +218,13 @@
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Object\UI\AnimationUI\SelectImage.h" />
+    <ClInclude Include="Object\UI\AnimationUI\SoulOrb.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\UI\QuadUI\HPFrame.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\HPBar.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene1.cpp" />
     <ClCompile Include="Object\UI\QuadUI\MainString.cpp" />
@@ -283,6 +286,7 @@
     <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\SelectImage.cpp" />
+    <ClCompile Include="Object\UI\AnimationUI\SoulOrb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />

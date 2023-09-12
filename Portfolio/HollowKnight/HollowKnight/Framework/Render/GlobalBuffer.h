@@ -176,8 +176,8 @@ class RatioBuffer : public ConstantBuffer
 public:
 	struct Data
 	{
-		float max = 0.0f;
-		float cur = 0.0f;
+		float max = 1.0f;
+		float cur = 1.0f;
 		float padding[2] = { 0.0f, 0.0f };
 	};
 

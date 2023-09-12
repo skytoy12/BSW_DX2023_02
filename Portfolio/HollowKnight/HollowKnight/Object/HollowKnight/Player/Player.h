@@ -28,6 +28,8 @@ public :
 
 	void AllStop();
 
+	void HPBarActive();
+
 	void Hitted();
 	void HitKnockBack();
 	void UnbeatableToIdle();
@@ -89,6 +91,9 @@ private :
 
 	Vector2 _KBdir = { 1,0 };
 	float _KBspeed = 150.0f;
+
+	Vector2 _test = { 0,0 };
+	float _testfloat = 0.0f;
 	
 #pragma region STATE
 	bool _isAlive = true;
@@ -107,8 +112,8 @@ private :
 #pragma endregion
 
 #pragma region INFO
-	int _maxHp = 5;
-	int _hp = 5;
+	int _maxHp = 7;
+	int _hp = 7;
 #pragma endregion
 
 	State_Player _oldstate = Player::State_Player::IDLE;
@@ -122,7 +127,11 @@ private :
 	shared_ptr<CircleCollider> _bulletCol;
 	shared_ptr<CircleCollider> _dashCol;
 
+#pragma region UI
 	vector<shared_ptr<class HPBar>> _hpBars;
+	shared_ptr<HPFrame> _frame;
+	shared_ptr<SoulOrb> _orb;
+#pragma endregion
 
 	vector<weak_ptr<class Monster>> _enemies;
 

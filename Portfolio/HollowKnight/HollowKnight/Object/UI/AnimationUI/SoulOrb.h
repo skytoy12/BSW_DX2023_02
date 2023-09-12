@@ -1,16 +1,9 @@
 #pragma once
-class HPBar
+class SoulOrb
 {
 public:
-	enum HPState
-	{
-		FULL,
-		BROKEN,
-		NONE
-	};
-
-	HPBar();
-	~HPBar();
+	SoulOrb();
+	~SoulOrb();
 
 	void Update();
 	void PostRender();
@@ -20,17 +13,12 @@ public:
 	void SetPosition(Vector2 pos) { _transform->SetPosition(pos); }
 	void SetScale(Vector2 scale) { _transform->SetScale(scale); }
 
-	void SetState(HPState type) { _curstate = type; }
-	void Play(HPState type) { _actions[type]->Play(); }
-
-
-	HPState GetState() { return _curstate; }
+	shared_ptr<Transform> GetTransform() { return _transform; }
 
 private:
-	HPState _curstate = FULL;
-
 	shared_ptr<Transform> _transform;
-	vector<shared_ptr<Sprite>> _sprites;
-	vector<shared_ptr<Action>> _actions;
+	shared_ptr<Sprite> _sprite;
+	shared_ptr<Action> _action;
 };
+
 

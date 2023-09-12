@@ -100,6 +100,7 @@ void Monster::Hitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
 		_targetPlayer.lock()->SetWeaponActive(false);
+		_targetPlayer.lock()->MPRecovery();
 		WeaponActive();
 		_jumpPower = 300.0f;
 		if (_monsterType == RUSH)

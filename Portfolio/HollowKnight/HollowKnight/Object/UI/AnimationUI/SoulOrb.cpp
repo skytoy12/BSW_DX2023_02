@@ -6,6 +6,7 @@ using namespace tinyxml2;
 SoulOrb::SoulOrb()
 {
 	_transform = make_shared<Transform>();
+	_ratioBuffer = make_shared<RatioBuffer>();
 	CreateAction(L"Resource/UI/HP/SoulOrb.png", "Resource/UI/HP/SoulOrb.xml", "SoulOrb",
 	Vector2(130, 125), Action::Type::LOOP);
 	_action->SetSpeed(0.5f);
@@ -20,11 +21,15 @@ void SoulOrb::Update()
 	_transform->Update();
 	_action->Update();
 	_sprite->Update();
+
+	_ratioBuffer->Update();
 }
 
 void SoulOrb::PostRender()
 {
 	_transform->SetBuffer(0);
+	_ratioBuffer->SetPSBuffer(1);
+
 	_sprite->SetCurClip(_action->GetCurClip());
 	_sprite->Render();
 }
@@ -65,6 +70,6 @@ void SoulOrb::CreateAction(wstring srvPath, string xmmlPath, string actionName, 
 	_action->Update();
 	_sprite = make_shared<Sprite>(srvPath, size);
 
-	_sprite->SetPS(ADD_PS(L"Shader/NonRedPS.hlsl"));
+	_sprite->SetPS(ADD_PS(L"Shader/RatioPS.hlsl"));
 	_sprite->Update();
 }

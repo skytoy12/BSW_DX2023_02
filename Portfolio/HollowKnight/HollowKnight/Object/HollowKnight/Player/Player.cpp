@@ -118,6 +118,7 @@ void Player::Update()
 	{
 		hp->Update();
 	}
+	SoulOrbRatio();
 	/////////////////////
 
 	if (_isBulletActive == false)
@@ -370,6 +371,8 @@ void Player::ChargeAndFire()
 		return;
 	if (_isAttack == true)
 		return;
+	if (_curMp < 51)
+		return;
 
 	if (KEY_DOWN('Z'))
 	{
@@ -389,7 +392,7 @@ void Player::ChargeAndFire()
 	{
 		_effect->Reset();
 		_effect->_isActive = false;
-		if (_chargeTime < 1.0f)
+		if (_chargeTime < 0.3f)
 		{
 			_chargeTime = 0.0f;
 			SetAndResetState(IDLE);
@@ -414,6 +417,7 @@ void Player::ChargeAndFire()
 			_bullet->Shoot(_col->GetTransform()->GetWorldPosition());
 			_isBulletActive = true;
 			_bullet->_isAttack = true;
+			_curMp -= 50;
 		}
 		else
 		{
@@ -423,6 +427,7 @@ void Player::ChargeAndFire()
 			_bullet->Shoot(_col->GetTransform()->GetWorldPosition(), Vector2(-1, 0));
 			_isBulletActive = true;
 			_bullet->_isAttack = true;
+			_curMp -= 50;
 		}
 
 		_isChargeAndFire = false;
@@ -561,6 +566,19 @@ void Player::HPBarActive()
 		else if (i + 1 <= _hp)
 			_hpBars[i]->SetState(HPBar::HPState::FULL);
 	}
+}
+
+void Player::MPRecovery()
+{
+	_curMp += 20;
+	if (_curMp > _maxMp)
+		_curMp = _maxMp;
+}
+
+void Player::SoulOrbRatio()
+{
+	_orb->GetRatioBuffer()->_data.cur = _curMp;
+	_orb->GetRatioBuffer()->_data.max = _maxMp;
 }
 
 void Player::Hitted()

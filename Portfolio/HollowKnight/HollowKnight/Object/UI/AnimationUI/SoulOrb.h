@@ -13,12 +13,16 @@ public:
 	void SetPosition(Vector2 pos) { _transform->SetPosition(pos); }
 	void SetScale(Vector2 scale) { _transform->SetScale(scale); }
 
+	shared_ptr<RatioBuffer> GetRatioBuffer() { return _ratioBuffer; }
+
 	shared_ptr<Transform> GetTransform() { return _transform; }
 
 private:
 	shared_ptr<Transform> _transform;
 	shared_ptr<Sprite> _sprite;
 	shared_ptr<Action> _action;
+
+	shared_ptr<RatioBuffer> _ratioBuffer;
 };
 
 

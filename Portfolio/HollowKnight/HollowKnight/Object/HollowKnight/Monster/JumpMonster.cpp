@@ -163,6 +163,7 @@ void JumpMonster::Hitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
 		_targetPlayer.lock()->SetWeaponActive(false);
+		_targetPlayer.lock()->MPRecovery();
 		WeaponActive();
 		if(_isJump == false)
 			_jumpPower = 300.0f;

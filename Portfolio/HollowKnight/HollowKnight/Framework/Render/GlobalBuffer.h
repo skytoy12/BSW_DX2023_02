@@ -178,7 +178,7 @@ public:
 	{
 		float max = 1.0f;
 		float cur = 1.0f;
-		float padding[2] = { 0.0f, 0.0f };
+		float dummy[2] = { 0.0f, 0.0f };
 	};
 
 	RatioBuffer()

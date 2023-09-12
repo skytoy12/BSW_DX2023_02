@@ -29,6 +29,8 @@ public :
 	void AllStop();
 
 	void HPBarActive();
+	void MPRecovery();
+	void SoulOrbRatio();
 
 	void Hitted();
 	void HitKnockBack();
@@ -114,6 +116,9 @@ private :
 #pragma region INFO
 	int _maxHp = 7;
 	int _hp = 7;
+
+	int _maxMp = 300;
+	int _curMp = 300;
 #pragma endregion
 
 	State_Player _oldstate = Player::State_Player::IDLE;

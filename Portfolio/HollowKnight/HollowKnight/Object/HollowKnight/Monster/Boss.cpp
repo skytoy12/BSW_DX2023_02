@@ -393,6 +393,7 @@ void Boss::RealHitted()
 		EFFECT_LPLAY("Hitted", _head->GetCollider()->GetTransform()->GetWorldPosition());
 		SOUND->Play("HeadHit");
 		_targetPlayer.lock()->SetWeaponActive(false);
+		_targetPlayer.lock()->MPRecovery();
 		_head->hurt();
 		_headHitCount += 1;
 	}
@@ -1045,6 +1046,7 @@ void Boss::Hitted(shared_ptr<Collider> col)
 		_monsterBuffer->_data.B = 0.5f;
 		_isUnbeatable = true;
 		_targetPlayer.lock()->SetWeaponActive(false);
+		_targetPlayer.lock()->MPRecovery();
 		_armor -= 1;
 		_hitCount += 1;
 	}

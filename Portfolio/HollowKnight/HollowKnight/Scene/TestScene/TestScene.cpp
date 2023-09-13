@@ -15,7 +15,7 @@ TestScene::TestScene()
 	_mon3 = make_shared<RushMonster>();
 	_mon3->SetPosition(Vector2(800, 0));
 	_mon3->SetPlayer(_player);
-	CAMERA->SetTarget(_player->GetTransform());
+	//CAMERA->SetTarget(_player->GetTransform());
 	_col = make_shared<RectCollider>(Vector2(20000, 30));
 	_col->SetPosition(Vector2(0, -250));
 }

@@ -32,12 +32,17 @@ public :
 	void PrevScene();
 	void SetScene(int number);
 
+	UINT GetCurScene() { return _curScene; }
+	UINT GetOldScene() { return _oldScene; }
+
 private :
 	static SceneManager* _instance;
 
 	vector<shared_ptr<Scene>> _scenes;
 
 	UINT _curScene = 0;
+
+	UINT _oldScene = 0;
 
 	UINT _test = 0;
 };

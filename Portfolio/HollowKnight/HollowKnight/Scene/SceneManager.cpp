@@ -6,11 +6,13 @@
 #include "TestScene/BossTestScene.h"
 
 #include "GameScene/MainScene.h"
+#include "GameScene/GameScene1.h"
 
 SceneManager* SceneManager::_instance = nullptr;
 
 SceneManager::SceneManager()
 {
+	_scenes.push_back(make_shared<GameScene1>());
 	_scenes.push_back(make_shared<MapTool>());
 	_scenes.push_back(make_shared<MainScene>());
 	_scenes.push_back(make_shared<BossTestScene>());
@@ -52,6 +54,8 @@ void SceneManager::NextScene()
 	if (_curScene >= _scenes.size() - 1)
 		return;
 
+	_oldScene = _curScene;
+
 	_scenes[_curScene]->End();
 	++_curScene;
 	_scenes[_curScene]->Init();
@@ -63,6 +67,8 @@ void SceneManager::PrevScene()
 	if (_curScene <= 0 )
 		return;
 
+	_oldScene = _curScene;
+
 	_scenes[_curScene]->End();
 	--_curScene;
 	_scenes[_curScene]->Init();
@@ -72,6 +78,8 @@ void SceneManager::SetScene(int number)
 {
 	if (number > _scenes.size() - 1 || number < 0)
 		return;
+
+	_oldScene = _curScene;
 
 	_scenes[_curScene]->End();
 	_curScene = number;

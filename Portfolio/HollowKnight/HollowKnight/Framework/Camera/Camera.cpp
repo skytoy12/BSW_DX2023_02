@@ -66,6 +66,8 @@ Vector2 Camera::GetWorldMousePos()
 
 	Vector2 mousePos = MOUSE_POS;
 
+	mousePos -= CENTER;
+
 	return mousePos.TransformCoord(inverseM);
 }
 

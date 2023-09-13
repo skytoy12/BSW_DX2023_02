@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\HollowKnight\_Terrain\Brick.h" />
     <ClInclude Include="Object\UI\QuadUI\HPFrame.h" />
     <ClInclude Include="Object\UI\AnimationUI\HPBar.h" />
     <ClInclude Include="Scene\GameScene\GameScene1.h" />
@@ -225,6 +226,7 @@
     <ClInclude Include="Types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\HollowKnight\_Terrain\Brick.cpp" />
     <ClCompile Include="Object\UI\QuadUI\HPFrame.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\HPBar.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene1.cpp" />

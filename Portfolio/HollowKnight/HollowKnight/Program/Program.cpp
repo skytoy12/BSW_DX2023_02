@@ -53,6 +53,8 @@ void Program::Render()
 	ImGui::Text("W_MOUSEPOS : { %.0f , %.0f }", W_MOUSE_POS.x, W_MOUSE_POS.y);
 	ImGui::Text("S_MOUSEPOS : { %.0f , %.0f }", S_MOUSE_POS.x, S_MOUSE_POS.y);
 	ImGui::Text("MOUSEPOS : { %.0f , %.0f }", MOUSE_POS.x, MOUSE_POS.y);
+	ImGui::Text("_curScene : %d", SCENE->GetCurScene());
+	ImGui::Text("_oldScene : %d", SCENE->GetOldScene());
 
 	CAMERA->SetUICameraBuffer();
 	CAMERA->PostRender();

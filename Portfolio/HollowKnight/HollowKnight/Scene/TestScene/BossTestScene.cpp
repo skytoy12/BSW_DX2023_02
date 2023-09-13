@@ -9,10 +9,10 @@ BossTestScene::BossTestScene()
 	_player = make_shared<Player>();
 	_boss = make_shared<Boss>();
 	_boss->SetPlayer(_player);
-	CAMERA->SetTarget(_player->GetTransform());
+	//CAMERA->SetTarget(_player->GetTransform());
 	_col = make_shared<RectCollider>(Vector2(20000, 300));
 	_col->SetPosition(Vector2(0, -250));
-	CAMERA->SetLeftBottom(Vector2(-100000, -130));
+	CAMERA->SetLeftBottom(Vector2(-100000, -100000));
 	CAMERA->SetRightTop(Vector2(100000, 100000));
 	SOUND->Add("Main1", "Resource/Sound/BGM/S19 Crossroads Main.wav", true);
 	SOUND->Add("Main2", "Resource/Sound/BGM/S19 Crossroads Bass.wav", true);

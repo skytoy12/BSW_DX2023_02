@@ -73,6 +73,7 @@ using namespace Utility;
 #include "Render/Shader/Shader.h"
 #include "Render/Shader/VertexShader.h"
 #include "Render/Shader/PixelShader.h"
+#include "Render/Shader/ComputeShader.h"
 
 
 
@@ -81,6 +82,7 @@ using namespace Utility;
 #include "Render/Buffer/IndexBuffer.h"
 #include "Render/Buffer/ConstBuffer.h"
 #include "Render/Buffer/GlobalBuffer.h"
+#include "Render/Buffer/RawBuffer.h"
 
 #include "Render/Texture/Texture.h"
 #include "Render/Mesh.h"

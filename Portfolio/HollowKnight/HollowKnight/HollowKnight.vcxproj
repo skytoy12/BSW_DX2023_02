@@ -219,6 +219,7 @@
     <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Object\UI\AnimationUI\SelectImage.h" />
     <ClInclude Include="Object\UI\AnimationUI\SoulOrb.h" />
+    <ClInclude Include="Object\HollowKnight\_Terrain\Stool.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
@@ -287,6 +288,7 @@
     <ClCompile Include="Scene\TestScene\TestScene.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\SelectImage.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\SoulOrb.cpp" />
+    <ClCompile Include="Object\HollowKnight\_Terrain\Stool.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />

@@ -115,6 +115,9 @@ using namespace Microsoft::WRL;
 #include "Object/HollowKnight/Monster/Boss.h"
 #include "Object/HollowKnight/Monster/BossHead.h"
 
+//Terrain
+#include "Object/HollowKnight/_Terrain/Stool.h"
+
 
 // Scene
 #include "Scene/Scene.h"

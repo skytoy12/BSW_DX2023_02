@@ -11,6 +11,7 @@ SceneManager* SceneManager::_instance = nullptr;
 
 SceneManager::SceneManager()
 {
+	_scenes.push_back(make_shared<MapTool>());
 	_scenes.push_back(make_shared<MainScene>());
 	_scenes.push_back(make_shared<BossTestScene>());
 	_scenes.push_back(make_shared<TestScene>());

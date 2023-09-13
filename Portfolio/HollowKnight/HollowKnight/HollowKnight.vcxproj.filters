@@ -228,6 +228,9 @@
     <ClInclude Include="Object\UI\AnimationUI\SoulOrb.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\HollowKnight\_Terrain\Stool.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -402,6 +405,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\UI\AnimationUI\SoulOrb.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\_Terrain\Stool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

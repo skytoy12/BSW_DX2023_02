@@ -11,6 +11,10 @@ public :
 	virtual void PreRender() override;
 
 private :
-	shared_ptr<CircleCollider> _collider;
+	shared_ptr<Player> _player;
+
+	shared_ptr<Stool> _stool1;
+
+	shared_ptr<Stool> _stool2;
 };
 

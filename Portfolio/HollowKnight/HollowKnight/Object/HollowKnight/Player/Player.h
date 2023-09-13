@@ -36,6 +36,8 @@ public :
 	void HitKnockBack();
 	void UnbeatableToIdle();
 
+	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
+
 #pragma region Player Move & Attack
 	void Move(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos * DELTA_TIME * _speed); }
 	void Select();

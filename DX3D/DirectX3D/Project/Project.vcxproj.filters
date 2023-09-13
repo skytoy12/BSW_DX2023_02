@@ -168,6 +168,12 @@
     <ClInclude Include="Object\LandScape\TerrainEditor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Render\Shader\ComputeShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Buffer\RawBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -281,6 +287,12 @@
     <ClCompile Include="_Include\ImGuiFileDialog.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Render\Shader\ComputeShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Buffer\RawBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -381,6 +393,7 @@
     <FxCompile Include="_Shader\PixelSpecular.hlsl" />
     <FxCompile Include="_Shader\VertexNormalMapping.hlsl" />
     <FxCompile Include="_Shader\PixelNormalMapping.hlsl" />
+    <FxCompile Include="_Shader\ByteAddress.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

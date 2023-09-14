@@ -139,6 +139,7 @@
     <ClInclude Include="Object\Basic\Circle.h" />
     <ClInclude Include="Object\Basic\Robot.h" />
     <ClInclude Include="Object\Basic\Sphere.h" />
+    <ClInclude Include="Render\Buffer\StructuredBuffer.h" />
     <ClInclude Include="System\Camera.h" />
     <ClInclude Include="Object\Basic\Quad.h" />
     <ClInclude Include="Render\State\RasterizerState.h" />
@@ -194,6 +195,7 @@
     <ClCompile Include="Object\Basic\Circle.cpp" />
     <ClCompile Include="Object\Basic\Robot.cpp" />
     <ClCompile Include="Object\Basic\Sphere.cpp" />
+    <ClCompile Include="Render\Buffer\StructuredBuffer.cpp" />
     <ClCompile Include="System\Camera.cpp" />
     <ClCompile Include="Object\Basic\Quad.cpp" />
     <ClCompile Include="Render\State\RasterizerState.cpp" />

@@ -16,5 +16,7 @@ private :
 	shared_ptr<Stool> _stool1;
 
 	shared_ptr<Stool> _stool2;
+
+	shared_ptr<Wall>_wall;
 };
 

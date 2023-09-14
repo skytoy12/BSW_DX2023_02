@@ -12,6 +12,8 @@ MapTool::MapTool()
 	_stool2 = make_shared<Stool>(L"Resource/Stool/stool2.png", Vector2(131, 106), Vector2(110, 50));
 	_stool2->GetTransform()->SetPosition(Vector2(0, -15));
 
+	_wall = make_shared<Wall>(Vector2(50, 50));
+
 	CAMERA->SetScale(Vector2(0.75f, 0.75f));
 	_stool1->SetTarget(_player);
 	_stool2->SetTarget(_player);
@@ -29,6 +31,8 @@ void MapTool::Update()
 
 	_stool1->Update();
 	_stool2->Update();
+
+	_wall->Update();
 }
 
 void MapTool::Render()
@@ -37,6 +41,8 @@ void MapTool::Render()
 
 	_stool1->Render();
 	_stool2->Render();
+
+	_wall->Render();
 }
 
 void MapTool::PostRender()

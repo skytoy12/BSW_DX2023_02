@@ -62,9 +62,11 @@ public :
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 	shared_ptr<RectCollider> GetWeaponcol() { return _weaponCol; }
 	shared_ptr<CircleCollider> GetBulletcol() { return _bulletCol; }
+	bool GetIsJump() { return _isJump; }
 	bool GetIsAttack() { return _isAttack; }
 	bool GetWeaponActive() { return _isWeaponActive; }
 	bool GetBulletActive() { return _isBulletActive; }
+	float GetJumpPower() { return _jumpPower; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -75,6 +77,7 @@ public :
 	void SetWeaponActive(bool value) { _isWeaponActive = value; }
 	void SetBulletActive(bool value) { _isBulletActive = value; }
 	void SetKBdir(Vector2 value) { _KBdir = value; }
+	void SetJumpPower(float value) { _jumpPower = value; }
 #pragma endregion
 
 	bool _isWeaponActiveB = false;

@@ -224,6 +224,7 @@
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
+    <ClInclude Include="Object\HollowKnight\_Terrain\Wall.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Object\HollowKnight\_Terrain\Brick.cpp" />
@@ -291,6 +292,7 @@
     <ClCompile Include="Object\UI\AnimationUI\SelectImage.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\SoulOrb.cpp" />
     <ClCompile Include="Object\HollowKnight\_Terrain\Stool.cpp" />
+    <ClCompile Include="Object\HollowKnight\_Terrain\Wall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />

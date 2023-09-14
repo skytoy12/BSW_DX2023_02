@@ -117,6 +117,7 @@ using namespace Microsoft::WRL;
 
 //Terrain
 #include "Object/HollowKnight/_Terrain/Stool.h"
+#include "Object/HollowKnight/_Terrain/Wall.h"
 
 
 // Scene

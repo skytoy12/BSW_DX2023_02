@@ -21,7 +21,9 @@ private:
 
 	shared_ptr<Player> _player;
 
-	vector<shared_ptr<RectCollider>> _cols;
+	vector<shared_ptr<Wall>> _walls;
+
+	//vector<shared_ptr<RectCollider>> _cols;
 
 	//shared_ptr<Player> _player;
 	//vector<shared_ptr<JumpMonster>>

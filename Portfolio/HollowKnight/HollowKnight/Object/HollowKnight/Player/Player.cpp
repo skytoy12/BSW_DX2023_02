@@ -141,6 +141,8 @@ void Player::Update()
 			Gravity();
 		if (_isUnbeatable == false)
 			Select();
+		if (_jumpPower < -600.0f)
+			_isJump = true;
 		HitKnockBack();
 	}
 
@@ -174,18 +176,23 @@ void Player::PostRender()
 	{
 		hp->PostRender();
 	}
-	/////////////////////
-	ImGui::SliderFloat("Location.x", (float*)&_test.x, -WIN_WIDTH * 0.5f, +WIN_WIDTH * 0.5f);
-    ImGui::SliderFloat("Location.y", (float*)&_test.y, -WIN_HEIGHT * 0.5f, +WIN_HEIGHT * 0.5f);
-    ImGui::SliderFloat("scale", (float*)&_testfloat, 0.0f, 2.0f);
 
-	ImGui::Text("hp1 : %d", _hpBars[0]->GetState());
-	ImGui::Text("hp2 : %d", _hpBars[1]->GetState());
-	ImGui::Text("hp3 : %d", _hpBars[2]->GetState());
-	ImGui::Text("hp4 : %d", _hpBars[3]->GetState());
-	ImGui::Text("hp5 : %d", _hpBars[4]->GetState());
-	ImGui::Text("hp6 : %d", _hpBars[5]->GetState());
-	ImGui::Text("hp7 : %d", _hpBars[6]->GetState());
+	/////////////////////
+	// 
+	
+
+	ImGui::Text("jumpP : %f", _jumpPower);
+	//ImGui::SliderFloat("Location.x", (float*)&_test.x, -WIN_WIDTH * 0.5f, +WIN_WIDTH * 0.5f);
+    //ImGui::SliderFloat("Location.y", (float*)&_test.y, -WIN_HEIGHT * 0.5f, +WIN_HEIGHT * 0.5f);
+    //ImGui::SliderFloat("scale", (float*)&_testfloat, 0.0f, 2.0f);
+
+	//ImGui::Text("hp1 : %d", _hpBars[0]->GetState());
+	//ImGui::Text("hp2 : %d", _hpBars[1]->GetState());
+	//ImGui::Text("hp3 : %d", _hpBars[2]->GetState());
+	//ImGui::Text("hp4 : %d", _hpBars[3]->GetState());
+	//ImGui::Text("hp5 : %d", _hpBars[4]->GetState());
+	//ImGui::Text("hp6 : %d", _hpBars[5]->GetState());
+	//ImGui::Text("hp7 : %d", _hpBars[6]->GetState());
 
 	//ImGui::Text("_isWeaponAct : %d", _isWeaponActive);
 	//ImGui::Text("_isAttack : %d", _isAttack);
@@ -480,8 +487,8 @@ void Player::Gravity()
 {
 	_jumpPower -= 15;
 
-	if (_jumpPower < -600.0f)
-		_jumpPower = -600.0f;
+	if (_jumpPower < -610.0f)
+		_jumpPower = -610.0f;
 
 
 	_col->GetTransform()->AddVector2(Vector2(0.0f, 1.0f) * _jumpPower * DELTA_TIME);

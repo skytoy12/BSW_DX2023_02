@@ -110,7 +110,7 @@ void RushMonster::Update()
 		RushFinish();
 
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 300.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isRush == true)
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 100.0f)
 	{
 		Attack();
 	}
@@ -136,7 +136,7 @@ void RushMonster::Render()
 
 void RushMonster::PostRender()
 {
-	ImGui::Text("SPEED : %f", _speed);
+	ImGui::Text("pos : %.1f, %.1f", _col->GetTransform()->GetWorldPosition().x, _col->GetTransform()->GetWorldPosition().y);
 	ImGui::Text("_curstate : %d", _curstate);
 	ImGui::Text("_jmDeath : %d", _isDeath);
 	ImGui::Text("JP : %f", _jumpPower);
@@ -268,9 +268,13 @@ void RushMonster::Active()
 	if (_isAlive == false)
 		return;
 
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isRush == true)
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 400.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 100.0f)
+	{
+		if (_isRush == true)
+			return;
 		_isActive = true;
+	}
 	else
 	{
 		_isActive = false;

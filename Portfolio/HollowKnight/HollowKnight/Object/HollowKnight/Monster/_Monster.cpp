@@ -112,7 +112,7 @@ void Monster::Hitted(shared_ptr<Collider> col)
 			_KBdir = Vector2(-1, 0);
 		_KBspeed = 600;
 		if (_hp == 1 && _monsterType != FLY)
-			_KBspeed = 16000;
+			_KBspeed = 600;
 		_hp -= 1;
 	}
 }

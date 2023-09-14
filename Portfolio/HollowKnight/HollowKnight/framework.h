@@ -112,6 +112,9 @@ using namespace Microsoft::WRL;
 //HollowKnight
 #include "Object/HollowKnight/Player/Player.h"
 #include "Object/HollowKnight/Monster/_Monster.h"
+#include "Object/HollowKnight/Monster/RushMonster.h"
+#include "Object/HollowKnight/Monster/JumpMonster.h"
+#include "Object/HollowKnight/Monster/FlyMonster.h"
 #include "Object/HollowKnight/Monster/Boss.h"
 #include "Object/HollowKnight/Monster/BossHead.h"
 

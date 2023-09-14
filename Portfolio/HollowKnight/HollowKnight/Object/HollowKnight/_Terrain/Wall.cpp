@@ -58,10 +58,12 @@ void Wall::BlockTarget()
 
 void Wall::BlockR(shared_ptr<RectCollider> col)
 {
+	_col->Block(col);
 }
 
 void Wall::BlockC(shared_ptr<CircleCollider> col)
 {
+	_col->Block(col);
 }
 
 void Wall::SetScale(Vector2 scale)

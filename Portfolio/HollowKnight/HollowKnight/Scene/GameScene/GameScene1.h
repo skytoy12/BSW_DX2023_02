@@ -23,6 +23,8 @@ private:
 
 	vector<shared_ptr<Wall>> _walls;
 
+	shared_ptr<RushMonster> _rMon;
+
 	//vector<shared_ptr<RectCollider>> _cols;
 
 	//shared_ptr<Player> _player;

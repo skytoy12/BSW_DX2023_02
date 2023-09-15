@@ -18,6 +18,10 @@ public:
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 	void SetScale(Vector2 scale);
 
+	Vector2 GetSize() { return Vector2(_width, _height); }
+
+	shared_ptr<RectCollider> GetCollider() { return _col; }
+
 private:
 	shared_ptr<Transform> _transform;
 	shared_ptr<RectCollider> _col;

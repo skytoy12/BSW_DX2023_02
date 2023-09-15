@@ -400,6 +400,7 @@
     <FxCompile Include="_Shader\VertexNormalMapping.hlsl" />
     <FxCompile Include="_Shader\PixelNormalMapping.hlsl" />
     <FxCompile Include="_Shader\ByteAddress.hlsl" />
+    <FxCompile Include="_Shader\ComputePicking.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

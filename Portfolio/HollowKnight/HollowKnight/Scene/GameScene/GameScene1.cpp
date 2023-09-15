@@ -6,7 +6,7 @@ GameScene1::GameScene1()
 	_player = make_shared<Player>();
 	_rMon = make_shared<RushMonster>();
 
-	for (int i = 0; i < 9; i++)
+	for (int i = 0; i < 15; i++)
 	{
 		shared_ptr<Wall> wall = make_shared<Wall>(Vector2(50, 50));
 		_walls.push_back(wall);
@@ -50,6 +50,7 @@ void GameScene1::Update()
 		wall->BlockR(RECT(_rMon->GetCollider()));
 	}
 
+	DashCut();
 
 	if (KEY_UP(VK_UP))
 		_colNum += 1;
@@ -86,25 +87,37 @@ void GameScene1::PreRender()
 
 void GameScene1::CreateMap()
 {
-	_walls[0]->SetPosition(Vector2(- 250, + 230));
-	_walls[1]->SetPosition(Vector2(+ 250, + 230));
-	_walls[2]->SetPosition(Vector2(+   0, - 700));
-	_walls[3]->SetPosition(Vector2(-1400, - 750));
-	_walls[4]->SetPosition(Vector2(- 887, -1047));
-	_walls[5]->SetPosition(Vector2(- 330, -1125));
-	_walls[6]->SetPosition(Vector2(-  50, - 900));
-	_walls[7]->SetPosition(Vector2(- 250, + 770));
-	_walls[8]->SetPosition(Vector2(+ 250, + 770));
+	_walls[0] ->SetPosition(Vector2(- 250, + 230));
+	_walls[1] ->SetPosition(Vector2(+ 250, + 230));
+	_walls[2] ->SetPosition(Vector2(+   0, - 700));
+	_walls[3] ->SetPosition(Vector2(-1400, - 750));
+	_walls[4] ->SetPosition(Vector2(- 887, -1047));
+	_walls[5] ->SetPosition(Vector2(- 330, -1125));
+	_walls[6] ->SetPosition(Vector2(-  50, - 900));
+	_walls[7] ->SetPosition(Vector2(- 250, + 770));
+	_walls[8] ->SetPosition(Vector2(+ 250, + 770));
+	_walls[9] ->SetPosition(Vector2(+ 280, - 344));
+	_walls[10]->SetPosition(Vector2(-1887, -1047));
+	_walls[11]->SetPosition(Vector2(-2320, -1100));
+	_walls[12]->SetPosition(Vector2(-2358, - 635));
+	_walls[13]->SetPosition(Vector2(-2760, -1060));
+	_walls[14]->SetPosition(Vector2(-2760, - 450));
 
-	_walls[0]->SetScale(Vector2( 2, 10));
-	_walls[1]->SetScale(Vector2( 2, 10));
-	_walls[2]->SetScale(Vector2(20,  3));
-	_walls[3]->SetScale(Vector2(20,  4));
-	_walls[4]->SetScale(Vector2( 3,  8));
-	_walls[5]->SetScale(Vector2(20,  4));
-	_walls[6]->SetScale(Vector2( 3,  5));
-	_walls[7]->SetScale(Vector2( 2, 10));
-	_walls[8]->SetScale(Vector2( 2, 10));
+	_walls[0] ->SetScale(Vector2( 2, 10));
+	_walls[1] ->SetScale(Vector2( 2, 10));
+	_walls[2] ->SetScale(Vector2(20,  3));
+	_walls[3] ->SetScale(Vector2(20,  4));
+	_walls[4] ->SetScale(Vector2( 3,  8));
+	_walls[5] ->SetScale(Vector2(20,  4));
+	_walls[6] ->SetScale(Vector2( 3,  5));
+	_walls[7] ->SetScale(Vector2( 2, 10));
+	_walls[8] ->SetScale(Vector2( 2, 10));
+	_walls[9] ->SetScale(Vector2( 2, 12));
+	_walls[10]->SetScale(Vector2( 3,  8));
+	_walls[11]->SetScale(Vector2(15,  3));
+	_walls[12]->SetScale(Vector2( 8,  3));
+	_walls[13]->SetScale(Vector2( 3,  8));
+	_walls[14]->SetScale(Vector2( 3,  8));
 }
 
 void GameScene1::MoveCol()
@@ -117,4 +130,17 @@ void GameScene1::MoveCol()
 		}
 	}
 
+}
+
+void GameScene1::DashCut()
+{
+	for (auto wall : _walls)
+	{
+		_player->CutDash(wall);
+	}
+
+	if (KEY_DOWN(VK_SHIFT))
+	{
+		_player->Dash();
+	}
 }

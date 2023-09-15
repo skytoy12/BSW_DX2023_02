@@ -26,6 +26,11 @@
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
 
+#include <d2d1_2.h>
+#include <dwrite.h>
+
+#pragma <d2d1.lib>
+#pragma <dwrite.lib>
 // DirectXTex
 #include "../DirectTex/DirectXTex.h"
 
@@ -106,6 +111,9 @@ using namespace Microsoft::WRL;
 #include "Object/Dungreed/Dungreed.h"
 #include "Object/Dungreed/Dun_Player_Advanced.h"
 #include "Object/Dungreed/DungreedBoss.h"
+
+#include "Utility/Singleton.h"
+#include "Utility/Font.h"
 
 // UI
 #include "Object/UI/Button.h"

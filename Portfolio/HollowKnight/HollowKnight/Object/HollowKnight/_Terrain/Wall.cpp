@@ -50,6 +50,7 @@ void Wall::BlockTarget()
 		}
 
 		_target.lock()->SetIsJump(false);
+		_target.lock()->SetCanDash(true);
 	}
 
 

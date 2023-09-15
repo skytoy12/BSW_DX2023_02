@@ -15,6 +15,8 @@ public:
 
 	void MoveCol();
 
+	void DashCut();
+
 private:
 	float _scale = 0.75f;
 	int _colNum = 0;

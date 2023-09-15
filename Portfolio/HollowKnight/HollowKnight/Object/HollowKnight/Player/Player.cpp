@@ -3,6 +3,9 @@
 #include "Bullet.h"
 #include "ChargeEffect.h"
 #include "../Monster/_Monster.h"
+#include "../_Terrain/Wall.h"
+
+class Wall;
 
 using namespace tinyxml2;
 
@@ -14,6 +17,7 @@ Player::Player()
 	_col = make_shared<RectCollider>(Vector2(50, 100));
 	_weaponCol = make_shared<RectCollider>(Vector2(120, 70));
 	_dashCol = make_shared<CircleCollider>(10);
+	_distanceCol = make_shared<RectCollider>(Vector2(250, 75));
 	_transform = make_shared<Transform>();
 	_bullet = make_shared<Bullet>();
 	_bulletCol = make_shared<CircleCollider>(50);
@@ -56,6 +60,8 @@ Player::Player()
 	_weaponCol->SetPosition(Vector2(80, -5));
 	_dashCol->SetParent(_col->GetTransform());
 	_dashCol->SetPosition(Vector2(0, -15));
+	_distanceCol->SetParent(_col->GetTransform());
+	_distanceCol->SetPosition(Vector2(125, 10));
 	_transform->SetPosition(Vector2(0, 18));
 	_bulletCol->SetParent(_bullet->GetCollider()->GetTransform());
 	_effect->GetTransform()->SetParent(_col->GetTransform());
@@ -105,6 +111,7 @@ void Player::Update()
 	if (_isAttack == true)
 		_weaponCol->Update();
 	_dashCol->Update();
+	_distanceCol->Update();
 	_actions[_curstate]->Update();
 	_sprites[_curstate]->Update();
 	_transform->Update();
@@ -134,12 +141,13 @@ void Player::Update()
 	else
 		_weaponCol->SetBlue();
 
+	Time();
 	if (_isAlive == true)
 	{
 		CoolTime();
 		if (_isDash == false)
 			Gravity();
-		if (_isUnbeatable == false)
+		if (_hitmotion == false)
 			Select();
 		if (_jumpPower < -600.0f)
 			_isJump = true;
@@ -157,6 +165,7 @@ void Player::Render()
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
 	_sprites[_curstate]->Render();
 	_col->Render();
+	_distanceCol->Render();
 	if(_isAttack == true)
 		_weaponCol->Render();
 	_bullet->Render();
@@ -182,6 +191,7 @@ void Player::PostRender()
 	
 
 	ImGui::Text("jumpP : %f", _jumpPower);
+	ImGui::Text("_dash : %f", _dash);
 	//ImGui::SliderFloat("Location.x", (float*)&_test.x, -WIN_WIDTH * 0.5f, +WIN_WIDTH * 0.5f);
     //ImGui::SliderFloat("Location.y", (float*)&_test.y, -WIN_HEIGHT * 0.5f, +WIN_HEIGHT * 0.5f);
     //ImGui::SliderFloat("scale", (float*)&_testfloat, 0.0f, 2.0f);
@@ -218,7 +228,7 @@ void Player::Select()
 	LeftRight();
 	Walk();
 	Jump();
-	Dash();
+	//Dash();
 	Attack();
 	if(_bulletCoolTime > 2.9f)
 		ChargeAndFire();
@@ -326,8 +336,14 @@ void Player::Dash()
 	if (_isChargeAndFire == true)
 		return;
 
+	if (_isUnbeatable == true)
+		return;
+	if (_isCanDash == 0)
+	{
+		_dash = 250.0f;
+		return;
+	}
 
-	if (KEY_DOWN(VK_LSHIFT))
 	{
 		_isDash = true;
 		_jumpPower = 0;
@@ -336,7 +352,7 @@ void Player::Dash()
 		{
 			SetAndResetState(DASH);
 			SetSpeed(3.0f);
-			Move(Vector2(-5000.0f, 0.0f));
+			DashMove(Vector2(-_dash, 0.0f));
 			SetSpeed(1.0f);
 			EFFECT_LPLAY("Dash", _dashCol->GetTransform()->GetWorldPosition());
 		}
@@ -344,12 +360,60 @@ void Player::Dash()
 		{
 			SetAndResetState(DASH);
 			SetSpeed(3.0f);
-			Move(Vector2(5000.0f, 0.0f));
+			DashMove(Vector2(_dash, 0.0f));
 			SetSpeed(1.0f);
 			EFFECT_RPLAY("Dash", _dashCol->GetTransform()->GetWorldPosition());
 		}
+		_dash = 250.0f;
+		_isCanDash = 0;
+	}
+	//if (KEY_DOWN(VK_LSHIFT))
+	//{
+	//	_isDash = true;
+	//	_jumpPower = 0;
+
+	//	if (_isLeft == true)
+	//	{
+	//		SetAndResetState(DASH);
+	//		SetSpeed(3.0f);
+	//		DashMove(Vector2(-_dash, 0.0f));
+	//		SetSpeed(1.0f);
+	//		EFFECT_LPLAY("Dash", _dashCol->GetTransform()->GetWorldPosition());
+	//	}
+	//	else
+	//	{
+	//		SetAndResetState(DASH);
+	//		SetSpeed(3.0f);
+	//		DashMove(Vector2(_dash, 0.0f));
+	//		SetSpeed(1.0f);
+	//		EFFECT_RPLAY("Dash", _dashCol->GetTransform()->GetWorldPosition());
+	//	}
+	//	_dash = 250.0f;
+	//}
+}
+
+void Player::CutDash(shared_ptr<Wall> wall)
+{
+#define WallWP wall->GetCollider()->GetTransform()->GetWorldPosition()
+#define WP _col->GetTransform()->GetWorldPosition()
+
+	if (KEY_DOWN(VK_LSHIFT))
+	{
+		_isDashCol = true;
+
+		if (_distanceCol->IsCollision(wall->GetCollider()) && _isDashCol == true)
+		{
+			float distance = abs(WP.x - WallWP.x);
+			float Sum = 25.0f + (wall->GetSize().x / 2);
+
+			_dash = abs(Sum - distance);
+			_isDashCol = false;
+			return;
+		}
 	}
 }
+
+
 
 void Player::Attack()
 {
@@ -543,10 +607,7 @@ void Player::CreateAction(wstring srvPath, string xmmlPath, string actionName, V
 	_sprites.push_back(sprite);
 }
 
-void Player::SetEnemy(shared_ptr<class Monster> enemy)
-{
-	_enemies.push_back(enemy);
-}
+
 
 void Player::AllStop()
 {
@@ -612,22 +673,44 @@ void Player::Hitted()
 		return;
 	}
 
+	_isKnockBackTime = true;
+	_hitmotion = true;
 	SetAndResetState(RECOIL);
 }
 
 void Player::HitKnockBack()
 {
-	if (_isUnbeatable == true)
+	if (_isKnockBackTime == true)
 		_col->GetTransform()->AddVector2(_KBdir * _KBspeed * DELTA_TIME);
 
-	if (_unbeatableTime > 0.1f && _unbeatableTime < 0.2f)
+	if (_isKnockBackTime > 0.1f && _isKnockBackTime < 0.2f)
 		_jumpPower = -400.0f;
 }
 
 void Player::UnbeatableToIdle()
 {
-	_isUnbeatable = false;
+	_hitmotion = false;
 	SetAndResetState(IDLE);
+}
+
+void Player::Time()
+{
+	if (_isKnockBackTime == true)
+		_knockBackTime += DELTA_TIME;
+	if (_isUnbeatable == true)
+		_unbeatableTime += DELTA_TIME;
+
+	if (_knockBackTime > 0.5f)
+	{
+		_isKnockBackTime = false;
+		_knockBackTime = 0.0f;
+	}
+
+	if (_unbeatableTime > 1.0f)
+	{
+		_isUnbeatable = false;
+		_unbeatableTime = 0.0f;
+	}
 }
 
 
@@ -648,6 +731,14 @@ void Player::SetAndResetState(State_Player type)
 	_sprites[_curstate]->Update();
 	_actions[_curstate]->Play();
 	_actions[_oldstate]->Reset();
+}
+
+void Player::SetCanDash(bool value)
+{
+	if (value == true)
+		_isCanDash = 1;
+	else
+		_isCanDash = 0;
 }
 
 void Player::SetLeft()

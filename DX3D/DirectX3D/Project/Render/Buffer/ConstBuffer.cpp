@@ -35,6 +35,13 @@ void ConstBuffer::SetPSBuffer(UINT slot)
     DC->PSSetConstantBuffers(slot, 1, &constBuffer);
 }
 
+void ConstBuffer::SetCSBuffer(UINT slot)
+{
+    UpdateSubResource();
+
+    DC->CSSetConstantBuffers(slot, 1, &constBuffer);
+}
+
 void ConstBuffer::UpdateSubResource()
 {
     // Map, Unmap

@@ -1,4 +1,7 @@
 #pragma once
+
+class Wall;
+
 class Player
 {
 public :
@@ -24,7 +27,6 @@ public :
 
 	void CreateAction(wstring srvPath, string xmmlPath, string actionName, Vector2 size, Action::Type type, CallBack event = nullptr);
 
-	void SetEnemy(shared_ptr<class Monster> enemy);
 
 	void AllStop();
 
@@ -35,11 +37,14 @@ public :
 	void Hitted();
 	void HitKnockBack();
 	void UnbeatableToIdle();
+	void Time();
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
+
 #pragma region Player Move & Attack
 	void Move(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos * DELTA_TIME * _speed); }
+	void DashMove(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos); }
 	void Select();
 	void CoolTime();
 
@@ -47,6 +52,7 @@ public :
 	void Jump();
 	void Walk();
 	void Dash();
+	void CutDash(shared_ptr<class Wall> wall);
 	void Attack();
 	void ChargeAndFire();
 	void ActiveOn(bool value);
@@ -67,6 +73,7 @@ public :
 	bool GetWeaponActive() { return _isWeaponActive; }
 	bool GetBulletActive() { return _isBulletActive; }
 	float GetJumpPower() { return _jumpPower; }
+	float GetDashDistance() { return _dash; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -78,6 +85,8 @@ public :
 	void SetBulletActive(bool value) { _isBulletActive = value; }
 	void SetKBdir(Vector2 value) { _KBdir = value; }
 	void SetJumpPower(float value) { _jumpPower = value; }
+	void SetDashDistance(float value) { _dash = value; }
+	void SetCanDash(bool value);
 #pragma endregion
 
 	bool _isWeaponActiveB = false;
@@ -95,6 +104,7 @@ private :
 	float _bulletCoolTime = 10.0f;
 
 	float _unbeatableTime = 0.0f;
+	float _knockBackTime = 0.0f;
 
 	Vector2 _KBdir = { 1,0 };
 	float _KBspeed = 150.0f;
@@ -113,9 +123,13 @@ private :
 	bool _isBulletActive = false;
 
 	bool _isUnbeatable = false;
+	bool _hitmotion = false;
+	bool _isKnockBackTime = false;
 
 	bool _isDash = false;
 	bool _isChargeAndFire = false;
+
+	bool _isDashCol = false;
 #pragma endregion
 
 #pragma region INFO
@@ -124,6 +138,10 @@ private :
 
 	int _maxMp = 300;
 	int _curMp = 300;
+
+	float _dash = 250.0f;
+
+	int _isCanDash = 0;
 #pragma endregion
 
 	State_Player _oldstate = Player::State_Player::IDLE;
@@ -136,6 +154,7 @@ private :
 	shared_ptr<RectCollider> _weaponCol;
 	shared_ptr<CircleCollider> _bulletCol;
 	shared_ptr<CircleCollider> _dashCol;
+	shared_ptr<RectCollider> _distanceCol;
 
 #pragma region UI
 	vector<shared_ptr<class HPBar>> _hpBars;
@@ -143,7 +162,7 @@ private :
 	shared_ptr<SoulOrb> _orb;
 #pragma endregion
 
-	vector<weak_ptr<class Monster>> _enemies;
+	vector<weak_ptr<Wall>> _walls;
 
 	shared_ptr<class Bullet> _bullet;
 	shared_ptr<class ChargeEffect> _effect;

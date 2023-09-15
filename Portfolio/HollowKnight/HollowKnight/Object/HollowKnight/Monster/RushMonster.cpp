@@ -152,6 +152,21 @@ void RushMonster::Attack()
 		return;
 	if (_attackCoolTime < 3.0f)
 		return;
+#define target _targetPlayer.lock()->GetCollider()->GetTransform()->GetWorldPosition()
+#define WorldPosition _col->GetTransform()->GetWorldPosition()
+
+	if (target.x - WorldPosition.x < 0)
+	{
+		if (_isLeft == false)
+			return;
+	}
+
+	if (target.x - WorldPosition.x > 0)
+	{
+		if (_isLeft == true)
+			return;
+	}
+
 	_isRush = true;
 	_speed = 100.0f;
 	TotalUpdate(RUSHREADY);

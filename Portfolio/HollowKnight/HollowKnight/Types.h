@@ -26,6 +26,8 @@
 #define DEVICE Device::GetInstance()->GetDevice()
 #define DC Device::GetInstance()->GetDC()
 
+#define Vector3 XMFLOAT3
+
 #define SAMPLER StateManager::GetInstance()->GetSampler()
 #define ALPHA StateManager::GetInstance()->GetAlpha()
 #define ADDITIVE StateManager::GetInstance()->GetAdditive()

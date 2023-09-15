@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Framework\Utility\Font.h" />
+    <ClInclude Include="Framework\Utility\Singleton.h" />
     <ClInclude Include="Object\HollowKnight\_Terrain\Brick.h" />
     <ClInclude Include="Object\UI\QuadUI\HPFrame.h" />
     <ClInclude Include="Object\UI\AnimationUI\HPBar.h" />
@@ -227,6 +229,7 @@
     <ClInclude Include="Object\HollowKnight\_Terrain\Wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Framework\Utility\Font.cpp" />
     <ClCompile Include="Object\HollowKnight\_Terrain\Brick.cpp" />
     <ClCompile Include="Object\UI\QuadUI\HPFrame.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\HPBar.cpp" />

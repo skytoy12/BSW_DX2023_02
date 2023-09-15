@@ -15,7 +15,7 @@ Font::Font()
 	device->CreateDeviceContext(D2D1_DEVICE_CONTEXT_OPTIONS_ENABLE_MULTITHREADED_OPTIMIZATIONS, &deviceContext);
 
 	IDXGISurface* dxgiSurface;
-	Device::Get()->GetSwapChain()->GetBuffer(0, __uuidof(IDXGISurface), (void**)&dxgiSurface);
+	Device::GetInstance()->GetSwapChain()->GetBuffer(0, __uuidof(IDXGISurface), (void**)&dxgiSurface);
 
 	D2D1_BITMAP_PROPERTIES1 bp;
 	bp.pixelFormat.format = DXGI_FORMAT_R8G8B8A8_UNORM;

@@ -46,6 +46,8 @@ void Program::Render()
 
 	ALPHA->SetState();
 
+	Font::GetInstance()->GetDC()->BeginDraw();
+
 	SCENE->Render();
 	EffectManager::GetInstance()->Render();
 
@@ -62,6 +64,8 @@ void Program::Render()
 
 	ImGui::Render();
 	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+	Font::GetInstance()->GetDC()->EndDraw();
 
 	Device::GetInstance()->Present();
 }

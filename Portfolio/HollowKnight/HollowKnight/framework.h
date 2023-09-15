@@ -16,6 +16,7 @@
 #include <tchar.h>
 #include <vector>
 #include <unordered_map>
+#include <map>
 #include <algorithm>
 #include <string>
 #include <memory>
@@ -25,6 +26,12 @@
 #include <d3d11.h>
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+
+#include <d2d1_2.h>
+#include <dwrite.h>
+
+#pragma comment(lib, "d2d1.lib")
+#pragma comment(lib, "dwrite.lib")
 
 // DirectXTex
 #include "../DirectTex/DirectXTex.h"
@@ -61,9 +68,11 @@ using namespace Microsoft::WRL;
 #include "Framework/Utility/InputManager.h"
 #include "Framework/Utility/Timer.h"
 #include "Framework/Utility/tinyxml2.h"
+#include "Framework/Utility/Singleton.h"
 #include "Framework/Utility/Sound.h"
 #include "Framework/Utility/BinaryWriter.h"
 #include "Framework/Utility/BinaryReader.h"
+#include "Framework/Utility/Font.h"
 
 //Render
 #include "Framework/Render/ConstantBuffer.h"

@@ -8,6 +8,8 @@ public:
 
 	void SetMesh(D3D11_PRIMITIVE_TOPOLOGY type = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
+	void UpdateVertex(void* data, UINT count) { vertexBuffer->UpdateVertex(data, count); }
+
 private:
 	VertexBuffer* vertexBuffer;
 	 IndexBuffer*  indexBuffer;

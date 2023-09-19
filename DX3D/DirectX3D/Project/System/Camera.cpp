@@ -7,7 +7,7 @@ Camera::Camera()
 	
 	transform = new Transform();
 
-	transform->translation = { 120.0f, 100.0f, -20.0f };
+	transform->translation = { 40.0f, 100.0f, -80.0f };
 	transform->rotation.x = 0.6f;
 }
 

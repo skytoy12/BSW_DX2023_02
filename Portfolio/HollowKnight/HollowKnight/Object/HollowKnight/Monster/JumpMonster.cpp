@@ -158,6 +158,7 @@ void JumpMonster::Hitted(shared_ptr<Collider> col)
 	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;
@@ -207,6 +208,7 @@ void JumpMonster::BulletHitted(shared_ptr<Collider> col)
 	if (col->IsCollision(_targetPlayer.lock()->GetBulletcol()))
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;

@@ -12,3 +12,5 @@ void Mesh::SetMesh(D3D11_PRIMITIVE_TOPOLOGY type)
 	vertexBuffer->IASetBuffer(type);
 	indexBuffer->IASetBuffer();
 }
+
+

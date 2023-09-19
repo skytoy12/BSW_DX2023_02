@@ -5,7 +5,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	:height(height), width(width)
 {
 	material = new Material();
-	material->SetShader(L"NormalMapping");
+	material->SetShader(L"TerrainBrush");
 
 	worldBuffer = new MatrixBuffer();
 
@@ -44,6 +44,8 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 					  );
 
 	output = new OutputDesc[polygonCount];
+
+	brushBuffer = new BrushBuffer();
 }
 
 TerrainEditor::~TerrainEditor()
@@ -57,17 +59,28 @@ TerrainEditor::~TerrainEditor()
 
 	delete        rayBuffer;
 	delete structuredBuffer;
+	delete brushBuffer;
 
 }
 
 void TerrainEditor::Update()
 {
+	Transform::Update();
+	Picking(&pickedPos);
+
+	brushBuffer->data.location = pickedPos;
+
+	if (KEY_PRESS(VK_LBUTTON))
+		AdjustHeight();
 }
 
 void TerrainEditor::Render()
 {
 	worldBuffer->SetData(world);
 	worldBuffer->SetVSBuffer(0);
+
+	brushBuffer->SetPSBuffer(10);
+
 
 	mesh->SetMesh();
 	material->SetMaterial();
@@ -77,6 +90,8 @@ void TerrainEditor::Render()
 
 void TerrainEditor::Debug()
 {
+	ImGui::Text("PickedPos : %.1f, %.1f,%.1f", pickedPos.x, pickedPos.y, pickedPos.z);
+	ImGui::ColorEdit3("BrushColor", (float*)&brushBuffer->data.color);
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)
@@ -214,4 +229,29 @@ void TerrainEditor::CreateTangent()
 
 		vertex.tangent = (T - N * Vector3::Dot(N, T)).GetNormalized();
 	}
+}
+
+void TerrainEditor::AdjustHeight()
+{
+	switch (brushBuffer->data.type)
+	{
+	case 0:
+		for (VertexType& vertex : vertices)
+		{
+			Vector3 p1 = Vector3(vertex.pos.x, 0.0f, vertex.pos.z);
+			Vector3 p2 = Vector3( pickedPos.x, 0.0f,  pickedPos.z);
+
+			float distance = (p1 - p2).Length();
+
+			if (distance <= brushBuffer->data.range)
+			{
+				vertex.pos.y += 10 * Time::Delta();
+			}
+		}
+		break;
+	default:
+		break;
+	}
+
+	mesh->UpdateVertex(vertices.data(), vertices.size());
 }

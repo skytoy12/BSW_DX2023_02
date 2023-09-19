@@ -116,7 +116,7 @@ void GameScene1::CreateMap()
 	_walls[13]->SetPosition(Vector2(-2760, -1060));
 	_walls[14]->SetPosition(Vector2(-2760, - 450));
 
-	_walls[0] ->SetScale(Vector2( 5, 10));
+	_walls[0] ->SetScale(Vector2( 2, 10));
 	_walls[1] ->SetScale(Vector2( 2, 10));
 	_walls[2] ->SetScale(Vector2(20,  3));
 	_walls[3] ->SetScale(Vector2(20,  4));

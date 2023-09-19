@@ -400,6 +400,7 @@ void Boss::RealHitted()
 	if (_head->GetCollider()->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", _head->GetCollider()->GetTransform()->GetWorldPosition());
+		EFFECT_LPLAY("Particle", _head->GetCollider()->GetTransform()->GetWorldPosition());
 		SOUND->Play("HeadHit");
 		_targetPlayer.lock()->SetWeaponActive(false);
 		_targetPlayer.lock()->MPRecovery();
@@ -1104,6 +1105,7 @@ void Boss::Hitted(shared_ptr<Collider> col)
 	if (col->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
+		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
 		SOUND->Play("ArmourHit");
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;

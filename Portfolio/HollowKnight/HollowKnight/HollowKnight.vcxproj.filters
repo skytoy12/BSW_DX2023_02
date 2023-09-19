@@ -231,9 +231,6 @@
     <ClInclude Include="Object\HollowKnight\_Terrain\Stool.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\HollowKnight\_Terrain\Brick.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Object\HollowKnight\_Terrain\Wall.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -256,6 +253,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Object\HollowKnight\_Terrain\BrickImage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HollowKnight\_Terrain\VectorBrick.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -437,9 +437,6 @@
     <ClCompile Include="Object\HollowKnight\_Terrain\Stool.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\HollowKnight\_Terrain\Brick.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Object\HollowKnight\_Terrain\Wall.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -459,6 +456,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\HollowKnight\_Terrain\BrickImage.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\_Terrain\VectorBrick.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

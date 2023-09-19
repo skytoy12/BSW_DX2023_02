@@ -80,3 +80,8 @@ struct PlayerInfo
 	int hp;
 	int mp;
 };
+
+struct BrickInfo
+{
+	Vector2 pos;
+};

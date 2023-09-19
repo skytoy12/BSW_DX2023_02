@@ -8,10 +8,10 @@ public:
 	void Update();
 	void Render();
 
-	void Save(string name, wstring flie);
-	void Load(string name, wstring flie);
+	Vector2 GetPosition() { return _transform->GetWorldPosition(); }
+	void SetPosition(Vector2 value) { _transform->SetPosition(value); }
 
-	
+	bool _isActive = true;
 private:
 	shared_ptr<Transform> _transform;
 	shared_ptr<Quad> _quad;

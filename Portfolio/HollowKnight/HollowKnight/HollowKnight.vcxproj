@@ -158,7 +158,6 @@
     <ClInclude Include="Framework\Utility\Singleton.h" />
     <ClInclude Include="Scene\GameScene\GameScene3.h" />
     <ClInclude Include="Scene\GameScene\GameScene2.h" />
-    <ClInclude Include="Object\HollowKnight\_Terrain\Brick.h" />
     <ClInclude Include="Object\UI\QuadUI\HPFrame.h" />
     <ClInclude Include="Object\UI\AnimationUI\HPBar.h" />
     <ClInclude Include="Scene\GameScene\GameScene1.h" />
@@ -232,6 +231,7 @@
     <ClInclude Include="Scene\TestScene\TestScene.h" />
     <ClInclude Include="Types.h" />
     <ClInclude Include="Object\HollowKnight\_Terrain\Wall.h" />
+    <ClInclude Include="Object\HollowKnight\_Terrain\VectorBrick.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Object\HollowKnight\_Terrain\BrickImage.cpp" />
@@ -240,7 +240,6 @@
     <ClCompile Include="Framework\Utility\Font.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene3.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene2.cpp" />
-    <ClCompile Include="Object\HollowKnight\_Terrain\Brick.cpp" />
     <ClCompile Include="Object\UI\QuadUI\HPFrame.cpp" />
     <ClCompile Include="Object\UI\AnimationUI\HPBar.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene1.cpp" />
@@ -306,6 +305,7 @@
     <ClCompile Include="Object\UI\AnimationUI\SoulOrb.cpp" />
     <ClCompile Include="Object\HollowKnight\_Terrain\Stool.cpp" />
     <ClCompile Include="Object\HollowKnight\_Terrain\Wall.cpp" />
+    <ClCompile Include="Object\HollowKnight\_Terrain\VectorBrick.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="HollowKnight.rc" />

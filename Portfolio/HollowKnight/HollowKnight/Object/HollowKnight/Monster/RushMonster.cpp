@@ -99,6 +99,13 @@ void RushMonster::Update()
 		_dir = _dir.NormalVector2();
 	}
 
+	if (_isRush == false)
+	{
+		if(_isAlive == true)
+			_transform->SetPosition(Vector2(0, 0));
+		else
+			_transform->SetPosition(Vector2(0, -35));
+	}
 
 	WalkChange();
 	Active();

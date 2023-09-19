@@ -64,6 +64,8 @@ Boss::Boss()
 	Vector2((float)(412 * 1.2), (float)(467 * 1.2)), Action::Type::END);
 	CreateAction(L"Resource/Monster/Boss/GrogyHead.png", "Resource/Monster/Boss/GrogyHead.xml", "GrogyHead",
 	Vector2((float)(392 * 1.2), (float)(451 * 1.2)), Action::Type::END, std::bind(&Boss::GrogyEvent, this));
+	CreateAction(L"Resource/Monster/Boss/Last.png", "Resource/Monster/Boss/Last.xml", "Last",
+	Vector2((float)(346 * 1.2), (float)(257 * 1.2)), Action::Type::END);
 
 #pragma endregion
 
@@ -151,6 +153,8 @@ void Boss::Update()
 	GrogyKnockBack();
 	Attack();
 	Hitted(_heatBox);
+	if (_lastDance == true)
+		_isColActive = false;
 
 	if(_isColActive == true)
 		targetHit(_heatBox);
@@ -285,6 +289,10 @@ void Boss::Attack()
 		return;
 	if (_attackCoolTime < 2.0f)
 		return;
+	if (_isStart == true)
+		return;
+	if (_lastDance == true)
+		return;
 
 	_oldAttackType = _curAttackType;
 	_curAttackType = MyMath::RandomInt(1, 4);
@@ -386,7 +394,8 @@ void Boss::RealHitted()
 	if (_isGrogyAttack == true)
 		return;
 
-	_grogyTime += DELTA_TIME;
+	if(_lastDance == false)
+		_grogyTime += DELTA_TIME;
 
 	if (_head->GetCollider()->IsCollision(_targetPlayer.lock()->GetWeaponcol()))
 	{
@@ -423,6 +432,9 @@ void Boss::Turn()
 		return;
 
 	if (_turnCoolTime < 0.4f)
+		return;
+
+	if (_lastDance == true)
 		return;
 
 	_actions[TURN]->Reset();
@@ -463,6 +475,9 @@ void Boss::Turn()
 
 void Boss::UnActiveIDle()
 {
+	if (_lastDance == true)
+		return;
+
 	if (Return() != 1)
 	{
 		_head->_isActive = false;
@@ -631,14 +646,14 @@ void Boss::BackStep()
 
 void Boss::JumpToIdle()
 {
-	if (_jumpAttackTime > 0.2f)
+	if (_jumpAttackTime > 0.2f && _lastDance == false)
 	{
 		_jumpAttackTime = 0.0f;
 		BackStep();
 		return;
 	}
 
-	if (_isJump == true && _isJustJump == true && _col->IsCollision(_landLine) && _jumpPower < 0.0f)
+	if (_isJump == true && _isJustJump == true && _col->IsCollision(_landLine) && _jumpPower < 0.0f && _lastDance == false)
 	{
 		if (_curstate != JUMP)
 			return;
@@ -646,6 +661,23 @@ void Boss::JumpToIdle()
 		SOUND->Play("Land");
 		TotalUpdate(JUMPTOIDLE);
 		SetAndResetState(JUMPTOIDLE);
+	}
+
+	if (_lastDance == true)
+	{
+		if (_curstate == LAST)
+			return;
+		if (_col->GetTransform()->GetWorldPosition().y < -1500)
+		{
+			SetAndResetState(LAST);
+			_head->_isActive = true;
+			_head->_lastHead = true;
+			if (_isLeft == true)
+				_head->SetPosition(Vector2(300, 0));
+			else
+				_head->SetPosition(Vector2(-300, 0));
+		}
+	
 	}
 }
 
@@ -674,6 +706,18 @@ void Boss::WeaponcolMove()
 		_isWeaponActive = false;
 
 	_heatBox->GetTransform()->SetAngle(_weaponMove._weaponAngle);
+}
+
+void Boss::LastDance()
+{
+	_isreturn = Return();
+
+	if (_isreturn == 1)
+		return;
+
+	_landPoint = Vector2(0, 0);
+	TotalUpdate(JUMPREADY);
+	SetAndResetState(JUMPREADY);
 }
 
 void Boss::TurnEvent()
@@ -780,7 +824,7 @@ void Boss::AttackEvent()
 
 		}
 
-		if (_isJustJump == true && _isJumpAndLandAttack == false)
+		else if (_isJustJump == true && _isJumpAndLandAttack == false && _isJumpAndGrogyAttack == false)
 		{
 			_landPoint = _targetPlayer.lock()->GetTransform()->GetWorldPosition();
 		}
@@ -788,9 +832,18 @@ void Boss::AttackEvent()
 		else if (_isJumpAndGrogyAttack == true && _isJustJump == true)
 		{
 			if (_isLeft == true)
-				_landPoint = CENTER;
+				_landPoint = Vector2(0,0);
 			else
-				_landPoint = CENTER;
+				_landPoint = Vector2(0, 0);
+		}
+		else if (_lastDance == true)
+		{
+			TotalUpdate(JUMP);
+			SetAndResetState(JUMP);
+			_landBreak = true;
+			SOUND->Play("Jump");
+			_jumpPower = 1900.0f;
+			return;
 		}
 
 		_isJump = true;
@@ -860,7 +913,7 @@ void Boss::AttackEvent()
 			SOUND->Play("GrogyAttack");
 			return;
 		}
-		else
+		else if(_weaponMove._count >= 26 && _head->GetHP() > 0)
 		{
 			_isGrogyAttack = false;
 			_isJumpAndGrogyAttack = false;
@@ -871,6 +924,12 @@ void Boss::AttackEvent()
 			TotalUpdate(IDLE);
 			SetAndResetState(IDLE);
 			return;
+		}
+		else if (_weaponMove._count >= 26 && _head->GetHP() <= 0)
+		{
+			AllStop();
+			_lastDance = true;
+			LastDance();
 		}
 	}
 }
@@ -995,6 +1054,11 @@ void Boss::LocationFix(State_Boss type)
 	{
 		_transform->SetPosition(Vector2(0, 135));
 	}
+
+	if (type == LAST)
+	{
+		_transform->SetPosition(Vector2(100, -5));
+	}
 }
 
 void Boss::DirFix()
@@ -1106,6 +1170,7 @@ void Boss::AfterGroggyPattern()
 		return;
 
 	_isGrogyAttack = true;
+	_isJumpAndLandAttack = false;
 	_hitCount = 0;
 	_headHitCount = 0;
 	_heatBox->GetTransform()->SetAngle(-3.7f);

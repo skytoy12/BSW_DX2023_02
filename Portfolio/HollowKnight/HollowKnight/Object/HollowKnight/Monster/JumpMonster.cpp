@@ -422,8 +422,8 @@ void JumpMonster::Active()
 	if (_isAlive == false)
 		return;
 
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isJump == true)
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 400.0f &&
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 100.0f || _isJump == true)
 		_isActive = true;
 	else
 	{
@@ -438,7 +438,7 @@ void JumpMonster::AttackStart()
 		return;
 
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 250.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f) || _isJump == true)
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 300.0f || _isJump == true)
 	{
 		if (_isAttack == true)
 			return;

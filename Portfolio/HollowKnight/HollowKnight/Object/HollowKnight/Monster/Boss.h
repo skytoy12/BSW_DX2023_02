@@ -20,7 +20,8 @@ public :
 		GROGYSTART,
 		GROGYROLLING,
 		GROGY,
-		GROGYHEAD
+		GROGYHEAD,
+		LAST
 	};
 
 	struct WeaponMove
@@ -82,6 +83,7 @@ public :
 	void BackStep();
 	void JumpToIdle();
 	void WeaponcolMove();
+	void LastDance();
 #pragma endregion
 
 	void LandAttackPattern();
@@ -99,7 +101,11 @@ public :
 	shared_ptr<class BossHead> GetHead() { return _head; }
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
+	void SetStart(bool value) { _isStart = value; }
+	void SetLand(bool value) { _isLandActive = value; }
 
+	Vector2 GetLandPoint() { return _landPoint; }
+	bool _landBreak = false;
 private :
 	void SetLeft();
 	void SetRight();
@@ -146,7 +152,11 @@ private :
 	bool _isWeaponMove = false;
 	bool _isWeaponActive = false;
 	bool _isColActive = true;
+	bool _isLandActive = true;
 
+	bool _lastDance = false;
+
+	bool _isStart = true;
 
 	bool _isGrogy = false;
 

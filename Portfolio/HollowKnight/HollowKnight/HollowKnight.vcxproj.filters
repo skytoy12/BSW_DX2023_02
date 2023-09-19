@@ -243,6 +243,15 @@
     <ClInclude Include="Framework\Utility\Singleton.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\GameScene\GameScene2.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene\GameScene3.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\GameScene\BossScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -429,6 +438,15 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Framework\Utility\Font.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\GameScene2.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\GameScene3.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\GameScene\BossScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -651,6 +669,12 @@
     <Image Include="Resource\UI\HP\SoulOrb.png">
       <Filter>리소스 파일</Filter>
     </Image>
+    <Image Include="Resource\Monster\Boss\Last.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
+    <Image Include="Resource\Monster\Boss\LastHead.png">
+      <Filter>리소스 파일</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui.ini" />
@@ -747,6 +771,8 @@
     <Xml Include="Resource\UI\HP\BrokenHP.xml" />
     <Xml Include="Resource\UI\HP\FullHP.xml" />
     <Xml Include="Resource\UI\HP\SoulOrb.xml" />
+    <Xml Include="Resource\Monster\Boss\Last.xml" />
+    <Xml Include="Resource\Monster\Boss\LastHead.xml" />
   </ItemGroup>
   <ItemGroup>
     <Media Include="Resource\Sound\BGM\S19 Crossroads Bass.wav">

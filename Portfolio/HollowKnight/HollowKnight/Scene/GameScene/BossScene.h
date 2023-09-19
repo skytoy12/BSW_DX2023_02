@@ -1,10 +1,9 @@
 #pragma once
-class GameScene1 : public Scene
+class BossScene : public Scene
 {
 public:
-	GameScene1();
-	~GameScene1();
-
+	BossScene();
+	~BossScene();
 
 	virtual void Update() override;
 	virtual void Render() override;
@@ -19,23 +18,23 @@ public:
 
 	void Save();
 	void Load();
-
 private:
 	float _scale = 0.75f;
 	int _colNum = 0;
 
-	bool _isOn = true;
-	bool _load = true;
+	bool _start = true;
 
 	shared_ptr<Player> _player;
+	shared_ptr<Boss> _boss;
+
+	shared_ptr<CircleCollider> _startButton;
+	bool _startActive = true;
+	bool _isEnd = false;
+	shared_ptr<RectCollider> _startCollider;
+	shared_ptr<RectCollider> _endCollider;
 
 	vector<shared_ptr<Wall>> _walls;
-
-	shared_ptr<RushMonster> _rMon;
-
-	shared_ptr<CircleCollider> _Potal;
-
-
 };
+
 
 

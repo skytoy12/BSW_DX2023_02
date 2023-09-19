@@ -74,3 +74,9 @@ struct Hit_Result
 	bool isCollision = false;
 	vector<Vector2> contact;
 };
+
+struct PlayerInfo
+{
+	int hp;
+	int mp;
+};

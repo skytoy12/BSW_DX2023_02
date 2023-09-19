@@ -17,6 +17,9 @@ BossHead::BossHead()
 	CreateAction(L"Resource/Monster/Boss/BossHeadHit.png", "Resource/Monster/Boss/BossHeadHit.xml", "BossHeadHit",
 	Vector2((float)(120 * 1.4), (float)(138 * 1.4)), Action::Type::LOOP);
 
+	CreateAction(L"Resource/Monster/Boss/LastHead.png", "Resource/Monster/Boss/LastHead.xml", "LastHead",
+	Vector2((float)(271), (float)(190)), Action::Type::END);
+
 	_monsterBuffer->_data.state = 1;
 }
 
@@ -31,6 +34,9 @@ void BossHead::Update()
 
 	if (_isUnbeatableH == false)
 		SetRGB(0.0f, 0.0f, 0.0f);
+
+	if (_lastHead == true)
+		_curstate = LASTHEAD;
 
 	_col->Update();
 	_transform->Update();

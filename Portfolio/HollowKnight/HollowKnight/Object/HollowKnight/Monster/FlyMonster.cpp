@@ -107,7 +107,8 @@ void FlyMonster::Render()
 {
 	if (_targetPlayer.expired() == true)
 		return;
-
+	if (_isDeath == true)
+		return;
 
 	Monster::Render();
 	_sprites[_curstate]->SetCurClip(_actions[_curstate]->GetCurClip());
@@ -139,6 +140,12 @@ void FlyMonster::Attack()
 }
 
 #pragma region Update Function
+
+void FlyMonster::SetPosition(Vector2 pos)
+{
+	_col->SetPosition(pos);
+	_originPos = pos;
+}
 
 void FlyMonster::DeathStart()
 {
@@ -218,7 +225,7 @@ void FlyMonster::Active()
 		return;
 
 	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
-		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y < 500.0f))
+		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 300.0f)
 	{
 		_isActive = true;
 		_actions[IDLE]->SetSpeed(0.10f);

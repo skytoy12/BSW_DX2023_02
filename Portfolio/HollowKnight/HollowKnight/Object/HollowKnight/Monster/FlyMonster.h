@@ -17,10 +17,11 @@ public :
 	virtual void Attack() override;
 
 	void SetPlayer(shared_ptr<Player> target) { _targetPlayer = target; }
+	Vector2 GetOrigin() { return _originPos; }
 
 	shared_ptr<Collider> GetCollider() { return _col; }
 
-	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
+	void SetPosition(Vector2 pos);
 
 
 	void DeathStart();
@@ -44,7 +45,7 @@ private :
 	Vector2 _originPos = { 0,0 };
 	Vector2 _randomPos = { 1,0 };
 	float _searchRange = 0.0f;
-	float _SRCoolTime = 0.0f;
+	float _SRCoolTime = 10.0f;
 	float _turnCoolTime = 0.0f;
 
 	float _deathTime = 0.0f;

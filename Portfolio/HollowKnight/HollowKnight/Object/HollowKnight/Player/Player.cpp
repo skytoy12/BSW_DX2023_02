@@ -392,7 +392,7 @@ void Player::Dash()
 	//}
 }
 
-void Player::CutDash(shared_ptr<Wall> wall)
+void Player::CutDashW(shared_ptr<Wall> wall)
 {
 #define WallWP wall->GetCollider()->GetTransform()->GetWorldPosition()
 #define WP _col->GetTransform()->GetWorldPosition()
@@ -412,6 +412,29 @@ void Player::CutDash(shared_ptr<Wall> wall)
 		}
 	}
 }
+
+void Player::CutDashS(shared_ptr<class Stool> stool)
+{
+#define StoolWP stool->GetCollider()->GetTransform()->GetWorldPosition()
+#define WP _col->GetTransform()->GetWorldPosition()
+
+	if (KEY_DOWN(VK_LSHIFT))
+	{
+		_isDashCol = true;
+
+		if (_distanceCol->IsCollision(stool->GetCollider()) && _isDashCol == true)
+		{
+			float distance = abs(WP.x - StoolWP.x);
+			float Sum = 25.0f + (stool->GetSize().x / 2);
+
+			_dash = abs(Sum - distance);
+			_isDashCol = false;
+			return;
+		}
+	}
+}
+
+
 
 
 

@@ -1,10 +1,9 @@
 #pragma once
-class GameScene1 : public Scene
+class GameScene3 : public Scene
 {
 public:
-	GameScene1();
-	~GameScene1();
-
+	GameScene3();
+	~GameScene3();
 
 	virtual void Update() override;
 	virtual void Render() override;
@@ -24,16 +23,24 @@ private:
 	float _scale = 0.75f;
 	int _colNum = 0;
 
+	bool _start = true;
 	bool _isOn = true;
-	bool _load = true;
 
 	shared_ptr<Player> _player;
 
-	vector<shared_ptr<Wall>> _walls;
+	vector<shared_ptr<RushMonster>> _RMons;
+	vector<shared_ptr<JumpMonster>> _JMons;
+	shared_ptr<FlyMonster> _fly;
 
-	shared_ptr<RushMonster> _rMon;
+	vector<shared_ptr<Wall>> _walls;
+	vector<shared_ptr<Stool>> _stools;
 
 	shared_ptr<CircleCollider> _Potal;
+
+	shared_ptr<Stool> _stoolA;
+	shared_ptr<Stool> _stoolB;
+	shared_ptr<Stool> _stoolC;
+	shared_ptr<Stool> _stoolD;
 
 
 };

@@ -8,6 +8,8 @@ MainScene::MainScene()
 	_load = make_shared<MainString>(L"Resource/UI/TestString.png",   Vector2(754.0f * 0.2f, 84.0f * 0.2f));
 	_finish = make_shared<MainString>(L"Resource/UI/TestString.png", Vector2(754.0f * 0.2f, 84.0f * 0.2f));
 
+	Font::GetInstance()->Add("Start", L"Consolas");
+
 	_select = make_shared<RectCollider>(Vector2(200, 50));
 	_selectLeft = make_shared<SelectImage>();
 	_selectRight = make_shared<SelectImage>();
@@ -26,6 +28,9 @@ MainScene::MainScene()
 
 	_title->SetPosition(Vector2(0,200));
 	_selectRight->SetScale(Vector2(-1, 1));
+
+	SOUND->Add("Main2", "Resource/Sound/BGM/S19 Crossroads Bass.wav", true);
+	SOUND->Play("Main2");
 }
 
 MainScene::~MainScene()
@@ -64,6 +69,7 @@ void MainScene::PostRender()
 	_selectLeft->PostRender();
 	_selectRight->PostRender();
 
+	Font::GetInstance()->RenderText(L"처음부터", "Start", Vector2(-100, -100), Vector2(754.0f * 0.2f, 84.0f * 0.2f));
 
 	Debug();
 }

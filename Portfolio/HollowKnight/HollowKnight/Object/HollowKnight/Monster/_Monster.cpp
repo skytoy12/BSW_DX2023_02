@@ -33,6 +33,8 @@ void Monster::targetHit(shared_ptr<Collider> col)
 {
 	if (_targetPlayer.lock()->_isUnbeatable == true)
 		return;
+	if (_isAlive == false)
+		return;
 
 	if (col->IsCollision(_targetPlayer.lock()->GetCollider()))
 	{

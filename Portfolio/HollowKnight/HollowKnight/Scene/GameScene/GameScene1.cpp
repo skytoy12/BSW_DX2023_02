@@ -5,6 +5,7 @@ GameScene1::GameScene1()
 {
 	_player = make_shared<Player>();
 	_rMon = make_shared<RushMonster>();
+	_Potal = make_shared<CircleCollider>(50);
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -25,6 +26,7 @@ GameScene1::GameScene1()
 	_rMon->SetPlayer(_player);
 	_player->SetPosition(Vector2(0, 1000));
 	_rMon->SetPosition(Vector2(-300, -900));
+	_Potal->SetPosition(Vector2(-2761, -774));
 }
 
 GameScene1::~GameScene1()
@@ -36,9 +38,19 @@ void GameScene1::Update()
 {
 	_player->Update();
 	_rMon->Update();
+	_Potal->Update();
 
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	MoveCol();
+
+
+	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
+	{
+		_isOn = false;
+		Save();
+		CAMERA->SetTarget(nullptr);
+		SCENE->NextScene();
+	}
 
 	for (auto wall : _walls)
 	{
@@ -63,6 +75,7 @@ void GameScene1::Render()
 {
 	_player->Render();
 	_rMon->Render();
+	_Potal->Render();
 
 	for (auto wall : _walls)
 	{
@@ -103,7 +116,7 @@ void GameScene1::CreateMap()
 	_walls[13]->SetPosition(Vector2(-2760, -1060));
 	_walls[14]->SetPosition(Vector2(-2760, - 450));
 
-	_walls[0] ->SetScale(Vector2( 2, 10));
+	_walls[0] ->SetScale(Vector2( 5, 10));
 	_walls[1] ->SetScale(Vector2( 2, 10));
 	_walls[2] ->SetScale(Vector2(20,  3));
 	_walls[3] ->SetScale(Vector2(20,  4));
@@ -136,11 +149,47 @@ void GameScene1::DashCut()
 {
 	for (auto wall : _walls)
 	{
-		_player->CutDash(wall);
+		_player->CutDashW(wall);
 	}
 
 	if (KEY_DOWN(VK_SHIFT))
 	{
 		_player->Dash();
 	}
+}
+
+void GameScene1::Save()
+{
+	PlayerInfo playerInfo;
+
+
+	int Php = _player->GetHP();
+	int Pmp = _player->GetMP();
+
+	playerInfo.hp = Php;
+	playerInfo.mp = Pmp;
+
+	BinaryWriter writer = BinaryWriter(L"Info/HpMp.save");
+	writer.String("PlayerInfo");
+	writer.UInt(sizeof(playerInfo));
+	writer.Byte(&playerInfo, sizeof(playerInfo));
+}
+
+void GameScene1::Load()
+{
+	PlayerInfo playerInfo;
+
+	BinaryReader reader = BinaryReader(L"Info/HpMp.save");
+	string infoName = reader.String();
+
+	if (infoName == "PlayerInfo")
+	{
+		UINT size = reader.UInt();
+
+		void* ptr = &playerInfo;
+		reader.Byte(&ptr, size);
+	}
+
+	_player->SetHP(playerInfo.hp);
+	_player->SetMP(playerInfo.mp);
 }

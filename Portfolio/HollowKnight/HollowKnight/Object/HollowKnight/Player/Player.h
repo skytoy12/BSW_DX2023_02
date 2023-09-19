@@ -1,6 +1,7 @@
 #pragma once
 
 class Wall;
+class Stool;
 
 class Player
 {
@@ -52,7 +53,8 @@ public :
 	void Jump();
 	void Walk();
 	void Dash();
-	void CutDash(shared_ptr<class Wall> wall);
+	void CutDashW(shared_ptr<class Wall> wall);
+	void CutDashS(shared_ptr<class Stool> stool);
 	void Attack();
 	void ChargeAndFire();
 	void ActiveOn(bool value);
@@ -68,6 +70,8 @@ public :
 	shared_ptr<RectCollider> GetCollider() { return _col; }
 	shared_ptr<RectCollider> GetWeaponcol() { return _weaponCol; }
 	shared_ptr<CircleCollider> GetBulletcol() { return _bulletCol; }
+	int GetHP() { return _hp; }
+	int GetMP() { return _curMp; }
 	bool GetIsJump() { return _isJump; }
 	bool GetIsAttack() { return _isAttack; }
 	bool GetWeaponActive() { return _isWeaponActive; }
@@ -87,6 +91,8 @@ public :
 	void SetJumpPower(float value) { _jumpPower = value; }
 	void SetDashDistance(float value) { _dash = value; }
 	void SetCanDash(bool value);
+	void SetHP(int value) { _hp = value; }
+	void SetMP(int value) { _curMp = value; }
 #pragma endregion
 
 	bool _isWeaponActiveB = false;

@@ -2,6 +2,15 @@
 class Scene
 {
 public :
+	enum State
+	{
+		FIRST,
+		SECOND,
+		THIRD,
+		BOSS,
+		NONE
+	};
+
 	Scene() {}
 	virtual ~Scene() {}
 
@@ -14,7 +23,9 @@ public :
 	virtual void PostRender() abstract;
 	virtual void PreRender()  abstract;
 
-private :
-	
+	void SetType(State type) { type = type; }
+
+protected :
+	State type = NONE;
 };
 

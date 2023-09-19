@@ -252,6 +252,12 @@
     <ClInclude Include="Scene\GameScene\BossScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\UI\QuadUI\Black.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\HollowKnight\_Terrain\BrickImage.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="HollowKnight.cpp">
@@ -447,6 +453,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Scene\GameScene\BossScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\UI\QuadUI\Black.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\HollowKnight\_Terrain\BrickImage.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -702,6 +714,7 @@
     <FxCompile Include="Shader\NonRedPS.hlsl" />
     <FxCompile Include="Shader\RatioPS.hlsl" />
     <FxCompile Include="Shader\MonsterPS.hlsl" />
+    <FxCompile Include="Shader\TextureAlphaPS.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <Xml Include="Resource\Player\Run.xml" />

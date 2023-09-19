@@ -24,6 +24,7 @@ Player::Player()
 	_effect = make_shared<ChargeEffect>();
 	_frame = make_shared<HPFrame>();
 	_orb = make_shared<SoulOrb>();
+	_black = make_shared<Black>();
 	for (int i = 0; i < 10; i++)
 	{
 		shared_ptr<HPBar> hp = make_shared<HPBar>();
@@ -121,6 +122,10 @@ void Player::Update()
 	//////UI/////////////
 	_frame->Update();
 	_orb->Update();	
+	_black->Update();
+	_FadeOutTime += DELTA_TIME;
+	if(_FadeOutTime > 0.5f)
+		FadeOut();
 	for (auto hp : _hpBars)
 	{
 		hp->Update();
@@ -185,6 +190,7 @@ void Player::PostRender()
 	{
 		hp->PostRender();
 	}
+	_black->PostRender();
 
 	/////////////////////
 	// 
@@ -734,6 +740,11 @@ void Player::Time()
 		_isUnbeatable = false;
 		_unbeatableTime = 0.0f;
 	}
+}
+
+void Player::FadeOut()
+{
+	_black->FadeOut();
 }
 
 

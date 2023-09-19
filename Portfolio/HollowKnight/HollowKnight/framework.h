@@ -114,9 +114,11 @@ using namespace Microsoft::WRL;
 #include "Object/UI//QuadUI/Button.h"
 #include "Object/UI/QuadUI/MainString.h"
 #include "Object/UI/QuadUI/HPFrame.h"
+#include "Object/UI/QuadUI/Black.h"
 #include "Object/UI/AnimationUI/SelectImage.h"
 #include "Object/UI/AnimationUI/HPBar.h"
 #include "Object/UI/AnimationUI/SoulOrb.h"
+
 
 //HollowKnight
 #include "Object/HollowKnight/Player/Player.h"

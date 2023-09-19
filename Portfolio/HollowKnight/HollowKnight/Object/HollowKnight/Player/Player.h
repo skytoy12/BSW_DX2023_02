@@ -42,7 +42,7 @@ public :
 
 	void SetPosition(Vector2 pos) { _col->SetPosition(pos); }
 
-
+	void FadeOut();
 #pragma region Player Move & Attack
 	void Move(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos * DELTA_TIME * _speed); }
 	void DashMove(Vector2 movePos) { _col->GetTransform()->AddVector2(movePos); }
@@ -78,6 +78,7 @@ public :
 	bool GetBulletActive() { return _isBulletActive; }
 	float GetJumpPower() { return _jumpPower; }
 	float GetDashDistance() { return _dash; }
+	shared_ptr<Black> GetBlack() { return _black; }
 #pragma endregion
 
 #pragma region Player Set Info
@@ -108,6 +109,7 @@ private :
 	float _speed = 1.0f;
 	float _chargeTime = 0.0f;
 	float _bulletCoolTime = 10.0f;
+	float _FadeOutTime = 0.0f;
 
 	float _unbeatableTime = 0.0f;
 	float _knockBackTime = 0.0f;
@@ -166,6 +168,7 @@ private :
 	vector<shared_ptr<class HPBar>> _hpBars;
 	shared_ptr<HPFrame> _frame;
 	shared_ptr<SoulOrb> _orb;
+	shared_ptr<Black> _black;
 #pragma endregion
 
 	vector<weak_ptr<Wall>> _walls;

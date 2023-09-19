@@ -10,13 +10,28 @@ public :
 	virtual void PostRender() override;
 	virtual void PreRender() override;
 
-private :
+	void CreateMap();
+
+	void MoveCol();
+
+	void DashCut();
+
+	void Save();
+	void Load();
+
+private:
+	float _scale = 0.75f;
+	int _colNum = 0;
+
+	bool _isOn = true;
+	bool _load = true;
+
 	shared_ptr<Player> _player;
 
-	shared_ptr<Stool> _stool1;
+	vector<shared_ptr<Wall>> _walls;
 
-	shared_ptr<Stool> _stool2;
+	shared_ptr<RushMonster> _rMon;
 
-	shared_ptr<Wall>_wall;
+	shared_ptr<CircleCollider> _Potal;
 };
 

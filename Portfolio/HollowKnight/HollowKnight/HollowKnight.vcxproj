@@ -151,6 +151,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\HollowKnight\_Terrain\BrickImage.h" />
+    <ClInclude Include="Object\UI\QuadUI\Black.h" />
     <ClInclude Include="Scene\GameScene\BossScene.h" />
     <ClInclude Include="Framework\Utility\Font.h" />
     <ClInclude Include="Framework\Utility\Singleton.h" />
@@ -232,6 +234,8 @@
     <ClInclude Include="Object\HollowKnight\_Terrain\Wall.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\HollowKnight\_Terrain\BrickImage.cpp" />
+    <ClCompile Include="Object\UI\QuadUI\Black.cpp" />
     <ClCompile Include="Scene\GameScene\BossScene.cpp" />
     <ClCompile Include="Framework\Utility\Font.cpp" />
     <ClCompile Include="Scene\GameScene\GameScene3.cpp" />
@@ -542,6 +546,14 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="Shader\TextureAlphaPS.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">PS</EntryPointName>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="Shader\TexturePS.hlsl">
       <EntryPointName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">PS</EntryPointName>

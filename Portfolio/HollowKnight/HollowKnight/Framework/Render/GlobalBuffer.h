@@ -213,3 +213,23 @@ public:
 
 	Data _data;
 };
+
+class AlphaBuffer : public ConstantBuffer
+{
+public:
+	struct Data
+	{
+		float alpha = 1;
+		int padding[3];
+	};
+
+	AlphaBuffer()
+		:ConstantBuffer(&_data, sizeof(Data))
+	{
+
+	}
+	virtual ~AlphaBuffer() {}
+
+
+	Data _data;
+};

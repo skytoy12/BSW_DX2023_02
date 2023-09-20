@@ -40,6 +40,9 @@ using namespace DirectX;
 
 #pragma comment(lib, "DirectXtex.lib")
 
+#include <Shlwapi.h>
+#pragma comment(lib, "shlwapi.lib")
+
 #define WIN_WIDTH 1280.0f
 #define WIN_HEIGHT 720.0f
 

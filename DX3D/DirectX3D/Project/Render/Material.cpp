@@ -142,9 +142,6 @@ void Material::SelectMap()
 
 			Dialog->Close();
 		}
-
-
-
-		ImGui::EndChild();
 	}
+	ImGui::EndChild();
 }

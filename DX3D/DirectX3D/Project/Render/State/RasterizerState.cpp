@@ -21,10 +21,13 @@ void RasterizerState::SetState()
 
 void RasterizerState::ChangeState(D3D11_FILL_MODE mode)
 {
-	if (rasterizerState != nullptr)
-		rasterizerState->Release();
+	if (desc.FillMode == mode)
+		return;
 
 	desc.FillMode = mode;
+
+	if (rasterizerState != nullptr)
+		rasterizerState->Release();
 
 	DEVICE->CreateRasterizerState(&desc, &rasterizerState);
 	DC->RSSetState(rasterizerState);

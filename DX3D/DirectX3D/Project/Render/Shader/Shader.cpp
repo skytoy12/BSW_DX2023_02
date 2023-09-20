@@ -12,6 +12,8 @@ VertexShader* Shader::GetVS(wstring file)
 {
 	file = L"_Shader/Vertex" + file + L".hlsl";
 
+	assert(PathFileExists(file.c_str()));
+
 	if (shaders.count(file) > 0)
 		return (VertexShader*)shaders[file];
 
@@ -23,6 +25,9 @@ VertexShader* Shader::GetVS(wstring file)
 PixelShader* Shader::GetPS(wstring file)
 {
 	file = L"_Shader/Pixel" + file + L".hlsl";
+
+	assert(PathFileExists(file.c_str()));
+
 	if (shaders.count(file) > 0)
 		return (PixelShader*)shaders[file];
 
@@ -34,6 +39,9 @@ PixelShader* Shader::GetPS(wstring file)
 ComputeShader* Shader::GetCS(wstring file)
 {
 	file = L"_Shader/" + file + L".hlsl";
+
+	assert(PathFileExists(file.c_str()));
+
 	if (shaders.count(file) > 0)
 		return (ComputeShader*)shaders[file];
 

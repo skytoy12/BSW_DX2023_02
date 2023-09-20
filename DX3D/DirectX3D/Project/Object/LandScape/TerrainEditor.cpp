@@ -66,11 +66,10 @@ TerrainEditor::~TerrainEditor()
 void TerrainEditor::Update()
 {
 	Transform::Update();
-	Picking(&pickedPos);
 
 	brushBuffer->data.location = pickedPos;
 
-	if (KEY_PRESS(VK_LBUTTON))
+	if (Picking(&pickedPos) && KEY_PRESS(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
 		AdjustHeight();
 }
 
@@ -92,10 +91,13 @@ void TerrainEditor::Debug()
 {
 	ImGui::Text("PickedPos : %.1f, %.1f,%.1f", pickedPos.x, pickedPos.y, pickedPos.z);
 	ImGui::ColorEdit3("BrushColor", (float*)&brushBuffer->data.color);
+	ImGui::SliderFloat("BrushIntensity", &adjustValue, 1.0f, 50.0f);
+	ImGui::SliderFloat("BrushRange", &brushBuffer->data.range, 1.0f, 50.0f);
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)
 {
+
 	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
 
 	rayBuffer->data.origin     = ray.origin;
@@ -117,14 +119,25 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 
 	structuredBuffer->Copy(output, sizeof(OutputDesc) * polygonCount);
 
+	float minDistance = FLT_MAX;
+
+
 	for (UINT i = 0; i < polygonCount; i++)
 	{
 		if (output[i].isPicked)
 		{
-			*position = ray.origin + ray.direction * output[i].distance;
-
-			return true;
+			if (minDistance > output[i].distance)
+			{
+				minDistance = output[i].distance;
+			}
 		}
+	}
+
+	if (minDistance < FLT_MAX)
+	{
+		*position = ray.origin + ray.direction * minDistance;
+
+		return true;
 	}
 
 	return false;
@@ -167,6 +180,9 @@ void TerrainEditor::CreateMesh()
 
 void TerrainEditor::CreateNormal()
 {
+	for (VertexType& vertex : vertices)
+		vertex.normal = Vector3();
+
 	for (UINT i = 0; i < indices.size() / 3; i++)
 	{
 		UINT index0 = indices[i * 3 + 0];
@@ -190,6 +206,10 @@ void TerrainEditor::CreateNormal()
 
 void TerrainEditor::CreateTangent()
 {
+
+	for (VertexType& vertex : vertices)
+		vertex.tangent = Vector3();
+
 	for (UINT i = 0; i < indices.size() / 3; i++)
 	{
 		UINT index0 = indices[i * 3 + 0];
@@ -243,9 +263,11 @@ void TerrainEditor::AdjustHeight()
 
 			float distance = (p1 - p2).Length();
 
+			float value = adjustValue * max(0, cos(XM_PIDIV2 * distance / brushBuffer->data.range));
+
 			if (distance <= brushBuffer->data.range)
 			{
-				vertex.pos.y += 10 * Time::Delta();
+				vertex.pos.y += value * Time::Delta();
 			}
 		}
 		break;
@@ -253,5 +275,23 @@ void TerrainEditor::AdjustHeight()
 		break;
 	}
 
+	CreateNormal();
+	CreateTangent();
+
 	mesh->UpdateVertex(vertices.data(), vertices.size());
+
+	for (UINT i = 0; i < polygonCount; i++)
+	{
+		input[i].index = i;
+
+		UINT index0 = indices[i * 3 + 0];
+		UINT index1 = indices[i * 3 + 1];
+		UINT index2 = indices[i * 3 + 2];
+
+		input[i].v0 = vertices[index0].pos;
+		input[i].v1 = vertices[index1].pos;
+		input[i].v2 = vertices[index2].pos;
+	}
+
+	structuredBuffer->UpdateInput(input);
 }

@@ -13,11 +13,17 @@ BrickImage::~BrickImage()
 
 void BrickImage::Update()
 {
+	if (_isActive == false)
+		return;
+
 	_transform->Update();
 }
 
 void BrickImage::Render()
 {
+	if (_isActive == false)
+		return;
+
 	_transform->SetBuffer(0);
 	_quad->Render();
 }

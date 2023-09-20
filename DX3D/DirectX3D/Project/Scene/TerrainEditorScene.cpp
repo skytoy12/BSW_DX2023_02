@@ -35,6 +35,7 @@ void TerrainEditorScene::PostRender()
 {
 	terrainEditor->Debug();
 	terrainEditor->GetMaterial()->SelectMap();
+	terrainEditor->GetMaterial()->PostRender();
 
 }
 

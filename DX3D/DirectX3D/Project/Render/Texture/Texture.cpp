@@ -19,6 +19,8 @@ Texture* Texture::Get(wstring file)
 
 	file = L"_Texture/" + file;
 
+	assert(PathFileExists(file.c_str()));
+
 	if (textures.count(file) > 0)
 		return textures[file];
 

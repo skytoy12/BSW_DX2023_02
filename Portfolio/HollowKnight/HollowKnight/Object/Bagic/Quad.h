@@ -12,6 +12,8 @@ public :
 	void SetPS(shared_ptr<PixelShader> ps) { _ps = ps; }
 	void SetVS(shared_ptr<VertexShader> vs) { _vs = vs; }
 
+	void SetSRV(wstring file) { _srv = SRVManager::GetInstance()->Add_SRV(file); }
+
 	void CreateVertices();
 	Vector2 GetQuadHalfSize() { return _halfSize; }
 	Vector2 GetImageSize() { return _srv.lock()->GetImageSize(); }

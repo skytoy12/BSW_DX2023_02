@@ -35,6 +35,15 @@ void StructuredBuffer::Copy(void* data, UINT size)
 	DC->Unmap(result, 0);
 }
 
+void StructuredBuffer::UpdateInput(void* data)
+{
+	DC->UpdateSubresource(input, 0, nullptr, data, inputStride, inputCount);
+
+	srv->Release();
+
+	CreateSRV();
+}
+
 void StructuredBuffer::SetSRV()
 {
 	DC->CSSetShaderResources(0, 1, &srv);

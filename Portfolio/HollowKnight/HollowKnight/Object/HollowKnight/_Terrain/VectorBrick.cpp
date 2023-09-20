@@ -3,7 +3,10 @@
 
 VectorBrick::VectorBrick()
 {
-
+	for (int i = 0; i < 10; i++)
+	{
+		shared_ptr<BrickImage> brick = make_shared<BrickImage>(L"Resource/UI/Title.png", Vector2(1185.0f * 0.5f, 412.0f * 0.5f));
+	}
 }
 
 VectorBrick::~VectorBrick()
@@ -12,10 +15,18 @@ VectorBrick::~VectorBrick()
 
 void VectorBrick::Update()
 {
+	for (shared_ptr<BrickImage> brick : _brickImages)
+	{
+		brick->Update();
+	}
 }
 
 void VectorBrick::Render()
 {
+	for (shared_ptr<BrickImage> brick : _brickImages)
+	{
+		brick->Render();
+	}
 }
 
 void VectorBrick::Save(string name, wstring flie)

@@ -20,3 +20,7 @@ void SRV::Set(int slot)
 {
     DC->PSSetShaderResources(slot, 1, _shaderResourceView.GetAddressOf());
 }
+
+
+
+

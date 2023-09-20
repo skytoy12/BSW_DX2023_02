@@ -7,6 +7,11 @@ MapTool::MapTool()
 	_rMon = make_shared<RushMonster>();
 	_Potal = make_shared<CircleCollider>(50);
 
+	_Vbricks = make_shared<VectorBrick>();
+
+	_Vbricks->SetName("GameScene1");
+	_Vbricks->SetSaveFile(L"Info/BrickInfoGameScene1.BSW");
+
 	for (int i = 0; i < 15; i++)
 	{
 		shared_ptr<Wall> wall = make_shared<Wall>(Vector2(50, 50));
@@ -38,6 +43,7 @@ void MapTool::Update()
 	_player->Update();
 	_rMon->Update();
 	_Potal->Update();
+	_Vbricks->Update();
 
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	MoveCol();
@@ -46,9 +52,8 @@ void MapTool::Update()
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
 	{
 		_isOn = false;
-		Save();
 		CAMERA->SetTarget(nullptr);
-		SCENE->NextScene();
+		//SCENE->NextScene();
 	}
 
 	for (auto wall : _walls)
@@ -72,6 +77,8 @@ void MapTool::Update()
 
 void MapTool::Render()
 {
+	_Vbricks->Render();
+
 	_player->Render();
 	_rMon->Render();
 	_Potal->Render();
@@ -89,7 +96,7 @@ void MapTool::PostRender()
 	_rMon->PostRender();
 
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
-	ImGui::Text("colNum : %d", _colNum);
+
 }
 
 void MapTool::PreRender()
@@ -157,38 +164,3 @@ void MapTool::DashCut()
 	}
 }
 
-void MapTool::Save()
-{
-	PlayerInfo playerInfo;
-
-
-	int Php = _player->GetHP();
-	int Pmp = _player->GetMP();
-
-	playerInfo.hp = Php;
-	playerInfo.mp = Pmp;
-
-	BinaryWriter writer = BinaryWriter(L"Info/HpMp.save");
-	writer.String("PlayerInfo");
-	writer.UInt(sizeof(playerInfo));
-	writer.Byte(&playerInfo, sizeof(playerInfo));
-}
-
-void MapTool::Load()
-{
-	PlayerInfo playerInfo;
-
-	BinaryReader reader = BinaryReader(L"Info/HpMp.save");
-	string infoName = reader.String();
-
-	if (infoName == "PlayerInfo")
-	{
-		UINT size = reader.UInt();
-
-		void* ptr = &playerInfo;
-		reader.Byte(&ptr, size);
-	}
-
-	_player->SetHP(playerInfo.hp);
-	_player->SetMP(playerInfo.mp);
-}

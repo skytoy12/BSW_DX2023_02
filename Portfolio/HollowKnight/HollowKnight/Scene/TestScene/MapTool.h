@@ -16,8 +16,7 @@ public :
 
 	void DashCut();
 
-	void Save();
-	void Load();
+
 
 private:
 	float _scale = 0.75f;
@@ -33,5 +32,7 @@ private:
 	shared_ptr<RushMonster> _rMon;
 
 	shared_ptr<CircleCollider> _Potal;
+
+	shared_ptr<VectorBrick> _Vbricks;
 };
 

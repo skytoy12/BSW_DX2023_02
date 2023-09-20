@@ -19,6 +19,7 @@ Quad::Quad(wstring srvFile)
     _ps = ADD_PS(L"Shader/TexturePS.hlsl");
 
     _srv = ADD_SRV(srvFile);
+    _path = srvFile;
 
     CreateVertices();
     _vertexBuffer = make_shared<VertexBuffer>(_vertices.data(), sizeof(Vertex_Texture), _vertices.size(), 0);
@@ -32,6 +33,7 @@ Quad::Quad(wstring srvFile, Vector2 size)
     _ps = ADD_PS(L"Shader/TexturePS.hlsl");
 
     _srv = ADD_SRV(srvFile);
+    _path = srvFile;
     _halfSize = size * 0.5f;
 
     CreateVertices();
@@ -61,6 +63,12 @@ void Quad::Render()
 
     DC->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
     DC->DrawIndexed(_indices.size(), 0, 0);
+}
+
+void Quad::SetSRV(wstring file)
+{
+    _srv = SRVManager::GetInstance()->Add_SRV(file);
+    _path = file;
 }
 
 void Quad::CreateVertices()

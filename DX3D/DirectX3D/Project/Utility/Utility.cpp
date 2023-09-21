@@ -24,3 +24,20 @@ wstring Utility::ToWString(string str)
 
 	return temp;
 }
+
+wstring Utility::GetProjectDir()
+{
+	WCHAR path[128];
+	GetCurrentDirectory(128, path);
+
+	wstring projectDir = path;
+
+	wstring dir = path;
+
+	return dir + L"/";
+}
+
+wstring Utility::GetTextureDir()
+{
+	return GetProjectDir() + L"_Texture/";
+}

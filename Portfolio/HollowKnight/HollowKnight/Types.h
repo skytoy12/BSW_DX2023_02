@@ -85,5 +85,4 @@ struct BrickInfo
 {
 	Vector2 pos;
 	Vector2 Scale;
-	wstring path;
 };

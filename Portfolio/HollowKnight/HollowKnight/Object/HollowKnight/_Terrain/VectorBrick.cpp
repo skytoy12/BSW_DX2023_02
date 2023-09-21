@@ -20,26 +20,26 @@ void VectorBrick::Update()
 	if (KEY_PRESS(VK_CONTROL))
 	{
 		if (KEY_DOWN('S'))
-			Save(_name, _savefile);
+		{
+			SaveWString("saveee", L"Info/abc.abc");
+			SavePS(_name, _savefile);
+		}
+
 	}
 
 	if (KEY_PRESS(VK_CONTROL))
 	{
 		if (KEY_DOWN('V'))
-			Load(_name, _savefile);
+			LoadPS(_name, _savefile);
 	}
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (KEY_DOWN(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
 	{
-		for (auto brick : _brickImages)
-		{
-			if (brick->_isActive == false)
-			{
-				brick->SetPosition(W_MOUSE_POS);
-				brick->_isActive = true;
-				break;
-			}
-		}
+		if (_brickImages[_curNum]->_isActive == false)
+			_brickImages[_curNum]->_isActive = true;
+
+		_brickImages[_curNum]->SetPosition(W_MOUSE_POS);
+
 	}
 	
 	for (shared_ptr<BrickImage> brick : _brickImages)
@@ -56,7 +56,14 @@ void VectorBrick::Render()
 	}
 }
 
-void VectorBrick::Save(string name, wstring flie)
+void VectorBrick::PostRender()
+{
+	ImGui::SliderFloat("Scale.x", &_brickScaleX, 0.0f, 2.0f);
+	ImGui::SliderFloat("Scale.y", &_brickScaleY, 0.0f, 2.0f);
+	ImGui::SliderInt("CurNumber", &_curNum, 0, 49);
+}
+
+void VectorBrick::SavePS(string name, wstring flie)
 {
 	vector<BrickInfo> brickInfo;
 
@@ -68,11 +75,9 @@ void VectorBrick::Save(string name, wstring flie)
 
 			Vector2 pos = brick->GetPosition();
 			Vector2 scale = brick->GetScale();
-			wstring path = brick->Getpath();
 
 			info.pos = pos;
 			info.Scale = scale;
-			info.path = path;
 
 			brickInfo.push_back(info);
 		}
@@ -84,7 +89,7 @@ void VectorBrick::Save(string name, wstring flie)
 	writer.Byte(brickInfo.data(), sizeof(BrickInfo) * brickInfo.size());
 }
 
-void VectorBrick::Load(string name, wstring flie)
+void VectorBrick::LoadPS(string name, wstring flie)
 {
 	vector<BrickInfo> brickInfo;
 
@@ -104,10 +109,88 @@ void VectorBrick::Load(string name, wstring flie)
 	{
 		if (i >= _brickImages.size() - 1)
 			break;
-		//wstring temp = brickInfo[i].path;
+
 		_brickImages[i]->SetPosition(brickInfo[i].pos);
 		_brickImages[i]->SetScale(brickInfo[i].Scale);
-		_brickImages[i]->SetSRV(brickInfo[i].path);
 		_brickImages[i]->_isActive = true;
 	}
+}
+
+void VectorBrick::SaveWString(string name, wstring flie)
+{
+	vector<string> files;
+
+	for (auto brick : _brickImages)
+	{
+		if (brick->_isActive == true)
+		{
+			wstring path;
+			string imageName;
+
+			path = brick->Getpath();
+			imageName = ToString(path);
+
+			files.push_back(imageName);
+		}
+	}
+
+	UINT dataSize = 0;
+	for (string file : files)
+	{
+		dataSize += sizeof(file);
+	}
+
+	BinaryWriter writer = BinaryWriter(flie);
+	writer.String(name);
+	writer.UInt(dataSize);
+	for (string file : files)
+	{
+		writer.String(file);
+	}
+}
+
+void VectorBrick::LoadWString(string name, wstring flie)
+{
+	vector<string> files;
+
+	BinaryReader reader = BinaryReader(flie);
+	string infoName = reader.String();
+
+	if (infoName == name)
+	{
+		UINT size = reader.UInt();
+		files.resize(size);
+
+		void* ptr = files.data();
+		reader.String();
+	}
+
+	for (int i = 0; i < brickInfo.size(); i++)
+	{
+		if (i >= _brickImages.size() - 1)
+			break;
+
+		_brickImages[i]->SetPosition(brickInfo[i].pos);
+		_brickImages[i]->SetScale(brickInfo[i].Scale);
+		_brickImages[i]->_isActive = true;
+	}
+}
+
+
+string VectorBrick::ToString(wstring str)
+{
+	string temp;
+
+	temp.assign(str.begin(), str.end());
+
+	return temp;
+}
+
+wstring VectorBrick::ToWString(string str)
+{
+	wstring temp;
+
+	temp.assign(str.begin(), str.end());
+
+	return temp;
 }

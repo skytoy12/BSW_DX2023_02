@@ -8,6 +8,8 @@ private :
 
 public:
 	static Texture* Get(wstring file);
+	static Texture* Load(wstring file);
+
 	static void Delete();
 
 	void PSSetShaderResources(UINT slot);

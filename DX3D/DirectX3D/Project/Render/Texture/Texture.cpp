@@ -51,6 +51,42 @@ Texture* Texture::Get(wstring file)
 	return textures[file];
 }
 
+Texture* Texture::Load(wstring file)
+{
+	file = L"_Texture/" + file;
+
+	assert(PathFileExists(file.c_str()));
+
+	if (textures.count(file) > 0)
+		textures.erase(file);
+
+	wstring extension = GetExtention(file);
+
+	ScratchImage image;
+
+	if (extension == L"tga")
+		LoadFromTGAFile(file.c_str(), nullptr, image);
+	else if (extension == L"dds")
+		LoadFromDDSFile(file.c_str(), DDS_FLAGS_NONE, nullptr, image);
+	else
+		LoadFromWICFile(file.c_str(), WIC_FLAGS_NONE, nullptr, image);
+
+	ID3D11ShaderResourceView* srv = nullptr;
+
+	CreateShaderResourceView
+	(
+		DEVICE,
+		image.GetImages(),
+		image.GetImageCount(),
+		image.GetMetadata(),
+		&srv
+	);
+
+	textures[file] = new Texture(srv, image);
+
+	return textures[file];
+}
+
 void Texture::Delete()
 {
 	for (pair<wstring, Texture*> pair : textures)

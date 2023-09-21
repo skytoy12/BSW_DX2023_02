@@ -16,10 +16,17 @@ public:
 
 	bool Picking(OUT Vector3* position);
 
+	void SaveHeightMap(wstring file);
+	void LoadHeightMap(wstring file);
+
+	void SaveHeightDialog();
+	void LoadHeightDialog();
+
 private:
 	void CreateMesh();
 	void CreateNormal();
 	void CreateTangent();
+	void CreateCompute();
 
 	void AdjustHeight();
 private:

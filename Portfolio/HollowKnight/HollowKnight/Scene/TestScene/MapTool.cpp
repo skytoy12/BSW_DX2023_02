@@ -46,7 +46,7 @@ void MapTool::Update()
 	_Vbricks->Update();
 
 	CAMERA->SetScale(Vector2(_scale, _scale));
-	MoveCol();
+	//MoveCol();
 
 
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
@@ -92,10 +92,8 @@ void MapTool::Render()
 
 void MapTool::PostRender()
 {
-	_player->PostRender();
-	_rMon->PostRender();
-
 	ImGui::SliderFloat("Scale.x", (float*)&_scale, 0.1f, 2.0f);
+	_Vbricks->PostRender();
 
 }
 

@@ -18,32 +18,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	rayBuffer = new RayBuffer();
 	computeShader = Shader::GetCS(L"ComputePicking");
 
-	polygonCount = indices.size() / 3;
-
-	input = new InputDesc[polygonCount];
-
-	for (UINT i = 0; i < polygonCount; i++)
-	{
-		input[i].index = i;
-
-		UINT index0 = indices[i * 3 + 0];
-		UINT index1 = indices[i * 3 + 1];
-		UINT index2 = indices[i * 3 + 2];
-
-		input[i].v0 = vertices[index0].pos;
-		input[i].v1 = vertices[index1].pos;
-		input[i].v2 = vertices[index2].pos;
-	}
-
-	structuredBuffer = new StructuredBuffer
-	                  (   input, 
-						  sizeof(InputDesc),
-						  polygonCount, 
-						  sizeof(OutputDesc), 
-						  polygonCount
-					  );
-
-	output = new OutputDesc[polygonCount];
+	CreateCompute();
 
 	brushBuffer = new BrushBuffer();
 }
@@ -93,6 +68,10 @@ void TerrainEditor::Debug()
 	ImGui::ColorEdit3("BrushColor", (float*)&brushBuffer->data.color);
 	ImGui::SliderFloat("BrushIntensity", &adjustValue, 1.0f, 50.0f);
 	ImGui::SliderFloat("BrushRange", &brushBuffer->data.range, 1.0f, 50.0f);
+
+
+	SaveHeightDialog();
+	LoadHeightDialog();
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)
@@ -143,8 +122,110 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 	return false;
 }
 
+void TerrainEditor::SaveHeightMap(wstring file)
+{
+	file = L"_Texture/" + file;
+
+	UINT size = width * height * 4;
+
+	uint8_t* pixels = new uint8_t[size];
+
+	for (UINT i = 0; i < size / 4; i++)
+	{
+		float y = vertices[i].pos.y;
+
+		uint8_t height = y * 255 / MAP_HEIGHT;
+
+		pixels[4 * i + 0] = height;
+		pixels[4 * i + 1] = height;
+		pixels[4 * i + 2] = height;
+		pixels[4 * i + 3] = 255;
+	}
+
+	Image image;
+
+	image.width = width;
+	image.height = height;
+	image.pixels = pixels;
+	image.format = DXGI_FORMAT_R8G8B8A8_UNORM;
+	image.rowPitch = width * 4;
+	image.slicePitch = size;
+
+	SaveToWICFile(image, WIC_FLAGS_FORCE_RGB, GetWICCodec(WIC_CODEC_PNG), file.c_str());
+}
+
+void TerrainEditor::LoadHeightMap(wstring file)
+{
+	heightMap = Texture::Load(file);
+	if (mesh != nullptr)
+		delete mesh;
+
+	vertices.clear();
+	indices.clear();
+
+	CreateMesh();
+	CreateNormal();
+	CreateTangent();
+
+	mesh = new Mesh(vertices, indices);
+
+	CreateCompute();
+}
+
+void TerrainEditor::SaveHeightDialog()
+{
+	if (ImGui::Button("Save HeightMap"))
+	{
+		Dialog->OpenDialog("SaveKey", "Save", ".png", "_Texture/HeightMap/");
+	}
+
+	if (Dialog->Display("SaveKey", 32, { 200, 100 }))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+
+			path = path.substr(GetTextureDir().size(), path.length());
+
+			SaveHeightMap(ToWString(path));
+		}
+		Dialog->Close();
+	}
+}
+
+void TerrainEditor::LoadHeightDialog()
+{
+	if (ImGui::Button("Load HeightMap"))
+	{
+		Dialog->OpenDialog("LoadKey", "Load", ".png", "_Texture/HeightMap/");
+	}
+
+	if (Dialog->Display("LoadKey", 32, { 200, 100 }))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+
+			path = path.substr(GetTextureDir().size(), path.length());
+
+			LoadHeightMap(ToWString(path));
+		}
+		Dialog->Close();
+	}
+}
+
+
 void TerrainEditor::CreateMesh()
 {
+	vector<Vector4> colors;
+
+	if (heightMap != nullptr)
+	{
+		width = heightMap->GetSize().x;
+		height = heightMap->GetSize().y;
+
+		colors = heightMap->ReadPixels();
+	}
 
 	//Vertices
 	for (float z = 0; z < height; z++)
@@ -157,6 +238,12 @@ void TerrainEditor::CreateMesh()
 			vertex.uv.x = x / (width - 1);
 			vertex.uv.y = 1 - z / (height - 1);
 
+			//HeightMap
+			if (colors.size() > 0)
+			{
+				UINT index = x + z * width;
+				vertex.pos.y = colors[index].x * MAP_HEIGHT;
+			}
 
 			vertices.push_back(vertex);
 		}
@@ -251,6 +338,45 @@ void TerrainEditor::CreateTangent()
 	}
 }
 
+void TerrainEditor::CreateCompute()
+{
+	polygonCount = indices.size() / 3;
+
+	if (input != nullptr)
+		delete[] input;
+
+	input = new InputDesc[polygonCount];
+
+	for (UINT i = 0; i < polygonCount; i++)
+	{
+		input[i].index = i;
+
+		UINT index0 = indices[i * 3 + 0];
+		UINT index1 = indices[i * 3 + 1];
+		UINT index2 = indices[i * 3 + 2];
+
+		input[i].v0 = vertices[index0].pos;
+		input[i].v1 = vertices[index1].pos;
+		input[i].v2 = vertices[index2].pos;
+	}
+
+	if (structuredBuffer != nullptr)
+		delete structuredBuffer;
+
+	structuredBuffer = new StructuredBuffer
+	(input,
+		sizeof(InputDesc),
+		polygonCount,
+		sizeof(OutputDesc),
+		polygonCount
+	);
+
+	if (output != nullptr)
+		delete[] output;
+
+	output = new OutputDesc[polygonCount];
+}
+
 void TerrainEditor::AdjustHeight()
 {
 	switch (brushBuffer->data.type)
@@ -268,6 +394,9 @@ void TerrainEditor::AdjustHeight()
 			if (distance <= brushBuffer->data.range)
 			{
 				vertex.pos.y += value * Time::Delta();
+
+				if (vertex.pos.y > MAP_HEIGHT)
+					vertex.pos.y = MAP_HEIGHT;
 			}
 		}
 		break;

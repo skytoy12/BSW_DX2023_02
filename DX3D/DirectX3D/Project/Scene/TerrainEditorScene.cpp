@@ -9,6 +9,7 @@ TerrainEditorScene::TerrainEditorScene()
 	terrainEditor->GetMaterial()->  SetNormalMap(L"Landscape/FieldStone_NM.tga");
 
 	//RawData();
+
 }
 
 TerrainEditorScene::~TerrainEditorScene()

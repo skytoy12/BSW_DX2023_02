@@ -21,6 +21,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	CreateCompute();
 
 	brushBuffer = new BrushBuffer();
+	brushBuffer->data.type = 1;
 }
 
 TerrainEditor::~TerrainEditor()
@@ -399,6 +400,26 @@ void TerrainEditor::AdjustHeight()
 					vertex.pos.y = MAP_HEIGHT;
 			}
 		}
+		break;
+	case 1:
+		for (VertexType& vertex : vertices)
+		{
+			float x1 = abs(vertex.pos.x - pickedPos.x);
+			float z1 = abs(vertex.pos.z - pickedPos.z);
+
+
+			float value = adjustValue * max(0, cos(XM_PIDIV2 * x1 / brushBuffer->data.range));
+
+			if (x1 <= brushBuffer->data.range && z1 <= brushBuffer->data.range)
+			{
+				vertex.pos.y += value * Time::Delta();
+				
+				if (vertex.pos.y > MAP_HEIGHT)
+					vertex.pos.y = MAP_HEIGHT;
+			}
+
+		}
+
 		break;
 	default:
 		break;

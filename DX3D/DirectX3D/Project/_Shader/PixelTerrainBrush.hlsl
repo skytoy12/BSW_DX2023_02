@@ -20,11 +20,19 @@ float3 SetBrushColor(float3 pos)
         
         if (distance <= range)
             return color;
-        
-
     }
     
-    return float3(0, 0, 0);
+    if (type == 1)
+    {
+        float x = abs(pos.x - location.x);
+        float z = abs(pos.z - location.z);
+        
+        if (x <= range && z <= range)
+            return color;
+        
+    }
+    
+        return float3(0, 0, 0);
 }
 
 struct VertexOutput

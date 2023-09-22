@@ -61,6 +61,30 @@ void VectorBrick::PostRender()
 	ImGui::SliderFloat("Scale.x", &_brickScaleX, 0.0f, 2.0f);
 	ImGui::SliderFloat("Scale.y", &_brickScaleY, 0.0f, 2.0f);
 	ImGui::SliderInt("CurNumber", &_curNum, 0, 49);
+	ImGui::SliderInt("imageNumber", &_imagenumber, 0, 200);
+
+	if (ImGui::Button("Ceil"))
+	{
+		_imageType = L"Ceil/";
+	}
+
+	if (ImGui::Button("Deco"))
+	{
+		_imageType = L"Deco/";
+	}
+
+	if (ImGui::Button("Stool"))
+	{
+		_imageType = L"Stool/";
+	}
+
+	if (ImGui::Button("Select"))
+	{
+		wstring imagenumber = to_wstring(_imagenumber);
+		_select = L"Resource/" + _imageType + imagenumber + L".png";
+
+		_brickImages[_curNum]->SetSRV(_select);
+	}
 }
 
 void VectorBrick::SavePS(string name, wstring flie)
@@ -118,62 +142,62 @@ void VectorBrick::LoadPS(string name, wstring flie)
 
 void VectorBrick::SaveWString(string name, wstring flie)
 {
-	vector<string> files;
+	//vector<string> files;
 
-	for (auto brick : _brickImages)
-	{
-		if (brick->_isActive == true)
-		{
-			wstring path;
-			string imageName;
+	//for (auto brick : _brickImages)
+	//{
+	//	if (brick->_isActive == true)
+	//	{
+	//		wstring path;
+	//		string imageName;
 
-			path = brick->Getpath();
-			imageName = ToString(path);
+	//		path = brick->Getpath();
+	//		imageName = ToString(path);
 
-			files.push_back(imageName);
-		}
-	}
+	//		files.push_back(imageName);
+	//	}
+	//}
 
-	UINT dataSize = 0;
-	for (string file : files)
-	{
-		dataSize += sizeof(file);
-	}
+	//UINT dataSize = 0;
+	//for (string file : files)
+	//{
+	//	dataSize += sizeof(file);
+	//}
 
-	BinaryWriter writer = BinaryWriter(flie);
-	writer.String(name);
-	writer.UInt(dataSize);
-	for (string file : files)
-	{
-		writer.String(file);
-	}
+	//BinaryWriter writer = BinaryWriter(flie);
+	//writer.String(name);
+	//writer.UInt(dataSize);
+	//for (string file : files)
+	//{
+	//	writer.String(file);
+	//}
 }
 
 void VectorBrick::LoadWString(string name, wstring flie)
 {
-	vector<string> files;
+	//vector<string> files;
 
-	BinaryReader reader = BinaryReader(flie);
-	string infoName = reader.String();
+	//BinaryReader reader = BinaryReader(flie);
+	//string infoName = reader.String();
 
-	if (infoName == name)
-	{
-		UINT size = reader.UInt();
-		files.resize(size);
+	//if (infoName == name)
+	//{
+	//	UINT size = reader.UInt();
+	//	files.resize(size);
 
-		void* ptr = files.data();
-		reader.String();
-	}
+	//	void* ptr = files.data();
+	//	reader.String();
+	//}
 
-	for (int i = 0; i < brickInfo.size(); i++)
-	{
-		if (i >= _brickImages.size() - 1)
-			break;
+	//for (int i = 0; i < brickInfo.size(); i++)
+	//{
+	//	if (i >= _brickImages.size() - 1)
+	//		break;
 
-		_brickImages[i]->SetPosition(brickInfo[i].pos);
-		_brickImages[i]->SetScale(brickInfo[i].Scale);
-		_brickImages[i]->_isActive = true;
-	}
+	//	_brickImages[i]->SetPosition(brickInfo[i].pos);
+	//	_brickImages[i]->SetScale(brickInfo[i].Scale);
+	//	_brickImages[i]->_isActive = true;
+	//}
 }
 
 
@@ -193,4 +217,8 @@ wstring VectorBrick::ToWString(string str)
 	temp.assign(str.begin(), str.end());
 
 	return temp;
+}
+
+void VectorBrick::SelectImage()
+{
 }

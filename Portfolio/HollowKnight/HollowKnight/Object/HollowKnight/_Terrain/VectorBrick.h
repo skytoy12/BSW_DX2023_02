@@ -22,6 +22,8 @@ public:
 	void SetName(string name) { _name = name; }
 	void SetSaveFile(wstring save) { _savefile = save; }
 
+	void SelectImage();
+
 	shared_ptr<BrickImage> GetBrickImage(int number) { return _brickImages[number]; }
 
 private:
@@ -32,7 +34,11 @@ private:
 
 	int _curNum = 0;
 	int _brickNumber = 0;
+
 	wstring _imageType = L"Ceil/";
+	int _imagenumber = 0;
+
+	wstring _select = L"";
 
 	string _name;
 	wstring _savefile;

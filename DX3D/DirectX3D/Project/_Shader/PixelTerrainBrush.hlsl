@@ -22,14 +22,13 @@ float3 SetBrushColor(float3 pos)
             return color;
     }
     
-    if (type == 1)
+    else if (type == 1)
     {
-        float x = abs(pos.x - location.x);
-        float z = abs(pos.z - location.z);
+        float x = pos.x - location.x;
+        float z = pos.z - location.z;
         
-        if (x <= range && z <= range)
+        if (abs(x) <= range && abs(z) <= range)
             return color;
-        
     }
     
         return float3(0, 0, 0);

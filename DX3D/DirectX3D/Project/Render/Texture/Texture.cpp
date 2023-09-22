@@ -16,6 +16,7 @@ Texture::~Texture()
 
 Texture* Texture::Get(wstring file)
 {
+	wstring path = file;
 
 	file = L"_Texture/" + file;
 
@@ -47,12 +48,15 @@ Texture* Texture::Get(wstring file)
 	);
 
 	textures[file] = new Texture(srv, image);
+	textures[file]->path = path;
 
 	return textures[file];
 }
 
 Texture* Texture::Load(wstring file)
 {
+	wstring path = file;
+
 	file = L"_Texture/" + file;
 
 	assert(PathFileExists(file.c_str()));
@@ -83,6 +87,7 @@ Texture* Texture::Load(wstring file)
 	);
 
 	textures[file] = new Texture(srv, image);
+	textures[file]->path = path;
 
 	return textures[file];
 }

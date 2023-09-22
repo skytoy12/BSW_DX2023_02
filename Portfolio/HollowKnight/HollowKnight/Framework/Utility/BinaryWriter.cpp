@@ -36,6 +36,21 @@ void BinaryWriter::String(string data)
 	WriteFile(_file, ptr, data.size(), IN & _size, nullptr);
 }
 
+void BinaryWriter::WString(wstring data)
+{
+	UInt((UINT)data.size());
+
+	const wchar_t* str = data.c_str();
+
+	WriteFile(_file, str, sizeof(wchar_t) * data.size(), &_size, nullptr);
+}
+
+void BinaryWriter::Float2(Vector2 data)
+{
+	Float(data.x);
+	Float(data.y);
+}
+
 void BinaryWriter::Byte(void* data, UINT dataSize)
 {
 	WriteFile(_file, data, dataSize, IN & _size, nullptr);

@@ -20,12 +20,14 @@ public:
 		return Vector2(image.GetMetadata().width, image.GetMetadata().height);
 	}
 
+	wstring GetPath() { return path; }
+
 private:
 	ID3D11ShaderResourceView* srv = nullptr;
 	ScratchImage image;
 
 	static map<wstring, Texture*> textures;
 
-	
+	wstring path;
 };
 

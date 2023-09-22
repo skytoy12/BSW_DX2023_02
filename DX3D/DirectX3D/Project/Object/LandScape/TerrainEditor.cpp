@@ -9,6 +9,14 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 
 	worldBuffer = new MatrixBuffer();
 
+	BinaryReader data(L"HeightMap");
+	if (data.Succeeded())
+	{
+		wstring heightPath = data.ReadWString();
+
+		heightMap = Texture::Load(heightPath);
+	}
+
 	CreateMesh();
 	CreateNormal();
 	CreateTangent();
@@ -21,11 +29,17 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	CreateCompute();
 
 	brushBuffer = new BrushBuffer();
-	brushBuffer->data.type = 1;
+
 }
 
 TerrainEditor::~TerrainEditor()
 {
+	if (heightMap != nullptr)
+	{
+		BinaryWriter data(L"HeightMap");
+		data.WriteData(heightMap->GetPath());
+	}
+
 	delete mesh;
 	delete worldBuffer;
 	delete material;
@@ -47,6 +61,11 @@ void TerrainEditor::Update()
 
 	if (Picking(&pickedPos) && KEY_PRESS(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
 		AdjustHeight();
+
+	if (KEY_PRESS(VK_LSHIFT))
+		isRaise = false;
+	else
+		isRaise = true;
 }
 
 void TerrainEditor::Render()
@@ -70,6 +89,9 @@ void TerrainEditor::Debug()
 	ImGui::SliderFloat("BrushIntensity", &adjustValue, 1.0f, 50.0f);
 	ImGui::SliderFloat("BrushRange", &brushBuffer->data.range, 1.0f, 50.0f);
 
+	const char* typeList[] = { "Circle", "Rect" };
+
+	ImGui::Combo("BrushType", &brushBuffer->data.type, typeList, 2);
 
 	SaveHeightDialog();
 	LoadHeightDialog();
@@ -394,30 +416,43 @@ void TerrainEditor::AdjustHeight()
 
 			if (distance <= brushBuffer->data.range)
 			{
-				vertex.pos.y += value * Time::Delta();
+				if(isRaise)
+					vertex.pos.y += value * Time::Delta();
+				else
+					vertex.pos.y -= value * Time::Delta();
+
 
 				if (vertex.pos.y > MAP_HEIGHT)
 					vertex.pos.y = MAP_HEIGHT;
+
+				if (vertex.pos.y < 0)
+					vertex.pos.y = 0;
 			}
 		}
 		break;
 	case 1:
 		for (VertexType& vertex : vertices)
 		{
-			float x1 = abs(vertex.pos.x - pickedPos.x);
-			float z1 = abs(vertex.pos.z - pickedPos.z);
 
+			Vector3 p1 = Vector3(vertex.pos.x, 0.0f, vertex.pos.z);
+			Vector3 p2 = Vector3(pickedPos.x, 0.0f, pickedPos.z);
 
-			float value = adjustValue * max(0, cos(XM_PIDIV2 * x1 / brushBuffer->data.range));
+			Vector3 distance = p1 - p2;
 
-			if (x1 <= brushBuffer->data.range && z1 <= brushBuffer->data.range)
+			if (abs(distance.x) <= brushBuffer->data.range && abs(distance.z) <= brushBuffer->data.range)
 			{
-				vertex.pos.y += value * Time::Delta();
+				if(isRaise)
+					vertex.pos.y += adjustValue * Time::Delta();
+				else
+					vertex.pos.y -= adjustValue * Time::Delta();
+
 				
 				if (vertex.pos.y > MAP_HEIGHT)
 					vertex.pos.y = MAP_HEIGHT;
-			}
 
+				if (vertex.pos.y < 0)
+					vertex.pos.y = 0;
+			}
 		}
 
 		break;

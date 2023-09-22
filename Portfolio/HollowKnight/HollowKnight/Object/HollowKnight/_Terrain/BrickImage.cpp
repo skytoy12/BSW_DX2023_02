@@ -28,4 +28,10 @@ void BrickImage::Render()
 	_quad->Render();
 }
 
+void BrickImage::SetPosition(Vector2 value)
+{
+	_oldPos = GetPosition();
+	_transform->SetPosition(value);
+}
+
 

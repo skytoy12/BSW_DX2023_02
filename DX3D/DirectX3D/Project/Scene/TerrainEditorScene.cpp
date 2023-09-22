@@ -10,6 +10,10 @@ TerrainEditorScene::TerrainEditorScene()
 
 	//RawData();
 
+	BinaryWriter data(L"Data");
+	data.WriteData(10);
+	data.WriteData(1.5f);
+	data.WriteData("HellowWorld");
 }
 
 TerrainEditorScene::~TerrainEditorScene()

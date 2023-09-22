@@ -11,6 +11,7 @@ MapTool::MapTool()
 
 	_Vbricks->SetName("GameScene1");
 	_Vbricks->SetSaveFile(L"Info/BrickInfoGameScene1.BSW");
+	_Vbricks->SetImageSaveName(L"GameScene1.image");
 
 	for (int i = 0; i < 15; i++)
 	{

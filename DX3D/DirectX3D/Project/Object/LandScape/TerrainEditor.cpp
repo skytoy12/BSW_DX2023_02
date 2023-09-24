@@ -7,14 +7,22 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	material = new Material();
 	material->SetShader(L"TerrainBrush");
 
+	material->SetDuffuseMap(L"Landscape/FieldStone_DM.tga");
+	material->SetSpecularMap(L"Landscape/FieldStone_SM.tga");
+	material->SetNormalMap(L"Landscape/FieldStone_NM.tga");
+
 	worldBuffer = new MatrixBuffer();
 
 	BinaryReader data(L"HeightMap");
+
 	if (data.Succeeded())
 	{
 		wstring heightPath = data.ReadWString();
 
 		heightMap = Texture::Load(heightPath);
+		material->SetDuffuseMap(data.ReadWString());
+		material->SetSpecularMap(data.ReadWString());
+		material->SetNormalMap(data.ReadWString());
 	}
 
 	CreateMesh();
@@ -34,10 +42,13 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 
 TerrainEditor::~TerrainEditor()
 {
-	if (heightMap != nullptr)
+	if (heightMap != nullptr && material->GetDiffuseMap() != nullptr && material->GetSpecularMap() != nullptr && material->GetNormalMap() != nullptr)
 	{
 		BinaryWriter data(L"HeightMap");
 		data.WriteData(heightMap->GetPath());
+		data.WriteData(material->GetDiffuseMap()->GetPath());
+		data.WriteData(material->GetSpecularMap()->GetPath());
+		data.WriteData(material->GetNormalMap()->GetPath());
 	}
 
 	delete mesh;

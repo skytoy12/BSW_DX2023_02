@@ -17,6 +17,10 @@ public:
 	void SetSpecularMap(wstring file);
 	void SetNormalMap(wstring file);
 
+	Texture* GetDiffuseMap() { return diffuseMap; }
+	Texture* GetSpecularMap() { return specularMap; }
+	Texture* GetNormalMap() { return normalMap; }
+
 	MaterialBuffer* GetBuffer() { return buffer; }
 
 	void PostRender();

@@ -6,11 +6,12 @@ GameScene1::GameScene1()
 	_player = make_shared<Player>();
 	_rMon = make_shared<RushMonster>();
 	_Potal = make_shared<CircleCollider>(50);
-	for (int i = 0; i < 229; i++)
+
+	for (int i = 0; i < 230; i++)
 	{
-		shared_ptr<BrickImage> brick = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
-		brick->_isActive = false;
-		_images.push_back(brick);
+		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
+		image->_isActive = false;
+		_images.push_back(image);
 	}
 
 	for (int i = 0; i < 15; i++)
@@ -28,9 +29,7 @@ GameScene1::GameScene1()
 	CAMERA->SetTarget(_player->GetTransform());
 
 	CreateMap();
-
 	BrickLoad();
-	BrickImageLoad();
 
 	_rMon->SetPlayer(_player);
 	_player->SetPosition(Vector2(0, 1000));
@@ -48,10 +47,8 @@ void GameScene1::Update()
 	_player->Update();
 	_rMon->Update();
 	_Potal->Update();
-	for (shared_ptr<BrickImage> brick : _images)
-	{
-		brick->Update();
-	}
+	for (auto image : _images)
+		image->Update();
 
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	MoveCol();
@@ -90,10 +87,8 @@ void GameScene1::Render()
 	_rMon->Render();
 	_Potal->Render();
 
-	for (shared_ptr<BrickImage> brick : _images)
-	{
-		brick->Render();
-	}
+	for (auto image : _images)
+		image->Render();
 
 	for (auto wall : _walls)
 	{
@@ -237,14 +232,13 @@ void GameScene1::BrickLoad()
 		_images[i]->SetScale(brickInfo[i].Scale);
 		_images[i]->_isActive = true;
 	}
-}
 
-void GameScene1::BrickImageLoad()
-{
-	BinaryReader data(L"GameScene1.image");
+	BinaryReader data(L"Info/GameScene1.image");
 
 	for (shared_ptr<BrickImage> image : _images)
 	{
 		image->SetSRV(data.WString());
 	}
 }
+
+

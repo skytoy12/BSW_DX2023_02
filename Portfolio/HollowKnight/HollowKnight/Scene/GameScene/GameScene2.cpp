@@ -8,6 +8,13 @@ GameScene2::GameScene2()
 	_RMon = make_shared<RushMonster>();
 	_JMon = make_shared<JumpMonster>();
 
+	for (int i = 0; i < 230; i++)
+	{
+		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
+		image->_isActive = false;
+		_images.push_back(image);
+	}
+
 	for (int i = 0; i < 5; i++)
 	{
 		shared_ptr<Wall> wall = make_shared<Wall>(Vector2(50, 50));
@@ -58,6 +65,7 @@ GameScene2::GameScene2()
 	_Potal->SetPosition(Vector2(+ 914, -1284));
 
 	CreateMap();
+	BrickLoad();
 }
 
 GameScene2::~GameScene2()
@@ -77,6 +85,8 @@ void GameScene2::Update()
 	_RMon->Update();
 	_JMon->Update();
 	_Potal->Update();
+	for (auto image : _images)
+		image->Update();
 
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
 	{
@@ -134,6 +144,9 @@ void GameScene2::Render()
 	{
 		stool->Render();
 	}
+
+	for (auto image : _images)
+		image->Render();
 
 	for (auto fly : _flies)
 	{
@@ -264,4 +277,38 @@ void GameScene2::Load()
 
 	_player->SetHP(playerInfo.hp);
 	_player->SetMP(playerInfo.mp);
+}
+
+void GameScene2::BrickLoad()
+{
+	vector<BrickInfo> brickInfo;
+
+	BinaryReader reader = BinaryReader(L"Info/BrickInfoGameScene2.BSW");
+	string infoName = reader.String();
+
+	if (infoName == "GameScene2")
+	{
+		UINT size = reader.UInt();
+		brickInfo.resize(size);
+
+		void* ptr = brickInfo.data();
+		reader.Byte(&ptr, size * sizeof(BrickInfo));
+	}
+
+	for (int i = 0; i < brickInfo.size(); i++)
+	{
+		if (i >= _images.size() - 1)
+			break;
+
+		_images[i]->SetPosition(brickInfo[i].pos);
+		_images[i]->SetScale(brickInfo[i].Scale);
+		_images[i]->_isActive = true;
+	}
+
+	BinaryReader data(L"Info/GameScene2.image");
+
+	for (shared_ptr<BrickImage> image : _images)
+	{
+		image->SetSRV(data.WString());
+	}
 }

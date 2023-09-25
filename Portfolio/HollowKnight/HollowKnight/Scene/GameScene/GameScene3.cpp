@@ -15,6 +15,13 @@ GameScene3::GameScene3()
 
 	_Potal = make_shared<CircleCollider>(50);
 
+	for (int i = 0; i < 215; i++)
+	{
+		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
+		image->_isActive = false;
+		_images.push_back(image);
+	}
+
 	for (int i = 0; i < 8; i++)
 	{
 		shared_ptr<Wall> wall = make_shared<Wall>(Vector2(50, 50));
@@ -86,6 +93,7 @@ GameScene3::GameScene3()
 	_Potal->SetPosition(Vector2(+2753, + 234));
 
 	CreateMap();
+	BrickLoad();
 }
 
 GameScene3::~GameScene3()
@@ -109,6 +117,8 @@ void GameScene3::Update()
 	_stoolC->Update();
 	_stoolD->Update();
 	_Potal->Update();
+	for (auto image : _images)
+		image->Update();
 
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
 	{
@@ -204,6 +214,9 @@ void GameScene3::Render()
 	{
 		jmon->Render();
 	}
+
+	for (auto image : _images)
+		image->Render();
 
 	_fly->Render();
 }
@@ -334,4 +347,38 @@ void GameScene3::Load()
 
 	_player->SetHP(playerInfo.hp);
 	_player->SetMP(playerInfo.mp);
+}
+
+void GameScene3::BrickLoad()
+{
+	vector<BrickInfo> brickInfo;
+
+	BinaryReader reader = BinaryReader(L"Info/BrickInfoGameScene3.BSW");
+	string infoName = reader.String();
+
+	if (infoName == "GameScene3")
+	{
+		UINT size = reader.UInt();
+		brickInfo.resize(size);
+
+		void* ptr = brickInfo.data();
+		reader.Byte(&ptr, size * sizeof(BrickInfo));
+	}
+
+	for (int i = 0; i < brickInfo.size(); i++)
+	{
+		if (i >= _images.size() - 1)
+			break;
+
+		_images[i]->SetPosition(brickInfo[i].pos);
+		_images[i]->SetScale(brickInfo[i].Scale);
+		_images[i]->_isActive = true;
+	}
+
+	BinaryReader data(L"Info/GameScene3.image");
+
+	for (shared_ptr<BrickImage> image : _images)
+	{
+		image->SetSRV(data.WString());
+	}
 }

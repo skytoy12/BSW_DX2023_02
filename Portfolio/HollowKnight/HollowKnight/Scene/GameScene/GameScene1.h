@@ -21,7 +21,6 @@ public:
 	void Load();
 
 	void BrickLoad();
-	void BrickImageLoad();
 
 private:
 	float _scale = 0.75f;

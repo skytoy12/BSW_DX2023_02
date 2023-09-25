@@ -27,11 +27,12 @@ private:
 
 	shared_ptr<Player> _player;
 
-	vector<shared_ptr<Wall>> _walls;
-
 	shared_ptr<RushMonster> _rMon;
 
+	vector<shared_ptr<Wall>> _walls;
+
 	shared_ptr<CircleCollider> _Potal;
+
 
 	shared_ptr<VectorBrick> _Vbricks;
 };

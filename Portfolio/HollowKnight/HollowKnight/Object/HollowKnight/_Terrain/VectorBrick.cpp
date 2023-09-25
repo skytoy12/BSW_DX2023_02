@@ -1,9 +1,9 @@
 #include "framework.h"
 #include "VectorBrick.h"
 
-VectorBrick::VectorBrick()
+VectorBrick::VectorBrick(int value)
 {
-	for (int i = 0; i < 500; i++)
+	for (int i = 0; i < value; i++)
 	{
 		shared_ptr<BrickImage> brick = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
 		brick->_isActive = false;
@@ -12,6 +12,7 @@ VectorBrick::VectorBrick()
 	
 	BinaryReader curNumR(L"Info/CurNum.int");
 	_curNum = curNumR.Int();
+
 }
 
 VectorBrick::~VectorBrick()
@@ -22,6 +23,16 @@ VectorBrick::~VectorBrick()
 
 void VectorBrick::Update()
 {
+
+	for (shared_ptr<BrickImage> brick : _brickImages)
+	{
+		brick->Update();
+	}
+
+
+	if (_isGameMod == true)
+		return;
+
 	if (KEY_PRESS(VK_CONTROL))
 	{
 		if (KEY_PRESS(VK_SHIFT))
@@ -78,11 +89,6 @@ void VectorBrick::Update()
 		_curNum++;
 	if (KEY_DOWN(VK_DOWN))
 		_curNum--;
-
-	for (shared_ptr<BrickImage> brick : _brickImages)
-	{
-		brick->Update();
-	}
 
 }
 

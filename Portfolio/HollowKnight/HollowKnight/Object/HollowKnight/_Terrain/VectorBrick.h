@@ -2,7 +2,7 @@
 class VectorBrick
 {
 public:
-	VectorBrick();
+	VectorBrick(int value);
 	~VectorBrick();
 
 	void Update();
@@ -27,6 +27,8 @@ public:
 	void SelectImage();
 
 	shared_ptr<BrickImage> GetBrickImage(int number) { return _brickImages[number]; }
+
+	bool _isGameMod = false;
 
 private:
 	vector<shared_ptr<BrickImage>> _brickImages;

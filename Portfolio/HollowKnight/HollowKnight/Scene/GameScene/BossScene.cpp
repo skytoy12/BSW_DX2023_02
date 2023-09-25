@@ -10,8 +10,13 @@ BossScene::BossScene()
 
 	_endCollider = make_shared<RectCollider>(Vector2(7500, 300));
 
+	for (int i = 0; i < 70; i++)
+	{
+		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
+		image->_isActive = false;
+		_images.push_back(image);
+	}
 	
-
 	for (int i = 0; i < 5; i++)
 	{
 		shared_ptr<Wall> wall = make_shared<Wall>(Vector2(50, 50));
@@ -36,6 +41,7 @@ BossScene::BossScene()
 	_endCollider->SetPosition(Vector2(0, -2250));
 
 	CreateMap();
+	BrickLoad();
 }
 
 BossScene::~BossScene()
@@ -77,6 +83,8 @@ void BossScene::Update()
 		_startActive = false;
 	}
 
+	for (auto image : _images)
+		image->Update();
 
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	MoveCol();
@@ -127,6 +135,9 @@ void BossScene::Render()
 	_endCollider->Render();
 	if (_startActive == false)
 		_startCollider->Render();
+
+	for (auto image : _images)
+		image->Render();
 
 	for (int i = 1; i < 3; i++)
 	{
@@ -236,4 +247,38 @@ void BossScene::Load()
 
 	_player->SetHP(playerInfo.hp);
 	_player->SetMP(playerInfo.mp);
+}
+
+void BossScene::BrickLoad()
+{
+	vector<BrickInfo> brickInfo;
+
+	BinaryReader reader = BinaryReader(L"Info/BrickInfoGameScene4.BSW");
+	string infoName = reader.String();
+
+	if (infoName == "GameScene4")
+	{
+		UINT size = reader.UInt();
+		brickInfo.resize(size);
+
+		void* ptr = brickInfo.data();
+		reader.Byte(&ptr, size * sizeof(BrickInfo));
+	}
+
+	for (int i = 0; i < brickInfo.size(); i++)
+	{
+		if (i >= _images.size() - 1)
+			break;
+
+		_images[i]->SetPosition(brickInfo[i].pos);
+		_images[i]->SetScale(brickInfo[i].Scale);
+		_images[i]->_isActive = true;
+	}
+
+	BinaryReader data(L"Info/GameScene4.image");
+
+	for (shared_ptr<BrickImage> image : _images)
+	{
+		image->SetSRV(data.WString());
+	}
 }

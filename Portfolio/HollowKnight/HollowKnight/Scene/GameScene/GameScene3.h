@@ -19,6 +19,8 @@ public:
 	void Save();
 	void Load();
 
+	void BrickLoad();
+
 private:
 	float _scale = 0.75f;
 	int _colNum = 0;
@@ -42,7 +44,7 @@ private:
 	shared_ptr<Stool> _stoolC;
 	shared_ptr<Stool> _stoolD;
 
-
+	vector<shared_ptr<BrickImage>> _images;
 };
 
 

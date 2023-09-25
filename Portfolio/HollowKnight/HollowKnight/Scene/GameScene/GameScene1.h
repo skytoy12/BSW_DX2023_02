@@ -20,6 +20,9 @@ public:
 	void Save();
 	void Load();
 
+	void BrickLoad();
+	void BrickImageLoad();
+
 private:
 	float _scale = 0.75f;
 	int _colNum = 0;
@@ -35,7 +38,7 @@ private:
 
 	shared_ptr<CircleCollider> _Potal;
 
-
+	vector<shared_ptr<BrickImage>> _images;
 };
 
 

@@ -1074,18 +1074,18 @@ struct IMGUI_API ImGuiMenuColumns
 // Internal temporary state for deactivating InputText() instances.
 struct IMGUI_API ImGuiInputTextDeactivatedState
 {
-    ImGuiID            ID;              // widget id owning the text state (which just got deactivated)
+    ImGuiID            label;              // widget id owning the text state (which just got deactivated)
     ImVector<char>     TextA;           // text buffer
 
     ImGuiInputTextDeactivatedState()    { memset(this, 0, sizeof(*this)); }
-    void    ClearFreeMemory()           { ID = 0; TextA.clear(); }
+    void    ClearFreeMemory()           { label = 0; TextA.clear(); }
 };
 // Internal state of the currently focused/edited text input box
 // For a given item ID, access with ImGui::GetInputTextState()
 struct IMGUI_API ImGuiInputTextState
 {
     ImGuiContext*           Ctx;                    // parent UI context (needs to be set explicitly by parent).
-    ImGuiID                 ID;                     // widget id owning the text state
+    ImGuiID                 label;                     // widget id owning the text state
     int                     CurLenW, CurLenA;       // we need to maintain our buffer length in both UTF-8 and wchar format. UTF-8 length is valid even if TextA is not.
     ImVector<ImWchar>       TextW;                  // edit buffer, we need to persist but can't guarantee the persistence of the user-provided buffer. so we copy into own buffer.
     ImVector<char>          TextA;                  // temporary UTF8 buffer for callbacks and other operations. this is not updated in every code-path! size=capacity.
@@ -1192,7 +1192,7 @@ struct ImGuiNextItemData
 // Status storage for the last submitted item
 struct ImGuiLastItemData
 {
-    ImGuiID                 ID;
+    ImGuiID                 label;
     ImGuiItemFlags          InFlags;            // See ImGuiItemFlags_
     ImGuiItemStatusFlags    StatusFlags;        // See ImGuiItemStatusFlags_
     ImRect                  Rect;               // Full rectangle
@@ -1207,7 +1207,7 @@ struct ImGuiLastItemData
 // Only stored when the node is a potential candidate for landing on a Left arrow jump.
 struct ImGuiNavTreeNodeData
 {
-    ImGuiID                 ID;
+    ImGuiID                 label;
     ImGuiItemFlags          InFlags;
     ImRect                  NavRect;
 };
@@ -1519,7 +1519,7 @@ enum ImGuiNavLayer
 struct ImGuiNavItemData
 {
     ImGuiWindow*        Window;         // Init,Move    // Best candidate window (result->ItemWindow->RootWindowForNav == request->Window)
-    ImGuiID             ID;             // Init,Move    // Best candidate item ID
+    ImGuiID             label;             // Init,Move    // Best candidate item ID
     ImGuiID             FocusScopeId;   // Init,Move    // Best candidate focus scope ID
     ImRect              RectRel;        // Init,Move    // Best candidate bounding box in window relative space
     ImGuiItemFlags      InFlags;        // ????,Move    // Best candidate item flags
@@ -1528,7 +1528,7 @@ struct ImGuiNavItemData
     float               DistAxial;      //      Move    // Best candidate axial distance to current NavId
 
     ImGuiNavItemData()  { Clear(); }
-    void Clear()        { Window = NULL; ID = FocusScopeId = 0; InFlags = 0; DistBox = DistCenter = DistAxial = FLT_MAX; }
+    void Clear()        { Window = NULL; label = FocusScopeId = 0; InFlags = 0; DistBox = DistCenter = DistAxial = FLT_MAX; }
 };
 
 //-----------------------------------------------------------------------------
@@ -1568,7 +1568,7 @@ struct ImGuiOldColumnData
 
 struct ImGuiOldColumns
 {
-    ImGuiID             ID;
+    ImGuiID             label;
     ImGuiOldColumnFlags Flags;
     bool                IsFirstFrame;
     bool                IsBeingResized;
@@ -1643,7 +1643,7 @@ struct ImGuiViewportP : public ImGuiViewport
 // (this is designed to be stored in a ImChunkStream buffer, with the variable-length Name following our structure)
 struct ImGuiWindowSettings
 {
-    ImGuiID     ID;
+    ImGuiID     label;
     ImVec2ih    Pos;
     ImVec2ih    Size;
     bool        Collapsed;
@@ -1729,7 +1729,7 @@ struct ImGuiMetricsConfig
 
 struct ImGuiStackLevelInfo
 {
-    ImGuiID                 ID;
+    ImGuiID                 label;
     ImS8                    QueryFrameCount;            // >= 1: Query in progress
     bool                    QuerySuccess;               // Obtained result from DebugHookIdInfo()
     ImGuiDataType           DataType : 8;
@@ -2303,7 +2303,7 @@ struct IMGUI_API ImGuiWindow
 {
     ImGuiContext*           Ctx;                                // Parent UI context (needs to be set explicitly by parent).
     char*                   Name;                               // Window name, owned by the window.
-    ImGuiID                 ID;                                 // == ImHashStr(Name)
+    ImGuiID                 label;                                 // == ImHashStr(Name)
     ImGuiWindowFlags        Flags;                              // See enum ImGuiWindowFlags_
     ImGuiViewportP*         Viewport;                           // Always set in Begin(). Inactive windows may have a NULL value here if their viewport was discarded.
     ImVec2                  Pos;                                // Position (always rounded-up to nearest pixel)
@@ -2443,7 +2443,7 @@ enum ImGuiTabItemFlagsPrivate_
 // Storage for one active tab item (sizeof() 40 bytes)
 struct ImGuiTabItem
 {
-    ImGuiID             ID;
+    ImGuiID             label;
     ImGuiTabItemFlags   Flags;
     int                 LastFrameVisible;
     int                 LastFrameSelected;      // This allows us to infer an ordered list of the last activated tabs with little maintenance
@@ -2464,7 +2464,7 @@ struct IMGUI_API ImGuiTabBar
 {
     ImVector<ImGuiTabItem> Tabs;
     ImGuiTabBarFlags    Flags;
-    ImGuiID             ID;                     // Zero for tab-bars used by docking
+    ImGuiID             label;                     // Zero for tab-bars used by docking
     ImGuiID             SelectedTabId;          // Selected tab/window
     ImGuiID             NextSelectedTabId;      // Next selected tab/window. Will also trigger a scrolling animation
     ImGuiID             VisibleTabId;           // Can occasionally be != SelectedTabId (e.g. when previewing contents for CTRL+TAB preview)
@@ -2594,7 +2594,7 @@ struct ImGuiTableInstanceData
 // sizeof() ~ 580 bytes + heap allocs described in TableBeginInitMemory()
 struct IMGUI_API ImGuiTable
 {
-    ImGuiID                     ID;
+    ImGuiID                     label;
     ImGuiTableFlags             Flags;
     void*                       RawData;                    // Single allocation to hold Columns[], DisplayOrderToIndex[] and RowCellData[]
     ImGuiTableTempData*         TempData;                   // Transient data while table is active. Point within g.CurrentTableStack[]
@@ -2755,7 +2755,7 @@ struct ImGuiTableColumnSettings
 // This is designed to be stored in a single ImChunkStream (1 header followed by N ImGuiTableColumnSettings, etc.)
 struct ImGuiTableSettings
 {
-    ImGuiID                     ID;                     // Set to 0 to invalidate/delete the setting
+    ImGuiID                     label;                     // Set to 0 to invalidate/delete the setting
     ImGuiTableFlags             SaveFlags;              // Indicate data we want to save using the Resizable/Reorderable/Sortable/Hideable flags (could be using its own flags..)
     float                       RefScale;               // Reference scale to be able to rescale columns on font/dpi changes.
     ImGuiTableColumnIdx         ColumnsCount;
@@ -3218,7 +3218,7 @@ namespace ImGui
     IMGUI_API bool          TempInputText(const ImRect& bb, ImGuiID id, const char* label, char* buf, int buf_size, ImGuiInputTextFlags flags);
     IMGUI_API bool          TempInputScalar(const ImRect& bb, ImGuiID id, const char* label, ImGuiDataType data_type, void* p_data, const char* format, const void* p_clamp_min = NULL, const void* p_clamp_max = NULL);
     inline bool             TempInputIsActive(ImGuiID id)       { ImGuiContext& g = *GImGui; return (g.ActiveId == id && g.TempInputId == id); }
-    inline ImGuiInputTextState* GetInputTextState(ImGuiID id)   { ImGuiContext& g = *GImGui; return (id != 0 && g.InputTextState.ID == id) ? &g.InputTextState : NULL; } // Get input text state if active
+    inline ImGuiInputTextState* GetInputTextState(ImGuiID id)   { ImGuiContext& g = *GImGui; return (id != 0 && g.InputTextState.label == id) ? &g.InputTextState : NULL; } // Get input text state if active
 
     // Color
     IMGUI_API void          ColorTooltip(const char* text, const float* col, ImGuiColorEditFlags flags);

@@ -14,9 +14,13 @@ public:
 
 	virtual void SetShader() = 0;
 
+	wstring GetPath() { return path; }
+
 protected:
 	ID3DBlob* blob;
 
 	static map<wstring, Shader*> shaders;
+
+	wstring path;
 };
 

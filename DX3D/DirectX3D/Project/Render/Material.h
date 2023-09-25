@@ -27,6 +27,9 @@ public:
 
 	void SelectMap();
 
+	void Save(wstring file);
+	void Load(wstring file);
+
 private:
 	VertexShader* vertexShader = nullptr;
 	 PixelShader* pixelShader = nullptr;
@@ -39,7 +42,9 @@ private:
 
 	 string projectDir;
 
-	 static string ID;
+	 static int ID;
+
+	 string label = "";
 };
 
 

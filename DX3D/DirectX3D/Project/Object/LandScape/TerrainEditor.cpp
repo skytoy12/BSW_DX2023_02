@@ -5,11 +5,7 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 	:height(height), width(width)
 {
 	material = new Material();
-	material->SetShader(L"TerrainBrush");
 
-	material->SetDuffuseMap(L"Landscape/FieldStone_DM.tga");
-	material->SetSpecularMap(L"Landscape/FieldStone_SM.tga");
-	material->SetNormalMap(L"Landscape/FieldStone_NM.tga");
 
 	worldBuffer = new MatrixBuffer();
 
@@ -20,9 +16,6 @@ TerrainEditor::TerrainEditor(UINT height, UINT width)
 		wstring heightPath = data.ReadWString();
 
 		heightMap = Texture::Load(heightPath);
-		material->SetDuffuseMap(data.ReadWString());
-		material->SetSpecularMap(data.ReadWString());
-		material->SetNormalMap(data.ReadWString());
 	}
 
 	CreateMesh();
@@ -46,9 +39,6 @@ TerrainEditor::~TerrainEditor()
 	{
 		BinaryWriter data(L"HeightMap");
 		data.WriteData(heightMap->GetPath());
-		data.WriteData(material->GetDiffuseMap()->GetPath());
-		data.WriteData(material->GetSpecularMap()->GetPath());
-		data.WriteData(material->GetNormalMap()->GetPath());
 	}
 
 	delete mesh;
@@ -95,17 +85,33 @@ void TerrainEditor::Render()
 
 void TerrainEditor::Debug()
 {
-	ImGui::Text("PickedPos : %.1f, %.1f,%.1f", pickedPos.x, pickedPos.y, pickedPos.z);
-	ImGui::ColorEdit3("BrushColor", (float*)&brushBuffer->data.color);
-	ImGui::SliderFloat("BrushIntensity", &adjustValue, 1.0f, 50.0f);
-	ImGui::SliderFloat("BrushRange", &brushBuffer->data.range, 1.0f, 50.0f);
+	if (ImGui::BeginChild("TerrainEditor", ImVec2(250, 100), true))
+	{
+		ImGui::Text("PickedPos : %.1f, %.1f,%.1f", pickedPos.x, pickedPos.y, pickedPos.z);
 
-	const char* typeList[] = { "Circle", "Rect" };
+		if (ImGui::BeginMenu("TerrainBrush"))
+		{
+			ImGui::ColorEdit3("BrushColor", (float*)&brushBuffer->data.color);
+			ImGui::SliderFloat("BrushIntensity", &adjustValue, 1.0f, 50.0f);
+			ImGui::SliderFloat("BrushRange", &brushBuffer->data.range, 1.0f, 50.0f);
 
-	ImGui::Combo("BrushType", &brushBuffer->data.type, typeList, 2);
+			const char* typeList[] = { "Circle", "Rect" };
 
-	SaveHeightDialog();
-	LoadHeightDialog();
+			ImGui::Combo("BrushType", &brushBuffer->data.type, typeList, 2);
+
+			ImGui::EndMenu();
+		}
+
+		if (ImGui::BeginMenu("Save/Load HeightMap"))
+		{
+			SaveHeightDialog();
+			LoadHeightDialog();
+
+			ImGui::EndMenu();
+		}
+		material->PostRender();
+	}
+	ImGui::EndChild();
 }
 
 bool TerrainEditor::Picking(OUT Vector3* position)

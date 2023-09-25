@@ -3,16 +3,21 @@
 
 VectorBrick::VectorBrick()
 {
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 500; i++)
 	{
-		shared_ptr<BrickImage> brick = make_shared<BrickImage>(L"Resource/Ceil/11.png", Vector2(275.0f, 273.0f));
+		shared_ptr<BrickImage> brick = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
 		brick->_isActive = false;
 		_brickImages.push_back(brick);
 	}
+	
+	BinaryReader curNumR(L"Info/CurNum.int");
+	_curNum = curNumR.Int();
 }
 
 VectorBrick::~VectorBrick()
 {
+	BinaryWriter curNum(L"Info/CurNum.int");
+	curNum.Int(_curNum);
 }
 
 void VectorBrick::Update()
@@ -27,8 +32,6 @@ void VectorBrick::Update()
 				SaveWString(_image);
 			}
 		}
-
-
 	}
 
 	if (KEY_PRESS(VK_CONTROL))
@@ -47,7 +50,6 @@ void VectorBrick::Update()
 		{
 			_brickImages[_curNum]->ReturnPos();
 		}
-
 	}
 
 	if (KEY_DOWN(VK_LBUTTON) && !ImGui::GetIO().WantCaptureMouse)
@@ -72,6 +74,11 @@ void VectorBrick::Update()
 		}
 	}
 	
+	if (KEY_DOWN(VK_UP))
+		_curNum++;
+	if (KEY_DOWN(VK_DOWN))
+		_curNum--;
+
 	for (shared_ptr<BrickImage> brick : _brickImages)
 	{
 		brick->Update();
@@ -95,7 +102,7 @@ void VectorBrick::PostRender()
 	ImGui::SliderFloat("BrickPos.x", &_brickPosX, -10000.0f, 10000.0f);
 	ImGui::SliderFloat("BrickPos.y", &_brickPosY, -10000.0f, 10000.0f);
 
-	ImGui::SliderInt("CurNumber", &_curNum, 0, 49);
+	ImGui::SliderInt("CurNumber", &_curNum, 0, 499);
 	ImGui::SliderInt("imageNumber", &_imagenumber, 0, 200);
 
 	ImGui::Text("Pos = %.1f, %.1f", _brickImages[_curNum]->GetPosition().x, _brickImages[_curNum]->GetPosition().y);

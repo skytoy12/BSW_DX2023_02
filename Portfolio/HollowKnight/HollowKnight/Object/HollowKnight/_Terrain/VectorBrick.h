@@ -37,6 +37,7 @@ private:
 	float _brickPosX = 0.0f;
 	float _brickPosY = 0.0f;
 
+
 	int _curNum = 99;
 	int _brickNumber = 0;
 

@@ -9,9 +9,9 @@ MapTool::MapTool()
 
 	_Vbricks = make_shared<VectorBrick>();
 
-	_Vbricks->SetName("GameScene1");
-	_Vbricks->SetSaveFile(L"Info/BrickInfoGameScene1.BSW");
-	_Vbricks->SetImageSaveName(L"GameScene1.image");
+	_Vbricks->SetName("GameScene2");
+	_Vbricks->SetSaveFile(L"Info/BrickInfoGameScene2.BSW");
+	_Vbricks->SetImageSaveName(L"GameScene2.image");
 
 	for (int i = 0; i < 15; i++)
 	{
@@ -78,11 +78,12 @@ void MapTool::Update()
 
 void MapTool::Render()
 {
-	_Vbricks->Render();
 
 	_player->Render();
 	_rMon->Render();
 	_Potal->Render();
+
+	_Vbricks->Render();
 
 	for (auto wall : _walls)
 	{

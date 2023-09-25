@@ -19,11 +19,15 @@ void VectorBrick::Update()
 {
 	if (KEY_PRESS(VK_CONTROL))
 	{
-		if (KEY_DOWN('S'))
+		if (KEY_PRESS(VK_SHIFT))
 		{
-			SavePS(_name, _savefile);
-			SaveWString(_image);
+			if (KEY_DOWN('S'))
+			{
+				SavePS(_name, _savefile);
+				SaveWString(_image);
+			}
 		}
+
 
 	}
 

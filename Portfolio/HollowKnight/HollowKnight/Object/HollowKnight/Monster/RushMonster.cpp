@@ -116,7 +116,7 @@ void RushMonster::Update()
 	if (_rushTime > 2.5f)
 		RushFinish();
 
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 300.0f &&
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 500.0f &&
 		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 100.0f)
 	{
 		Attack();
@@ -290,7 +290,7 @@ void RushMonster::Active()
 	if (_isAlive == false)
 		return;
 
-	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 400.0f &&
+	if (abs(_col->GetTransform()->GetWorldPosition().x - _targetPlayer.lock()->GetTransform()->GetWorldPosition().x) < 700.0f &&
 		abs(_col->GetTransform()->GetWorldPosition().y - _targetPlayer.lock()->GetTransform()->GetWorldPosition().y) < 100.0f)
 	{
 		if (_isRush == true)

@@ -134,6 +134,7 @@ using namespace Microsoft::WRL;
 #include "Object/HollowKnight/_Terrain/Wall.h"
 #include "Object/HollowKnight/_Terrain/BrickImage.h"
 #include "Object/HollowKnight/_Terrain/VectorBrick.h"
+#include "Object/HollowKnight/_Terrain/BackGround.h"
 
 
 // Scene

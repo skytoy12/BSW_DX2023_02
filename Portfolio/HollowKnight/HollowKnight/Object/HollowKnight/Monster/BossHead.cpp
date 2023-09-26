@@ -29,8 +29,8 @@ BossHead::~BossHead()
 
 void BossHead::Update()
 {
-	if (_isActive == false)
-		return;
+	//if (_isActive == false)
+	//	return;
 
 	if (_isUnbeatableH == false)
 		SetRGB(0.0f, 0.0f, 0.0f);

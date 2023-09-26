@@ -8,6 +8,11 @@ GameScene2::GameScene2()
 	_RMon = make_shared<RushMonster>();
 	_JMon = make_shared<JumpMonster>();
 
+	_backGround = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround1 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround2 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround3 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+
 	for (int i = 0; i < 230; i++)
 	{
 		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
@@ -64,6 +69,11 @@ GameScene2::GameScene2()
 	_RMon->SetPosition(Vector2(+ 356, -1005));
 	_Potal->SetPosition(Vector2(+ 914, -1284));
 
+	_backGround ->SetPosition(Vector2(0, 610));
+	_backGround1->SetPosition(Vector2(-3000, 500));
+	_backGround2->SetPosition(Vector2(0, -800));
+	_backGround3->SetPosition(Vector2(-3000, -800));
+
 	CreateMap();
 	BrickLoad();
 }
@@ -81,12 +91,21 @@ void GameScene2::Update()
 		Load();
 		CAMERA->SetTarget(_player->GetTransform());
 	}
+
+	CAMERA->SetLeftBottom(Vector2(-1950, -1200));
+	CAMERA->SetRightTop(Vector2(+1000, +1100));
+
 	_player->Update();
 	_RMon->Update();
 	_JMon->Update();
 	_Potal->Update();
 	for (auto image : _images)
 		image->Update();
+
+	_backGround->Update();
+	_backGround1->Update();
+	_backGround2->Update();
+	_backGround3->Update();
 
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
 	{
@@ -131,6 +150,10 @@ void GameScene2::Update()
 
 void GameScene2::Render()
 {
+	_backGround->Render();
+	_backGround3->Render();
+	_backGround1->Render();
+	_backGround2->Render();
 	_player->Render();
 	_RMon->Render();
 	_JMon->Render();

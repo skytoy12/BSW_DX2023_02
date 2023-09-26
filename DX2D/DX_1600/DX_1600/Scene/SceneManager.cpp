@@ -11,7 +11,7 @@ SceneManager::SceneManager()
 {
 	//_scenes.push_back(make_shared<TutorialScene>());
 	//_scenes.push_back(make_shared<SolorSystem>());
-	_scenes.push_back(make_shared<CupHeadScene>());
+	_scenes.push_back(make_shared<TutorialScene>());
 }
 
 SceneManager::~SceneManager()

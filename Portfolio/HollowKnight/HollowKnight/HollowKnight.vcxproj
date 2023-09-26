@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\HollowKnight\_Terrain\BackGround.h" />
     <ClInclude Include="Object\HollowKnight\_Terrain\BrickImage.h" />
     <ClInclude Include="Object\UI\QuadUI\Black.h" />
     <ClInclude Include="Scene\GameScene\BossScene.h" />
@@ -234,6 +235,7 @@
     <ClInclude Include="Object\HollowKnight\_Terrain\VectorBrick.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\HollowKnight\_Terrain\BackGround.cpp" />
     <ClCompile Include="Object\HollowKnight\_Terrain\BrickImage.cpp" />
     <ClCompile Include="Object\UI\QuadUI\Black.cpp" />
     <ClCompile Include="Scene\GameScene\BossScene.cpp" />

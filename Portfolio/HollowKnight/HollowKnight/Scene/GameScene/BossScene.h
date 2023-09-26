@@ -38,6 +38,10 @@ private:
 	vector<shared_ptr<Wall>> _walls;
 
 	vector<shared_ptr<BrickImage>> _images;
+
+	shared_ptr<BackGround> _backGround;
+	shared_ptr<BackGround> _backGround1;
+	shared_ptr<BackGround> _backGround2;
 };
 
 

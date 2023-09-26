@@ -120,7 +120,9 @@ void Boss::Update()
 	_sprites[_curstate]->Update();
 	_head->Update();
 
-	if (_curstate == LAST)
+	if (_head->GetHP() <= 0)
+		_landPoint = Vector2(0, 0);
+	if(_isGrogy == true)
 		_landPoint = Vector2(0, 0);
 
 	if (_isColActive == true)
@@ -674,6 +676,7 @@ void Boss::JumpToIdle()
 		if (_col->GetTransform()->GetWorldPosition().y < -1500)
 		{
 			SetAndResetState(LAST);
+			_head->Update();
 			_head->_isActive = true;
 			_head->_lastHead = true;
 			if (_isLeft == true)
@@ -1084,6 +1087,7 @@ void Boss::AllStop()
 	_isTurn = false;
 	_isWeaponMove = false;
 	_isWeaponActive = false;
+	_isJumpAndLandAttack = false;
 }
 
 void Boss::Hitted(shared_ptr<Collider> col)

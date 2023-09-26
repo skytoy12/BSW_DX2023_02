@@ -11,6 +11,11 @@ GameScene3::GameScene3()
 	_stoolC = make_shared<Stool>(L"Resource/Stool/stool4.png", Vector2(125, 103), Vector2(110, 50));
 	_stoolD = make_shared<Stool>(L"Resource/Stool/stool5.png", Vector2(641, 286), Vector2(520, 100));
 
+	_backGround = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround1 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround2 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround3 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+
 	_fly = make_shared<FlyMonster>(Vector2(1471, 376));
 
 	_Potal = make_shared<CircleCollider>(50);
@@ -91,6 +96,10 @@ GameScene3::GameScene3()
 
 	_player->SetPosition(Vector2(-1887, - 253));
 	_Potal->SetPosition(Vector2(+2753, + 234));
+	_backGround->SetPosition(Vector2(-1887, -253));
+	_backGround1->SetPosition(Vector2(0, -253));
+	_backGround2->SetPosition(Vector2(1900, 150));
+	_backGround3->SetPosition(Vector2(1900, 1200));
 
 	CreateMap();
 	BrickLoad();
@@ -110,6 +119,9 @@ void GameScene3::Update()
 		CAMERA->SetTarget(_player->GetTransform());
 	}
 
+	CAMERA->SetLeftBottom(Vector2(-1600, -580));
+	CAMERA->SetRightTop(Vector2(+1900, +1100));
+
 	_player->Update();
 	_fly->Update();
 	_stoolA->Update();
@@ -119,6 +131,11 @@ void GameScene3::Update()
 	_Potal->Update();
 	for (auto image : _images)
 		image->Update();
+
+	_backGround->Update();
+	_backGround1->Update();
+	_backGround2->Update();
+	_backGround3->Update();
 
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
 	{
@@ -188,6 +205,12 @@ void GameScene3::Update()
 
 void GameScene3::Render()
 {
+
+	_backGround->Render();
+	_backGround3->Render();
+	_backGround1->Render();
+	_backGround2->Render();
+
 	_player->Render();
 	_stoolA->Render();
 	_stoolB->Render();

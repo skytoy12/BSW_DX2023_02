@@ -9,14 +9,15 @@ MapTool::MapTool()
 
 	_Vbricks = make_shared<VectorBrick>(230);
 
+	_backGround = make_shared<BrickImage>(L"Resource/UI/BackGround.webp", Vector2(800*4, 505*4));
+
 	_Vbricks->SetName("GameScene5");
 	_Vbricks->SetSaveFile(L"Info/BrickInfoGameScene5.BSW");
 	_Vbricks->SetImageSaveName(L"GameScene5.image");
+	_endCollider = make_shared<RectCollider>(Vector2(7500, 300));
 
 
-
-
-	for (int i = 0; i < 8; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		shared_ptr<Wall> wall = make_shared<Wall>(Vector2(50, 50));
 		_walls.push_back(wall);
@@ -37,6 +38,7 @@ MapTool::MapTool()
 	_rMon->SetPlayer(_player);
 	_player->SetPosition(Vector2(-3400, +150));
 	_rMon->SetPosition(Vector2(-300, -900));
+	_endCollider->SetPosition(Vector2(0, -2250));
 	_Potal->SetPosition(Vector2(-2761, -774));
 }
 
@@ -50,11 +52,12 @@ void MapTool::Update()
 	_rMon->Update();
 	_Potal->Update();
 	_Vbricks->Update();
+	_backGround->Update();
 
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	//MoveCol();
 
-
+	_endCollider->Update();
 
 	if (_isOn == true && _Potal->IsCollision(_player->GetCollider()))
 	{
@@ -87,6 +90,7 @@ void MapTool::Update()
 
 void MapTool::Render()
 {
+	_backGround->Render();
 
 	_player->Render();
 	_rMon->Render();
@@ -101,7 +105,7 @@ void MapTool::Render()
 		wall->Render();
 	}
 
-
+	_endCollider->Render();
 
 }
 

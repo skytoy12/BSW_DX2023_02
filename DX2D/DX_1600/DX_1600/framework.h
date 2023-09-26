@@ -112,8 +112,7 @@ using namespace Microsoft::WRL;
 #include "Object/Dungreed/Dun_Player_Advanced.h"
 #include "Object/Dungreed/DungreedBoss.h"
 
-#include "Utility/Singleton.h"
-#include "Utility/Font.h"
+
 
 // UI
 #include "Object/UI/Button.h"

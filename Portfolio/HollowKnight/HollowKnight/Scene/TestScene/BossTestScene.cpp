@@ -15,7 +15,7 @@ BossTestScene::BossTestScene()
 	CAMERA->SetLeftBottom(Vector2(-100000, -100000));
 	CAMERA->SetRightTop(Vector2(100000, 100000));
 	SOUND->Add("Main1", "Resource/Sound/BGM/S19 Crossroads Main.wav", true);
-
+	_boss->SetStart(false);
 }
 
 BossTestScene::~BossTestScene()

@@ -38,6 +38,9 @@ private:
 	shared_ptr<CircleCollider> _Potal;
 
 	vector<shared_ptr<BrickImage>> _images;
+
+	shared_ptr<BackGround> _backGround;
+	shared_ptr<BackGround> _backGround1;
 };
 
 

@@ -10,7 +10,12 @@ BossScene::BossScene()
 
 	_endCollider = make_shared<RectCollider>(Vector2(7500, 300));
 
-	for (int i = 0; i < 75; i++)
+	_backGround = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround1 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround2 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+
+
+	for (int i = 0; i < 100; i++)
 	{
 		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
 		image->_isActive = false;
@@ -40,6 +45,10 @@ BossScene::BossScene()
 	_startCollider->SetPosition(Vector2(-1373, 116));
 	_endCollider->SetPosition(Vector2(0, -2250));
 
+	_backGround->SetPosition(Vector2(-1887, 500));
+	_backGround1->SetPosition(Vector2(200, 500));
+	_backGround2->SetPosition(Vector2(200, -1500));
+
 	CreateMap();
 	BrickLoad();
 }
@@ -56,6 +65,26 @@ void BossScene::Update()
 	_boss->Update();
 	_startButton->Update();
 	_endCollider->Update();
+
+	_backGround->Update();
+	_backGround1->Update();
+	_backGround2->Update();
+
+
+
+	if (_isEnd == false)
+	{
+		CAMERA->SetRightTop(Vector2(+1700, +1100));
+		CAMERA->SetLeftBottom(Vector2(-2600, -180));
+	}
+
+	if (_isEnd == true)
+	{
+		CAMERA->SetRightTop(Vector2(+500, +1100));
+		CAMERA->SetLeftBottom(Vector2(-800, -2180));
+	}
+
+
 
 	if (_start == true)
 	{
@@ -129,6 +158,10 @@ void BossScene::Update()
 
 void BossScene::Render()
 {
+	_backGround->Render();
+	_backGround1->Render();
+	_backGround2->Render();
+
 	_boss->Render();
 	_player->Render();
 	_startButton->Render();

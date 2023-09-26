@@ -33,7 +33,9 @@ private:
 
 	shared_ptr<CircleCollider> _Potal;
 
+	shared_ptr<BrickImage> _backGround;
 
+	shared_ptr<RectCollider> _endCollider;
 	shared_ptr<VectorBrick> _Vbricks;
 };
 

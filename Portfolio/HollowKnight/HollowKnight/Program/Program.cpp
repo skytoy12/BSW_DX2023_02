@@ -63,7 +63,7 @@ void Program::Render()
 	SCENE->PostRender();
 
 	ImGui::Render();
-	ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+	//ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
 	Font::GetInstance()->GetDC()->EndDraw();
 

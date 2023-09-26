@@ -148,6 +148,7 @@ void BossScene::Render()
 	{
 		_walls[3]->Render();
 		_walls[4]->Render();
+		_images[52]->_isActive = false;
 	}
 
 	if (_isEnd == false)

@@ -120,6 +120,9 @@ void Boss::Update()
 	_sprites[_curstate]->Update();
 	_head->Update();
 
+	if (_curstate == LAST)
+		_landPoint = Vector2(0, 0);
+
 	if (_isColActive == true)
 		_heatBox->SetGreen();
 	else

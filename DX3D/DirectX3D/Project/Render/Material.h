@@ -30,6 +30,9 @@ public:
 	void Save(wstring file);
 	void Load(wstring file);
 
+	void SaveDialog();
+	void LoadDialog();
+
 private:
 	VertexShader* vertexShader = nullptr;
 	 PixelShader* pixelShader = nullptr;

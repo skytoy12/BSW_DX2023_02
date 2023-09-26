@@ -7,7 +7,6 @@ Material::Material()
 {
 	buffer = new MaterialBuffer();
 
-	SetShader(L"TerrainBrush");
 	SetDuffuseMap(L"Landscape/FieldStone_DM.tga");
 	SetSpecularMap(L"Landscape/FieldStone_SM.tga");
 	SetNormalMap(L"Landscape/FieldStone_NM.tga");
@@ -110,8 +109,16 @@ void Material::SetNormalMap(wstring file)
 
 void Material::PostRender()
 {
-	ImGui::InputText("Label", (char*)label.data(), 128);
+	char* str;
 
+	str = (char*)label.data();
+
+	ImGui::InputText("Label", str, 128);
+
+	label = str;
+
+	if (label[0] == '\0')
+		label = " ";
 
 	if (ImGui::BeginMenu(label.c_str()))
 	{
@@ -125,12 +132,9 @@ void Material::PostRender()
 
 		ImGui::SliderFloat((label + "Shininess").c_str(), &buffer->data.shininess, 1.0f, 50.0f);
 
-		if (ImGui::Button(("Save " + label).c_str()))
-			Save(ToWString(label + "Data"));
 
-
-		if (ImGui::Button(("Load " + label).c_str()))
-			Load(ToWString(label + "Data"));
+		SaveDialog();
+		LoadDialog();
 
 		ImGui::EndMenu();
 	}
@@ -242,4 +246,46 @@ void Material::Load(wstring file)
 	str = data.ReadWString();
 	if (str != L"")
 		normalMap = Texture::Get(str);
+}
+
+void Material::SaveDialog()
+{
+	if (ImGui::Button(("Save " + label).c_str()))
+	{
+		Dialog->OpenDialog("Save Material", "Save", ".mat", "_TextData/");
+	}
+
+	if (Dialog->Display("Save Material", 32, { 200, 100 }))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+
+			path = path.substr(GetTextDataDir().size(), path.length());
+
+			Save(ToWString(path));
+		}
+		Dialog->Close();
+	}
+}
+
+void Material::LoadDialog()
+{
+	if (ImGui::Button(("Load " + label).c_str()))
+	{
+		Dialog->OpenDialog("Load Material", "Save", ".mat", "_TextData/");
+	}
+
+	if (Dialog->Display("Load Material", 32, { 200, 100 }))
+	{
+		if (Dialog->IsOk())
+		{
+			string path = Dialog->GetFilePathName();
+
+			path = path.substr(GetTextDataDir().size(), path.length());
+
+			Load(ToWString(path));
+		}
+		Dialog->Close();
+	}
 }

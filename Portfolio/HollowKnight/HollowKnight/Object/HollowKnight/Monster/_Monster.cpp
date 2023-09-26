@@ -12,6 +12,7 @@ Monster::Monster()
 	EffectManager::GetInstance()->AddEffect("Particle", L"Resource/Effect/Particle.png", Vector2(13, 1), Vector2(100, 100));
 	EFFECT_S("Hitted", Vector2(1.5f, 1.5f));
 	EFFECT_S("Particle", Vector2(3.0f, 3.0f));
+	SOUND->Add("Hitted", "Resource/Sound/Player/enemy_damage.wav");
 }
 
 void Monster::Update()
@@ -100,6 +101,7 @@ void Monster::Hitted(shared_ptr<Collider> col)
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
 		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
+		SOUND->Play("Hitted");
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;
@@ -136,6 +138,7 @@ void Monster::BulletHitted(shared_ptr<Collider> col)
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
 		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
+		SOUND->Play("Hitted");
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;

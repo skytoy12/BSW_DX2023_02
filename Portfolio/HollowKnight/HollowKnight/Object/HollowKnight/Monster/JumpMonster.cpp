@@ -159,6 +159,7 @@ void JumpMonster::Hitted(shared_ptr<Collider> col)
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
 		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
+		SOUND->Play("Hitted");
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;
@@ -209,6 +210,7 @@ void JumpMonster::BulletHitted(shared_ptr<Collider> col)
 	{
 		EFFECT_LPLAY("Hitted", col->GetTransform()->GetWorldPosition());
 		EFFECT_LPLAY("Particle", col->GetTransform()->GetWorldPosition());
+		SOUND->Play("Hitted");
 		_monsterBuffer->_data.R = 0.5f;
 		_monsterBuffer->_data.G = 0.5f;
 		_monsterBuffer->_data.B = 0.5f;

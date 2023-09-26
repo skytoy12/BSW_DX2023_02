@@ -10,7 +10,7 @@ BossScene::BossScene()
 
 	_endCollider = make_shared<RectCollider>(Vector2(7500, 300));
 
-	for (int i = 0; i < 70; i++)
+	for (int i = 0; i < 75; i++)
 	{
 		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
 		image->_isActive = false;
@@ -148,6 +148,7 @@ void BossScene::Render()
 	{
 		_walls[3]->Render();
 		_walls[4]->Render();
+		_images[5]->_isActive = false;
 		_images[52]->_isActive = false;
 	}
 

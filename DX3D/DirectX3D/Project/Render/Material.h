@@ -33,6 +33,8 @@ public:
 	void SaveDialog();
 	void LoadDialog();
 
+	void SetLabel(string label) { this->label = label; }
+
 private:
 	VertexShader* vertexShader = nullptr;
 	 PixelShader* pixelShader = nullptr;

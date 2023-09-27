@@ -79,6 +79,7 @@ public:
 		Vector4 diffuse  = Vector4(1, 1, 1, 1);
 		Vector4 specular = Vector4(1, 1, 1, 1);
 		Vector4 ambient  = Vector4(1, 1, 1, 1);
+		Vector4 emissive = Vector4(0, 0, 0, 1);
 
 		int hasDiffuseMap   = 0;
 		int hasSpecularMap  = 0;

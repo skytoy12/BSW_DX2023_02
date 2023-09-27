@@ -89,3 +89,5 @@ Diffuse     (난반사)
 Ambient(주변반사)
 
 template을 cpp에 정의하면 링커에서 오류가 발생함
+
+samplerstate에서 Point면 픽셀단위로 네모모양으로, Linear면 뭉게져서 찰흙처럼 나옴

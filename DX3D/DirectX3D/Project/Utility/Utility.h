@@ -9,5 +9,8 @@ namespace Utility
 	wstring GetProjectDir();
 	wstring GetTextureDir();
 	wstring GetTextDataDir();
+
+	bool StartsWith( string str,  string start);
+	bool StartsWith(wstring str, wstring start);
 };
 

@@ -52,6 +52,8 @@ float4 Blur(float2 uv)
 
 	result /= 4 * value2;
 
+	result += float4(0.05f, 0.05f, 0.05f, 0.0f);
+
 	return result;
 }
 

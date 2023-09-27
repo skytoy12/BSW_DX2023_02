@@ -9,8 +9,9 @@ MainGame::MainGame()
 	//scene = new TextureScene();
 	//scene = new RobotScene();
 	//scene = new TerrainScene();
-	scene = new TerrainEditorScene();
+	//scene = new TerrainEditorScene();
 	//scene = new SphereScene();
+	scene = new ModelExportScene();
 }
 
 MainGame::~MainGame()

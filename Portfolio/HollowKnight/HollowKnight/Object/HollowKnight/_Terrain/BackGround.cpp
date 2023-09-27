@@ -6,8 +6,8 @@ BackGround::BackGround(wstring path, Vector2 size)
 	_quad = make_shared<Quad>(path, size);
 	_quad->SetPS(ADD_PS(L"Shader/FilterPS.hlsl"));
 	_filterBuffer = make_shared<FilterBuffer>();
-	_filterBuffer->_data.selected = 2;
-	_filterBuffer->_data.Value2 = 1;
+	_filterBuffer->_data.selected = 3;
+	_filterBuffer->_data.Value2 = 3;
 	_filterBuffer->_data.imageSize = _quad->GetImageSize();
 	_filterBuffer->_data.radialCenter = Vector2(0.5f, 0.5f);
 }

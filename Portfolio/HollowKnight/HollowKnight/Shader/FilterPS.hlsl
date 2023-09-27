@@ -53,6 +53,8 @@ float4 Blur(float2 uv)
 	result /= 4 * value2;
 
 	result += float4(0.05f, 0.05f, 0.05f, 0.0f);
+	if (uv.x > 0.99 || uv.x < 0.01 || uv.y > 0.99 || uv.y < 0.01)
+		result.w = 0.5;
 
 	return result;
 }

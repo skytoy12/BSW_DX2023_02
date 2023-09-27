@@ -16,6 +16,8 @@ public:
 	void SetScale(Vector2 value) { _transform->SetScale(value); }
 	void SetSRV(wstring file) { _quad->SetSRV(file); }
 
+	Vector2 GetImageSize() { return _quad->GetImageSize(); }
+
 
 	bool _isActive = true;
 

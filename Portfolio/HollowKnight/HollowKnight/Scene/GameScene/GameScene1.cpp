@@ -6,8 +6,8 @@ GameScene1::GameScene1()
 	_player = make_shared<Player>();
 	_rMon = make_shared<RushMonster>();
 	_Potal = make_shared<CircleCollider>(50);
-	_backGround = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
-	_backGround1 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround = make_shared<BackGround>(L"Resource/UI/Origin.jpg", Vector2(739 * 4, 162 * 4));
+	_backGround1 = make_shared<BackGround>(L"Resource/UI/ReverseU.jpg", Vector2(739 * 4, 162 * 4));
 	for (int i = 0; i < 230; i++)
 	{
 		shared_ptr<BrickImage> image = make_shared<BrickImage>(L"Resource/Deco/44.png", Vector2(275.0f, 273.0f));
@@ -26,8 +26,8 @@ GameScene1::GameScene1()
 		wall->SetTarget(_player);
 	}
 
-	//CAMERA->SetTarget(nullptr);
-	CAMERA->SetTarget(_player->GetTransform());
+	CAMERA->SetTarget(nullptr);
+	//CAMERA->SetTarget(_player->GetTransform());
 
 	CreateMap();
 	BrickLoad();
@@ -37,7 +37,7 @@ GameScene1::GameScene1()
 	_rMon->SetPosition(Vector2(-300, -900));
 	_Potal->SetPosition(Vector2(-2761, -774));
 	_backGround->SetPosition(Vector2(0, -500));
-	_backGround1->SetPosition(Vector2(-3000, -500));
+	_backGround1->SetPosition(_backGround->GetPosition() + Vector2(0.0f, _backGround->GetImageSize().y * 4 - 10.0f));
 }
 
 GameScene1::~GameScene1()

@@ -37,6 +37,12 @@ void TestScene::Update()
 	_col->Block(RECT(_mon1->GetCollider()));
 	_col->Block(RECT(_mon2->GetCollider()));
 	_col->Block(RECT(_mon3->GetCollider()));
+
+
+	if (KEY_DOWN(VK_SHIFT))
+	{
+		_player->Dash();
+	}
 	CAMERA->SetScale(Vector2(_scale, _scale));
 	CAMERA->SetLeftBottom(Vector2(-100000, -100000));
 	CAMERA->SetRightTop(Vector2(100000, 100000));

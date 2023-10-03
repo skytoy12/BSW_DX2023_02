@@ -11,10 +11,10 @@ GameScene3::GameScene3()
 	_stoolC = make_shared<Stool>(L"Resource/Stool/stool4.png", Vector2(125, 103), Vector2(110, 50));
 	_stoolD = make_shared<Stool>(L"Resource/Stool/stool5.png", Vector2(641, 286), Vector2(520, 100));
 
-	_backGround = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
-	_backGround1 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
-	_backGround2 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
-	_backGround3 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
+	_backGround1 = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
+	_backGround2 = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
+	_backGround3 = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
 
 	_fly = make_shared<FlyMonster>(Vector2(1471, 376));
 

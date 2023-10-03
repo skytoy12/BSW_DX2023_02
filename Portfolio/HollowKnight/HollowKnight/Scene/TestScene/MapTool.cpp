@@ -90,7 +90,7 @@ void MapTool::Update()
 
 void MapTool::Render()
 {
-	_backGround->Render();
+	//_backGround->Render();
 
 	_player->Render();
 	_rMon->Render();

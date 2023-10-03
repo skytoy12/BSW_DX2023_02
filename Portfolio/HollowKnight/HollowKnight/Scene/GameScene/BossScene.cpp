@@ -10,9 +10,9 @@ BossScene::BossScene()
 
 	_endCollider = make_shared<RectCollider>(Vector2(7500, 300));
 
-	_backGround = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
-	_backGround1 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
-	_backGround2 = make_shared<BackGround>(L"Resource/UI/BackGround.webp", Vector2(800 * 4, 505 * 4));
+	_backGround = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
+	_backGround1 = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
+	_backGround2 = make_shared<BackGround>(L"Resource/UI/RealRealBackGround.png", Vector2(3840, 2160));
 
 
 	for (int i = 0; i < 100; i++)

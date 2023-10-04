@@ -7,7 +7,7 @@ Material::Material()
 {
 	buffer = new MaterialBuffer();
 
-	SetDuffuseMap(L"Landscape/FieldStone_DM.tga");
+	SetDiffuseMap(L"Landscape/FieldStone_DM.tga");
 	SetSpecularMap(L"Landscape/FieldStone_SM.tga");
 	SetNormalMap(L"Landscape/FieldStone_NM.tga");
 
@@ -30,7 +30,7 @@ Material::Material(wstring file)
 	buffer = new MaterialBuffer();
 
 	SetShader(file);
-	SetDuffuseMap(L"Landscape/FieldStone_DM.tga");
+	SetDiffuseMap(L"Landscape/FieldStone_DM.tga");
 	SetSpecularMap(L"Landscape/FieldStone_SM.tga");
 	SetNormalMap(L"Landscape/FieldStone_NM.tga");
 
@@ -86,7 +86,7 @@ void Material::SetMaterial()
 	 buffer->SetPSBuffer(1);
 }
 
-void Material::SetDuffuseMap(wstring file)
+void Material::SetDiffuseMap(wstring file)
 {
 	diffuseMap = Texture::Get(file);
 
@@ -168,7 +168,7 @@ void Material::SelectMap()
 
 
 				if (Dialog->GetOpenedKey() == "Diffuse")
-					SetDuffuseMap(file);
+					SetDiffuseMap(file);
 				else if (Dialog->GetOpenedKey() == "Specular")
 					SetSpecularMap(file);
 				else if (Dialog->GetOpenedKey() == "Normal")

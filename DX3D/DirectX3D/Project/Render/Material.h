@@ -13,7 +13,7 @@ public:
 
 	void SetMaterial();
 
-	void SetDuffuseMap(wstring file);
+	void SetDiffuseMap(wstring file);
 	void SetSpecularMap(wstring file);
 	void SetNormalMap(wstring file);
 

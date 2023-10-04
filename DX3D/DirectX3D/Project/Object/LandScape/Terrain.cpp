@@ -5,7 +5,7 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 {
 	material = new Material();
 	material->SetShader(L"NormalMapping");
-	material->SetDuffuseMap(diffuseFile);
+	material->SetDiffuseMap(diffuseFile);
 	material->SetSpecularMap(specularFile);
 	material->SetNormalMap(NormalFile);
 

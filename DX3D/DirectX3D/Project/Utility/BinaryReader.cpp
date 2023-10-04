@@ -3,7 +3,9 @@
 
 BinaryReader::BinaryReader(wstring path)
 {
-	path = L"_TextData/" + path;
+	if (!StartsWith(path, L"_"))
+		path = L"_Texture/" + path;
+
 	file = CreateFile(path.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
 

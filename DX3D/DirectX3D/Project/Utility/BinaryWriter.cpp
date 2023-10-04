@@ -3,7 +3,9 @@
 
 BinaryWriter::BinaryWriter(wstring path)
 {
-	path = L"_TextData/" + path;
+	if (!StartsWith(path, L"_"))
+		path = L"_Texture/" + path;
+
 	file = CreateFile(path.c_str(), GENERIC_WRITE, 0, 0, CREATE_ALWAYS, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
 

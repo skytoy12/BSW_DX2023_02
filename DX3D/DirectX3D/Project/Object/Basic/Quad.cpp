@@ -26,7 +26,7 @@ Quad::Quad(Vector2 size)
 	material = new Material();
 
 	material->SetShader(L"Diffuse");
-	material->SetDuffuseMap(L"LandScape/Box.png");
+	material->SetDiffuseMap(L"LandScape/Box.png");
 
 	worldBuffer = new MatrixBuffer();
 }

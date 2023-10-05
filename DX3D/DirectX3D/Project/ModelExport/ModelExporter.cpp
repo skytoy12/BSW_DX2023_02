@@ -16,6 +16,12 @@ ModelExporter::~ModelExporter()
 	delete importer;
 }
 
+void ModelExporter::ExportModel()
+{
+	ExportMaterial();
+	ExportMesh();
+}
+
 void ModelExporter::ExportMaterial()
 {
 	for (UINT i = 0; i < scene->mNumMaterials; i++)
@@ -53,7 +59,7 @@ void ModelExporter::ExportMaterial()
 		srcMaterial->GetTexture(aiTextureType_NORMALS, 0, &file);
 		material->SetNormalMap(CreateTexture(file.C_Str()));
 
-		string savePath = "_ModelData/Material/" + name + ".mat";
+		string savePath = "_ModelData/Material/" + name + "/" + material->GetLabel() + ".mat";
 
 		CreateFolder(savePath);
 
@@ -61,6 +67,13 @@ void ModelExporter::ExportMaterial()
 
 		delete material;
 	}
+}
+
+void ModelExporter::ExportMesh()
+{
+	ReadMesh(scene->mRootNode);
+
+	WriteMesh();
 }
 
 
@@ -102,4 +115,46 @@ wstring ModelExporter::CreateTexture(string file)
 	}
 
 	return ToWString(path);
+}
+
+void ModelExporter::ReadMesh(aiNode* node)
+{
+	for (UINT i = 0; i < node->mNumMeshes; i++)
+	{
+		MeshData* mesh = new MeshData();
+
+		mesh->name = node->mName.C_Str();
+
+		UINT index = node->mMeshes[i];
+
+		aiMesh* srcMesh = scene->mMeshes[index];
+
+		mesh->materialIndex = srcMesh->mMaterialIndex;
+
+		UINT startVertex = mesh->vertices.size();
+
+		mesh->vertices.resize(srcMesh->mNumVertices);
+
+		for (UINT j = 0; j < srcMesh->mNumVertices; j++)
+		{
+			ModelVertex vertex;
+
+			memcpy(&vertex.pos, &srcMesh->mVertices[j], sizeof(Vector3));
+
+			if(srcMesh->HasTextureCoords(0))
+				memcpy(&vertex.uv, &srcMesh->mTextureCoords[0][j], sizeof(Vector2));
+
+			if (srcMesh->HasNormals())
+				memcpy(&vertex.normal, &srcMesh->mNormals[j], sizeof(Vector3));
+
+			if(srcMesh->HasTangentsAndBitangents())
+				memcpy(&vertex.tangent, &srcMesh->mTangents[j], sizeof(Vector3));
+
+			mesh->vertices[j] = vertex;
+		}
+	}
+}
+
+void ModelExporter::WriteMesh()
+{
 }

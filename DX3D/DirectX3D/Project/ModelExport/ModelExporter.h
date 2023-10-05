@@ -5,9 +5,17 @@ public:
 	ModelExporter(string name);
 	~ModelExporter();
 
+	void ExportModel();
+
 	void ExportMaterial();
+	void ExportMesh();
 
 	wstring CreateTexture(string file);
+
+	void  ReadMesh(aiNode* node);
+	void WriteMesh();
+
+
 private:
 	string name;
 
@@ -15,7 +23,7 @@ private:
 
 	const aiScene* scene;
 
-	vector<Material*> materials;
+	vector<MeshData*> meshes;
 };
 
 

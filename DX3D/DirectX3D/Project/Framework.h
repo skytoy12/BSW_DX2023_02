@@ -121,8 +121,11 @@ using namespace MyMath;
 #include "Object/LandScape/Terrain.h"
 #include "Object/LandScape/TerrainEditor.h"
 
-#include "ModelExport/ModelExporter.h"
 #include "ModelExport/ModelType.h"
+#include "ModelExport/ModelExporter.h"
+
+#include "Model/ModelMesh.h"
+#include "Model/ModelReader.h"
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"

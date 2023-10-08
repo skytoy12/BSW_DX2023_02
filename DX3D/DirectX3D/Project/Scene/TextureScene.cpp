@@ -48,7 +48,7 @@ void TextureScene::Render()
 	cube->Render();
 	cube2->Render();
 	//RS->ChangeState(D3D11_FILL_WIREFRAME);
-	sphere->Render();
+	//sphere->Render();
 	//RS->ChangeState(D3D11_FILL_SOLID);
 }
 

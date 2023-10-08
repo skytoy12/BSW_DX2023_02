@@ -56,6 +56,8 @@ void Cube::CreateMesh(Vector4 color)
         VertexType({ +0.5f, -0.5f, +0.5f }, color, Vector3()),
     };
 
+
+
     //VertexBuffer
 
     // IndexBuffer

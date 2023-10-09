@@ -201,6 +201,9 @@
     <ClInclude Include="Model\ModelMesh.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Object\Basic\Model.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -342,6 +345,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Model\ModelMesh.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Basic\Model.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -6,6 +6,8 @@ class ModelMesh
 public:
 	ModelMesh();
 	~ModelMesh();
+	vector<ModelVertex> GetVertices() { return vertices; }
+	vector<UINT> GetIndices() { return indices; }
 
 private:
 	string name;

@@ -7,6 +7,9 @@ public:
 
 	void SetShader(wstring file);
 
+	vector<Material*> GetMaterials() { return materials; }
+	vector<ModelMesh*> GetModelMeshes() { return meshes; }
+
 private:
 	void ReadMaterial();
 	void ReadMesh();

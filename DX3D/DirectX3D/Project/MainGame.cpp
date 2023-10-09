@@ -7,11 +7,11 @@ MainGame::MainGame()
 
 	//scene = new TutorialScene();
 	//scene = new TextureScene();
-	scene = new RobotScene();
+	//scene = new RobotScene();
 	//scene = new TerrainScene();
 	//scene = new TerrainEditorScene();
 	//scene = new SphereScene();
-	//scene = new ModelExportScene();
+	scene = new ModelExportScene();
 }
 
 MainGame::~MainGame()

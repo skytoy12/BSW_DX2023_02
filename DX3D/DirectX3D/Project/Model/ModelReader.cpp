@@ -54,14 +54,6 @@ void ModelReader::ReadMesh()
 
 	UINT size = data.ReadUINT();
 
-	//data.WriteData(mesh->name);
-	//data.WriteData(mesh->materialIndex);
-	
-	//data.WriteData((UINT)mesh->vertices.size());
-	//data.WriteData(mesh->vertices.data(), mesh->vertices.size() * sizeof(ModelVertex));
-	
-	//data.WriteData((UINT)mesh->indices.size());
-	//data.WriteData(mesh->indices.data(), mesh->indices.size() * sizeof(UINT));
 
 	for (UINT i = 0; i < size; i++)
 	{

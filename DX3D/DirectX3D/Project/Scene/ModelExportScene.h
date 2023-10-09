@@ -17,6 +17,8 @@ private:
 	ModelExporter* exporter;
 
 	ModelReader* reader;
+
+	Model* model;
 };
 
 

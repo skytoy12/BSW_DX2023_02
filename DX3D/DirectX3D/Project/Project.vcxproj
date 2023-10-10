@@ -134,7 +134,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Object\Basic\Model.h" />
+    <ClInclude Include="Model\Model.h" />
+    <ClInclude Include="Object\Basic\ModelBSW.h" />
     <ClInclude Include="ModelExport\ModelExporter.h" />
     <ClInclude Include="ModelExport\ModelType.h" />
     <ClInclude Include="Model\ModelMesh.h" />
@@ -199,7 +200,8 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Object\Basic\Model.cpp" />
+    <ClCompile Include="Model\Model.cpp" />
+    <ClCompile Include="Object\Basic\ModelBSW.cpp" />
     <ClCompile Include="ModelExport\ModelExporter.cpp" />
     <ClCompile Include="Model\ModelMesh.cpp" />
     <ClCompile Include="Model\ModelReader.cpp" />

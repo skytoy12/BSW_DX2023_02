@@ -5,10 +5,12 @@
 Transform::Transform()
 {
 	world = XMMatrixIdentity();
+	worldBuffer = new MatrixBuffer();
 }
 
 Transform::~Transform()
 {
+	delete worldBuffer;
 }
 
 void Transform::Update()
@@ -58,4 +60,10 @@ void Transform::Debug()
 		ImGui::DragFloat3("Translation", (float*)&translation, 0.01f, -WIN_WIDTH, WIN_WIDTH);
 		ImGui::EndMenu();
 	}
+}
+
+void Transform::SetWorld()
+{
+	worldBuffer->SetData(world);
+	worldBuffer->SetVSBuffer(0);
 }

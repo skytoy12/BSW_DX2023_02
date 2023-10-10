@@ -3,18 +3,18 @@
 
 ModelExportScene::ModelExportScene()
 {
-	//exporter = new ModelExporter("Knight D Pelegrini");
+	string name = "Y Bot";
+	//exporter = new ModelExporter(name);
 	//exporter->ExportModel();
+	//model = new ModelBSW();
 
-	//reader = new ModelReader("Knight D Pelegrini");
-
-	model = new Model();
+	model = new Model(name);
 }
 
 ModelExportScene::~ModelExportScene()
 {
 	//delete exporter;
-	//delete reader;
+
 
 	delete model;
 }
@@ -35,4 +35,5 @@ void ModelExportScene::Render()
 
 void ModelExportScene::PostRender()
 {
+	model->GetReader()->Debug();
 }

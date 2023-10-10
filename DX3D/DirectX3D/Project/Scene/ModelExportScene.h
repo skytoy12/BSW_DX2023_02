@@ -15,8 +15,7 @@ public:
 	virtual void PostRender() override;
 private:
 	ModelExporter* exporter;
-
-	ModelReader* reader;
+	//ModelBSW* model;
 
 	Model* model;
 };

@@ -1,7 +1,7 @@
 #include "Framework.h"
-#include "Model.h"
+#include "ModelBSW.h"
 
-Model::Model()
+ModelBSW::ModelBSW()
 {
 
     worldBuffer = new MatrixBuffer();
@@ -12,8 +12,10 @@ Model::Model()
 
 }
 
-Model::~Model()
+ModelBSW::~ModelBSW()
 {
+    delete worldBuffer;
+
     for (Material* material : materials)
         delete material;
 
@@ -24,18 +26,19 @@ Model::~Model()
         delete modelMesh;
 
 	delete reader;
-    delete worldBuffer;
 }
 
-void Model::Update()
+void ModelBSW::Update()
 {
     Transform::Update();
 
     worldBuffer->SetData(world);
 }
 
-void Model::Render()
+void ModelBSW::Render()
 {
+    worldBuffer->SetVSBuffer(0);
+
     for (Material* material : materials)
     {
         material->SetShader(L"NormalMapping");
@@ -46,14 +49,13 @@ void Model::Render()
     for (int i = 0; i < meshes.size(); i++)
     {
         meshes[i]->SetMesh();
-        DC->DrawIndexed(indexVector[0].size(), 0, 0);
+        DC->DrawIndexed(indexVector[i].size(), 0, 0);
     }
 
-    worldBuffer->SetVSBuffer(0);
 
 }
 
-void Model::CreateMesh()
+void ModelBSW::CreateMesh()
 {
     for (int i = 0; i < reader->GetMaterials().size(); i++)
     {

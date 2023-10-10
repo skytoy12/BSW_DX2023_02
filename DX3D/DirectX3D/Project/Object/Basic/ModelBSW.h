@@ -1,10 +1,10 @@
 #pragma once
-class Model : public Transform
+class ModelBSW : public Transform
 {
 
 public:
-	Model();
-	~Model();
+    ModelBSW();
+	~ModelBSW();
 
     void Update();
     void Render();

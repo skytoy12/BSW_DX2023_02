@@ -6,13 +6,16 @@ class ModelMesh
 public:
 	ModelMesh();
 	~ModelMesh();
+
+	void Create();
+
+	void Render();
+
 	vector<ModelVertex> GetVertices() { return vertices; }
 	vector<UINT> GetIndices() { return indices; }
 
 private:
 	string name;
-
-	UINT materialIndex;
 
 	Material* material;
 

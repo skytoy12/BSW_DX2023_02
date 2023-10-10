@@ -18,6 +18,9 @@ Texture* Texture::Get(wstring file)
 {
 	wstring path = file;
 
+	if (file == L"")
+		return nullptr;
+
 	if(!StartsWith(file, L"_Texture"))
 		file = L"_Texture/" + file;
 
@@ -57,6 +60,9 @@ Texture* Texture::Get(wstring file)
 Texture* Texture::Load(wstring file)
 {
 	wstring path = file;
+
+	if (file == L"")
+		return nullptr;
 
 	file = L"_Texture/" + file;
 

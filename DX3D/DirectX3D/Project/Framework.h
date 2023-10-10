@@ -126,8 +126,9 @@ using namespace MyMath;
 
 #include "Model/ModelMesh.h"
 #include "Model/ModelReader.h"
+#include "Model/Model.h"
 
-#include "Object/Basic/Model.h"
+#include "Object/Basic/ModelBSW.h"
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"

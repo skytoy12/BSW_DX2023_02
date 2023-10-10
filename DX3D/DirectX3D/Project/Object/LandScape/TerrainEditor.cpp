@@ -130,7 +130,7 @@ void TerrainEditor::Debug()
 
 			ImGui::EndMenu();
 		}
-		material->PostRender();
+		material->Debug();
 	}
 	ImGui::EndChild();
 }

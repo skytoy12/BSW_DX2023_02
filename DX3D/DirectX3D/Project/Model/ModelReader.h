@@ -7,6 +7,10 @@ public:
 
 	void SetShader(wstring file);
 
+	void Render();
+
+	void Debug();
+
 	vector<Material*> GetMaterials() { return materials; }
 	vector<ModelMesh*> GetModelMeshes() { return meshes; }
 

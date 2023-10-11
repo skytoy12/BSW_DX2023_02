@@ -58,7 +58,7 @@ void MainGame::Render()
 	     Camera::GetInstance()->Debug();
 	Environment::GetInstance()->PostRender();
 
-	//ImGui::Checkbox("WireFrame", &isWireFrame);
+	ImGui::Checkbox("WireFrame", &isWireFrame);
 
 	ImGui::Render();
 

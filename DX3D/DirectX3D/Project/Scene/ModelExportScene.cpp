@@ -3,9 +3,9 @@
 
 ModelExportScene::ModelExportScene()
 {
-	string name = "Y Bot";
-	//exporter = new ModelExporter(name);
-	//exporter->ExportModel();
+	string name = "Knight D Pelegrini";
+	exporter = new ModelExporter(name);
+	exporter->ExportModel();
 	//model = new ModelBSW();
 
 	model = new Model(name);
@@ -13,7 +13,7 @@ ModelExportScene::ModelExportScene()
 
 ModelExportScene::~ModelExportScene()
 {
-	//delete exporter;
+	delete exporter;
 
 
 	delete model;

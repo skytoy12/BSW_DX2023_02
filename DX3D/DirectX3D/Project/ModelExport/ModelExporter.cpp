@@ -79,6 +79,8 @@ void ModelExporter::ExportMaterial()
 
 void ModelExporter::ExportMesh()
 {
+	ReadNode(scene->mRootNode, 0, -1);
+
 	ReadMesh(scene->mRootNode);
 
 	WriteMesh();
@@ -141,6 +143,15 @@ void ModelExporter::ReadMesh(aiNode* node)
 
 		UINT startVertex = mesh->vertices.size();
 
+
+		////////////////////////////////////////////////////
+		vector<VertexWeights> vertexWeights;
+		vertexWeights.resize(srcMesh->mNumVertices);
+
+		ReadBone(srcMesh, vertexWeights);
+		////////////////////////////////////////////////////
+
+
 		mesh->vertices.resize(srcMesh->mNumVertices);
 
 		for (UINT j = 0; j < srcMesh->mNumVertices; j++)
@@ -157,6 +168,21 @@ void ModelExporter::ReadMesh(aiNode* node)
 
 			if(srcMesh->HasTangentsAndBitangents())
 				memcpy(&vertex.tangent, &srcMesh->mTangents[j], sizeof(Vector3));
+
+			if (!vertexWeights.empty())
+			{
+				vertexWeights[j].Normalize();
+
+				vertex.indices.x = vertexWeights[j].indices[0];
+				vertex.indices.y = vertexWeights[j].indices[1];
+				vertex.indices.z = vertexWeights[j].indices[2];
+				vertex.indices.w = vertexWeights[j].indices[3];
+
+				vertex.weights.x = vertexWeights[j].weights[0];
+				vertex.weights.y = vertexWeights[j].weights[1];
+				vertex.weights.z = vertexWeights[j].weights[2];
+				vertex.weights.w = vertexWeights[j].weights[3];
+			}
 
 			mesh->vertices[j] = vertex;
 		}
@@ -177,6 +203,64 @@ void ModelExporter::ReadMesh(aiNode* node)
 	for (UINT i = 0; i < node->mNumChildren; i++)
 	{
 		ReadMesh(node->mChildren[i]);
+	}
+}
+
+void ModelExporter::ReadNode(aiNode* node, int index, int parent)
+{
+	NodeData* nodeData = new NodeData();
+	nodeData->index = index;
+	nodeData->parent = parent;
+	nodeData->name = node->mName.C_Str();
+
+	Matrix matrix(node->mTransformation[0]);
+	matrix = XMMatrixTranspose(matrix);
+	XMStoreFloat4x4(&nodeData->transform, matrix);
+
+	nodes.emplace_back(nodeData);
+
+	for (UINT i = 0; i < node->mNumChildren; i++)
+	{
+		ReadNode(node->mChildren[i], nodes.size(), index);
+	}
+}
+
+void ModelExporter::ReadBone(aiMesh* mesh, vector<VertexWeights>& vertexWeights)
+{
+	for (UINT i = 0; i < mesh->mNumBones; i++)
+	{
+		UINT boneIndex = 0;
+
+		string name = mesh->mBones[i]->mName.C_Str();
+
+		if (boneMap.count(name) == 0)
+		{
+			boneIndex = boneCount++;
+
+			boneMap.emplace(name, boneIndex);
+
+			BoneData* boneData = new BoneData();
+			boneData->index = boneIndex;
+			boneData->name = name;
+
+			Matrix matrix(mesh->mBones[i]->mOffsetMatrix[0]);
+			matrix = XMMatrixTranspose(matrix);
+			XMStoreFloat4x4(&boneData->offset, matrix);
+
+			bones.emplace_back(boneData);
+		}
+		else
+		{
+			boneIndex = boneMap[name];
+		}
+
+		for (UINT j = 0; j < mesh->mBones[i]->mNumWeights; j++)
+		{
+			UINT  index  = mesh->mBones[i]->mWeights[j].mVertexId;
+			float weight = mesh->mBones[i]->mWeights[j].mWeight;
+
+			vertexWeights[index].Add(boneIndex, weight);
+		}
 	}
 }
 
@@ -205,4 +289,31 @@ void ModelExporter::WriteMesh()
 	}
 
 	meshes.clear();
+
+	data.WriteData((UINT)nodes.size());
+
+	for (NodeData* node : nodes)
+	{
+		data.WriteData(node->index);
+		data.WriteData(node->name);
+		data.WriteData(node->parent);
+		data.WriteData(node->transform);
+
+		delete node;
+	}
+
+	nodes.clear();
+
+	data.WriteData((UINT)bones.size());
+
+	for (BoneData* bone : bones)
+	{
+		data.WriteData(bone->index);
+		data.WriteData(bone->name);
+		data.WriteData(bone->offset);
+
+		delete bone;
+	}
+
+	bones.clear();
 }

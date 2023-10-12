@@ -5,10 +5,12 @@ ModelExportScene::ModelExportScene()
 {
 	string name = "Knight D Pelegrini";
 	exporter = new ModelExporter(name);
-	exporter->ExportModel();
-	//model = new ModelBSW();
+	//exporter->ExportModel();
+	exporter->ExportClip("Hip Hop Dancing");
 
 	model = new Model(name);
+
+	//model = new ModelBSW();
 }
 
 ModelExportScene::~ModelExportScene()

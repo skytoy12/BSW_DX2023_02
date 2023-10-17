@@ -23,6 +23,11 @@ private :
 
 	vector<Material*> materials;
 	vector<ModelMesh*> meshes;
+
+	vector<NodeData> nodes;
+	vector<BoneData> bones;
+
+	map<string, UINT> boneMap;
 };
 
 

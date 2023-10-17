@@ -3,6 +3,7 @@ class BinaryWriter
 {
 public:
 	BinaryWriter(wstring path);
+	BinaryWriter(string path);
 	~BinaryWriter();
 
 	void WriteData(    int data);
@@ -14,6 +15,8 @@ public:
 	void WriteData(Vector4 data);
 	void WriteData(void* data, UINT dataSize);
 	void WriteData(XMFLOAT4X4 data);
+	void WriteData(Matrix data);
+	void WriteData(size_t data);
 
 private:
 	HANDLE file = nullptr;

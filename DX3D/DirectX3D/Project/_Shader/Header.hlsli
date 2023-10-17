@@ -79,6 +79,16 @@ struct VertexTextureNormalTangentAlpha
     float4 alpha : ALPHA;
 };
 
+struct VertexTextureNormalTangentBlend
+{
+    float4 pos : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float4 indices : BLENDINDICES;
+    float4 weights : BLENDWEIGHTS;
+};
+
 Texture2D  diffusemap : register(t0);
 Texture2D specularmap : register(t1);
 Texture2D   normalmap : register(t2);

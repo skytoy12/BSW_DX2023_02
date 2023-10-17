@@ -101,4 +101,33 @@ void ModelReader::ReadMesh()
 
 		meshes.push_back(mesh);
 	}
+
+	size = data.ReadUINT();
+
+	for (UINT i = 0; i < size; i++)
+	{
+		NodeData node;
+
+		node.index = data.ReadInt();
+		node.name = data.ReadString();
+		node.parent = data.ReadInt();
+		node.transform = data.ReadMatrix();
+
+		nodes.emplace_back(node);
+	}
+
+	size = data.ReadUINT();
+
+	for (UINT i = 0; i < size; i++)
+	{
+		BoneData node;
+
+		node.index = data.ReadInt();
+		node.name = data.ReadString();
+		node.offset = data.ReadMatrix();
+
+		bones.emplace_back(node);
+
+		boneMap.emplace(node.name, node.index);
+	}
 }

@@ -9,6 +9,14 @@ BinaryReader::BinaryReader(wstring path)
 	file = CreateFile(path.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
 }
 
+BinaryReader::BinaryReader(string path)
+{
+	if (!StartsWith(path, "_"))
+		path = "_Texture/" + path;
+
+	file = CreateFileA(path.c_str(), GENERIC_READ, FILE_SHARE_READ, 0, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, nullptr);
+}
+
 BinaryReader::~BinaryReader()
 {
 	CloseHandle(file);
@@ -93,6 +101,15 @@ XMFLOAT4X4 BinaryReader::ReadFloat4X4()
 	XMFLOAT4X4 data;
 
 	ReadFile(file, &data, sizeof(XMFLOAT4X4), &size, nullptr);
+
+	return data;
+}
+
+Matrix BinaryReader::ReadMatrix()
+{
+	Matrix data;
+
+	ReadFile(file, &data, sizeof(Matrix), &size, nullptr);
 
 	return data;
 }

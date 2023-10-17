@@ -20,7 +20,7 @@ struct NodeData
 
 	int parent;
 
-	XMFLOAT4X4 transform;
+	Matrix transform;
 };
 
 struct BoneData
@@ -29,7 +29,7 @@ struct BoneData
 
 	string name;
 
-	XMFLOAT4X4 offset;
+	Matrix offset;
 };
 
 struct VertexWeights

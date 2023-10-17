@@ -130,6 +130,8 @@ using namespace MyMath;
 #include "Model/ModelMesh.h"
 #include "Model/ModelReader.h"
 #include "Model/Model.h"
+#include "Model/ModelClip.h"
+#include "Model/ModelAnimation.h"
 
 #include "Object/Basic/ModelBSW.h"
 

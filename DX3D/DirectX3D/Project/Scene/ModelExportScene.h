@@ -17,7 +17,8 @@ private:
 	ModelExporter* exporter;
 	//ModelBSW* model;
 
-	Model* model;
+	//Model* model;
+	ModelAnimation* modelAnimation;
 };
 
 

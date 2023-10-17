@@ -1,6 +1,7 @@
 #pragma once
 class ModelClip
 {
+	friend class ModelAnimation;
 public:
 	ModelClip();
 	~ModelClip();

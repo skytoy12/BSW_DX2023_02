@@ -1,6 +1,7 @@
 #pragma once
 class ModelReader
 {
+	friend class ModelAnimation;
 public:
 	ModelReader(string name);
 	~ModelReader();
@@ -10,6 +11,8 @@ public:
 	void Render();
 
 	void Debug();
+
+	bool HasBone(string boneName) { return boneMap.count(boneName) > 0; }
 
 	vector<Material*> GetMaterials() { return materials; }
 	vector<ModelMesh*> GetModelMeshes() { return meshes; }

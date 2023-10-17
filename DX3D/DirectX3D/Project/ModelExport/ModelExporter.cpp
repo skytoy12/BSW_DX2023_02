@@ -233,7 +233,7 @@ void ModelExporter::ReadNode(aiNode* node, int index, int parent)
 
 	Matrix matrix(node->mTransformation[0]);
 	matrix = XMMatrixTranspose(matrix);
-	XMStoreFloat4x4(&nodeData->transform, matrix);
+	nodeData->transform = matrix;
 
 	nodes.emplace_back(nodeData);
 
@@ -263,7 +263,7 @@ void ModelExporter::ReadBone(aiMesh* mesh, vector<VertexWeights>& vertexWeights)
 
 			Matrix matrix(mesh->mBones[i]->mOffsetMatrix[0]);
 			matrix = XMMatrixTranspose(matrix);
-			XMStoreFloat4x4(&boneData->offset, matrix);
+			boneData->offset = matrix;
 
 			bones.emplace_back(boneData);
 		}

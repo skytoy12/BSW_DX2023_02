@@ -36,6 +36,16 @@ cbuffer MaterialBuffer : register(b1)
     float shininess;
 }
 
+cbuffer FrameBuffer : register(b3)
+{
+    int clip;
+    uint curFrame;
+    float time;
+    float runningTime;
+}
+
+Texture2DArray transformMap : register(t0);
+
 struct VertexColor
 {
     float4 pos   : POSITION;
@@ -72,18 +82,18 @@ struct VertexTextureNormalTangent
 
 struct VertexTextureNormalTangentAlpha
 {
-    float4 pos : POSITION;
-    float2 uv : UV;
-    float3 normal : NORMAL;
+    float4 pos     : POSITION;
+    float2 uv      : UV;
+    float3 normal  : NORMAL;
     float3 tangent : TANGENT;
-    float4 alpha : ALPHA;
+    float4 alpha   : ALPHA;
 };
 
 struct VertexTextureNormalTangentBlend
 {
-    float4 pos : POSITION;
-    float2 uv : UV;
-    float3 normal : NORMAL;
+    float4 pos     : POSITION;
+    float2 uv      : UV;
+    float3 normal  : NORMAL;
     float3 tangent : TANGENT;
     float4 indices : BLENDINDICES;
     float4 weights : BLENDWEIGHTS;

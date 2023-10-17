@@ -129,3 +129,21 @@ public:
 		Vector3 color = { 0.0f, 0.5f, 0.0f };
 	} data;
 };
+
+class FrameBuffer : public ConstBuffer
+{
+public:
+	FrameBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+
+	}
+
+	struct Data
+	{
+		int clip          = 0;
+		UINT curFrame     = 0;
+		float type        = 0.0f;
+		float runningTime = 0.0f;
+	} data;
+};

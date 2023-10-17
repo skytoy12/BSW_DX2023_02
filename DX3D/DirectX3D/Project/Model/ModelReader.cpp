@@ -120,14 +120,14 @@ void ModelReader::ReadMesh()
 
 	for (UINT i = 0; i < size; i++)
 	{
-		BoneData node;
+		BoneData bone;
 
-		node.index = data.ReadInt();
-		node.name = data.ReadString();
-		node.offset = data.ReadMatrix();
+		bone.index = data.ReadInt();
+		bone.name = data.ReadString();
+		bone.offset = data.ReadMatrix();
 
-		bones.emplace_back(node);
+		bones.emplace_back(bone);
 
-		boneMap.emplace(node.name, node.index);
+		boneMap.emplace(bone.name, bone.index);
 	}
 }

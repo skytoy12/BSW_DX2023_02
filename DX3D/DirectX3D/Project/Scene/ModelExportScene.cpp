@@ -4,11 +4,16 @@
 ModelExportScene::ModelExportScene()
 {
 	string name = "Knight D Pelegrini";
+	string name1 = "Y Bot";
 	exporter = new ModelExporter(name);
-	//exporter->ExportModel();
+	exporter->ExportModel();
 	exporter->ExportClip("Hip Hop Dancing");
 
-	model = new Model(name);
+	modelAnimation = new ModelAnimation(name);
+	modelAnimation->ReadClip("Hip Hop Dancing");
+	modelAnimation->CreateTexture();
+
+	//model = new Model(name);
 
 	//model = new ModelBSW();
 }
@@ -17,13 +22,15 @@ ModelExportScene::~ModelExportScene()
 {
 	delete exporter;
 
+	delete modelAnimation;
 
-	delete model;
+	//delete model;
 }
 
 void ModelExportScene::Update()
 {
-	model->Update();
+	modelAnimation->Update();
+	//model->Update();
 }
 
 void ModelExportScene::PreRender()
@@ -32,10 +39,11 @@ void ModelExportScene::PreRender()
 
 void ModelExportScene::Render()
 {
-	model->Render();
+	modelAnimation->Render();
+	//model->Render();
 }
 
 void ModelExportScene::PostRender()
 {
-	model->GetReader()->Debug();
+	//model->GetReader()->Debug();
 }

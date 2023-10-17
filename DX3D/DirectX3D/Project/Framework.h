@@ -131,7 +131,7 @@ using namespace MyMath;
 #include "Model/ModelReader.h"
 #include "Model/Model.h"
 #include "Model/ModelClip.h"
-#include "Model/ModelAnimation.h"
+#include "Model/ModelAnimator.h"
 
 #include "Object/Basic/ModelBSW.h"
 

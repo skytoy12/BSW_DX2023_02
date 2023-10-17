@@ -18,7 +18,7 @@ private:
 	//ModelBSW* model;
 
 	//Model* model;
-	ModelAnimation* modelAnimation;
+	ModelAnimator* modelAnimator;
 };
 
 

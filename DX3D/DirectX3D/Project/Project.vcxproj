@@ -134,7 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Model\ModelAnimation.h" />
+    <ClInclude Include="Model\ModelAnimator.h" />
     <ClInclude Include="Model\ModelClip.h" />
     <ClInclude Include="Model\Model.h" />
     <ClInclude Include="Object\Basic\ModelBSW.h" />
@@ -202,7 +202,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Model\ModelAnimation.cpp" />
+    <ClCompile Include="Model\ModelAnimator.cpp" />
     <ClCompile Include="Model\ModelClip.cpp" />
     <ClCompile Include="Model\Model.cpp" />
     <ClCompile Include="Object\Basic\ModelBSW.cpp" />

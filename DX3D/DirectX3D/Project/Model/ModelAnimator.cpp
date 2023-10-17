@@ -1,7 +1,7 @@
 #include "Framework.h"
-#include "ModelAnimation.h"
+#include "ModelAnimator.h"
 
-ModelAnimation::ModelAnimation(string name, wstring shaderFile)
+ModelAnimator::ModelAnimator(string name, wstring shaderFile)
 	:name(name)
 {
 	reader = new ModelReader(name);
@@ -10,14 +10,14 @@ ModelAnimation::ModelAnimation(string name, wstring shaderFile)
 	frameBuffer = new FrameBuffer();
 }
 
-ModelAnimation::~ModelAnimation()
+ModelAnimator::~ModelAnimator()
 {
 	delete reader;
 
 	delete frameBuffer;
 }
 
-void ModelAnimation::Update()
+void ModelAnimator::Update()
 {
 	Transform::Update();
 
@@ -27,7 +27,7 @@ void ModelAnimation::Update()
 	frameBuffer->data.curFrame = time;
 }
 
-void ModelAnimation::Render()
+void ModelAnimator::Render()
 {
 	Transform::SetWorld();
 
@@ -37,19 +37,19 @@ void ModelAnimation::Render()
 	reader->Render();
 }
 
-void ModelAnimation::ReadClip(string file, UINT clipIndex)
+void ModelAnimator::ReadClip(string file, UINT clipIndex)
 {
-	string path = "_ModelData / Clip / " + name + " / " + file + to_string(clipIndex) + ".clip";
+	string path = "_ModelData/Clip/" + name + "/" + file + to_string(clipIndex) + ".clip";
 
 	BinaryReader data(path);
 
 	ModelClip* clip = new ModelClip();
 
-	clip->name           = data.ReadString();
+	clip->name = data.ReadString();
 	clip->ticksPerSecond = data.ReadFloat();
-	clip->frameCount     = data.ReadUINT();
-	clip->duration       = data.ReadFloat();
-	
+	clip->frameCount = data.ReadUINT();
+	clip->duration = data.ReadFloat();
+
 	UINT keyFrameCount = data.ReadUINT();
 
 	for (UINT i = 0; i < keyFrameCount; i++)
@@ -73,7 +73,7 @@ void ModelAnimation::ReadClip(string file, UINT clipIndex)
 	clips.emplace_back(clip);
 }
 
-void ModelAnimation::CreateTexture()
+void ModelAnimator::CreateTexture()
 {
 	UINT clipCount = clips.size();
 
@@ -87,13 +87,13 @@ void ModelAnimation::CreateTexture()
 
 	D3D11_TEXTURE2D_DESC desc = {};
 
-	desc.Width            = MAX_BONE * 4;
-	desc.Height           = MAX_FRAME_KEY;
-	desc.ArraySize        = clipCount;
-	desc.Format           = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	desc.Usage            = D3D11_USAGE_IMMUTABLE;
-	desc.BindFlags        = D3D11_BIND_SHADER_RESOURCE;
-	desc.MipLevels        = 1;
+	desc.Width = MAX_BONE * 4;
+	desc.Height = MAX_FRAME_KEY;
+	desc.ArraySize = clipCount;
+	desc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	desc.Usage = D3D11_USAGE_IMMUTABLE;
+	desc.BindFlags = D3D11_BIND_SHADER_RESOURCE;
+	desc.MipLevels = 1;
 	desc.SampleDesc.Count = 1;
 
 	UINT pageSize = MAX_BONE * sizeof(Matrix) * MAX_FRAME_KEY;
@@ -131,15 +131,15 @@ void ModelAnimation::CreateTexture()
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC srvDesc = {};
 
-	srvDesc.Format                   = DXGI_FORMAT_R32G32B32A32_FLOAT;
-	srvDesc.ViewDimension            = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
+	srvDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
+	srvDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2DARRAY;
 	srvDesc.Texture2DArray.MipLevels = 1;
 	srvDesc.Texture2DArray.ArraySize = clipCount;
 
 	DEVICE->CreateShaderResourceView(texture, &srvDesc, &srv);
 }
 
-void ModelAnimation::CreateClipTransform(UINT index)
+void ModelAnimator::CreateClipTransform(UINT index)
 {
 	ModelClip* clip = clips[index];
 

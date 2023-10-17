@@ -2,6 +2,7 @@
 class ModelReader
 {
 	friend class ModelAnimation;
+	friend class ModelAnimator;
 public:
 	ModelReader(string name);
 	~ModelReader();

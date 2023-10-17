@@ -210,7 +210,7 @@
     <ClInclude Include="Model\ModelClip.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Model\ModelAnimation.h">
+    <ClInclude Include="Model\ModelAnimator.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -365,7 +365,7 @@
     <ClCompile Include="Model\ModelClip.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Model\ModelAnimation.cpp">
+    <ClCompile Include="Model\ModelAnimator.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

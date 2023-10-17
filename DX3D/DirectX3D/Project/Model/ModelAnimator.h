@@ -1,9 +1,9 @@
 #pragma once
-class ModelAnimation : public Transform
+class ModelAnimator : public Transform
 {
 public:
-	ModelAnimation(string name, wstring shaderFile = L"02ModelAnimation");
-	~ModelAnimation();
+	ModelAnimator(string name, wstring shaderFile = L"02ModelAnimation");
+	~ModelAnimator();
 
 	void Update();
 	void Render();
@@ -12,7 +12,7 @@ public:
 
 	void CreateTexture();
 
-private :
+private:
 	void CreateClipTransform(UINT index);
 
 private:

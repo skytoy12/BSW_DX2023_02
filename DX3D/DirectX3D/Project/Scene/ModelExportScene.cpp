@@ -9,9 +9,11 @@ ModelExportScene::ModelExportScene()
 	exporter->ExportModel();
 	exporter->ExportClip("Hip Hop Dancing");
 
-	modelAnimation = new ModelAnimation(name);
-	modelAnimation->ReadClip("Hip Hop Dancing");
-	modelAnimation->CreateTexture();
+	modelAnimator = new ModelAnimator(name);
+	modelAnimator->ReadClip("hip hop dancing");
+	modelAnimator->CreateTexture();
+
+
 
 	//model = new Model(name);
 
@@ -22,14 +24,15 @@ ModelExportScene::~ModelExportScene()
 {
 	delete exporter;
 
-	delete modelAnimation;
+
+	delete modelAnimator;
 
 	//delete model;
 }
 
 void ModelExportScene::Update()
 {
-	modelAnimation->Update();
+	modelAnimator->Update();
 	//model->Update();
 }
 
@@ -39,7 +42,7 @@ void ModelExportScene::PreRender()
 
 void ModelExportScene::Render()
 {
-	modelAnimation->Render();
+	modelAnimator->Render();
 	//model->Render();
 }
 

@@ -1,0 +1,64 @@
+#include<iostream>
+#include<string>
+#include<map>
+#include<algorithm>
+#include<utility>
+
+using namespace std;
+
+int main()
+{
+	string str;
+
+	cin >> str;
+
+	for (int i = 0; i < str.size(); i++)
+	{
+		str[i] = toupper(str[i]);
+	}
+
+	map<char, int> map;
+
+	int countS = 0;
+
+	int isSame = 0;
+
+	size_t pos = 0;
+
+	for (int i = 0; i < str.length(); i++)
+	{
+		char a = str[i + 1];
+
+		while (1)
+		{
+			size_t s = str.find(a, pos);
+			pos = str.find(a, pos);
+			if (pos == std::string::npos)
+				break;
+			pos += 1;
+			countS++;
+		}
+
+		if (map.count(a) == 0)
+			map[a] = countS;
+
+		pos = 0;
+		countS = 0;
+	}
+
+	auto Max = max_element(map.begin(), map.end(), [](const auto& x, const auto& y)
+	{
+		return x.second < y.second;
+	});
+
+	for (auto iter = map.begin(); iter != map.end(); iter++)
+	{
+		if (iter->second == Max->second)
+			isSame++;
+	}
+
+	if (isSame > 1)
+		cout << "?" << endl;
+	else
+		cout << Max->first << endl;
+}

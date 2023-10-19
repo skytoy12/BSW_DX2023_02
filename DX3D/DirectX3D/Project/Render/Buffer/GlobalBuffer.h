@@ -136,14 +136,24 @@ public:
 	FrameBuffer()
 		:ConstBuffer(&data, sizeof(Data))
 	{
-
+		data.next.clip = -1;
 	}
+
+	struct Frame
+	{
+		int   clip     = 0;
+		UINT  curFrame = 0;
+		float time     = 0.0f;
+		float speed    = 1.0f;
+	};
 
 	struct Data
 	{
-		int clip          = 0;
-		UINT curFrame     = 0;
-		float type        = 0.0f;
+		float    takeTime = 0.0f;
+		float   tweenTime = 0.0f;
 		float runningTime = 0.0f;
+		float padding     = 0.0f;
+
+		Frame cur, next;
 	} data;
 };

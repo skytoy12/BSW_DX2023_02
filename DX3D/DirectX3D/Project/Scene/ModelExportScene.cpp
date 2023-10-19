@@ -5,12 +5,16 @@ ModelExportScene::ModelExportScene()
 {
 	string name = "Knight D Pelegrini";
 	string name1 = "Y Bot";
+
 	exporter = new ModelExporter(name);
-	exporter->ExportModel();
-	exporter->ExportClip("Hip Hop Dancing");
+	//exporter->ExportModel();
+	//exporter->ExportClip("Old Man Idle");
+	//exporter->ExportClip("Running");
 
 	modelAnimator = new ModelAnimator(name);
 	modelAnimator->ReadClip("hip hop dancing");
+	modelAnimator->ReadClip("Old Man Idle");
+	modelAnimator->ReadClip("Running");
 	modelAnimator->CreateTexture();
 
 
@@ -33,6 +37,16 @@ ModelExportScene::~ModelExportScene()
 void ModelExportScene::Update()
 {
 	modelAnimator->Update();
+
+	if (KEY_DOWN('1'))
+		modelAnimator->PlayClip(0, speed, takeTime);
+
+	if (KEY_DOWN('2'))
+		modelAnimator->PlayClip(1, speed, takeTime);
+
+	if (KEY_DOWN('3'))
+		modelAnimator->PlayClip(2, speed, takeTime);
+
 	//model->Update();
 }
 
@@ -49,4 +63,7 @@ void ModelExportScene::Render()
 void ModelExportScene::PostRender()
 {
 	//model->GetReader()->Debug();
+
+	ImGui::SliderFloat(   "Speed",    &speed, 0.0f, 10.0f);
+	ImGui::SliderFloat("TakeTime", &takeTime, 0.0f,  1.0f);
 }

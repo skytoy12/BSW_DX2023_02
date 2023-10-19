@@ -15,10 +15,12 @@ public:
 	virtual void PostRender() override;
 private:
 	ModelExporter* exporter;
-	//ModelBSW* model;
 
 	//Model* model;
 	ModelAnimator* modelAnimator;
+
+	float speed = 1.0f;
+	float takeTime = 0.2f;
 };
 
 

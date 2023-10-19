@@ -21,10 +21,7 @@ void ModelAnimator::Update()
 {
 	Transform::Update();
 
-	static float time = 0.0f;
-	time += Time::Delta();
-
-	frameBuffer->data.curFrame = time;
+	UpdateFrame();
 }
 
 void ModelAnimator::Render()
@@ -71,6 +68,13 @@ void ModelAnimator::ReadClip(string file, UINT clipIndex)
 	}
 
 	clips.emplace_back(clip);
+}
+
+void ModelAnimator::PlayClip(UINT clipIndex, float speed, float takeTime)
+{
+	frameBuffer->data.next.clip  = clipIndex;
+	frameBuffer->data.next.speed = speed;
+	frameBuffer->data.takeTime   = takeTime;
 }
 
 void ModelAnimator::CreateTexture()
@@ -137,6 +141,50 @@ void ModelAnimator::CreateTexture()
 	srvDesc.Texture2DArray.ArraySize = clipCount;
 
 	DEVICE->CreateShaderResourceView(texture, &srvDesc, &srv);
+}
+
+void ModelAnimator::UpdateFrame()
+{
+	FrameBuffer::Data& frameData = frameBuffer->data;
+
+	ModelClip* clip = clips[frameData.cur.clip];
+
+	frameData.cur.time += Time::Delta() * clip->ticksPerSecond * frameData.cur.speed;
+
+	if (frameData.cur.time >= 1.0f)
+	{
+		++frameData.cur.curFrame %= (clip->frameCount - 1);
+		frameData.cur.time = 0.0f;
+	}
+
+
+	/////NEXT CLIP/////
+	if (frameData.next.clip < 0)
+		return;
+
+	frameData.tweenTime += Time::Delta() / frameData.takeTime;
+
+	clip = clips[frameData.next.clip];
+
+	if (frameData.tweenTime >= 1.0f)
+	{
+		frameData.cur       = frameData.next;
+		frameData.tweenTime = 0.0f;
+
+		frameData.next.clip     = -1;
+		frameData.next.curFrame = 0;
+		frameData.next.time     = 0.0f;
+	}
+	else
+	{
+		frameData.next.time += Time::Delta() * clip->ticksPerSecond * frameData.next.speed;
+
+		if (frameData.next.time >= 1.0f)
+		{
+			++frameData.next.curFrame %= (clip->frameCount - 1);
+			frameData.next.time = 0.0f;
+		}
+	}
 }
 
 void ModelAnimator::CreateClipTransform(UINT index)

@@ -31,7 +31,7 @@ private:
 
 private:
 	Transform* transform;
-	float moveSpeed = 20.0f;
+	float moveSpeed = 10.0f;
 	float rotSpeed = 7.5f;
 
 	ViewBuffer* viewBuffer;

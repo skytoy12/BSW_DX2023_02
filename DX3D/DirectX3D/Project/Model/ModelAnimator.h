@@ -7,6 +7,7 @@ public:
 
 	void Update();
 	void Render();
+	void Debug();
 
 	void ReadClip(string file, UINT clipIndex = 0);
 
@@ -16,10 +17,13 @@ public:
 
 	void UpdateFrame();
 
+	Matrix GetTransformByBone(UINT boneIndex);
+	Matrix GetTransformByNode(UINT nodeIndex);
+
 private:
 	void CreateClipTransform(UINT index);
 
-private:
+protected:
 	ModelReader* reader;
 
 	vector<ModelClip*> clips;

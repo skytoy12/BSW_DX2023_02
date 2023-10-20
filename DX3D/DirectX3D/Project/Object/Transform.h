@@ -44,7 +44,7 @@ protected :
 
 	Vector3 right, up, forward;
 
-	string label = "";
+	string label = "NULL";
 
 	MatrixBuffer* worldBuffer;
 };

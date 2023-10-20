@@ -10,7 +10,7 @@ Camera::Camera()
 	transform->translation = { 40.0f, 100.0f, -80.0f };
 	transform->rotation.x = 0.6f;
 
-	Load();
+	//Load();
 }
 
 Camera::~Camera()
@@ -33,6 +33,15 @@ void Camera::Debug()
 
 	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
 	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
+
+	if (ImGui::Button("GrootOrigin"))
+	{
+		transform->translation = { -44.0f, 174.0f, -203.0f };
+		transform->rotation.x = 0.5f;
+		transform->rotation.y = 0.2f;
+		transform->rotation.z = 0.0f;
+	}
+
 }
 
 Ray Camera::ScreenPointToRay(Vector3 screenPos)
@@ -91,6 +100,13 @@ void Camera::FreeMode()
 			transform->translation += transform->Down()     * moveSpeed * Time::Delta();
 
 		Vector3 dir = mousePos - oldPos;
+
+		if (abs(dir.x) > 30.0f || abs(dir.y) > 30.0f)
+		{
+			dir.x = 0.0f;
+			dir.y = 0.0f;
+		}
+
 
 		transform->rotation.y += dir.x * rotSpeed * Time::Delta();
 		transform->rotation.x += dir.y * rotSpeed * Time::Delta();

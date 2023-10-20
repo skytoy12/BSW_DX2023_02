@@ -201,9 +201,6 @@
     <ClInclude Include="Model\ModelMesh.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Basic\ModelBSW.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Model\Model.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -211,6 +208,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Model\ModelAnimator.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\Model\Groot.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ModelAnimationScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -356,9 +359,6 @@
     <ClCompile Include="Model\ModelMesh.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Basic\ModelBSW.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="Model\Model.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -366,6 +366,12 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Model\ModelAnimator.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\Model\Groot.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ModelAnimationScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

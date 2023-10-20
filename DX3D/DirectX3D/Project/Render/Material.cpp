@@ -141,13 +141,13 @@ void Material::SelectMap()
 	if (ImGui::BeginMenu(label.c_str()))
 	{
 		if (ImGui::Button("DiffuseMap"))
-			Dialog->OpenDialog("Diffuse", "Select Diffuse", ".png,.jpg,.dds,.tga", ".");
+			Dialog->OpenDialog("Diffuse", "Select Diffuse", ".png,.jpg,.dds,.tga,.TGA", ".");
 
 		if (ImGui::Button("NormalMap"))
-			Dialog->OpenDialog("Normal", "Select Normal", ".png,.jpg,.dds,.tga", ".");
+			Dialog->OpenDialog("Normal", "Select Normal", ".png,.jpg,.dds,.tga,.TGA", ".");
 
 		if (ImGui::Button("SpecularMap"))
-			Dialog->OpenDialog("Specular", "Select Specular", ".png,.jpg,.dds,.tga", ".");
+			Dialog->OpenDialog("Specular", "Select Specular", ".png,.jpg,.dds,.tga,.TGA", ".");
 
 		if (Dialog->Display("Diffuse") || Dialog->Display("Specular") || Dialog->Display("Normal"))
 		{

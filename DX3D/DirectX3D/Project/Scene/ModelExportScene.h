@@ -17,10 +17,6 @@ private:
 	ModelExporter* exporter;
 
 	//Model* model;
-	ModelAnimator* modelAnimator;
-
-	float speed = 1.0f;
-	float takeTime = 0.2f;
 };
 
 

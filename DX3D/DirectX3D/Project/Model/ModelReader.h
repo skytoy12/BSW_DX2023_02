@@ -16,7 +16,9 @@ public:
 	bool HasBone(string boneName) { return boneMap.count(boneName) > 0; }
 
 	vector<Material*> GetMaterials() { return materials; }
-	vector<ModelMesh*> GetModelMeshes() { return meshes; }
+
+	UINT GetBoneIndex(string name);
+	UINT GetNodeIndex(string name);
 
 private:
 	void ReadMaterial();

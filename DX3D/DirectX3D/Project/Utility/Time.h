@@ -11,7 +11,7 @@ public:
 	void Update();
 	void Render();
 
-	static float Delta() { return timeElapsed; }
+	static float Delta();
 
 	UINT GetFPS() { return frameRate; }
 
@@ -32,4 +32,6 @@ private:
 	float scanningRate;
 
 	float oneSecCount;
+
+	static float maxDeltaTime;
 };

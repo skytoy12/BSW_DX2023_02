@@ -16,7 +16,7 @@ public:
 private:
 	ModelExporter* exporter;
 
-	//Model* model;
+	Model* model;
 };
 
 

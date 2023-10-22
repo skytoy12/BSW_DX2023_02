@@ -161,7 +161,13 @@ void ModelAnimator::UpdateFrame()
 		++frameData.cur.curFrame %= (clip->frameCount - 1);
 		frameData.cur.time = 0.0f;
 	}
-
+	/////////////////////////////////////////////////////////
+	if (frameData.cur.curFrame > clip->frameCount * 0.8)
+	{
+		if (_endEvent != nullptr)
+			_endEvent();
+	}
+	/////////////////////////////////////////////////////////
 
 	/////NEXT CLIP/////
 	if (frameData.next.clip < 0)

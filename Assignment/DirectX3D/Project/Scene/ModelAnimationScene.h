@@ -14,4 +14,11 @@ public:
 	virtual void PostRender() override;
 private:
 	Groot* groot;
+
+	Terrain* terrain;
+
+	Vector3 pickedPos;
+
+	Vector3 cameraPos;
+	Vector3 cameraRot;
 };

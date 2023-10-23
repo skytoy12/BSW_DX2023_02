@@ -429,7 +429,6 @@
   <ItemGroup>
     <None Include="imgui.ini" />
     <None Include="_Include\DirectXTex.inl" />
-    <None Include="_Library\assimp-vc143-mtd.dll" />
     <None Include="_Library\ImGui.idb" />
     <None Include="_Library\ImGui.pdb" />
     <None Include="_Shader\Header.hlsli" />

@@ -32,11 +32,12 @@ private:
 private:
 	Transform* transform;
 	float moveSpeed = 10.0f;
-	float rotSpeed = 7.5f;
+	float rotSpeed = 1.5f;
 
 	ViewBuffer* viewBuffer;
 	Matrix        viewMatrix;
 
 	Vector3 oldPos;
+	Vector3 cameraDir;
 };
 

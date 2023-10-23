@@ -267,7 +267,7 @@ void Material::SaveDialog()
 		{
 			string path = Dialog->GetFilePathName();
 
-			path = path.substr(GetTextDataDir().size(), path.length());
+			path = path.substr(GetProjectDir().size(), path.length());
 
 			Save(ToWString(path));
 		}
@@ -288,7 +288,7 @@ void Material::LoadDialog()
 		{
 			string path = Dialog->GetFilePathName();
 
-			path = path.substr(GetTextDataDir().size(), path.length());
+			path = path.substr(GetProjectDir().size(), path.length());
 
 			Load(ToWString(path));
 		}

@@ -6,7 +6,7 @@ ModelExportScene::ModelExportScene()
 	string name = "Knight D Pelegrini";
 	string name1 = "Y Bot";
 	string name2 = "Groot";
-	string name3 = "Ax";
+	string name3 = "Dwarven_Axe";
 
 
 	//exporter = new ModelExporter(name3);
@@ -17,20 +17,18 @@ ModelExportScene::ModelExportScene()
 
 
 
-	//model = new Model(name3);
-
-	//model = new ModelBSW();
+	model = new Model(name3);
 }
 
 ModelExportScene::~ModelExportScene()
 {
 	delete exporter;
-	//delete model;
+	delete model;
 }
 
 void ModelExportScene::Update()
 {
-	//model->Update();
+	model->Update();
 }
 
 void ModelExportScene::PreRender()
@@ -39,11 +37,11 @@ void ModelExportScene::PreRender()
 
 void ModelExportScene::Render()
 {
-	//model->Render();
+	model->Render();
 }
 
 void ModelExportScene::PostRender()
 {
-	//model->GetReader()->Debug();
+	model->GetReader()->Debug();
 
 }

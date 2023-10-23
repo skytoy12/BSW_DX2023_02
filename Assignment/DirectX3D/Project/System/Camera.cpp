@@ -34,6 +34,10 @@ void Camera::Debug()
 	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
 	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
 
+	ImGui::Text("Camera MousePos : %.3f, %.3f, %.3f", mousePos.x, mousePos.y, mousePos.z);
+	ImGui::Text("Camera OldPos : %.3f, %.3f, %.3f", oldPos.x, oldPos.y, oldPos.z);
+	ImGui::Text("Camera Dir : %.3f, %.3f, %.3f", cameraDir.x, cameraDir.y, cameraDir.z);
+
 	if (ImGui::Button("GrootOrigin"))
 	{
 		transform->translation = { -44.0f, 174.0f, -203.0f };
@@ -101,12 +105,18 @@ void Camera::FreeMode()
 
 		Vector3 dir = mousePos - oldPos;
 
-		if (abs(dir.x) > 30.0f || abs(dir.y) > 30.0f)
+		if (abs(dir.x) > 10.0f || abs(dir.y) > 10.0f)
 		{
 			dir.x = 0.0f;
 			dir.y = 0.0f;
 		}
 
+		if (dir.x != 0.0f)
+			cameraDir.x = dir.x;
+		if (dir.y != 0.0f)
+			cameraDir.y = dir.y;
+		if (dir.z != 0.0f)
+			cameraDir.z = dir.z;
 
 		transform->rotation.y += dir.x * rotSpeed * Time::Delta();
 		transform->rotation.x += dir.y * rotSpeed * Time::Delta();

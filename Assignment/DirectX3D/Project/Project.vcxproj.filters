@@ -491,7 +491,6 @@
       <Filter>헤더 파일</Filter>
     </None>
     <None Include="_Shader\Header.hlsli" />
-    <None Include="_Library\assimp-vc143-mtd.dll" />
   </ItemGroup>
   <ItemGroup>
     <Library Include="_Library\ImGui.lib" />

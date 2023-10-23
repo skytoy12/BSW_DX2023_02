@@ -12,15 +12,16 @@ public:
 	void ReadClip(string file, UINT clipIndex = 0);
 
 	void PlayClip(UINT clipIndex, float speed = 1.0f, float takeTime = 0.2f);
+	void StopClip() { isPlay = false; }
 
 	void CreateTexture();
 
 	void UpdateFrame();
 
-	void SetEndEvent(CallBack endEvent) { _endEvent = endEvent; }
-
 	Matrix GetTransformByBone(UINT boneIndex);
 	Matrix GetTransformByNode(UINT nodeIndex);
+
+	void SetEndEvent(function<void()> EndEvent, float ratio);
 
 private:
 	void CreateClipTransform(UINT index);
@@ -40,5 +41,9 @@ protected:
 	ID3D11Texture2D* texture;
 	ID3D11ShaderResourceView* srv;
 
-	CallBack _endEvent = nullptr;
+	bool isPlay = true;
+
+	function<void()> EndEvent;
+
+	float animRatio;
 };

@@ -17,6 +17,8 @@ public:
 
 	void UpdateFrame();
 
+	void SetEndEvent(CallBack endEvent) { _endEvent = endEvent; }
+
 	Matrix GetTransformByBone(UINT boneIndex);
 	Matrix GetTransformByNode(UINT nodeIndex);
 
@@ -37,4 +39,6 @@ protected:
 
 	ID3D11Texture2D* texture;
 	ID3D11ShaderResourceView* srv;
+
+	CallBack _endEvent = nullptr;
 };

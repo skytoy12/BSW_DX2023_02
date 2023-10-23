@@ -68,6 +68,8 @@ using namespace DirectX;
 #define MAX_BONE 256
 #define MAX_FRAME_KEY 512
 
+using CallBack = function<void(void)>;
+
 typedef XMMATRIX Matrix;
 typedef XMFLOAT4 Vector4;
 typedef XMFLOAT2 Vector2;

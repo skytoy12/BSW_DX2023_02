@@ -2,6 +2,14 @@
 class Groot : public ModelAnimator
 {
 public:
+
+	enum State
+	{
+		RUN,
+		IDLE,
+		ATTACK
+	};
+
 	Groot();
 	~Groot();
 
@@ -11,11 +19,19 @@ public:
 
 	void UpdateRightHand();
 
+	void EndEvent();
+
 private:
 	float speed = 1.0f;
 	float takeTime = 0.2f;
 
-	Sphere* weapon;
+	State type = IDLE;
+
+	float x = 0.0f;
+	float y = 0.0f;
+	float z = 0.0f;
+
+	Model* weapon;
 
 	Transform* rightHand;
 };

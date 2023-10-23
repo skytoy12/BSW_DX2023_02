@@ -2,7 +2,7 @@
 #include "Time.h"
 
 float Time::timeElapsed = 0.0;
-float Time::maxDeltaTime = 0.2f;
+float Time::maxDeltaTime = 0.05f;
 
 Time::Time()
 	: curTick(0), frameCount(0), frameRate(0), oneSecCount(0), runningTime(0), scanningRate(0)
@@ -57,8 +57,8 @@ void Time::Render()
 
 float Time::Delta()
 {
-	//if (timeElapsed > maxDeltaTime)
-	//	return maxDeltaTime;
+	if (timeElapsed > maxDeltaTime)
+		return maxDeltaTime;
 
 	return timeElapsed;
 }

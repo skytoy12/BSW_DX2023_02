@@ -20,6 +20,24 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	mesh = new Mesh(vertices, indices);
 }
 
+Terrain::Terrain(wstring diffuseFile, wstring heightFile)
+{
+	material = new Material();
+	material->SetShader(L"NormalMapping");
+	material->SetDiffuseMap(diffuseFile);
+
+
+	worldBuffer = new MatrixBuffer();
+
+	heightMap = Texture::Get(heightFile);
+
+	CreateMesh();
+	CreateNormal();
+	CreateTangent();
+
+	mesh = new Mesh(vertices, indices);
+}
+
 Terrain::~Terrain()
 {
 	delete mesh;

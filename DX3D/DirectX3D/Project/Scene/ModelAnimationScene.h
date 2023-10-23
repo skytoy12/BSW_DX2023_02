@@ -14,4 +14,6 @@ public:
 	virtual void PostRender() override;
 private:
 	Groot* groot;
+
+	Terrain* terrain;
 };

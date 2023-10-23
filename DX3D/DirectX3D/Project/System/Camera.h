@@ -38,5 +38,6 @@ private:
 	Matrix        viewMatrix;
 
 	Vector3 oldPos;
+	Vector3 cameraDir;
 };
 

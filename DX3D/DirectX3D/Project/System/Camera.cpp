@@ -23,28 +23,40 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	FreeMode();
+	if (target == nullptr)
+		FreeMode();
+	else
+		TargetMode();
 }
 
 void Camera::Debug()
 {
-	Vector3 pos = transform->translation;
-	Vector3 rot = transform->rotation;
-
-	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
-	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
-
-	ImGui::Text("Camera MousePos : %.3f, %.3f, %.3f", mousePos.x, mousePos.y, mousePos.z);
-	ImGui::Text("Camera OldPos : %.3f, %.3f, %.3f", oldPos.x, oldPos.y, oldPos.z);
-	ImGui::Text("Camera Dir : %.3f, %.3f, %.3f", cameraDir.x, cameraDir.y, cameraDir.z);
-
-	if (ImGui::Button("GrootOrigin"))
+	if (ImGui::TreeNode("Camera Option"))
 	{
-		transform->translation = { -44.0f, 174.0f, -203.0f };
-		transform->rotation.x = 0.5f;
-		transform->rotation.y = 0.2f;
-		transform->rotation.z = 0.0f;
+		Vector3 pos = transform->translation;
+		Vector3 rot = transform->rotation;
+
+		ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
+		ImGui::Text("Camera Rot : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
+
+		ImGui::SliderFloat("Camera MoveDamping", &moveDamping, 0.0f, 30.0f);
+		ImGui::SliderFloat("Camera  RotDamping", &rotDamping, 0.0f, 30.0f);
+		ImGui::SliderFloat("Camera  RotY", &rotY, 0, XM_2PI);
+
+		ImGui::TreePop();
 	}
+
+	//ImGui::Text("Camera MousePos : %.3f, %.3f, %.3f", mousePos.x, mousePos.y, mousePos.z);
+	//ImGui::Text("Camera OldPos : %.3f, %.3f, %.3f", oldPos.x, oldPos.y, oldPos.z);
+	//ImGui::Text("Camera Dir : %.3f, %.3f, %.3f", cameraDir.x, cameraDir.y, cameraDir.z);
+
+	//if (ImGui::Button("GrootOrigin"))
+	//{
+	//	transform->translation = { -44.0f, 174.0f, -203.0f };
+	//	transform->rotation.x = 0.5f;
+	//	transform->rotation.y = 0.2f;
+	//	transform->rotation.z = 0.0f;
+	//}
 
 }
 
@@ -124,11 +136,40 @@ void Camera::FreeMode()
 
 	oldPos = mousePos;
 
+	viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+
 	SetView();
 }
 
 void Camera::TargetMode()
 {
+	//destination = target->translation - target->Backward() * distance + V_UP * height;
+
+	//transform->translation = destination;
+
+	//viewMatrix = XMMatrixLookAtLH(destination, target->translation, V_UP);
+
+	////////////////////////////////////////////////////////////////////////////////////////
+
+	//destination = target->translation - V_FORWARD * distance + V_UP * height;
+
+	//transform->translation = destination;
+
+	//viewMatrix = XMMatrixLookAtLH(destination, target->translation, V_UP);
+
+	destRot = LERP(destRot, target->rotation.y, rotDamping * Time::Delta());
+
+	XMMATRIX rotMatrix = XMMatrixRotationY(destRot + rotY);
+
+	Vector3 forward = V_FORWARD * rotMatrix;
+
+	destination = target->GetGlobalPosition() + forward * distance + V_UP * height;
+
+	transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
+
+	viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
+
+	SetView();
 }
 
 void Camera::SetView()
@@ -140,8 +181,6 @@ void Camera::SetView()
 	//XMVECTOR upVector = transform->Up();
 
 	//viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
-
-	viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
 
 	viewBuffer->SetData(viewMatrix, transform->GetWorld());
 	viewBuffer->SetVSBuffer(1);

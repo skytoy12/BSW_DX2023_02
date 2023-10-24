@@ -23,6 +23,8 @@ Groot::Groot()
 	weapon->rotation.z = XMConvertToRadians(-79);
 
 	weapon->translation = { -50.630f, 68.640f, -20.580f };
+
+	clips[ATTACK]->SetEndEvent(bind(&Groot::SetClip, this, IDLE), 0.7f);
 }
 
 Groot::~Groot()
@@ -48,6 +50,7 @@ void Groot::Update()
 		PlayClip(2, speed, takeTime);
 
 	Move();
+	Attack();
 
 	UpdateRightHand();
 }

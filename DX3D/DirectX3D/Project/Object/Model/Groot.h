@@ -30,7 +30,7 @@ private:
 
 	Transform* rightHand;
 
-	float moveSpeed = 10.0f;
+	float moveSpeed = 50.0f;
 	float  rotSpeed =  3.0f;
 };
 

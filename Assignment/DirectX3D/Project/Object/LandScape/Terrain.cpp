@@ -97,46 +97,51 @@ bool Terrain::Picking(OUT Vector3* position)
 	return false;
 }
 
-bool Terrain::ModelPicking(OUT Vector3* position, Vector3 ModelPos)
+float Terrain::GetHeight(Vector3 position)
 {
-	Ray ray;
+	position.x /= scale.x;
+	position.z /= scale.z;
 
-	ray.direction = Vector3(0, -1, 0);
-	ray.origin = ModelPos;
+	int x = (int)position.x;
+	int z = (int)position.z;
 
-	for (UINT z = 0; z < height - 1; z++)
+	if (x < 0 || x > width - 1)
+		return 0.0f;
+
+	if (z < 0 || z > height - 1)
+		return 0.0f;
+
+	UINT index[4];
+	index[0] = x + 0 + width * (z + 1);
+	index[1] = x + 1 + width * (z + 1);
+	index[2] = x + 0 + width * (z + 0);
+	index[3] = x + 1 + width * (z + 0);
+
+	Vector3 vertex[4];
+
+	for (UINT i = 0; i < 4; i++)
 	{
-		for (UINT x = 0; x < width - 1; x++)
-		{
-			UINT index[4];
-			index[0] = (x + 0) + width * (z + 0);
-			index[1] = (x + 1) + width * (z + 0);
-			index[2] = (x + 0) + width * (z + 1);
-			index[3] = (x + 1) + width * (z + 1);
-
-			Vector3 pos[4];
-			for (UINT i = 0; i < 4; i++)
-			{
-				pos[i] = vertices[index[i]].pos;
-			}
-
-			float distance = 0.0f;
-
-			if (TriangleTests::Intersects(ray.origin, ray.direction, pos[0], pos[1], pos[2], distance))
-			{
-				*position = ray.origin + ray.direction * distance;
-				return true;
-			}
-
-			if (TriangleTests::Intersects(ray.origin, ray.direction, pos[2], pos[1], pos[3], distance))
-			{
-				*position = ray.origin + ray.direction * distance;
-				return true;
-			}
-		}
+		vertex[i] = vertices[index[i]].pos;
 	}
 
-	return false;
+	float u = abs(position.x - vertex[0].x);
+	float v = abs(position.z - vertex[0].z);
+
+	Vector3 result;
+
+	if (u + v <= 1.0f)
+	{
+		result = vertex[0] + (vertex[2] - vertex[0]) * u + (vertex[1] - vertex[0]) * v;
+	}
+	else
+	{
+		u = 1.0f - u;
+		v = 1.0f - v;
+
+		result = vertex[3] + (vertex[2] - vertex[3]) * u + (vertex[1] - vertex[3]) * v;
+	}
+
+	return result.y * scale.y;
 }
 
 void Terrain::CreateMesh()

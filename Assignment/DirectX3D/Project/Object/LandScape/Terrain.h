@@ -12,7 +12,7 @@ public:
 
 	bool Picking(OUT Vector3* position);
 
-	bool ModelPicking(OUT Vector3* position, Vector3 ModelPos);
+	float GetHeight(Vector3 position);
 
 private :
 	void CreateMesh();

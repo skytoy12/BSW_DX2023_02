@@ -9,8 +9,8 @@ ModelExportScene::ModelExportScene()
 	string name3 = "Dwarven_Axe";
 
 
-	//exporter = new ModelExporter(name3);
-	//exporter->ExportModel();
+	exporter = new ModelExporter(name3);
+	exporter->ExportModel();
 	//exporter->ExportClip("Running Backward");
 	//exporter->ExportClip("Sad Idle");
 	//exporter->ExportClip("Standing Melee Attack 360 High");

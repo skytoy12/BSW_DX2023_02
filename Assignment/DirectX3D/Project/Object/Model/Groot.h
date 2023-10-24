@@ -19,10 +19,10 @@ public:
 	void UpdateRightHand();
 
 	void SetClip(AnimState state);
-
 private :
 	void Move();
 	void Attack();
+	void Dir();
 private:
 	float speed = 1.0f;
 	float takeTime = 0.2f;
@@ -31,7 +31,9 @@ private:
 
 	Transform* rightHand;
 
-	float moveSpeed = 10.0f;
+	float moveSpeed = 50.0f;
 	float  rotSpeed =  3.0f;
+
+	Vector3 dir;
 };
 

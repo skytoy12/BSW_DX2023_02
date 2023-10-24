@@ -23,9 +23,6 @@ void ModelAnimator::Update()
 
 	if (!isPlay)
 		return;
-	FrameBuffer::Frame& curClip = frameBuffer->data.cur;
-
-	animRatio = (float)curClip.curFrame / clips[curClip.clip]->frameCount;
 
 	UpdateFrame();
 }
@@ -168,6 +165,11 @@ void ModelAnimator::UpdateFrame()
 	{
 		++frameData.cur.curFrame %= (clip->frameCount - 1);
 		frameData.cur.time = 0.0f;
+
+		float animRatio = (float)frameData.cur.curFrame / clips[frameData.cur.clip]->frameCount;
+
+		if (clip->EndEvent != nullptr && animRatio > clip->ratio)
+			clip->EndEvent();
 	}
 
 
@@ -232,16 +234,6 @@ Matrix ModelAnimator::GetTransformByNode(UINT nodeIndex)
 	return LERP(curAnim, nextAnim, frameBuffer->data.tweenTime);
 }
 
-void ModelAnimator::SetEndEvent(function<void()> EndEvent, float ratio)
-{
-	if (frameBuffer->data.next.clip != -1)
-		return;
-
-	this->EndEvent = EndEvent;
-
-	if (animRatio >= ratio)
-		EndEvent();
-}
 
 void ModelAnimator::CreateClipTransform(UINT index)
 {

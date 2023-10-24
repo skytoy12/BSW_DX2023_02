@@ -57,8 +57,8 @@ void Time::Render()
 
 float Time::Delta()
 {
-	if (timeElapsed > maxDeltaTime)
-		return maxDeltaTime;
+	//if (timeElapsed > maxDeltaTime)
+	//	return maxDeltaTime;
 
 	return timeElapsed;
 }

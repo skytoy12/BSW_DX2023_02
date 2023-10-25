@@ -12,7 +12,8 @@ MainGame::MainGame()
 	//scene = new TerrainEditorScene();
 	//scene = new SphereScene();
 	//scene = new ModelExportScene();
-	scene = new ModelAnimationScene();
+	//scene = new ModelAnimationScene();
+	scene = new CollisionScene();
 }
 
 MainGame::~MainGame()

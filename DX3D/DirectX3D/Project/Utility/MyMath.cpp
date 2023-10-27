@@ -21,7 +21,7 @@ float MyMath::Min(const float& value1, const float& value2, const float& value3)
 	return min(min(value1, value2), value3);
 }
 
-float MyMath::Distance(Vector3& v1, Vector3& v2)
+float MyMath::Distance(Vector3 v1, Vector3 v2)
 {
 	return (v2 - v1).Length();
 }

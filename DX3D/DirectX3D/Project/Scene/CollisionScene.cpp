@@ -35,7 +35,7 @@ void CollisionScene::Update()
 
 	Contact contact = {};
 
-	if (colliders[2]->Collision(colliders[3]))
+	if (colliders[2]->Collision(colliders[1]))
 		colliders[2]->SetColor(1, 0, 0);
 	else
 		colliders[2]->SetColor(0, 1, 0);

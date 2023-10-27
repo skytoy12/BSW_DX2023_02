@@ -138,6 +138,8 @@
     <ClInclude Include="Collider\ColliderBox.h" />
     <ClInclude Include="Collider\ColliderCapsule.h" />
     <ClInclude Include="Collider\ColliderSphere.h" />
+    <ClInclude Include="Scene\GridScene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\CollisionScene.h" />
     <ClInclude Include="Scene\ModelAnimationScene.h" />
     <ClInclude Include="Object\Model\Groot.h" />
@@ -212,6 +214,8 @@
     <ClCompile Include="Collider\ColliderCapsule.cpp" />
     <ClCompile Include="Collider\ColliderSphere.cpp" />
     <ClCompile Include="Collider\Collider.cpp" />
+    <ClCompile Include="Scene\GridScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\CollisionScene.cpp" />
     <ClCompile Include="Scene\ModelAnimationScene.cpp" />
     <ClCompile Include="Object\Model\Groot.cpp" />

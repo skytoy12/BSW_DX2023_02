@@ -15,11 +15,66 @@ ColliderBox::~ColliderBox()
 
 bool ColliderBox::Collision(IN Ray& ray, OUT Contact* contact)
 {
-	return false;
+	Transform::UpdateWorld();
+
+	Contact temp;
+
+	temp.distance = FLT_MAX;
+
+	UINT faces[] =
+	{
+		0, 1, 2, 3,
+		4, 5, 6, 7,
+		1, 5, 3, 7,
+		0, 4, 2, 6,
+		0, 1, 4, 5,
+		2, 3, 6, 7
+	};
+
+	for (UINT i = 0; i < 6; i++)
+	{
+		Vector3 p[4];
+
+		for (UINT j = 0; j < 4; j++)
+		{
+			p[j] = vertices[faces[4 * i + j]].pos;
+			p[j] = XMVector3TransformCoord(p[j], world);
+		}
+
+		float distance = 0.0f;
+
+		if (TriangleTests::Intersects(ray.origin, ray.direction, p[0], p[1], p[2], distance))
+		{
+			if (temp.distance > distance)
+			{
+				temp.distance = distance;
+				temp.hitpoint = ray.origin + ray.direction * distance;
+			}	
+		}
+
+		if (TriangleTests::Intersects(ray.origin, ray.direction, p[3], p[1], p[2], distance))
+		{
+			if (temp.distance > distance)
+			{
+				temp.distance = distance;
+				temp.hitpoint = ray.origin + ray.direction * distance;
+			}
+		}
+	}
+
+	if (temp.distance == FLT_MAX)
+		return false;
+
+	if (contact != nullptr)
+		*contact = temp;
+
+	return true;
 }
 
 bool ColliderBox::Collision(ColliderBox* other)
 {
+	Transform::UpdateWorld();
+
 	Obb box1 =  this->GetOBB();
 	Obb box2 = other->GetOBB();
 
@@ -54,7 +109,24 @@ bool ColliderBox::Collision(ColliderBox* other)
 
 bool ColliderBox::Collision(ColliderSphere* other)
 {
-	return false;
+	Obb box = this->GetOBB();
+
+	Vector3 pos = box.position;
+
+	for (UINT i = 0; i < 3; i++)
+	{
+		float length = Vector3::Dot(box.axis[i], other->GetGlobalPosition() - this->GetGlobalPosition());
+
+		float mult = (length < 0.0f) ? -1.0f : 1.0f;
+
+		length = min(abs(length), box.halfSize[i]);
+
+		pos += box.axis[i] * length * mult;
+	}
+
+	float distance = Distance(other->GetGlobalPosition(), pos);
+
+	return distance <= other->Radius();
 }
 
 bool ColliderBox::Collision(ColliderCapsule* other)

@@ -3,6 +3,7 @@ class Terrain : public Transform
 {
 public:
 	Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile);
+	Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile);
 	Terrain(wstring diffuseFile, wstring heightFile);
 	~Terrain();
 

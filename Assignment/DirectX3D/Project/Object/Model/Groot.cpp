@@ -49,7 +49,6 @@ void Groot::Update()
 	if (KEY_DOWN('3'))
 		PlayClip(2, speed, takeTime);
 
-	Dir();
 	Move();
 	Attack();
 
@@ -69,12 +68,7 @@ void Groot::Debug()
 	ImGui::SliderFloat("Speed", &speed, 0.0f, 10.0f);
 	ImGui::SliderFloat("TakeTime", &takeTime, 0.0f, 1.0f);
 
-	ImGui::SliderFloat("ry", &rotation.y, -XM_PI, XM_PI);
-
-	ImGui::Text("roty : %f", Camera::GetInstance()->GetRotY());
-	ImGui::Text("y : %f", rotation.y);
-	ImGui::Text("Camera forward x : %f", CAMERA->Forward().x);
-	ImGui::Text("Camera forward z : %f", CAMERA->Forward().z);
+	ImGui::Text("DeltaTime : %f", Time::Delta());
 
 	weapon->Debug();
 }
@@ -99,9 +93,7 @@ void Groot::Move()
 {
 	if (KEY_PRESS('W'))
 	{
-		rotation.y = Camera::GetInstance()->GetRotY() * 2.0f;
-		translation.x += dir.x * moveSpeed * Time::Delta();
-		translation.z += dir.z * moveSpeed * Time::Delta();
+		translation -= Forward() * moveSpeed * Time::Delta();
 		SetClip(RUN);
 	}
 
@@ -114,15 +106,15 @@ void Groot::Move()
 	if (KEY_UP('W') || KEY_UP('S'))
 		SetClip(IDLE);
 
-	//if (KEY_PRESS('A'))
-	//{
-	//	rotation.y -= rotSpeed * Time::Delta();
-	//}
+	if (KEY_PRESS('A'))
+	{
+		rotation.y -= rotSpeed * Time::Delta();
+	}
 
-	//if (KEY_PRESS('D'))
-	//{
-	//	rotation.y += rotSpeed * Time::Delta();
-	//}
+	if (KEY_PRESS('D'))
+	{
+		rotation.y += rotSpeed * Time::Delta();
+	}
 }
 
 void Groot::Attack()
@@ -131,10 +123,4 @@ void Groot::Attack()
 	{
 		SetClip(ATTACK);
 	}
-}
-
-void Groot::Dir()
-{
-	dir = translation - CAMERA->translation;
-	dir = dir.GetNormalized();
 }

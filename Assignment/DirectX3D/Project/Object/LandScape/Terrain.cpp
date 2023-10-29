@@ -20,6 +20,24 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	mesh = new Mesh(vertices, indices);
 }
 
+Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile)
+{
+	material = new Material();
+	material->SetShader(L"NormalMapping");
+	material->SetDiffuseMap(diffuseFile);
+	material->SetSpecularMap(specularFile);
+	material->SetNormalMap(NormalFile);
+
+	worldBuffer = new MatrixBuffer();
+
+
+	CreateMesh();
+	CreateNormal();
+	CreateTangent();
+
+	mesh = new Mesh(vertices, indices);
+}
+
 Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 {
 	material = new Material();

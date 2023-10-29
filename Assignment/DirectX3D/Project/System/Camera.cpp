@@ -26,11 +26,14 @@ void Camera::Update()
 	if (target == nullptr)
 		FreeMode();
 	else
-		TargetMode();
+		TargetMode(MODE2);
 }
 
 void Camera::Debug()
 {
+	ImGuiIO io = ImGui::GetIO();
+	distance -= io.MouseWheel * moveSpeed;
+
 	if (ImGui::TreeNode("Camera Option"))
 	{
 		Vector3 pos = transform->translation;
@@ -39,14 +42,17 @@ void Camera::Debug()
 		ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
 		ImGui::Text("Camera Rot : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
 
+		ImGui::SliderFloat("Height", &height, -10.0f, 100.0f);
+		ImGui::SliderFloat("Distance", &distance, -10.0f, 100.0f);
+
 		ImGui::SliderFloat("Camera MoveDamping", &moveDamping, 0.0f, 30.0f);
 		ImGui::SliderFloat("Camera  RotDamping", &rotDamping, 0.0f, 30.0f);
-		ImGui::SliderFloat("Camera  RotY", &rotY, -XM_PI, XM_PI);
+		ImGui::SliderFloat("Camera  RotY", &rotY, 0, XM_2PI);
 
 		ImGui::TreePop();
 	}
 
-	ImGui::Text("Camera MousePos : %.3f, %.3f, %.3f", mousePos.x, mousePos.y, mousePos.z);
+	//ImGui::Text("Camera MousePos : %.3f, %.3f, %.3f", mousePos.x, mousePos.y, mousePos.z);
 	//ImGui::Text("Camera OldPos : %.3f, %.3f, %.3f", oldPos.x, oldPos.y, oldPos.z);
 	//ImGui::Text("Camera Dir : %.3f, %.3f, %.3f", cameraDir.x, cameraDir.y, cameraDir.z);
 
@@ -141,8 +147,63 @@ void Camera::FreeMode()
 	SetView();
 }
 
-void Camera::TargetMode()
+void Camera::TargetMode(Mode mode)
 {
+	if (KEY_PRESS(VK_UP))
+		height += moveSpeed * Time::Delta();
+
+	if (KEY_PRESS(VK_DOWN))
+		height -= moveSpeed * Time::Delta();
+
+	switch (mode)
+	{
+	case Camera::MODE1:
+	{
+		destRotY = LERP(destRotY, target->rotation.y, rotDamping * Time::Delta());
+
+		XMMATRIX rotMatrix = XMMatrixRotationY(destRotY + rotY);
+
+		Vector3 forward = V_FORWARD * rotMatrix;
+
+		destination = target->GetGlobalPosition() + forward * distance + V_UP * height;
+
+		transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
+
+		viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
+	}
+		break;
+
+	case Camera::MODE2:
+	{
+		if (KEY_PRESS(VK_RBUTTON))
+		{
+			Vector3 dir = mousePos - oldPos;
+
+			transform->rotation.y += dir.x * rotSpeed * Time::Delta();
+			transform->rotation.x += dir.y * rotSpeed * Time::Delta();
+		}
+		oldPos = mousePos;
+
+		destRotY = LERP(destRotY, transform->rotation.y, rotDamping * Time::Delta());
+		destRotX = LERP(destRotX, transform->rotation.x, rotDamping * Time::Delta());
+
+		XMMATRIX rotMatrix = XMMatrixRotationRollPitchYaw(destRotX, destRotY + rotY, 0.0f);
+
+		Vector3 forward = V_FORWARD * rotMatrix;
+
+		destination = target->GetGlobalPosition() + forward * distance;
+
+		transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
+
+		viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
+
+		viewMatrix *= XMMatrixTranslation(0, -height, 0);
+	}
+	    break;
+	default:
+		break;
+	}
+
 	//destination = target->translation - target->Backward() * distance + V_UP * height;
 
 	//transform->translation = destination;
@@ -156,24 +217,6 @@ void Camera::TargetMode()
 	//transform->translation = destination;
 
 	//viewMatrix = XMMatrixLookAtLH(destination, target->translation, V_UP);
-
-	float angleRatio = mousePos.x / WIN_WIDTH * XM_2PI;
-
-	angleRatio -= XM_PI;
-
-	rotY = angleRatio / 2;
-
-	destRot = LERP(destRot, rotY, rotDamping * Time::Delta());
-
-	XMMATRIX rotMatrix = XMMatrixRotationY(destRot + rotY);
-
-	Vector3 forward = V_FORWARD * rotMatrix;
-
-	destination = target->GetGlobalPosition() + forward * distance + V_UP * height;
-
-	transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
-
-	viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
 
 	SetView();
 }

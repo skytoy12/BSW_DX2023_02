@@ -61,6 +61,8 @@ using namespace DirectX;
 
 #define CAMERA Camera::GetInstance()->GetTransform()
 
+#define SCENE SceneManager::GetInstance()
+
 #define RS StateManager::GetInstance()->GetRS()
 
 #define Dialog ImGuiFileDialog::Instance()
@@ -114,6 +116,11 @@ using namespace MyMath;
 #include "Render/State/RasterizerState.h"
 #include "Render/State/StateManager.h"
 
+#include "Collider/Collider.h"
+#include "Collider/ColliderBox.h"
+#include "Collider/ColliderCapsule.h"
+#include "Collider/ColliderSphere.h"
+
 #include "System/Environment.h"
 #include "System/Camera.h"
 
@@ -137,6 +144,7 @@ using namespace MyMath;
 #include "Model/ModelAnimator.h"
 
 #include "Object/Model/Groot.h"
+#include "Object/Model/Zombie.h"
 
 
 #include "Scene/Scene.h"
@@ -147,6 +155,11 @@ using namespace MyMath;
 #include "Scene/TerrainEditorScene.h"
 #include "Scene/ModelExportScene.h"
 #include "Scene/ModelAnimationScene.h"
+#include "Scene/CollisionScene.h"
+#include "Scene/ZombieScene.h"
+#include "Scene/GridScene.h"
+
+#include "Scene/SceneManager.h"
 
 
 #include "MainGame.h"

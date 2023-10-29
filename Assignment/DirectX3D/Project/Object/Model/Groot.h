@@ -22,7 +22,6 @@ public:
 private :
 	void Move();
 	void Attack();
-	void Dir();
 private:
 	float speed = 1.0f;
 	float takeTime = 0.2f;
@@ -33,7 +32,5 @@ private:
 
 	float moveSpeed = 50.0f;
 	float  rotSpeed =  3.0f;
-
-	Vector3 dir;
 };
 

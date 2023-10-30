@@ -16,4 +16,6 @@ private:
 	Groot* groot;
 
 	Terrain* terrain;
+
+	Quad* crossHair;
 };

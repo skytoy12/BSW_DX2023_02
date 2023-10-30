@@ -25,12 +25,18 @@ Groot::Groot()
 	weapon->translation = { -50.630f, 68.640f, -20.580f };
 
 	clips[ATTACK]->SetEndEvent(bind(&Groot::SetClip, this, IDLE), 0.7f);
+
+	hpBar = new ProgressBar(L"UI/hp_bar.png", L"UI/hp_bar_BG.png");
+	hpBar->SetLabel("HP Bar");
+	hpBar->scale *= 0.1f;
 }
 
 Groot::~Groot()
 {
 	delete weapon;
 	delete rightHand;
+
+	delete hpBar;
 }
 
 void Groot::Update()
@@ -39,6 +45,10 @@ void Groot::Update()
 	Transform::Update();
 	weapon->Update();
 	rightHand->Update();
+
+	hpBar->Update();
+	hpBar->translation = this->translation;
+	hpBar->translation.y += 10.0f;
 
 	if (KEY_DOWN('1'))
 		PlayClip(0, speed, takeTime);
@@ -59,6 +69,8 @@ void Groot::Render()
 {
 	ModelAnimator::Render();
 	weapon->Render();
+
+	hpBar->Render();
 }
 
 void Groot::Debug()
@@ -71,6 +83,9 @@ void Groot::Debug()
 	ImGui::Text("DeltaTime : %f", Time::Delta());
 
 	weapon->Debug();
+	static float value = 1.0f;
+	hpBar->SetValue(value);
+	ImGui::SliderFloat("HP", &value, 0.0f, 1.0f);
 }
 
 void Groot::UpdateRightHand()

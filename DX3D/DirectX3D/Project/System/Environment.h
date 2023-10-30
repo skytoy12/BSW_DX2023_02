@@ -8,17 +8,24 @@ private:
 
 	void CreateViewport();
 	void CreatePerspective();
+	void CreateOrthographic();
 
 public :
 	void SetEnvironment();
+	void PostSet();
 
 	void PostRender();
 
-	Matrix GetProjMatrix() { return projMatrix; }
+	Matrix GetPersMatrix() { return persMatrix; }
 
 private:
-	MatrixBuffer* projBuffer;
-	Matrix        projMatrix;
+	MatrixBuffer* persBuffer;
+	Matrix        persMatrix;
+
+	MatrixBuffer* orthoBuffer;
+	Matrix        orthoMatrix;
+
+	ViewBuffer* UIViewBuffer;
 
 	LightBuffer* lightBuffer;
 

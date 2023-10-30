@@ -32,5 +32,7 @@ private:
 
 	float moveSpeed = 50.0f;
 	float  rotSpeed =  3.0f;
+
+	ProgressBar* hpBar;
 };
 

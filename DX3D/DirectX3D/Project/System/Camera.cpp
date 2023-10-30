@@ -81,7 +81,7 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 
 	///////////////////InvProjection////////////////////
 
-	Matrix projection = Environment::GetInstance()->GetProjMatrix();
+	Matrix projection = Environment::GetInstance()->GetPersMatrix();
 
 	XMFLOAT4X4 proj;
 	XMStoreFloat4x4(&proj, projection);

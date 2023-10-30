@@ -36,8 +36,8 @@ private:
 
 private:
 	Transform* transform;
-	float moveSpeed = 10.0f;
-	float rotSpeed = 7.5f;
+	float moveSpeed = 30.0f;
+	float  rotSpeed = 30.0f;
 
 	ViewBuffer* viewBuffer;
 	Matrix        viewMatrix;
@@ -47,8 +47,8 @@ private:
 
 	Transform* target;
 
-	float distance = 60.0f;
-	float height   = 60.0f;
+	float distance = 20.0f;
+	float height   = 10.0f;
 
 	Vector3 destination;
 	Vector3 focusOffset;

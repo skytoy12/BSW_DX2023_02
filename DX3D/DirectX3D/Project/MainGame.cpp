@@ -16,10 +16,12 @@ MainGame::MainGame()
 	//scene = new CollisionScene();
 
 	SCENE->Create("Grid", new GridScene());
-	SCENE->Create("Collision", new CollisionScene());
+	//SCENE->Create("Collision", new CollisionScene());
+	SCENE->Create("ModelAnimation", new ModelAnimationScene());
 
 	SCENE->Add("Grid");
-	SCENE->Add("Collision");
+	//SCENE->Add("Collision");
+	SCENE->Add("ModelAnimation");
 }
 
 MainGame::~MainGame()
@@ -61,6 +63,8 @@ void MainGame::Render()
 
 	              SCENE->Render();
 	Time::GetInstance()->Render();
+
+	Environment::GetInstance()->PostSet();
 
 	                SCENE->PostRender();
 	     Camera::GetInstance()->Debug();

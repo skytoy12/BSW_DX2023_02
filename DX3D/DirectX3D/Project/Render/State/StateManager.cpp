@@ -6,6 +6,7 @@ StateManager::StateManager()
 	CreateSamplerState();
 	CreateRasterizerState();
 	CreateBlendState();
+	CreateDepthStencilState();
 }
 
 StateManager::~StateManager()
@@ -39,6 +40,14 @@ void StateManager::CreateBlendState()
 	blendStates[2]->Additive();
 }
 
+void StateManager::CreateDepthStencilState()
+{
+	depthStencilStates.push_back(new DepthStencilState());
+	depthStencilStates.push_back(new DepthStencilState());
+
+	depthStencilStates[1]->DepthEnable(false);
+}
+
 void StateManager::AlphaBegin()
 {
 	blendStates[1]->SetState();
@@ -47,4 +56,26 @@ void StateManager::AlphaBegin()
 void StateManager::AlphaEnd()
 {
 	blendStates[0]->SetState();
+}
+
+void StateManager::DepthEnable()
+{
+	depthStencilStates[0]->SetState();
+}
+
+void StateManager::DepthDisable()
+{
+	depthStencilStates[1]->SetState();
+}
+
+void StateManager::Set()
+{
+	AlphaEnd();
+	DepthEnable();
+}
+
+void StateManager::PostSet()
+{
+	AlphaBegin();
+	DepthDisable();
 }

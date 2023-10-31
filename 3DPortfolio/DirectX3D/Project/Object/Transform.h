@@ -22,6 +22,9 @@ public:
 	Vector3       Up() { return up          ; }
 	Vector3     Down() { return up      * -1; }
 
+	Vector3 GetGlobalPosition() { return globalPosition; }
+	Vector3 GetGlobalScale() { return globalScale; }
+
 	void Debug();
 	void SetLabel(string label) { this->label = label; }
 
@@ -44,7 +47,7 @@ protected :
 
 	Vector3 right, up, forward;
 
-	string label = "";
+	string label = "NULL";
 
 	MatrixBuffer* worldBuffer;
 };

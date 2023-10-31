@@ -23,16 +23,47 @@ Camera::~Camera()
 
 void Camera::Update()
 {
-	FreeMode();
+	if (target == nullptr)
+		FreeMode();
+	else
+		TargetMode(MODE2);
 }
 
 void Camera::Debug()
 {
-	Vector3 pos = transform->translation;
-	Vector3 rot = transform->rotation;
+	ImGuiIO io = ImGui::GetIO();
+	distance -= io.MouseWheel * moveSpeed;
 
-	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
-	ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
+	if (ImGui::TreeNode("Camera Option"))
+	{
+		Vector3 pos = transform->translation;
+		Vector3 rot = transform->rotation;
+
+		ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
+		ImGui::Text("Camera Rot : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
+
+		ImGui::SliderFloat("Height", &height, -10.0f, 100.0f);
+		ImGui::SliderFloat("Distance", &distance, -10.0f, 100.0f);
+
+		ImGui::SliderFloat("Camera MoveDamping", &moveDamping, 0.0f, 30.0f);
+		ImGui::SliderFloat("Camera  RotDamping", &rotDamping, 0.0f, 30.0f);
+		ImGui::SliderFloat("Camera  RotY", &rotY, 0, XM_2PI);
+
+		ImGui::TreePop();
+	}
+
+	//ImGui::Text("Camera MousePos : %.3f, %.3f, %.3f", mousePos.x, mousePos.y, mousePos.z);
+	//ImGui::Text("Camera OldPos : %.3f, %.3f, %.3f", oldPos.x, oldPos.y, oldPos.z);
+	//ImGui::Text("Camera Dir : %.3f, %.3f, %.3f", cameraDir.x, cameraDir.y, cameraDir.z);
+
+	//if (ImGui::Button("GrootOrigin"))
+	//{
+	//	transform->translation = { -44.0f, 174.0f, -203.0f };
+	//	transform->rotation.x = 0.5f;
+	//	transform->rotation.y = 0.2f;
+	//	transform->rotation.z = 0.0f;
+	//}
+
 }
 
 Ray Camera::ScreenPointToRay(Vector3 screenPos)
@@ -50,7 +81,7 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 
 	///////////////////InvProjection////////////////////
 
-	Matrix projection = Environment::GetInstance()->GetProjMatrix();
+	Matrix projection = Environment::GetInstance()->GetPersMatrix();
 
 	XMFLOAT4X4 proj;
 	XMStoreFloat4x4(&proj, projection);
@@ -66,6 +97,21 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 	ray.direction.Normalize();
 
 	return ray;
+}
+
+Vector3 Camera::WorldToScreenPoint(Vector3 worldPos)
+{
+	Vector3 screenPos;
+
+	screenPos = XMVector3TransformCoord(worldPos, viewMatrix);
+	screenPos = XMVector3TransformCoord(screenPos, Environment::GetInstance()->GetPersMatrix());
+
+	screenPos = (screenPos + Vector3(1.0f, 1.0f, 1.0f)) * 0.5f;
+
+	screenPos.x *= WIN_WIDTH;
+	screenPos.y *= WIN_HEIGHT;
+
+	return screenPos;
 }
 
 void Camera::FreeMode()
@@ -92,17 +138,102 @@ void Camera::FreeMode()
 
 		Vector3 dir = mousePos - oldPos;
 
+		if (abs(dir.x) > 10.0f || abs(dir.y) > 10.0f)
+		{
+			dir.x = 0.0f;
+			dir.y = 0.0f;
+		}
+
+		if (dir.x != 0.0f)
+			cameraDir.x = dir.x;
+		if (dir.y != 0.0f)
+			cameraDir.y = dir.y;
+		if (dir.z != 0.0f)
+			cameraDir.z = dir.z;
+
 		transform->rotation.y += dir.x * rotSpeed * Time::Delta();
 		transform->rotation.x += dir.y * rotSpeed * Time::Delta();
 	}
 
 	oldPos = mousePos;
 
+	viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+
 	SetView();
 }
 
-void Camera::TargetMode()
+void Camera::TargetMode(Mode mode)
 {
+	if (KEY_PRESS(VK_UP))
+		height += moveSpeed * Time::Delta();
+
+	if (KEY_PRESS(VK_DOWN))
+		height -= moveSpeed * Time::Delta();
+
+	switch (mode)
+	{
+	case Camera::MODE1:
+	{
+		destRotY = LERP(destRotY, target->rotation.y, rotDamping * Time::Delta());
+
+		XMMATRIX rotMatrix = XMMatrixRotationY(destRotY + rotY);
+
+		Vector3 forward = V_FORWARD * rotMatrix;
+
+		destination = target->GetGlobalPosition() + forward * distance + V_UP * height;
+
+		transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
+
+		viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
+	}
+		break;
+
+	case Camera::MODE2:
+	{
+		if (KEY_PRESS(VK_RBUTTON))
+		{
+			Vector3 dir = mousePos - oldPos;
+
+			transform->rotation.y += dir.x * rotSpeed * Time::Delta();
+			transform->rotation.x += dir.y * rotSpeed * Time::Delta();
+		}
+		oldPos = mousePos;
+
+		destRotY = LERP(destRotY, transform->rotation.y, rotDamping * Time::Delta());
+		destRotX = LERP(destRotX, transform->rotation.x, rotDamping * Time::Delta());
+
+		XMMATRIX rotMatrix = XMMatrixRotationRollPitchYaw(destRotX, destRotY + rotY, 0.0f);
+
+		Vector3 forward = V_FORWARD * rotMatrix;
+
+		destination = target->GetGlobalPosition() + forward * distance;
+
+		transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
+
+		viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
+
+		viewMatrix *= XMMatrixTranslation(0, -height, 0);
+	}
+	    break;
+	default:
+		break;
+	}
+
+	//destination = target->translation - target->Backward() * distance + V_UP * height;
+
+	//transform->translation = destination;
+
+	//viewMatrix = XMMatrixLookAtLH(destination, target->translation, V_UP);
+
+	////////////////////////////////////////////////////////////////////////////////////////
+
+	//destination = target->translation - V_FORWARD * distance + V_UP * height;
+
+	//transform->translation = destination;
+
+	//viewMatrix = XMMatrixLookAtLH(destination, target->translation, V_UP);
+
+	SetView();
 }
 
 void Camera::SetView()
@@ -114,8 +245,6 @@ void Camera::SetView()
 	//XMVECTOR upVector = transform->Up();
 
 	//viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
-
-	viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
 
 	viewBuffer->SetData(viewMatrix, transform->GetWorld());
 	viewBuffer->SetVSBuffer(1);

@@ -9,6 +9,11 @@ public:
 
 	KeyFrame* GetKeyFrames(string name);
 
+	void SetEndEvent(function<void()> EndEvent, float ratio)
+	{
+		this->EndEvent = EndEvent;
+		this->ratio    = ratio;
+	}
 private:
 	string name = "";
 
@@ -18,5 +23,9 @@ private:
 	float duration = 0.0f;
 
 	unordered_map<string, KeyFrame*> keyFrames = {};
+
+	function<void()> EndEvent;
+
+	float ratio;
 };
 

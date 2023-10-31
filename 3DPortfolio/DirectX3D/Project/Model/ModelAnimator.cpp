@@ -21,6 +21,9 @@ void ModelAnimator::Update()
 {
 	Transform::Update();
 
+	if (!isPlay)
+		return;
+
 	UpdateFrame();
 }
 
@@ -32,6 +35,13 @@ void ModelAnimator::Render()
 	DC->VSSetShaderResources(0, 1, &srv);
 
 	reader->Render();
+}
+
+void ModelAnimator::Debug()
+{
+	reader->Debug();
+
+	ImGui::Checkbox("IsPlay", &isPlay);
 }
 
 void ModelAnimator::ReadClip(string file, UINT clipIndex)
@@ -155,6 +165,11 @@ void ModelAnimator::UpdateFrame()
 	{
 		++frameData.cur.curFrame %= (clip->frameCount - 1);
 		frameData.cur.time = 0.0f;
+
+		float animRatio = (float)frameData.cur.curFrame / clips[frameData.cur.clip]->frameCount;
+
+		if (clip->EndEvent != nullptr && animRatio > clip->ratio)
+			clip->EndEvent();
 	}
 
 
@@ -186,6 +201,39 @@ void ModelAnimator::UpdateFrame()
 		}
 	}
 }
+
+Matrix ModelAnimator::GetTransformByBone(UINT boneIndex)
+{
+	FrameBuffer::Frame& curClip = frameBuffer->data.cur;
+
+	Matrix cur = clipTransform[curClip.clip].transform[curClip.curFrame][boneIndex];
+
+	return cur;
+}
+
+Matrix ModelAnimator::GetTransformByNode(UINT nodeIndex)
+{
+	FrameBuffer::Frame& curClip = frameBuffer->data.cur;
+
+	Matrix cur  = nodeTransform[curClip.clip].transform[curClip.curFrame + 0][nodeIndex];
+	Matrix next = nodeTransform[curClip.clip].transform[curClip.curFrame + 1][nodeIndex];
+
+	Matrix curAnim = LERP(cur, next, curClip.time);
+
+
+	FrameBuffer::Frame& nextClip = frameBuffer->data.next;
+
+	if (nextClip.clip == -1)
+		return curAnim;
+
+	next = nodeTransform[nextClip.clip].transform[nextClip.curFrame + 0][nodeIndex];
+	next = nodeTransform[nextClip.clip].transform[nextClip.curFrame + 1][nodeIndex];
+
+	Matrix nextAnim = LERP(next, next, nextClip.time);
+
+	return LERP(curAnim, nextAnim, frameBuffer->data.tweenTime);
+}
+
 
 void ModelAnimator::CreateClipTransform(UINT index)
 {

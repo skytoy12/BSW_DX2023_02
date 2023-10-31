@@ -61,12 +61,17 @@ using namespace DirectX;
 
 #define CAMERA Camera::GetInstance()->GetTransform()
 
+#define SCENE SceneManager::GetInstance()
+
 #define RS StateManager::GetInstance()->GetRS()
 
 #define Dialog ImGuiFileDialog::Instance()
 
 #define MAX_BONE 256
 #define MAX_FRAME_KEY 512
+
+//#define LERP(start, end, t) (start * (1 - t) + end * t)
+#define LERP(start, end, t) (start + (end - start) * t)
 
 typedef XMMATRIX Matrix;
 typedef XMFLOAT4 Vector4;
@@ -109,7 +114,14 @@ using namespace MyMath;
 
 #include "Render/State/SamplerState.h"
 #include "Render/State/RasterizerState.h"
+#include "Render/State/BlendState.h"
+#include "Render/State/DepthStencilState.h"
 #include "Render/State/StateManager.h"
+
+#include "Collider/Collider.h"
+#include "Collider/ColliderBox.h"
+#include "Collider/ColliderCapsule.h"
+#include "Collider/ColliderSphere.h"
 
 #include "System/Environment.h"
 #include "System/Camera.h"
@@ -123,6 +135,10 @@ using namespace MyMath;
 
 #include "Object/LandScape/Terrain.h"
 #include "Object/LandScape/TerrainEditor.h"
+#include "Object/LandScape/Sky.h"
+#include "Object/LandScape/SkyBox.h"
+
+#include "Object/UI/ProgressBar.h"
 
 #include "ModelExport/ModelType.h"
 #include "ModelExport/ModelExporter.h"
@@ -133,7 +149,8 @@ using namespace MyMath;
 #include "Model/ModelClip.h"
 #include "Model/ModelAnimator.h"
 
-#include "Object/Basic/ModelBSW.h"
+#include "Object/Model/Groot.h"
+
 
 #include "Scene/Scene.h"
 #include "Scene/TutorialScene.h"
@@ -142,6 +159,11 @@ using namespace MyMath;
 #include "Scene/TerrainScene.h"
 #include "Scene/TerrainEditorScene.h"
 #include "Scene/ModelExportScene.h"
+#include "Scene/ModelAnimationScene.h"
+#include "Scene/CollisionScene.h"
+#include "Scene/GridScene.h"
+
+#include "Scene/SceneManager.h"
 
 
 #include "MainGame.h"

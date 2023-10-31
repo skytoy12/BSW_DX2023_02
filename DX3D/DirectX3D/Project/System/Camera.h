@@ -23,6 +23,8 @@ public:
 
 	Ray ScreenPointToRay(Vector3 screenPos);
 
+	Vector3 WorldToScreenPoint(Vector3 worldPos);
+
 	void SetTarget(Transform* target) { this->target = target; }
 
 private:

@@ -99,6 +99,21 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 	return ray;
 }
 
+Vector3 Camera::WorldToScreenPoint(Vector3 worldPos)
+{
+	Vector3 screenPos;
+
+	screenPos = XMVector3TransformCoord(worldPos, viewMatrix);
+	screenPos = XMVector3TransformCoord(screenPos, Environment::GetInstance()->GetPersMatrix());
+
+	screenPos = (screenPos + Vector3(1.0f, 1.0f, 1.0f)) * 0.5f;
+
+	screenPos.x *= WIN_WIDTH;
+	screenPos.y *= WIN_HEIGHT;
+
+	return screenPos;
+}
+
 void Camera::FreeMode()
 {
 	if (KEY_PRESS(VK_RBUTTON))

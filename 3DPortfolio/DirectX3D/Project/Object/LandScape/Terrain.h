@@ -3,6 +3,7 @@ class Terrain : public Transform
 {
 public:
 	Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile);
+	Terrain(wstring diffuseFile, wstring heightFile);
 	~Terrain();
 
 	void Render();
@@ -10,6 +11,8 @@ public:
 	Material* GetMaterial() { return material; }
 
 	bool Picking(OUT Vector3* position);
+
+	float GetHeight(Vector3 position);
 
 private :
 	void CreateMesh();

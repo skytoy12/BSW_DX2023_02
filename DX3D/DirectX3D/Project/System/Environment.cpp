@@ -52,12 +52,16 @@ void Environment::SetEnvironment()
 {
     lightBuffer->SetPSBuffer(0);
     persBuffer->SetVSBuffer(2);
+
+    StateManager::GetInstance()->Set();
 }
 
 void Environment::PostSet()
 {
     UIViewBuffer->SetVSBuffer(1);
      orthoBuffer->SetVSBuffer(2);
+
+     StateManager::GetInstance()->PostSet();
 }
 
 void Environment::PostRender()

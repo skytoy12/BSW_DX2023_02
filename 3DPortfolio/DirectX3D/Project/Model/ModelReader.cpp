@@ -41,6 +41,25 @@ void ModelReader::Debug()
 		material->Debug();
 }
 
+UINT ModelReader::GetBoneIndex(string name)
+{
+	if(HasBone(name))
+		return boneMap[name];
+
+	return 0;
+}
+
+UINT ModelReader::GetNodeIndex(string name)
+{
+	for (NodeData node : nodes)
+	{
+		if (node.name == name)
+			return node.index;
+	}
+
+	return 0;
+}
+
 void ModelReader::ReadMaterial()
 {
 	string path = "_ModelData/Material/" + name + "/MaterialList.list";

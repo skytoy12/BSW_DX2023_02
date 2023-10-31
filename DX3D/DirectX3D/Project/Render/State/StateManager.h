@@ -10,6 +10,7 @@ private:
 	void CreateSamplerState();
 	void CreateRasterizerState();
 	void CreateBlendState();
+	void CreateDepthStencilState();
 
 public :
 	RasterizerState* GetRS() { return rasterizerState; }
@@ -17,11 +18,19 @@ public :
 	void AlphaBegin();
 	void AlphaEnd();
 
+	void DepthEnable();
+	void DepthDisable();
+
+	void Set();
+	void PostSet();
+
 private:
 	      SamplerState* samplerState = nullptr;
 	RasterizerState* rasterizerState = nullptr;
 
 	vector<BlendState*> blendStates;
+
+	vector<DepthStencilState*> depthStencilStates;
 };
 
 

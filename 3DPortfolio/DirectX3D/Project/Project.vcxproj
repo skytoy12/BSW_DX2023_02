@@ -134,15 +134,28 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Render\State\DepthStencilState.h" />
+    <ClInclude Include="Object\UI\ProgressBar.h" />
+    <ClInclude Include="Render\State\BlendState.h" />
+    <ClInclude Include="Collider\Collider.h" />
+    <ClInclude Include="Collider\ColliderBox.h" />
+    <ClInclude Include="Collider\ColliderCapsule.h" />
+    <ClInclude Include="Collider\ColliderSphere.h" />
+    <ClInclude Include="Scene\GridScene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\CollisionScene.h" />
+    <ClInclude Include="Scene\ModelAnimationScene.h" />
+    <ClInclude Include="Object\Model\Groot.h" />
     <ClInclude Include="Model\ModelAnimator.h" />
     <ClInclude Include="Model\ModelClip.h" />
     <ClInclude Include="Model\Model.h" />
-    <ClInclude Include="Object\Basic\ModelBSW.h" />
     <ClInclude Include="ModelExport\ModelExporter.h" />
     <ClInclude Include="ModelExport\ModelType.h" />
     <ClInclude Include="Model\ModelMesh.h" />
     <ClInclude Include="Model\ModelReader.h" />
     <ClInclude Include="Scene\ModelExportScene.h" />
+    <ClInclude Include="Object\LandScape\Sky.h" />
+    <ClInclude Include="Object\LandScape\SkyBox.h" />
     <ClInclude Include="Utility\MyMath.h" />
     <ClInclude Include="Utility\BinaryReader.h" />
     <ClInclude Include="Utility\BinaryWriter.h" />
@@ -202,14 +215,27 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Render\State\DepthStencilState.cpp" />
+    <ClCompile Include="Object\UI\ProgressBar.cpp" />
+    <ClCompile Include="Render\State\BlendState.cpp" />
+    <ClCompile Include="Collider\ColliderBox.cpp" />
+    <ClCompile Include="Collider\ColliderCapsule.cpp" />
+    <ClCompile Include="Collider\ColliderSphere.cpp" />
+    <ClCompile Include="Collider\Collider.cpp" />
+    <ClCompile Include="Scene\GridScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\CollisionScene.cpp" />
+    <ClCompile Include="Scene\ModelAnimationScene.cpp" />
+    <ClCompile Include="Object\Model\Groot.cpp" />
     <ClCompile Include="Model\ModelAnimator.cpp" />
     <ClCompile Include="Model\ModelClip.cpp" />
     <ClCompile Include="Model\Model.cpp" />
-    <ClCompile Include="Object\Basic\ModelBSW.cpp" />
     <ClCompile Include="ModelExport\ModelExporter.cpp" />
     <ClCompile Include="Model\ModelMesh.cpp" />
     <ClCompile Include="Model\ModelReader.cpp" />
     <ClCompile Include="Scene\ModelExportScene.cpp" />
+    <ClCompile Include="Object\LandScape\Sky.cpp" />
+    <ClCompile Include="Object\LandScape\SkyBox.cpp" />
     <ClCompile Include="Utility\MyMath.cpp" />
     <ClCompile Include="Utility\BinaryReader.cpp" />
     <ClCompile Include="Utility\BinaryWriter.cpp" />
@@ -327,6 +353,24 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="_Shader\Pixel03Collider.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Pixel04ProgressBar.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Pixel05Sky.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="_Shader\PixelColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -376,6 +420,24 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="_Shader\Vertex02ModelAnimation.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Vertex03Collider.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Vertex04ProgressBar.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Vertex05Sky.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

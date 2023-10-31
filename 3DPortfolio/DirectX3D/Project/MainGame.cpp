@@ -11,19 +11,29 @@ MainGame::MainGame()
 	//scene = new TerrainScene();
 	//scene = new TerrainEditorScene();
 	//scene = new SphereScene();
-	scene = new ModelExportScene();
+	//scene = new ModelExportScene();
+	//scene = new ModelAnimationScene();
+	//scene = new CollisionScene();
+
+	SCENE->Create("Grid", new GridScene());
+	//SCENE->Create("Collision", new CollisionScene());
+	SCENE->Create("ModelAnimation", new ModelAnimationScene());
+
+	SCENE->Add("Grid");
+	//SCENE->Add("Collision");
+	SCENE->Add("ModelAnimation");
 }
 
 MainGame::~MainGame()
 {
-	delete scene;
+	SceneManager::Delete();
 
 	Release();
 }
 
 void MainGame::Update()
 {
-	scene->Update();
+	SCENE->Update();
 
 	    Time::GetInstance()->Update();
 	Keyboard::GetInstance()->Update();
@@ -45,16 +55,18 @@ void MainGame::Render()
 		RS->ChangeState(D3D11_FILL_SOLID);
 	}
 
-	scene->PreRender();
+	SCENE->PreRender();
 
 	Device::GetInstance()->Clear();
 
 	Environment::GetInstance()->SetEnvironment();
 
-	              scene->Render();
+	              SCENE->Render();
 	Time::GetInstance()->Render();
 
-	                     scene->PostRender();
+	Environment::GetInstance()->PostSet();
+
+	                SCENE->PostRender();
 	     Camera::GetInstance()->Debug();
 	Environment::GetInstance()->PostRender();
 

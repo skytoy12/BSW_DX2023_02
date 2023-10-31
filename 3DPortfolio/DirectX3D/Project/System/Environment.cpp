@@ -4,13 +4,14 @@ Environment::Environment()
 {
     CreateViewport();
     CreatePerspective();
+    CreateOrthographic();
 
     lightBuffer = new LightBuffer();
 }
 
 Environment::~Environment()
 {
-    delete  projBuffer;
+    delete  persBuffer;
     delete lightBuffer;
 }
 
@@ -29,18 +30,38 @@ void Environment::CreateViewport()
 
 void Environment::CreatePerspective()
 {
-    projBuffer = new MatrixBuffer();
+    persBuffer = new MatrixBuffer();
 
-    projMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
+    persMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
 
-    projBuffer->SetData(projMatrix);
+    persBuffer->SetData(persMatrix);
+}
 
-    projBuffer->SetVSBuffer(2);
+void Environment::CreateOrthographic()
+{
+    orthoBuffer = new MatrixBuffer();
+
+    orthoMatrix = XMMatrixOrthographicOffCenterLH(0.0f, WIN_WIDTH, 0.0f, WIN_HEIGHT, -1.0f, 1.0f);
+
+    orthoBuffer->SetData(orthoMatrix);
+
+    UIViewBuffer = new ViewBuffer();
 }
 
 void Environment::SetEnvironment()
 {
     lightBuffer->SetPSBuffer(0);
+    persBuffer->SetVSBuffer(2);
+
+    StateManager::GetInstance()->Set();
+}
+
+void Environment::PostSet()
+{
+    UIViewBuffer->SetVSBuffer(1);
+     orthoBuffer->SetVSBuffer(2);
+
+     StateManager::GetInstance()->PostSet();
 }
 
 void Environment::PostRender()

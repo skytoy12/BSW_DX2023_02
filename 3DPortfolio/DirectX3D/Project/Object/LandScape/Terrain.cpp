@@ -20,6 +20,24 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	mesh = new Mesh(vertices, indices);
 }
 
+Terrain::Terrain(wstring diffuseFile, wstring heightFile)
+{
+	material = new Material();
+	material->SetShader(L"NormalMapping");
+	material->SetDiffuseMap(diffuseFile);
+
+
+	worldBuffer = new MatrixBuffer();
+
+	heightMap = Texture::Get(heightFile);
+
+	CreateMesh();
+	CreateNormal();
+	CreateTangent();
+
+	mesh = new Mesh(vertices, indices);
+}
+
 Terrain::~Terrain()
 {
 	delete mesh;
@@ -77,6 +95,53 @@ bool Terrain::Picking(OUT Vector3* position)
 	}
 
 	return false;
+}
+
+float Terrain::GetHeight(Vector3 position)
+{
+	position.x /= scale.x;
+	position.z /= scale.z;
+
+	int x = (int)position.x;
+	int z = (int)position.z;
+
+	if (x < 0 || x >= width - 1)
+		return 0.0f;
+
+	if (z < 0 || z >= height - 1)
+		return 0.0f;
+
+	UINT index[4];
+	index[0] = x + 0 + width * (z + 1);
+	index[1] = x + 1 + width * (z + 1);
+	index[2] = x + 0 + width * (z + 0);
+	index[3] = x + 1 + width * (z + 0);
+
+	Vector3 vertex[4];
+
+	for (UINT i = 0; i < 4; i++)
+	{
+		vertex[i] = vertices[index[i]].pos;
+	}
+
+	float u = abs(position.x - vertex[0].x);
+	float v = abs(position.z - vertex[0].z);
+
+	Vector3 result;
+
+	if (u + v <= 1.0f)
+	{
+		result = vertex[0] + (vertex[2] - vertex[0]) * u + (vertex[1] - vertex[0]) * v;
+	}
+	else
+	{
+		u = 1.0f - u;
+		v = 1.0f - v;
+
+		result = vertex[3] + (vertex[2] - vertex[3]) * u + (vertex[1] - vertex[3]) * v;
+	}
+
+	return result.y * scale.y;
 }
 
 void Terrain::CreateMesh()

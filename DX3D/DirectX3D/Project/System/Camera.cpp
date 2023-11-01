@@ -42,6 +42,8 @@ void Camera::Debug()
 		ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
 		ImGui::Text("Camera Rot : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
 
+		transform->Debug();
+
 		ImGui::SliderFloat("Height", &height, -10.0f, 100.0f);
 		ImGui::SliderFloat("Distance", &distance, -10.0f, 100.0f);
 

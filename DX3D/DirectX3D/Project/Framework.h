@@ -161,6 +161,7 @@ using namespace MyMath;
 #include "Scene/ModelExportScene.h"
 #include "Scene/ModelAnimationScene.h"
 #include "Scene/CollisionScene.h"
+#include "Scene/InstanceScene.h"
 #include "Scene/GridScene.h"
 
 #include "Scene/SceneManager.h"

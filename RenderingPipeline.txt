@@ -91,3 +91,7 @@ Ambient(주변반사)
 template을 cpp에 정의하면 링커에서 오류가 발생함
 
 samplerstate에서 Point면 픽셀단위로 네모모양으로, Linear면 뭉게져서 찰흙처럼 나옴
+
+inctance
+프레임을 올리기 위한 기법
+draw call이 원래 각 객체의 mesh마다 call되지만 같은 메쉬를 가진 객체를 한번의 draw call로 그리는 기법

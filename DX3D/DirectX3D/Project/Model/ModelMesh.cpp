@@ -23,4 +23,12 @@ void ModelMesh::Render()
 	DC->DrawIndexed(indices.size(), 0, 0);
 }
 
+void ModelMesh::RenderInstanced(UINT instancedCount)
+{
+	material->SetMaterial();
+	mesh->SetMesh();
+
+	DC->DrawIndexedInstanced(indices.size(), instancedCount, 0, 0, 0);
+}
+
 

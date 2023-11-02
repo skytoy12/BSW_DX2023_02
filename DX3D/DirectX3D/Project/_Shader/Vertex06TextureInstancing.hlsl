@@ -37,8 +37,8 @@ VertexOutput main(VertexInput input)
     
     output.uv = input.uv;
     
-    output.normal = normalize(mul(input.normal, (float3x3) world));
-    output.tangent = normalize(mul(input.tangent, (float3x3) world));
+    output.normal = normalize(mul(input.normal, (float3x3) input.transform));
+    output.tangent = normalize(mul(input.tangent, (float3x3) input.transform));
     
     output.binormal = cross(output.normal, output.tangent);
     

@@ -20,12 +20,13 @@ MainGame::MainGame()
 	SCENE->Create("Grid", new GridScene());
 	//SCENE->Create("Collision", new CollisionScene());
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
-	SCENE->Create("Instance", new InstanceScene());
+	//SCENE->Create("Start", new InstanceScene());
+	SCENE->Create("Start", new ModelInstancingScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
 	//SCENE->Add("ModelAnimation");
-	SCENE->Add("Instance");
+	SCENE->Add("Start");
 }
 
 MainGame::~MainGame()

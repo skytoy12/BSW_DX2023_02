@@ -11,6 +11,8 @@ public:
 
 	void Render();
 
+	void RenderInstanced(UINT instancedCount);
+
 	vector<ModelVertex> GetVertices() { return vertices; }
 	vector<UINT> GetIndices() { return indices; }
 

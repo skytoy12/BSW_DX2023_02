@@ -70,6 +70,8 @@ using namespace DirectX;
 #define MAX_BONE 256
 #define MAX_FRAME_KEY 512
 
+#define MAX_INSTANCE 128
+
 //#define LERP(start, end, t) (start * (1 - t) + end * t)
 #define LERP(start, end, t) (start + (end - start) * t)
 
@@ -148,6 +150,8 @@ using namespace MyMath;
 #include "Model/Model.h"
 #include "Model/ModelClip.h"
 #include "Model/ModelAnimator.h"
+#include "Model/ModelInstancing.h"
+#include "Model/ModelAnimatorInstancing.h"
 
 #include "Object/Model/Groot.h"
 
@@ -162,6 +166,7 @@ using namespace MyMath;
 #include "Scene/ModelAnimationScene.h"
 #include "Scene/CollisionScene.h"
 #include "Scene/InstanceScene.h"
+#include "Scene/ModelInstancingScene.h"
 #include "Scene/GridScene.h"
 
 #include "Scene/SceneManager.h"

@@ -23,3 +23,10 @@ void Model::Render()
 
 	reader->Render();
 }
+
+void Model::RenderInstanced(UINT instanceCount)
+{
+	Transform::SetWorld();
+
+	reader->RenderInstanced(instanceCount);
+}

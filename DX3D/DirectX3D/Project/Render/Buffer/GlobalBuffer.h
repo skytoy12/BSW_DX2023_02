@@ -207,3 +207,40 @@ public:
 		float padding;
 	} data;
 };
+
+class FrameInstancingBuffer : public ConstBuffer
+{
+public:
+	FrameInstancingBuffer()
+		:ConstBuffer(&data, sizeof(Data))
+	{
+	}
+
+	struct Frame
+	{
+		int   clip = 0;
+		UINT  curFrame = 0;
+		float time = 0.0f;
+		float speed = 1.0f;
+	};
+
+	struct Motion
+	{
+		Motion()
+		{
+			next.clip = -1;
+		}
+
+		float    takeTime = 0.0f;
+		float   tweenTime = 0.0f;
+		float runningTime = 0.0f;
+		float padding     = 0.0f;
+
+		Frame cur, next;
+	};
+
+	struct Data
+	{
+		Motion motion[MAX_INSTANCE];
+	} data;
+};

@@ -7,9 +7,10 @@ public:
 
 	void Update();
 	void Render();
+	void RenderInstanced(UINT instanceCount);
 
 	ModelReader* GetReader() { return reader; }
-private:
+protected:
 	ModelReader* reader;
 };
 

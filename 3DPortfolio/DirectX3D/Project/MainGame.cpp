@@ -23,7 +23,7 @@ MainGame::MainGame()
 	//SCENE->Create("Start", new InstanceScene());
 	//SCENE->Create("Start", new ModelInstancingScene());
 	//SCENE->Create("Start", new TestScene());
-	SCENE->Create("Start", new ModelExportScene());
+	SCENE->Create("Start", new TestScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");

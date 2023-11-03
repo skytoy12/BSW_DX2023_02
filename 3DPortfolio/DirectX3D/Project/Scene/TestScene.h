@@ -15,6 +15,7 @@ public:
 private:
 	Soldier* soldier;
 
+	Terrain* terrain;
 };
 
 

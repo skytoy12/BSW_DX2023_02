@@ -8,18 +8,22 @@ ModelExportScene::ModelExportScene()
 	string name2 = "Groot";
 	string name3 = "Dwarven_Axe";
 	string name4 = "EliteFederationSoldier";
-	string name5 = "Classic Ghost";
 
 
-	exporter = new ModelExporter(name5);
+	exporter = new ModelExporter(name4);
 	exporter->ExportModel();
-	//exporter->ExportClip("Rifle Idle");
+	exporter->ExportClip("Rifle/Rifle Idle");
+	exporter->ExportClip("Rifle/Rifle Run");
+	exporter->ExportClip("Rifle/Rifle Walk");
+	exporter->ExportClip("Idle/Breathing Idle");
+	exporter->ExportClip("Idle/Running");
+	exporter->ExportClip("Idle/Walking");
 	//exporter->ExportClip("Sad Idle");
 	//exporter->ExportClip("Standing Melee Attack 360 High");
 
 
 
-	model = new Model(name5);
+	model = new Model(name4);
 }
 
 ModelExportScene::~ModelExportScene()

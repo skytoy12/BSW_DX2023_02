@@ -12,21 +12,18 @@ Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
 	material = new Material();
 	material->SetShader(L"NormalMapping");
 
-	worldBuffer = new MatrixBuffer();
 }
 
 Sphere::~Sphere()
 {
 	delete mesh;
 	delete material;
-	delete worldBuffer;
 }
 
 
 void Sphere::Render()
 {
-	worldBuffer->SetData(Transform::world);
-	worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	material->SetMaterial();
 	mesh->SetMesh();

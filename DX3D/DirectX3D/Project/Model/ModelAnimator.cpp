@@ -29,7 +29,7 @@ void ModelAnimator::Update()
 
 void ModelAnimator::Render()
 {
-	Transform::SetWorld();
+	Transform::SetWorld(true);
 
 	frameBuffer->SetVSBuffer(3);
 	DC->VSSetShaderResources(0, 1, &srv);
@@ -39,7 +39,7 @@ void ModelAnimator::Render()
 
 void ModelAnimator::RenderInstanced(UINT instanceCount)
 {
-	Transform::SetWorld();
+	Transform::SetWorld(true);
 
 	frameBuffer->SetVSBuffer(3);
 	DC->VSSetShaderResources(0, 1, &srv);

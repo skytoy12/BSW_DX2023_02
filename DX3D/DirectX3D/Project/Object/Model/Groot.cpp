@@ -9,7 +9,7 @@ Groot::Groot()
 	ReadClip("Standing Melee Attack 360 High");
 	CreateTexture();
 
-	scale *= 0.01f;
+	scale *= 0.04f;
 
 	reader->GetMaterials()[0]->Load(L"Groot.mat");
 
@@ -59,7 +59,7 @@ void Groot::Update()
 	if (KEY_DOWN('3'))
 		PlayClip(2, speed, takeTime);
 
-	Move();
+	//Move();
 	Attack();
 
 	UpdateRightHand();

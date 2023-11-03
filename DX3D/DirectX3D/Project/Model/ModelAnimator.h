@@ -21,6 +21,7 @@ public:
 
 	Matrix GetTransformByBone(UINT boneIndex);
 	Matrix GetTransformByNode(UINT nodeIndex);
+	ModelReader* GetReader() { return reader; }
 
 private:
 	void CreateClipTransform(UINT index);

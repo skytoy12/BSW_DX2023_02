@@ -20,7 +20,7 @@ private:
 
 	vector<VertexColor> vertices;
 
-	MatrixBuffer* worldBuffer;
+	WorldBuffer* worldBuffer;
 };
 
 

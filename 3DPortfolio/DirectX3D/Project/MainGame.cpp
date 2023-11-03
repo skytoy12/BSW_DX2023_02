@@ -3,6 +3,8 @@
 
 MainGame::MainGame()
 {
+	srand(time(NULL));
+
 	Initialize();
 
 	//scene = new TutorialScene();
@@ -17,11 +19,16 @@ MainGame::MainGame()
 
 	SCENE->Create("Grid", new GridScene());
 	//SCENE->Create("Collision", new CollisionScene());
-	SCENE->Create("ModelAnimation", new ModelAnimationScene());
+	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
+	//SCENE->Create("Start", new InstanceScene());
+	//SCENE->Create("Start", new ModelInstancingScene());
+	//SCENE->Create("Start", new TestScene());
+	SCENE->Create("Start", new ModelExportScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
-	SCENE->Add("ModelAnimation");
+	//SCENE->Add("ModelAnimation");
+	SCENE->Add("Start");
 }
 
 MainGame::~MainGame()

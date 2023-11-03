@@ -9,7 +9,6 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	material->SetSpecularMap(specularFile);
 	material->SetNormalMap(NormalFile);
 
-	worldBuffer = new MatrixBuffer();
 
 	heightMap = Texture::Get(heightFile);
 
@@ -27,8 +26,6 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 	material->SetDiffuseMap(diffuseFile);
 
 
-	worldBuffer = new MatrixBuffer();
-
 	heightMap = Texture::Get(heightFile);
 
 	CreateMesh();
@@ -41,14 +38,13 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 Terrain::~Terrain()
 {
 	delete mesh;
-	delete worldBuffer;
 	delete material;
 }
 
 void Terrain::Render()
 {
-	worldBuffer->SetData(world);
-	worldBuffer->SetVSBuffer(0);
+
+	Transform::SetWorld();
 
 	mesh->SetMesh();
 	material->SetMaterial();

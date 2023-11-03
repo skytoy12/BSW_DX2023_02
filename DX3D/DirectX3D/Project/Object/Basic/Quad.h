@@ -19,6 +19,4 @@ protected:
 
 	vector<VertexType> vertices;
 	vector<UINT>           indices;
-
-	MatrixBuffer* worldBuffer = nullptr;
 };

@@ -7,9 +7,10 @@ ModelExportScene::ModelExportScene()
 	string name1 = "Y Bot";
 	string name2 = "Groot";
 	string name3 = "Dwarven_Axe";
+	string name4 = "StanfordBunny";
 
 
-	exporter = new ModelExporter(name3);
+	exporter = new ModelExporter(name4);
 	exporter->ExportModel();
 	//exporter->ExportClip("Running Backward");
 	//exporter->ExportClip("Sad Idle");
@@ -17,7 +18,7 @@ ModelExportScene::ModelExportScene()
 
 
 
-	model = new Model(name3);
+	model = new Model(name4);
 }
 
 ModelExportScene::~ModelExportScene()

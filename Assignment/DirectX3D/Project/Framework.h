@@ -143,6 +143,7 @@ using namespace MyMath;
 #include "Model/ModelClip.h"
 #include "Model/ModelAnimator.h"
 
+#include "Object/Model/bullet.h"
 #include "Object/Model/Groot.h"
 #include "Object/Model/Zombie.h"
 

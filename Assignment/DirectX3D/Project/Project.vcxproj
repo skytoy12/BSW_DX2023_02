@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Model\bullet.h" />
     <ClInclude Include="Collider\Collider.h" />
     <ClInclude Include="Collider\ColliderBox.h" />
     <ClInclude Include="Collider\ColliderCapsule.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Model\bullet.cpp" />
     <ClCompile Include="Collider\ColliderBox.cpp" />
     <ClCompile Include="Collider\ColliderCapsule.cpp" />
     <ClCompile Include="Collider\ColliderSphere.cpp" />

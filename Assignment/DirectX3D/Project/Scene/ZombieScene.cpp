@@ -20,8 +20,8 @@ ZombieScene::ZombieScene()
 	zombie3->SetTarget(groot);
 
 	zombie1->SetSpeed(0.0f);
-	zombie2->SetSpeed(10.0f);
-	zombie3->SetSpeed(20.0f);
+	zombie2->SetSpeed(0.0f);
+	zombie3->SetSpeed(0.0f);
 
 	Camera::GetInstance()->SetTarget(groot);
 	terrain->scale *= 5.0f;
@@ -49,16 +49,21 @@ void ZombieScene::Update()
 
 	groot->rotation.y = Angle(CAMERA->GetGlobalPosition(), groot->GetGlobalPosition()) - XM_PI;
 
-	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
-	ray.direction *= -1;
 
-	Contact contact = {};
-	
 
-	if (zombie1->GetCollider()->Collision(ray))
-		zombie1->GetCollider()->SetColor(1, 0, 0);
-	else
-		zombie1->GetCollider()->SetColor(0, 1, 0);
+	for (Bullet* bullet : groot->GetBullet())
+	{
+		zombie1->hitted(bullet);
+		zombie2->hitted(bullet);
+		zombie3->hitted(bullet);
+	}
+
+	if (KEY_DOWN(VK_TAB))
+	{
+		zombie1->SetSpeed(0.0f);
+		zombie2->SetSpeed(10.0f);
+		zombie3->SetSpeed(20.0f);
+	}
 
 	//ray.origin = CAMERA->translation;
 
@@ -92,31 +97,31 @@ void ZombieScene::PostRender()
 
 void ZombieScene::Attack()
 {
-	Ray ray1 = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	//Ray ray1 = Camera::GetInstance()->ScreenPointToRay(mousePos);
 
-	if (KEY_PRESS(VK_LBUTTON))
-	{
-		if (zombie1->GetCollider()->Collision(ray1))
-		{
-			zombie1->GetCollider()->SetColor(1.0f, 0.0f, 0.0f);
-		}
-		else
-			zombie1->GetCollider()->SetColor(0.0f, 1.0f, 0.0f);
+	//if (KEY_PRESS(VK_LBUTTON))
+	//{
+	//	if (zombie1->GetCollider()->Collision(ray1))
+	//	{
+	//		zombie1->GetCollider()->SetColor(1.0f, 0.0f, 0.0f);
+	//	}
+	//	else
+	//		zombie1->GetCollider()->SetColor(0.0f, 1.0f, 0.0f);
 
-		if (zombie2->GetCollider()->Collision(ray1))
-		{
-			zombie2->GetCollider()->SetColor(1.0f, 0.0f, 0.0f);
-		}
-		else
-			zombie2->GetCollider()->SetColor(0.0f, 1.0f, 0.0f);
+	//	if (zombie2->GetCollider()->Collision(ray1))
+	//	{
+	//		zombie2->GetCollider()->SetColor(1.0f, 0.0f, 0.0f);
+	//	}
+	//	else
+	//		zombie2->GetCollider()->SetColor(0.0f, 1.0f, 0.0f);
 
-		if (zombie3->GetCollider()->Collision(ray1))
-		{
-			zombie3->GetCollider()->SetColor(1.0f, 0.0f, 0.0f);
-		}
-		else
-			zombie3->GetCollider()->SetColor(0.0f, 1.0f, 0.0f);
-	}
+	//	if (zombie3->GetCollider()->Collision(ray1))
+	//	{
+	//		zombie3->GetCollider()->SetColor(1.0f, 0.0f, 0.0f);
+	//	}
+	//	else
+	//		zombie3->GetCollider()->SetColor(0.0f, 1.0f, 0.0f);
+	//}
 	
 }
 

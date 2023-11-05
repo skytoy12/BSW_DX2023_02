@@ -19,12 +19,17 @@ public:
 	void UpdateRightHand();
 
 	void SetClip(AnimState state);
+
+	vector<Bullet*> GetBullet() { return bullets; }
+
 private :
 	void Move();
 	void Attack();
 private:
 	float speed = 1.0f;
 	float takeTime = 0.2f;
+
+	vector<Bullet*> bullets;
 
 	Model* weapon;
 

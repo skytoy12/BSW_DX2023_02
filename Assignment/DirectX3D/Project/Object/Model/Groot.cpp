@@ -25,12 +25,23 @@ Groot::Groot()
 	weapon->translation = { -50.630f, 68.640f, -20.580f };
 
 	clips[ATTACK]->SetEndEvent(bind(&Groot::SetClip, this, IDLE), 0.7f);
+
+	for (int i = 0; i < 30; i++)
+	{
+		Bullet* bullet = new Bullet();
+
+		bullets.push_back(bullet);
+	}
 }
 
 Groot::~Groot()
 {
 	delete weapon;
 	delete rightHand;
+
+	for (Bullet* bullet : bullets)
+		delete bullet;
+	bullets.clear();
 }
 
 void Groot::Update()
@@ -53,12 +64,35 @@ void Groot::Update()
 	Attack();
 
 	UpdateRightHand();
+
+	for (Bullet* bullet : bullets)
+	{
+		if (bullet->isActive == false)
+			bullet->SetDir(-Forward());
+	}
+
+	for (Bullet* bullet : bullets)
+	{
+		if (bullet->isActive == true)
+		{
+			float distance = (bullet->translation - this->translation).Length();
+
+			if (distance > 1000.0f)
+				bullet->isActive == false;
+		}
+	}
+
+	for (Bullet* bullet : bullets)
+		bullet->Update();
 }
 
 void Groot::Render()
 {
 	ModelAnimator::Render();
 	weapon->Render();
+
+	for (Bullet* bullet : bullets)
+		bullet->Render();
 }
 
 void Groot::Debug()
@@ -122,5 +156,12 @@ void Groot::Attack()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetClip(ATTACK);
+
+		auto bulletiter = std::find_if(bullets.begin(), bullets.end(), [](const Bullet* obj)->bool {return !obj->isActive; });
+
+		if (bulletiter == bullets.end())
+			return;
+		(*bulletiter)->Shoot(translation + Vector3(0.0f, 10.0f, 0.0f));
 	}
+
 }

@@ -31,6 +31,9 @@ Zombie::~Zombie()
 
 void Zombie::Update()
 {
+	if (hp == 0)
+		return;
+
 	ModelAnimator::Update();
 	Transform::Update();
 	collider->Update();
@@ -39,10 +42,17 @@ void Zombie::Update()
 	UpdateCollider();
 
 	Move();
+
+	hitTime += Time::Delta();
+	if (hitTime > 0.5f)
+		collider->SetColor(0, 1, 0);
 }
 
 void Zombie::Render()
 {
+	if (hp == 0)
+		return;
+
 	ModelAnimator::Render();
 	collider->Render();
 }
@@ -56,6 +66,23 @@ void Zombie::UpdateCollider()
 	UINT nodeIndex = reader->GetNodeIndex("mixamorig:Hips");
 
 	model->GetWorld() = GetTransformByNode(nodeIndex) * world;
+}
+
+void Zombie::hitted(Bullet* bullet)
+{
+	if (collider->Collision(bullet->GetCollider()))
+	{
+		if (bullet->isActive == false)
+			return;
+		if (hitTime < 0.5f)
+			return;
+
+		bullet->isActive = false;
+		Hp();
+		collider->SetColor(1, 0, 0);
+
+		hitTime = 0.0f;
+	}
 }
 
 void Zombie::Move()

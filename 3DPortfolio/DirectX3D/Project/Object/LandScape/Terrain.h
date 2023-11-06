@@ -1,6 +1,7 @@
 #pragma once
 class Terrain : public Transform
 {
+	typedef VertexTextureNormalTangent VertexType;
 public:
 	Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile);
 	Terrain(wstring diffuseFile, wstring heightFile);

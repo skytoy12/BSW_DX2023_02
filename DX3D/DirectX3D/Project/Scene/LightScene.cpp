@@ -60,6 +60,6 @@ void LightScene::PostRender()
 {
 	floor -> Debug();
 	groot -> Debug();
-	bunny -> Debug();
+	bunny->GetReader()->Debug();
 	sphere-> Debug();
 }

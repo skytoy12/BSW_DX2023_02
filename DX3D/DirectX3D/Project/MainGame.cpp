@@ -23,11 +23,12 @@ MainGame::MainGame()
 	//SCENE->Create("Start", new InstanceScene());
 	//SCENE->Create("Start", new ModelInstancingScene());
 	//SCENE->Create("Start", new LightScene());
+	SCENE->Create("ModelAnimation", new ModelAnimationScene());
 	SCENE->Create("Start", new LightScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
-	//SCENE->Add("ModelAnimation");
+	SCENE->Add("ModelAnimation");
 	SCENE->Add("Start");
 }
 

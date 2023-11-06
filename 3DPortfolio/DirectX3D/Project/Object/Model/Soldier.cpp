@@ -43,6 +43,8 @@ void Soldier::Update()
 
 	if (KEY_DOWN('6'))
 		PlayClip(5, animSpeed, takeTime);
+
+	Move();
 }
 
 void Soldier::Render()
@@ -67,4 +69,20 @@ void Soldier::Move()
 	dir = dir.GetNormalized();
 
 	translation += dir * moveSpeed * Time::Delta();
+}
+
+
+void Soldier::SetClip(SoliderState type)
+{
+	if (type == curState)
+		return;
+	curState = type;
+	oldState = curState;
+
+	PlayClip(curState);
+}
+
+bool Soldier::isMove()
+{
+	return false;
 }

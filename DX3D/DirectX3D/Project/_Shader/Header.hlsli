@@ -15,12 +15,6 @@ cbuffer Proj : register(b2)
     matrix proj;
 };
 
-cbuffer LightDirection : register(b0)
-{
-    float3 lightDirection;
-    float padding;
-    float4 ambientLight;
-}
 
 cbuffer MaterialBuffer : register(b1)
 {
@@ -144,7 +138,7 @@ SamplerState    samp : register(s0);
 
 ///Light
 
-struct Light
+struct LightData
 {
     float4 color;
     
@@ -160,11 +154,11 @@ struct Light
     int   active;
 };
 
-struct LightData
+struct LightMaterial
 {
     float3 normal;
     float4 diffuseColor;
-    float4 emossove;
+    float4 emissive;
     float4 specularIntensity;
     
     float shininess;
@@ -173,7 +167,7 @@ struct LightData
     float3 worldPos;
 };
 
-struct LightPixelInput
+struct LightVertexOutput
 {
     float4 pos      : SV_POSITION;
     float2 uv       : UV;
@@ -183,6 +177,91 @@ struct LightPixelInput
     float3 viewPos  : POSITION0;
     float3 worldPos : POSITION1;
 };
+
+#define MAX_LIGHT 10
+
+cbuffer LightBuffer : register(b0)
+{
+    LightData lights[MAX_LIGHT];
+    
+    int    lightCount;
+    float3 ambientLight;
+    float3 ambientCeil;
+}
+
+float3 GetNormal(float3 T, float3 B, float3 N, float2 uv)
+{
+     //Normal Mapping
+    
+    T = normalize(T);
+    B = normalize(B);
+    N = normalize(N);
+    
+    float3 normal = N;
+    
+    if (hasNormalMap)
+    {
+        float4 normalSample = normalmap.Sample(samp, uv);
+        
+        normal = normalSample * 2.0f - 1.0f;
+        
+        float3x3 TBN = float3x3(T, B, N);
+        
+        normal = normalize(mul(normal, TBN));
+    }
+    
+    return normal;
+}
+
+LightMaterial GetLightMaterial(LightVertexOutput input)
+{
+    LightMaterial material;
+    
+    material.normal            = GetNormal(input.tangent, input.binomal, input.normal, input.uv);
+    material.emissive          = float4(0.1f, 0.1f, 0.1f, 1.0f);
+    
+    if (hasDiffuseMap)
+        material.diffuseColor = diffusemap.Sample(samp, input.uv);
+    else
+        material.diffuseColor = float4(1, 1, 1, 1);
+    
+    material.specularIntensity = specularmap.Sample(samp, input.uv);
+    
+    material.viewPos  = input.viewPos;
+    material.worldPos = input.worldPos;
+
+    return material;
+}
+
+float4 CalculateAmbient(LightMaterial material)
+{
+    float up = material.normal.y * 0.5f + 0.5f;
+    
+    float4 result = (float4(ambientLight + up * ambientCeil, 1.0f));
+    
+    return result * material.diffuseColor * mAmbeint;
+
+}
+
+float4 CalculateDirectional(LightMaterial material, LightData data)
+{
+    float3 toLight = normalize(data.direction);
+    
+    float diffuseIntensity = saturate(dot(material.normal, -toLight));
+    
+    float4 finalColor = data.color * diffuseIntensity * mDiffuse;
+    
+    //Blinn-Phong Shading
+    
+    float3 viewDir = normalize(material.worldPos - material.viewPos);
+    float3 halfWay = normalize(viewDir + toLight);
+    float specular = saturate(dot(material.normal, -halfWay));
+    
+    finalColor += data.color * pow(specular, shininess) * material.specularIntensity * mSpecular;
+    
+    return finalColor * material.diffuseColor;
+
+}
 
 matrix Skinworld(float4 indices, float4 weights)
 {

@@ -10,7 +10,7 @@ Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
 	mesh = new Mesh(vertices, indices);
 
 	material = new Material();
-	material->SetShader(L"NormalMapping");
+	material->SetShader(L"09Light");
 
 }
 

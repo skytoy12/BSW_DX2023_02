@@ -4,7 +4,7 @@
 Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile)
 {
 	material = new Material();
-	material->SetShader(L"NormalMapping");
+	material->SetShader(L"09Light");
 	material->SetDiffuseMap(diffuseFile);
 	material->SetSpecularMap(specularFile);
 	material->SetNormalMap(NormalFile);
@@ -22,7 +22,7 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 {
 	material = new Material();
-	material->SetShader(L"NormalMapping");
+	material->SetShader(L"09Light");
 	material->SetDiffuseMap(diffuseFile);
 
 
@@ -152,7 +152,7 @@ void Terrain::CreateMesh()
 	{
 		for (float x = 0; x < width; x++)
 		{
-			VertexTextureNormalTangent vertex;
+			VertexType vertex;
 			vertex.pos = Vector3(x, 0, z);
 
 			vertex.uv.x = x / (width - 1);
@@ -240,7 +240,7 @@ void Terrain::CreateTangent()
 		vertices[index2].tangent += tangent;
 	}
 
-	for (VertexTextureNormalTangent& vertex : vertices)
+	for (VertexType& vertex : vertices)
 	{
 		Vector3 T = vertex.tangent;
 		Vector3 N = vertex.normal;

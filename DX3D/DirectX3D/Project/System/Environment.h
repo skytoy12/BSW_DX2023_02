@@ -10,6 +10,8 @@ private:
 	void CreatePerspective();
 	void CreateOrthographic();
 
+	void DebugLight(int lightIndex);
+
 public :
 	void SetEnvironment();
 	void PostSet();

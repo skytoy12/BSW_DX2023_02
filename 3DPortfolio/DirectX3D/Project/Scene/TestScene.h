@@ -2,6 +2,7 @@
 class TestScene : public Scene
 {
 public:
+
 	TestScene();
 	~TestScene();
 
@@ -12,6 +13,8 @@ public:
 	virtual void Render() override;
 
 	virtual void PostRender() override;
+
+
 private:
 	Soldier* soldier;
 
@@ -21,6 +24,8 @@ private:
 
 	int instanceIndex = 0;
 	int clip = 0;
+
+	Vector3 pos;
 };
 
 

@@ -2,6 +2,13 @@
 class Soldier : public ModelAnimator
 {
 public:
+	enum SoliderState
+	{
+		IDLE,
+		WALK,
+		RUN
+	};
+
 	Soldier();
 	~Soldier();
 
@@ -12,7 +19,18 @@ public:
 
 	void Move();
 	void SetDestination(Vector3 pos) { destination = pos; }
+	Vector3 GetDestination() { return destination; }
+
+	void SetClip(SoliderState type);
+
+	bool isMove();
 private:
+	SoliderState curState;
+	SoliderState oldState;
+
+	Vector3 curPos;
+	Vector3 oldPos;
+
 	float animSpeed = 1.0f;
 	float takeTime = 0.2f;
 

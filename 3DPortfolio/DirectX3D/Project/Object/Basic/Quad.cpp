@@ -28,7 +28,6 @@ Quad::Quad(Vector2 size)
 	material->SetShader(L"NormalMapping");
 	material->SetDiffuseMap(L"LandScape/Box.png");
 
-	worldBuffer = new MatrixBuffer();
 }
 
 Quad::Quad(wstring file)
@@ -61,19 +60,16 @@ Quad::Quad(wstring file)
 
 	mesh = new Mesh(vertices, indices);
 
-	worldBuffer = new MatrixBuffer();
 }
 
 Quad::~Quad()
 {
-	delete worldBuffer;
 	delete mesh;
 }
 
 void Quad::Render()
 {
-	worldBuffer->SetData(Transform::world);
-	worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	material->SetMaterial();
 	mesh    ->SetMesh();
@@ -83,8 +79,7 @@ void Quad::Render()
 
 void Quad::RenderInstanced(UINT instanceCount)
 {
-	worldBuffer->SetData(Transform::world);
-	worldBuffer->SetVSBuffer(0);
+	Transform::SetWorld();
 
 	material->SetMaterial();
 	mesh->SetMesh();

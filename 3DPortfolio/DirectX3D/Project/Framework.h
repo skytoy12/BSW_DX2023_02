@@ -132,7 +132,6 @@ using namespace MyMath;
 #include "Object/Basic/Quad.h"
 #include "Object/Basic/TextureCube.h"
 #include "Object/Basic/Robot.h"
-#include "Object/Basic/Circle.h"
 #include "Object/Basic/Sphere.h"
 
 #include "Object/LandScape/Terrain.h"

@@ -156,9 +156,6 @@
     <ClInclude Include="Object\Basic\Sphere.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Basic\Circle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
     <ClInclude Include="Utility\Utility.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -366,9 +363,6 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Object\Basic\Sphere.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Object\Basic\Circle.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Utility\Utility.cpp">
@@ -602,6 +596,8 @@
     <FxCompile Include="_Shader\Pixel07ModelInstancing.hlsl" />
     <FxCompile Include="_Shader\Vertex08ModelAnimatorInstancing.hlsl" />
     <FxCompile Include="_Shader\Pixel08ModelAnimatorInstancing.hlsl" />
+    <FxCompile Include="_Shader\Vertex09Light.hlsl" />
+    <FxCompile Include="_Shader\Pixel09Light.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

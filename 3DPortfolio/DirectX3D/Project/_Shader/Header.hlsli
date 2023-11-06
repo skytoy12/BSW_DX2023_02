@@ -1,6 +1,7 @@
 cbuffer World : register(b0)
 {
     matrix world;
+    int hasAnimation;
 };
 
 cbuffer View : register(b1)
@@ -38,8 +39,8 @@ cbuffer MaterialBuffer : register(b1)
 
 struct Frame
 {
-    int   clip;
-    uint  curFrame;
+    int clip;
+    uint curFrame;
     float time;
     float speed;
 };
@@ -70,7 +71,7 @@ Texture2DArray transformMap : register(t0);
 
 struct VertexColor
 {
-    float4 pos   : POSITION;
+    float4 pos : POSITION;
     float4 color : COLOR;
 };
 
@@ -84,38 +85,38 @@ struct VertexColorNormal
 struct VertexTexture
 {
     float4 pos : POSITION;
-    float2 uv  : UV;
+    float2 uv : UV;
 };
 
 struct VertexTextureNormal
 {
-    float4 pos    : POSITION;
-    float2 uv     : UV;
+    float4 pos : POSITION;
+    float2 uv : UV;
     float3 normal : NORMAL;
 };
 
 struct VertexTextureNormalTangent
 {
-    float4 pos     : POSITION;
-    float2 uv      : UV;
-    float3 normal  : NORMAL;
+    float4 pos : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
     float3 tangent : TANGENT;
 };
 
 struct VertexTextureNormalTangentAlpha
 {
-    float4 pos     : POSITION;
-    float2 uv      : UV;
-    float3 normal  : NORMAL;
+    float4 pos : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
     float3 tangent : TANGENT;
-    float4 alpha   : ALPHA;
+    float4 alpha : ALPHA;
 };
 
 struct VertexTextureNormalTangentBlend
 {
-    float4 pos     : POSITION;
-    float2 uv      : UV;
-    float3 normal  : NORMAL;
+    float4 pos : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
     float3 tangent : TANGENT;
     float4 indices : BLENDINDICES;
     float4 weights : BLENDWEIGHTS;
@@ -123,22 +124,65 @@ struct VertexTextureNormalTangentBlend
 
 struct VertexInstancing
 {
-    float4 pos     : POSITION;
-    float2 uv      : UV;
-    float3 normal  : NORMAL;
+    float4 pos : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
     float3 tangent : TANGENT;
     float4 indices : BLENDINDICES;
     float4 weights : BLENDWEIGHTS;
     
     matrix transform : INSTANCE_TRANSFORM;
-    uint   index     : INSTANCE_INDEX;
+    uint index : INSTANCE_INDEX;
 };
 
-Texture2D  diffusemap : register(t0);
+Texture2D diffusemap : register(t0);
 Texture2D specularmap : register(t1);
-Texture2D   normalmap : register(t2);
+Texture2D normalmap : register(t2);
 
-SamplerState    samp : register(s0);
+SamplerState samp : register(s0);
+
+
+///Light
+
+struct Light
+{
+    float4 color;
+    
+    float3 direction;
+    int type;
+    
+    float3 position;
+    float range;
+    
+    float inner;
+    float outer;
+    float length;
+    int active;
+};
+
+struct LightData
+{
+    float3 normal;
+    float4 diffuseColor;
+    float4 emossove;
+    float4 specularIntensity;
+    
+    float shininess;
+    
+    float3 viewPos;
+    float3 worldPos;
+};
+
+struct LightPixelInput
+{
+    float4 pos : SV_POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float3 binomal : BINORMAL;
+    float3 viewPos : POSITION0;
+    float3 worldPos : POSITION1;
+};
 
 matrix Skinworld(float4 indices, float4 weights)
 {
@@ -222,12 +266,12 @@ matrix Skinworld(uint instanceIndex, float4 indices, float4 weights)
     float time[2];
     
     clipIndex[0] = motions[instanceIndex].cur.clip;
-     curFrame[0] = motions[instanceIndex].cur.curFrame;
-         time[0] = motions[instanceIndex].cur.time;
+    curFrame[0] = motions[instanceIndex].cur.curFrame;
+    time[0] = motions[instanceIndex].cur.time;
     
     clipIndex[1] = motions[instanceIndex].next.clip;
-     curFrame[1] = motions[instanceIndex].next.curFrame;
-         time[1] = motions[instanceIndex].next.time;
+    curFrame[1] = motions[instanceIndex].next.curFrame;
+    time[1] = motions[instanceIndex].next.time;
     
     [unroll]
     for (int i = 0; i < 4; i++)

@@ -16,6 +16,11 @@ private:
 	Soldier* soldier;
 
 	Terrain* terrain;
+
+	ModelAnimatorInstancing* model;
+
+	int instanceIndex = 0;
+	int clip = 0;
 };
 
 

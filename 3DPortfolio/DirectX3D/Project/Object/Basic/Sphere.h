@@ -21,7 +21,6 @@ private :
 	vector<VertexType> vertices;
 	vector<UINT>           indices;
 
-	MatrixBuffer* worldBuffer = nullptr;
 
 
 	float radius;

@@ -167,7 +167,6 @@
     <ClInclude Include="Utility\BinaryWriter.h" />
     <ClInclude Include="Render\Buffer\RawBuffer.h" />
     <ClInclude Include="Render\Shader\ComputeShader.h" />
-    <ClInclude Include="Object\Basic\Circle.h" />
     <ClInclude Include="Object\Basic\Robot.h" />
     <ClInclude Include="Object\Basic\Sphere.h" />
     <ClInclude Include="Render\Buffer\StructuredBuffer.h" />
@@ -253,7 +252,6 @@
     <ClCompile Include="Utility\BinaryWriter.cpp" />
     <ClCompile Include="Render\Buffer\RawBuffer.cpp" />
     <ClCompile Include="Render\Shader\ComputeShader.cpp" />
-    <ClCompile Include="Object\Basic\Circle.cpp" />
     <ClCompile Include="Object\Basic\Robot.cpp" />
     <ClCompile Include="Object\Basic\Sphere.cpp" />
     <ClCompile Include="Render\Buffer\StructuredBuffer.cpp" />
@@ -401,6 +399,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
     </FxCompile>
+    <FxCompile Include="_Shader\Pixel09Light.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
     <FxCompile Include="_Shader\PixelColor.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Pixel</ShaderType>
@@ -486,6 +490,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="_Shader\Vertex08ModelAnimatorInstancing.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="_Shader\Vertex09Light.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>

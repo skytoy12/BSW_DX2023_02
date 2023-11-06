@@ -20,7 +20,7 @@ private :
 	void CreateNormal();
 	void CreateTangent();
 private:
-	vector<VertexTextureNormalTangent> vertices;
+	vector<VertexType> vertices;
 	vector<UINT>           indices;
 
 	Material* material;

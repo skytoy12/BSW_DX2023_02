@@ -5,8 +5,8 @@ public:
 	enum SoliderState
 	{
 		IDLE,
-		WALK,
-		RUN
+		RUN,
+		WALK
 	};
 
 	Soldier();
@@ -17,6 +17,8 @@ public:
 	void Debug();
 	void PostRender();
 
+
+	void SetAngle();
 	void Move();
 	void SetDestination(Vector3 pos) { destination = pos; }
 	Vector3 GetDestination() { return destination; }
@@ -36,6 +38,8 @@ private:
 
 	float moveSpeed = 10.0f;
 	Vector3 destination = { 0, 0, 0 };
+
+	float rotDamping = 10.0f;
 };
 
 

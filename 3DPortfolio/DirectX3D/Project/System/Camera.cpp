@@ -24,9 +24,9 @@ Camera::~Camera()
 void Camera::Update()
 {
 	if (target == nullptr)
-		FreeMode();
+		FreeMode(MODE3);
 	else
-		TargetMode(MODE2);
+		TargetMode(mode);
 }
 
 void Camera::Debug()
@@ -50,6 +50,7 @@ void Camera::Debug()
 		ImGui::SliderFloat("Camera MoveDamping", &moveDamping, 0.0f, 30.0f);
 		ImGui::SliderFloat("Camera  RotDamping", &rotDamping, 0.0f, 30.0f);
 		ImGui::SliderFloat("Camera  RotY", &rotY, 0, XM_2PI);
+		ImGui::SliderFloat("Camera  RotX", &rotX, 0, XM_2PI);
 
 		ImGui::TreePop();
 	}
@@ -116,52 +117,161 @@ Vector3 Camera::WorldToScreenPoint(Vector3 worldPos)
 	return screenPos;
 }
 
-void Camera::FreeMode()
+void Camera::SetMode(bool isMode3)
 {
-	if (KEY_PRESS(VK_RBUTTON))
+	if (isMode3 == true)
+		mode == MODE3;
+	else
+		mode == MODE4;
+}
+
+void Camera::FreeMode(Mode mode)
+{
+
+	switch (mode)
+	{
+	case Camera::MODE1:
+	{
+		if (KEY_PRESS(VK_RBUTTON))
+		{
+			if (KEY_PRESS(VK_LSHIFT))
+				moveSpeed = 50.0f;
+			else
+				moveSpeed = 20.0f;
+
+			if (KEY_PRESS('A'))
+				transform->translation += transform->Left() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('D'))
+				transform->translation += transform->Right() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('S'))
+				transform->translation += transform->Backward() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('W'))
+				transform->translation += transform->Forward() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('Q'))
+				transform->translation += transform->Up() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('E'))
+				transform->translation += transform->Down() * moveSpeed * Time::Delta();
+
+			Vector3 dir = mousePos - oldPos;
+
+			if (abs(dir.x) > 10.0f || abs(dir.y) > 10.0f)
+			{
+				dir.x = 0.0f;
+				dir.y = 0.0f;
+			}
+
+			if (dir.x != 0.0f)
+				cameraDir.x = dir.x;
+			if (dir.y != 0.0f)
+				cameraDir.y = dir.y;
+			if (dir.z != 0.0f)
+				cameraDir.z = dir.z;
+
+			transform->rotation.y += dir.x * rotSpeed * 0.0005f;//Time::Delta();
+			transform->rotation.x += dir.y * rotSpeed * 0.0005f;//Time::Delta();
+		}
+
+		oldPos = mousePos;
+
+		viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+	}
+	break;
+
+	case Camera::MODE2:
+	{
+		if (KEY_PRESS(VK_RBUTTON))
+		{
+			if (KEY_PRESS(VK_LSHIFT))
+				moveSpeed = 50.0f;
+			else
+				moveSpeed = 20.0f;
+
+			if (KEY_PRESS('A'))
+				transform->translation += transform->Left() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('D'))
+				transform->translation += transform->Right() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('S'))
+				transform->translation += transform->Backward() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('W'))
+				transform->translation += transform->Forward() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('Q'))
+				transform->translation += transform->Up() * moveSpeed * Time::Delta();
+			if (KEY_PRESS('E'))
+				transform->translation += transform->Down() * moveSpeed * Time::Delta();
+
+			Vector3 dir = mousePos - oldPos;
+
+			if (abs(dir.x) > 10.0f || abs(dir.y) > 10.0f)
+			{
+				dir.x = 0.0f;
+				dir.y = 0.0f;
+			}
+
+			if (dir.x != 0.0f)
+				cameraDir.x = dir.x;
+			if (dir.y != 0.0f)
+				cameraDir.y = dir.y;
+			if (dir.z != 0.0f)
+				cameraDir.z = dir.z;
+
+			transform->rotation.y += dir.x * rotSpeed * 0.0005f;//Time::Delta();
+			transform->rotation.x += dir.y * rotSpeed * 0.0005f;//Time::Delta();
+		}
+
+		oldPos = mousePos;
+
+		viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+	}
+	break;
+	case Camera::MODE3:
 	{
 		if (KEY_PRESS(VK_LSHIFT))
 			moveSpeed = 50.0f;
 		else
 			moveSpeed = 20.0f;
 
-		if (KEY_PRESS('A'))
-			transform->translation += transform->Left()     * moveSpeed * Time::Delta();
-		if (KEY_PRESS('D'))								   
-			transform->translation += transform->Right()    * moveSpeed * Time::Delta();
-		if (KEY_PRESS('S'))
-			transform->translation += transform->Backward() * moveSpeed * Time::Delta();
-		if (KEY_PRESS('W'))
-			transform->translation += transform->Forward()  * moveSpeed * Time::Delta();
-		if (KEY_PRESS('Q'))
-			transform->translation += transform->Up()       * moveSpeed * Time::Delta();
-		if (KEY_PRESS('E'))							       
-			transform->translation += transform->Down()     * moveSpeed * Time::Delta();
+		float moveRange = 50.0f;
 
-		Vector3 dir = mousePos - oldPos;
+		if (mousePos.x < moveRange)
+			transform->translation += transform->Left() * moveSpeed * Time::Delta();
+		if (mousePos.x > WIN_WIDTH - moveRange)
+			transform->translation += transform->Right() * moveSpeed * Time::Delta();
 
-		if (abs(dir.x) > 10.0f || abs(dir.y) > 10.0f)
+		Vector3 dirZ1 = transform->Backward();
+		dirZ1.y = 0;
+
+		Vector3 dirZ2 = transform->Forward();
+		dirZ2.y = 0;
+
+		if (mousePos.y > WIN_HEIGHT - moveRange)
+			transform->translation += dirZ1 * moveSpeed * Time::Delta();
+		if (mousePos.y < moveRange)
+			transform->translation += dirZ2 * moveSpeed * Time::Delta();
+
+	
+		if (KEY_DOWN(VK_CONTROL))
+			isForward = !isForward;
+
+		if (KEY_PRESS(VK_SHIFT))
 		{
-			dir.x = 0.0f;
-			dir.y = 0.0f;
+			if(isForward == true)
+				transform->translation += 10 * transform->Forward() * Time::Delta();
+			else
+				transform->translation -= 10 * transform->Forward() * Time::Delta();
 		}
+			
 
-		if (dir.x != 0.0f)
-			cameraDir.x = dir.x;
-		if (dir.y != 0.0f)
-			cameraDir.y = dir.y;
-		if (dir.z != 0.0f)
-			cameraDir.z = dir.z;
 
-		transform->rotation.y += dir.x * rotSpeed * 0.0005f;//Time::Delta();
-		transform->rotation.x += dir.y * rotSpeed * 0.0005f;//Time::Delta();
+
+		viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+	}
+	break;
+	default:
+		break;
 	}
 
-	oldPos = mousePos;
-
-	viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
-
 	SetView();
+	
 }
 
 void Camera::TargetMode(Mode mode)
@@ -217,6 +327,77 @@ void Camera::TargetMode(Mode mode)
 		viewMatrix *= XMMatrixTranslation(0, -height, 0);
 	}
 	    break;
+	case Camera::MODE3:
+	{
+		if (KEY_PRESS(VK_RBUTTON) && KEY_PRESS(VK_SHIFT))
+		{
+			Vector3 dir = mousePos - oldPos;
+
+			transform->rotation.y += dir.x * rotSpeed * Time::Delta();
+			transform->rotation.x += dir.y * rotSpeed * Time::Delta();
+		}
+		oldPos = mousePos;
+		FixTarget(10.0f, 60.0f, 0.0f, XM_PI, Vector3(0.6f, 0.0f, 0.0f));
+
+		destRotY = LERP(destRotY, transform->rotation.y, rotDamping * Time::Delta());
+		destRotX = LERP(destRotX, transform->rotation.x, rotDamping * Time::Delta());
+
+		XMMATRIX rotMatrix = XMMatrixRotationRollPitchYaw(destRotX + rotX, destRotY + rotY, 0.0f);
+
+		Vector3 forward = V_FORWARD * rotMatrix;
+
+		destination = target->GetGlobalPosition() + forward * distance;
+
+		transform->translation = LERP(transform->translation, destination, moveDamping * Time::Delta());
+
+		viewMatrix = XMMatrixLookAtLH(transform->translation, target->translation, V_UP);
+
+		viewMatrix *= XMMatrixTranslation(0, -height, 0);
+	}
+	break;
+	case Camera::MODE4:
+	{
+		if (KEY_PRESS(VK_LSHIFT))
+			moveSpeed = 50.0f;
+		else
+			moveSpeed = 20.0f;
+
+		float moveRange = 50.0f;
+
+		if (mousePos.x < moveRange)
+			transform->translation += transform->Left() * moveSpeed * Time::Delta();
+		if (mousePos.x > WIN_WIDTH - moveRange)
+			transform->translation += transform->Right() * moveSpeed * Time::Delta();
+
+		Vector3 dirZ1 = transform->Backward();
+		dirZ1.y = 0;
+
+		Vector3 dirZ2 = transform->Forward();
+		dirZ2.y = 0;
+
+		if (mousePos.y > WIN_HEIGHT - moveRange)
+			transform->translation += dirZ1 * moveSpeed * Time::Delta();
+		if (mousePos.y < moveRange)
+			transform->translation += dirZ2 * moveSpeed * Time::Delta();
+
+
+
+		if (KEY_DOWN(VK_CONTROL))
+			isForward = !isForward;
+
+		if (KEY_PRESS(VK_SHIFT))
+		{
+			if (isForward == true)
+				transform->translation -= distance * transform->Forward() * Time::Delta();
+			else
+				transform->translation -= distance * transform->Forward() * Time::Delta();
+		}
+
+		viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
+
+		SetView();
+	}
+	break;
 	default:
 		break;
 	}
@@ -236,6 +417,15 @@ void Camera::TargetMode(Mode mode)
 	//viewMatrix = XMMatrixLookAtLH(destination, target->translation, V_UP);
 
 	SetView();
+}
+
+void Camera::FixTarget(float height, float distance, float rotY, float rotX, Vector3 angle)
+{
+	this->height = height;
+	this->distance = distance;
+	this->rotY = rotY;
+	this->rotX = rotX;
+	transform->rotation = angle;
 }
 
 void Camera::SetView()

@@ -11,6 +11,8 @@ TestScene::TestScene()
 
 	terrain->translation.x = -50;
 	terrain->translation.z = -50;
+
+	Camera::GetInstance()->SetTarget(soldier);
 	
 	//model = new  ModelAnimatorInstancing("PoliceZombie");
 	//model->ReadClip("Zombie Attack");
@@ -39,6 +41,15 @@ void TestScene::Update()
 {
 	soldier->Update();
 	terrain->Update();
+	if (KEY_DOWN('L'))
+	{
+		isFree = !isFree;
+	}
+	if (isFree == true)
+		Camera::GetInstance()->SetMode(false);
+	else
+		Camera::GetInstance()->SetMode(true);
+
 
 	if(KEY_PRESS(VK_RBUTTON))
 		terrain->Picking(&pos);
@@ -62,6 +73,7 @@ void TestScene::PostRender()
 {
 	soldier->PostRender();
 	terrain->Debug();
+	ImGui::Text("MousePos : %f, %f, %f", mousePos.x, mousePos.y, mousePos.z);
 	//ImGui::SliderInt("InstanceIndex", &instanceIndex, 0, 100);
 	//ImGui::SliderInt("ClipIndex", &clip, 0, 1);
 	//if (ImGui::Button("Play"))

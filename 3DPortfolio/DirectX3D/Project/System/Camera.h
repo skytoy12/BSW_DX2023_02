@@ -9,7 +9,9 @@ public :
 	enum Mode
 	{
 		MODE1,
-		MODE2
+		MODE2,
+		MODE3,
+		MODE4
 	};
 private:
 	Camera();
@@ -26,10 +28,12 @@ public:
 	Vector3 WorldToScreenPoint(Vector3 worldPos);
 
 	void SetTarget(Transform* target) { this->target = target; }
+	void SetMode(bool isMode3);
 
 private:
-	void   FreeMode();
-	void TargetMode(Mode mode = MODE1);
+	void   FreeMode(Mode mode = MODE3);
+	void TargetMode(Mode mode = MODE3);
+	void FixTarget(float height, float distance, float rotY, float rotX, Vector3 angle);
 
 	void SetView();
 
@@ -49,6 +53,8 @@ private:
 
 	Transform* target;
 
+	Mode mode = MODE3;
+
 	float distance = 20.0f;
 	float height   = 10.0f;
 
@@ -56,9 +62,12 @@ private:
 	Vector3 focusOffset;
 
 	float rotY     = 0.0f;
+	float rotX     = 0.0f;
 	float destRotY = 0.0f;
 	float destRotX = 0.0f;
 
 	float moveDamping = 5.0f;
 	float  rotDamping = 5.0f;
+
+	bool isForward = true;
 };

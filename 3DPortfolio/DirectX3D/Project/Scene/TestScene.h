@@ -25,6 +25,8 @@ private:
 	int instanceIndex = 0;
 	int clip = 0;
 
+	bool isFree = false;
+
 	Vector3 pos;
 };
 

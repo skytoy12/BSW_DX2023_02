@@ -1,3 +1,4 @@
+#include "Header.hlsli"
 
 cbuffer Ray : register(b0)
 {

@@ -153,8 +153,8 @@ void Camera::FreeMode()
 		if (dir.z != 0.0f)
 			cameraDir.z = dir.z;
 
-		transform->rotation.y += dir.x * rotSpeed * Time::Delta();
-		transform->rotation.x += dir.y * rotSpeed * Time::Delta();
+		transform->rotation.y += dir.x * rotSpeed * 0.0005f;//Time::Delta();
+		transform->rotation.x += dir.y * rotSpeed * 0.0005f;//Time::Delta();
 	}
 
 	oldPos = mousePos;

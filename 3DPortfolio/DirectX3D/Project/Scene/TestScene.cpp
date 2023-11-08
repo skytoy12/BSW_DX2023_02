@@ -46,9 +46,9 @@ void TestScene::Update()
 		isFree = !isFree;
 	}
 	if (isFree == true)
-		Camera::GetInstance()->SetMode(false);
+		Camera::GetInstance()->SetTarget(nullptr);
 	else
-		Camera::GetInstance()->SetMode(true);
+		Camera::GetInstance()->SetTarget(soldier);
 
 
 	if(KEY_PRESS(VK_RBUTTON))

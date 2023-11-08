@@ -117,13 +117,6 @@ Vector3 Camera::WorldToScreenPoint(Vector3 worldPos)
 	return screenPos;
 }
 
-void Camera::SetMode(bool isMode3)
-{
-	if (isMode3 == true)
-		mode == MODE3;
-	else
-		mode == MODE4;
-}
 
 void Camera::FreeMode(Mode mode)
 {
@@ -230,6 +223,7 @@ void Camera::FreeMode(Mode mode)
 		else
 			moveSpeed = 20.0f;
 
+
 		float moveRange = 50.0f;
 
 		if (mousePos.x < moveRange)
@@ -248,20 +242,7 @@ void Camera::FreeMode(Mode mode)
 		if (mousePos.y < moveRange)
 			transform->translation += dirZ2 * moveSpeed * Time::Delta();
 
-	
-		if (KEY_DOWN(VK_CONTROL))
-			isForward = !isForward;
-
-		if (KEY_PRESS(VK_SHIFT))
-		{
-			if(isForward == true)
-				transform->translation += 10 * transform->Forward() * Time::Delta();
-			else
-				transform->translation -= 10 * transform->Forward() * Time::Delta();
-		}
-			
-
-
+		FreeRange();
 
 		viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
 	}
@@ -355,49 +336,6 @@ void Camera::TargetMode(Mode mode)
 		viewMatrix *= XMMatrixTranslation(0, -height, 0);
 	}
 	break;
-	case Camera::MODE4:
-	{
-		if (KEY_PRESS(VK_LSHIFT))
-			moveSpeed = 50.0f;
-		else
-			moveSpeed = 20.0f;
-
-		float moveRange = 50.0f;
-
-		if (mousePos.x < moveRange)
-			transform->translation += transform->Left() * moveSpeed * Time::Delta();
-		if (mousePos.x > WIN_WIDTH - moveRange)
-			transform->translation += transform->Right() * moveSpeed * Time::Delta();
-
-		Vector3 dirZ1 = transform->Backward();
-		dirZ1.y = 0;
-
-		Vector3 dirZ2 = transform->Forward();
-		dirZ2.y = 0;
-
-		if (mousePos.y > WIN_HEIGHT - moveRange)
-			transform->translation += dirZ1 * moveSpeed * Time::Delta();
-		if (mousePos.y < moveRange)
-			transform->translation += dirZ2 * moveSpeed * Time::Delta();
-
-
-
-		if (KEY_DOWN(VK_CONTROL))
-			isForward = !isForward;
-
-		if (KEY_PRESS(VK_SHIFT))
-		{
-			if (isForward == true)
-				transform->translation -= distance * transform->Forward() * Time::Delta();
-			else
-				transform->translation -= distance * transform->Forward() * Time::Delta();
-		}
-
-		viewMatrix = XMMatrixInverse(nullptr, transform->GetWorld());
-
-		SetView();
-	}
-	break;
 	default:
 		break;
 	}
@@ -426,6 +364,36 @@ void Camera::FixTarget(float height, float distance, float rotY, float rotX, Vec
 	this->rotY = rotY;
 	this->rotX = rotX;
 	transform->rotation = angle;
+}
+
+void Camera::FreeRange()
+{
+
+	if (distance > 20.0f)
+		distance = 20.0f;
+	if (distance < -20.0f)
+		distance = -20.0f;
+
+	if (transform->translation.y < 9.0f)
+	{
+		transform->translation.y = 9.5f;
+		distance = 0.0f;
+		return;
+	}
+
+	if (transform->translation.y > 34.0f)
+	{
+		transform->translation.y = 33.8f;
+		distance = 0.0f;
+		return;
+	}
+
+	//if(transform->translation.y < 9.0f)
+
+	if (KEY_PRESS(VK_SHIFT))
+	{
+		transform->translation -= distance * transform->Forward() * Time::Delta();
+	}
 }
 
 void Camera::SetView()

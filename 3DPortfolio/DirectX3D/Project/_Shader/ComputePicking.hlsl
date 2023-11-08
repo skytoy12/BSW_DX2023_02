@@ -1,6 +1,6 @@
 #include "Header.hlsli"
 
-cbuffer Ray : register(b0)
+cbuffer Ray : register(b1)
 {
     float3 origin;
     uint   outputSize;
@@ -32,9 +32,9 @@ RWStructuredBuffer<OutputDesc> output : register(u0);
 
 void Intersects(uint index)
 {
-    float3 v0 = input[index].v0;
-    float3 v1 = input[index].v1;
-    float3 v2 = input[index].v2;
+    float3 v0 = mul(input[index].v0, (float3x3) world);
+    float3 v1 = mul(input[index].v1, (float3x3) world);
+    float3 v2 = mul(input[index].v2, (float3x3) world);
     
     float3 v01 = v1 - v0;
     float3 v02 = v2 - v0;

@@ -26,6 +26,7 @@ LightScene::LightScene()
 	sphere->GetMaterial()->SetNormalMap(L"LandScape/FieldStone_NM.tga");
 	sphere->GetMaterial()->SetSpecularMap(L"LandScape/FieldStone_SM.tga");
 	sphere->GetMaterial()->SetShader(L"09Light");
+	sphere->SetLabel("Sphere");
 }
 
 LightScene::~LightScene()
@@ -62,4 +63,5 @@ void LightScene::PostRender()
 	groot -> Debug();
 	bunny->GetReader()->Debug();
 	sphere-> Debug();
+	sphere->GetMaterial()->Debug();
 }

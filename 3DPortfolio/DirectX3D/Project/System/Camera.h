@@ -10,8 +10,7 @@ public :
 	{
 		MODE1,
 		MODE2,
-		MODE3,
-		MODE4
+		MODE3
 	};
 private:
 	Camera();
@@ -28,12 +27,13 @@ public:
 	Vector3 WorldToScreenPoint(Vector3 worldPos);
 
 	void SetTarget(Transform* target) { this->target = target; }
-	void SetMode(bool isMode3);
+	void SetFreeTarget(Transform* target) { this->FreeTarget = target; }
 
 private:
 	void   FreeMode(Mode mode = MODE3);
 	void TargetMode(Mode mode = MODE3);
 	void FixTarget(float height, float distance, float rotY, float rotX, Vector3 angle);
+	void FreeRange();
 
 	void SetView();
 
@@ -52,6 +52,7 @@ private:
 	Vector3 cameraDir;
 
 	Transform* target;
+	Transform* FreeTarget;
 
 	Mode mode = MODE3;
 

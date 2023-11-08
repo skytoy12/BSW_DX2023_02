@@ -19,12 +19,16 @@ private :
 	void CreateMesh();
 	void CreateNormal();
 	void CreateTangent();
+	void CreateCompute();
 private:
 	vector<VertexType> vertices;
 	vector<UINT>           indices;
 
 	Material* material;
 	Mesh* mesh;
+
+	RayBuffer* rayBuffer;
+	UINT polygonCount;
 
 	MatrixBuffer* worldBuffer;
 

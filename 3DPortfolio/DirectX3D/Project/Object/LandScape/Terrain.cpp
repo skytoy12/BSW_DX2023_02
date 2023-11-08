@@ -10,6 +10,7 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	material->SetNormalMap(NormalFile);
 
 	worldBuffer = new MatrixBuffer();
+	rayBuffer = new RayBuffer();
 
 	heightMap = Texture::Get(heightFile);
 
@@ -43,6 +44,7 @@ Terrain::~Terrain()
 	delete mesh;
 	delete worldBuffer;
 	delete material;
+	delete rayBuffer;
 }
 
 void Terrain::Render()
@@ -61,6 +63,12 @@ void Terrain::Render()
 bool Terrain::Picking(OUT Vector3* position)
 {
 	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+
+	//rayBuffer->data.origin = ray.origin;
+	//rayBuffer->data.direction = ray.direction;
+	//rayBuffer->data.outputSize = polygonCount;
+
+	//rayBuffer->SetCSBuffer(1);
 
 	for (UINT z = 0; z < height - 1; z++)
 	{
@@ -251,4 +259,43 @@ void Terrain::CreateTangent()
 
 		vertex.tangent = (T - N * Vector3::Dot(N, T)).GetNormalized();
 	}
+}
+
+void Terrain::CreateCompute()
+{
+	/*polygonCount = indices.size() / 3;
+
+	if (input != nullptr)
+		delete[] input;
+
+	input = new InputDesc[polygonCount];
+
+	for (UINT i = 0; i < polygonCount; i++)
+	{
+		input[i].index = i;
+
+		UINT index0 = indices[i * 3 + 0];
+		UINT index1 = indices[i * 3 + 1];
+		UINT index2 = indices[i * 3 + 2];
+
+		input[i].v0 = vertices[index0].pos;
+		input[i].v1 = vertices[index1].pos;
+		input[i].v2 = vertices[index2].pos;
+	}
+
+	if (structuredBuffer != nullptr)
+		delete structuredBuffer;
+
+	structuredBuffer = new StructuredBuffer
+	(input,
+		sizeof(InputDesc),
+		polygonCount,
+		sizeof(OutputDesc),
+		polygonCount
+	);
+
+	if (output != nullptr)
+		delete[] output;
+
+	output = new OutputDesc[polygonCount];*/
 }

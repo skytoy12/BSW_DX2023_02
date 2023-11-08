@@ -12,6 +12,7 @@ public:
 	Material* GetMaterial() { return material; }
 
 	bool Picking(OUT Vector3* position);
+	bool EditPicking(OUT Vector3* position);
 
 	float GetHeight(Vector3 position);
 
@@ -27,8 +28,33 @@ private:
 	Material* material;
 	Mesh* mesh;
 
+	////////////////////////////////////////
+
+	struct InputDesc
+	{
+		UINT index;
+
+		Vector3 v0, v1, v2;
+	};
+
+	struct OutputDesc
+	{
+		int isPicked;
+
+		float u, v;
+
+		float distance;
+	};
+
+	StructuredBuffer* structuredBuffer;
 	RayBuffer* rayBuffer;
+
+	ComputeShader* computeShader;
 	UINT polygonCount;
+
+	InputDesc* input;
+	OutputDesc* output;
+	////////////////////////////////////////
 
 	MatrixBuffer* worldBuffer;
 

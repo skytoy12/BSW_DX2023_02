@@ -10,14 +10,18 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, 
 	material->SetNormalMap(NormalFile);
 
 	worldBuffer = new MatrixBuffer();
-	rayBuffer = new RayBuffer();
 
 	heightMap = Texture::Get(heightFile);
 
 	CreateMesh();
 	CreateNormal();
 	CreateTangent();
+	////////////////////////
 
+	rayBuffer = new RayBuffer();
+	computeShader = Shader::GetCS(L"ComputePicking");
+	CreateCompute();
+	////////////////////////
 	mesh = new Mesh(vertices, indices);
 }
 
@@ -64,11 +68,6 @@ bool Terrain::Picking(OUT Vector3* position)
 {
 	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
 
-	//rayBuffer->data.origin = ray.origin;
-	//rayBuffer->data.direction = ray.direction;
-	//rayBuffer->data.outputSize = polygonCount;
-
-	//rayBuffer->SetCSBuffer(1);
 
 	for (UINT z = 0; z < height - 1; z++)
 	{
@@ -100,6 +99,53 @@ bool Terrain::Picking(OUT Vector3* position)
 				return true;
 			}
 		}
+	}
+
+	return false;
+}
+
+bool Terrain::EditPicking(OUT Vector3* position)
+{
+	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+
+	rayBuffer->data.origin = ray.origin;
+	rayBuffer->data.direction = ray.direction;
+	rayBuffer->data.outputSize = polygonCount;
+
+	rayBuffer->SetCSBuffer(1);
+
+	//////////////////////////////
+
+	structuredBuffer->SetSRV();
+	structuredBuffer->SetUAV();
+
+	computeShader->SetShader();
+
+	UINT groupCount = ceil(polygonCount / 1024.0f);
+
+	DC->Dispatch(groupCount, 1, 1);
+
+	structuredBuffer->Copy(output, sizeof(OutputDesc) * polygonCount);
+
+	float minDistance = FLT_MAX;
+
+
+	for (UINT i = 0; i < polygonCount; i++)
+	{
+		if (output[i].isPicked)
+		{
+			if (minDistance > output[i].distance)
+			{
+				minDistance = output[i].distance;
+			}
+		}
+	}
+
+	if (minDistance < FLT_MAX)
+	{
+		*position = ray.origin + ray.direction * minDistance;
+
+		return true;
 	}
 
 	return false;
@@ -263,7 +309,7 @@ void Terrain::CreateTangent()
 
 void Terrain::CreateCompute()
 {
-	/*polygonCount = indices.size() / 3;
+	polygonCount = indices.size() / 3;
 
 	if (input != nullptr)
 		delete[] input;
@@ -297,5 +343,5 @@ void Terrain::CreateCompute()
 	if (output != nullptr)
 		delete[] output;
 
-	output = new OutputDesc[polygonCount];*/
+	output = new OutputDesc[polygonCount];
 }

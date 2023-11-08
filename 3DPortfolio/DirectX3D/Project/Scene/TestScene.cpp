@@ -52,7 +52,7 @@ void TestScene::Update()
 
 
 	if(KEY_PRESS(VK_RBUTTON))
-		terrain->Picking(&pos);
+		terrain->EditPicking(&pos);
 
 	soldier->SetDestination(pos);
 	//model->Update();

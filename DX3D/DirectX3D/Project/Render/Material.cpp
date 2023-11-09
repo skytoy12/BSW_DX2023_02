@@ -79,6 +79,13 @@ void Material::SetMaterial()
 	 buffer->SetPSBuffer(1);
 }
 
+void Material::SetDiffuseMap(Texture* texture)
+{
+	diffuseMap = texture;
+
+	buffer->data.hasDiffuseMap = true;
+}
+
 void Material::SetDiffuseMap(wstring file)
 {
 	diffuseMap = Texture::Get(file);

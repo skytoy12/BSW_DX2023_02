@@ -20,8 +20,8 @@ private:
 
 	bool isStencil = false;
 
-	ID3D11Texture2D* rtvTexture;
-	ID3D11RenderTargetView* rtv;
+	ID3D11Texture2D*          rtvTexture;
+	ID3D11RenderTargetView*   rtv;
 	ID3D11ShaderResourceView* srv;
 
 };

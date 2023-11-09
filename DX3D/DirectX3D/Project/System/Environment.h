@@ -6,13 +6,13 @@ private:
 	Environment();
 	~Environment();
 
-	void CreateViewport();
 	void CreatePerspective();
 	void CreateOrthographic();
 
 	void DebugLight(int lightIndex);
 
 public :
+	void SetViewport(UINT width = WIN_WIDTH, UINT height = WIN_HEIGHT);
 	void SetEnvironment();
 	void PostSet();
 

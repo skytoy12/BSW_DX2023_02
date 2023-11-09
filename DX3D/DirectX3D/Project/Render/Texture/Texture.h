@@ -8,6 +8,8 @@ private :
 
 public:
 	static Texture* Get(wstring file);
+	static Texture* Get(wstring key, ID3D11ShaderResourceView* srv);
+
 	static Texture* Load(wstring file);
 
 	static void Delete();
@@ -29,5 +31,7 @@ private:
 	static map<wstring, Texture*> textures;
 
 	wstring path;
+
+	bool isReferred = false;
 };
 

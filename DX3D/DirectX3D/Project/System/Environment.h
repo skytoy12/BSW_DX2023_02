@@ -20,6 +20,8 @@ public :
 
 	Matrix GetPersMatrix() { return persMatrix; }
 
+	MatrixBuffer* GetPersBuffer() { return persBuffer; }
+
 private:
 	MatrixBuffer* persBuffer;
 	Matrix        persMatrix;

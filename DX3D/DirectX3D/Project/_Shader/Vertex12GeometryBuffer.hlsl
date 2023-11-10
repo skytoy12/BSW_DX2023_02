@@ -27,8 +27,8 @@ LightVertexOutput main(VertexTextureNormalTangentBlend input)
     
     output.uv = input.uv;
     
-    output.normal = normalize(mul(input.normal, (float3x3) transform));
-    output.tangent = normalize(mul(input.tangent, (float3x3) transform));
+    output.normal  = normalize(mul(input.normal,  (float3x3)transform));
+    output.tangent = normalize(mul(input.tangent, (float3x3)transform));
     
     output.binomal = cross(output.normal, output.tangent);
     

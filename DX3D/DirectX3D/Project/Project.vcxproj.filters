@@ -273,6 +273,12 @@
     <ClInclude Include="Render\View\RenderTarget.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\DeferredRenderScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Buffer\GeometryBuffer.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -488,6 +494,12 @@
     <ClCompile Include="Render\View\RenderTarget.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\DeferredRenderScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Buffer\GeometryBuffer.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="__Others\Project.rc">
@@ -606,6 +618,10 @@
     <FxCompile Include="_Shader\Pixel10GrayScale.hlsl" />
     <FxCompile Include="_Shader\Pixel11PostEffect.hlsl" />
     <FxCompile Include="_Shader\Vertex11PostEffect.hlsl" />
+    <FxCompile Include="_Shader\Vertex12GeometryBuffer.hlsl" />
+    <FxCompile Include="_Shader\Pixel12GeometryBuffer.hlsl" />
+    <FxCompile Include="_Shader\Vertex12DeferredRender.hlsl" />
+    <FxCompile Include="_Shader\Pixel12DeferredRender.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

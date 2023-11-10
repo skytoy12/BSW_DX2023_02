@@ -27,6 +27,21 @@ void RenderTarget::Set(DepthStencil* depthStencil, Vector4 clearColor)
 	Environment::GetInstance()->SetViewport(width, height);
 }
 
+void RenderTarget::SetMulti(RenderTarget** targets, UINT count, DepthStencil* depthStencil, Vector4 clearColor)
+{
+	vector<ID3D11RenderTargetView*> rtvs;
+
+	for (UINT i = 0; i < count; i++)
+	{
+		rtvs.push_back(targets[i]->GetRTV());
+		DC->ClearRenderTargetView(rtvs.back(), (float*)&clearColor);
+	}
+	depthStencil->Clear();
+
+	DC->OMSetRenderTargets(count, rtvs.data(), depthStencil->GetDSV());
+	Environment::GetInstance()->SetEnvironment();
+}
+
 void RenderTarget::CreateRTVTexture()
 {
 	D3D11_TEXTURE2D_DESC Desc;

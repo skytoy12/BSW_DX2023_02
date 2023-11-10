@@ -10,6 +10,8 @@ public:
 	ID3D11RenderTargetView* GetRTV() { return rtv; }
 	ID3D11ShaderResourceView* GetSRV() { return srv; }
 
+	static void SetMulti(RenderTarget** targets, UINT count, DepthStencil* depthStencil, Vector4 clearColor = { 1, 1, 1, 1 });
+
 private:
 	void CreateRTVTexture();
 	void CreateRTV();

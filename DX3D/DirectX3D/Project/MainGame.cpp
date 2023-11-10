@@ -24,7 +24,8 @@ MainGame::MainGame()
 	//SCENE->Create("Start", new ModelInstancingScene());
 	//SCENE->Create("Start", new LightScene());
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
-	SCENE->Create("Start", new LightScene());
+	//SCENE->Create("DeferredRender", new DeferredRenderScene());
+	SCENE->Create("Start", new DeferredRenderScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");

@@ -125,6 +125,8 @@ using namespace MyMath;
 #include "Render/View/DepthStencil.h"
 #include "Render/View/RenderTarget.h"
 
+#include "Render/Buffer/GeometryBuffer.h"
+
 #include "Collider/Collider.h"
 #include "Collider/ColliderBox.h"
 #include "Collider/ColliderCapsule.h"
@@ -174,6 +176,7 @@ using namespace MyMath;
 #include "Scene/ModelInstancingScene.h"
 #include "Scene/LightScene.h"
 #include "Scene/GridScene.h"
+#include "Scene/DeferredRenderScene.h"
 
 #include "Scene/SceneManager.h"
 

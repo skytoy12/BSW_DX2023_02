@@ -56,7 +56,7 @@ void Terrain::Render()
 
 bool Terrain::Picking(OUT Vector3* position)
 {
-	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	Ray ray = CAMERA->ScreenPointToRay(mousePos);
 
 	for (UINT z = 0; z < height - 1; z++)
 	{

@@ -1,4 +1,6 @@
 #pragma once
+class Camera;
+
 class Environment : public Singleton<Environment>
 {
 	friend class Singleton;
@@ -22,6 +24,8 @@ public :
 
 	MatrixBuffer* GetPersBuffer() { return persBuffer; }
 
+	Camera* GetMainCamera() { return mainCamera; }
+
 private:
 	MatrixBuffer* persBuffer;
 	Matrix        persMatrix;
@@ -33,7 +37,7 @@ private:
 
 	LightBuffer* lightBuffer;
 
-
+	Camera* mainCamera;
 };
 
 

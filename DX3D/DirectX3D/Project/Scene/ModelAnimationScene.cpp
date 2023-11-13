@@ -9,7 +9,7 @@ ModelAnimationScene::ModelAnimationScene()
 
 	//terrain->scale *= 2.0f;
 
-	//Camera::GetInstance()->SetTarget(groot);
+	//CAMERA->SetTarget(groot);
 
 	crossHair = new Quad();
 	crossHair->GetMaterial()->SetDiffuseMap(L"UI/CrossHair.png");

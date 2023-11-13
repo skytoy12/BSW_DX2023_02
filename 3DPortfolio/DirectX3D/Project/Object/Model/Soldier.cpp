@@ -85,18 +85,53 @@ void Soldier::SetAngle()
 
 	float angle = atan2(dir.x, dir.z) - XM_PI;
 
-	float isLeft = abs(angle) + abs(this->rotation.y);
+	float isLeft = abs(angle - this->rotation.y);
 
-	if (isLeft < XM_PI)
+	if (isLeft <= XM_PI || isLeft >= -XM_PI)
 	{
 		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
 	}
-	else if (isLeft > XM_PI)
+	else if (isLeft > XM_PI || isLeft < -XM_PI)
 	{
 		angle = angle - XM_2PI;
 		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
 	}
 
+}
+
+void Soldier::TestAngle()
+{
+	Vector3 temp = this->Forward();
+	temp.y = 0;
+	Vector3 dir = (destination - this->GetGlobalPosition()).GetNormalized();
+	dir.y = 0;
+
+	float AdotB = Vector3::Dot(temp, dir);
+	float length = temp.Length() * dir.Length();
+
+	float thepta = acos(AdotB / length) - XM_PI;
+
+	if (thepta < XM_PI)
+	{
+		float angle = this->rotation.y - thepta;
+		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
+	}
+
+	//dir = (dir - temp).GetNormalized();
+
+	//float angle = atan2(dir.x, dir.z) - XM_PI;
+
+	//float isLeft = abs(angle) + abs(this->rotation.y);
+
+	//if (isLeft < XM_PI)
+	//{
+	//	this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
+	//}
+	//else if (isLeft > XM_PI)
+	//{
+	//	angle = angle - XM_2PI;
+	//	this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
+	//}
 }
 
 void Soldier::Move()

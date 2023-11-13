@@ -5,12 +5,13 @@ TestScene::TestScene()
 {
 	soldier = new Soldier();
 
-	terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"LandScape/Fieldstone_NM.tga", L"HeightMap/flat.png");
+	//terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"LandScape/Fieldstone_NM.tga", L"HeightMap/flat.png");
+	terrain = new TerrainEditor();
 
 	terrain->SetLabel("terrain1");
 
-	//terrain->translation.x = -50;
-	//terrain->translation.z = -50;
+	terrain->translation.x = -50;
+	terrain->translation.z = -50;
 
 	Camera::GetInstance()->SetTarget(soldier);
 	

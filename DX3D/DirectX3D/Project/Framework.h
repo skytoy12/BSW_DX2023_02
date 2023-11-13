@@ -59,7 +59,7 @@ using namespace DirectX;
 #define KEY_DOWN(p)  Keyboard::GetInstance()->Down(p)
 #define KEY_PRESS(p) Keyboard::GetInstance()->Press(p)
 
-#define CAMERA Camera::GetInstance()->GetTransform()
+#define CAMERA Environment::GetInstance()->GetMainCamera()
 
 #define SCENE SceneManager::GetInstance()
 
@@ -177,6 +177,7 @@ using namespace MyMath;
 #include "Scene/LightScene.h"
 #include "Scene/GridScene.h"
 #include "Scene/DeferredRenderScene.h"
+#include "Scene/FrustumCullingScene.h"
 
 #include "Scene/SceneManager.h"
 

@@ -19,6 +19,7 @@ public:
 
 
 	void SetAngle();
+	void TestAngle();
 	void Move();
 	void SetDestination(Vector3 pos) { destination = pos; }
 	Vector3 GetDestination() { return destination; }

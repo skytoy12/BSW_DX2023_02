@@ -25,7 +25,8 @@ MainGame::MainGame()
 	//SCENE->Create("Start", new LightScene());
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
 	//SCENE->Create("DeferredRender", new DeferredRenderScene());
-	SCENE->Create("Start", new DeferredRenderScene());
+	//SCENE->Create("FrustumCulling", new FrustumCullingScene());
+	SCENE->Create("Start", new FrustumCullingScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
@@ -46,7 +47,6 @@ void MainGame::Update()
 
 	    Time::GetInstance()->Update();
 	Keyboard::GetInstance()->Update();
-	  Camera::GetInstance()->Update();
 }
 
 void MainGame::Render()
@@ -76,7 +76,6 @@ void MainGame::Render()
 	Environment::GetInstance()->PostSet();
 
 	                SCENE->PostRender();
-	     Camera::GetInstance()->Debug();
 	Environment::GetInstance()->PostRender();
 
 	ImGui::Checkbox("WireFrame", &isWireFrame);
@@ -112,7 +111,6 @@ void MainGame::Release()
 	   Keyboard::Delete();
 	Environment::Delete();
    StateManager::Delete();
-         Camera::Delete();
 		Texture::Delete();
 
 	ImGui_ImplDX11_Shutdown();

@@ -18,7 +18,7 @@ public:
 private:
 	Soldier* soldier;
 
-	Terrain* terrain;
+	TerrainEditor* terrain;
 
 	ModelAnimatorInstancing* model;
 

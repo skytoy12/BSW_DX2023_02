@@ -136,13 +136,14 @@ void TerrainEditor::Debug()
 bool TerrainEditor::Picking(OUT Vector3* position)
 {
 
-	Ray ray = Camera::GetInstance()->ScreenPointToRay(mousePos);
+	Ray ray = CAMERA->ScreenPointToRay(mousePos);
 
 	rayBuffer->data.origin     = ray.origin;
 	rayBuffer->data.direction  = ray.direction;
 	rayBuffer->data.outputSize = polygonCount;
 
-	rayBuffer->SetCSBuffer(0);
+	  rayBuffer->SetCSBuffer(0);
+	worldBuffer->SetCSBuffer(1);
 
 	//////////////////////////////
 

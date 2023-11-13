@@ -7,12 +7,15 @@ Environment::Environment()
     CreateOrthographic();
 
     lightBuffer = new LightBuffer();
+
+    mainCamera = new Camera();
 }
 
 Environment::~Environment()
 {
     delete  persBuffer;
     delete lightBuffer;
+    delete  mainCamera;
 }
 
 void Environment::SetViewport(UINT width, UINT height)
@@ -80,6 +83,8 @@ void Environment::DebugLight(int lightIndex)
 
 void Environment::SetEnvironment()
 {
+    mainCamera->Update();
+
     lightBuffer->SetPSBuffer(0);
     persBuffer->SetVSBuffer(2);
 
@@ -111,4 +116,5 @@ void Environment::PostRender()
         ImGui::TreePop();
     }
 
+    mainCamera->Debug();
 }

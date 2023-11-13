@@ -38,3 +38,13 @@ int MyMath::Random(const int& min, const int& max)
 	return min + rand() % (max - min); // max Exclusive
 	//return min + rand() % (max - min + 1); // max Inclusive
 }
+
+Vector3 MyMath::ClosestPointOnLine(Vector3 start, Vector3 end, Vector3 point)
+{
+	Vector3 line = end - start;
+
+	float t = Vector3::Dot(line, point - start) / Vector3::Dot(line, line);
+	t = Saturate(t);
+
+	return start + line * t;
+}

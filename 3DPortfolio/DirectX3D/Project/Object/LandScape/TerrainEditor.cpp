@@ -144,7 +144,8 @@ bool TerrainEditor::Picking(OUT Vector3* position)
 	rayBuffer->data.direction  = ray.direction;
 	rayBuffer->data.outputSize = polygonCount;
 
-	rayBuffer->SetCSBuffer(1);
+	rayBuffer->SetCSBuffer(0);
+	worldBuffer->SetCSBuffer(1);
 
 	//////////////////////////////
 

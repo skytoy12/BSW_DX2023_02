@@ -47,7 +47,7 @@ void Groot::Update()
 	rightHand->Update();
 
 	hpBar->Update();
-	hpBar->translation = Camera::GetInstance()->WorldToScreenPoint(this->globalPosition + V_UP * 10.0f);
+	hpBar->translation = CAMERA->WorldToScreenPoint(this->globalPosition + V_UP * 10.0f);
 	//hpBar->translation.y += 200.0f;
 
 	if (KEY_DOWN('1'))

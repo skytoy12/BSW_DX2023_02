@@ -9,7 +9,7 @@ Groot::Groot()
 	ReadClip("Standing Melee Attack 360 High");
 	CreateTexture();
 
-	scale *= 0.01f;
+	scale *= 0.04f;
 
 	reader->GetMaterials()[0]->Load(L"Groot.mat");
 
@@ -26,12 +26,9 @@ Groot::Groot()
 
 	clips[ATTACK]->SetEndEvent(bind(&Groot::SetClip, this, IDLE), 0.7f);
 
-	for (int i = 0; i < 30; i++)
-	{
-		Bullet* bullet = new Bullet();
-
-		bullets.push_back(bullet);
-	}
+	hpBar = new ProgressBar(L"UI/hp_bar.png", L"UI/hp_bar_BG.png");
+	hpBar->SetLabel("HP Bar");
+	hpBar->scale.x *= 0.5f;
 }
 
 Groot::~Groot()
@@ -39,9 +36,7 @@ Groot::~Groot()
 	delete weapon;
 	delete rightHand;
 
-	for (Bullet* bullet : bullets)
-		delete bullet;
-	bullets.clear();
+	delete hpBar;
 }
 
 void Groot::Update()
@@ -50,6 +45,10 @@ void Groot::Update()
 	Transform::Update();
 	weapon->Update();
 	rightHand->Update();
+
+	hpBar->Update();
+	hpBar->translation = Camera::GetInstance()->WorldToScreenPoint(this->globalPosition + V_UP * 10.0f);
+	//hpBar->translation.y += 200.0f;
 
 	if (KEY_DOWN('1'))
 		PlayClip(0, speed, takeTime);
@@ -60,39 +59,16 @@ void Groot::Update()
 	if (KEY_DOWN('3'))
 		PlayClip(2, speed, takeTime);
 
-	Move();
+	//Move();
 	Attack();
 
 	UpdateRightHand();
-
-	for (Bullet* bullet : bullets)
-	{
-		if (bullet->isActive == false)
-			bullet->SetDir(-Forward());
-	}
-
-	for (Bullet* bullet : bullets)
-	{
-		if (bullet->isActive == true)
-		{
-			float distance = (bullet->translation - this->translation).Length();
-
-			if (distance > 1000.0f)
-				bullet->isActive == false;
-		}
-	}
-
-	for (Bullet* bullet : bullets)
-		bullet->Update();
 }
 
 void Groot::Render()
 {
 	ModelAnimator::Render();
 	weapon->Render();
-
-	for (Bullet* bullet : bullets)
-		bullet->Render();
 }
 
 void Groot::Debug()
@@ -105,6 +81,15 @@ void Groot::Debug()
 	ImGui::Text("DeltaTime : %f", Time::Delta());
 
 	weapon->Debug();
+	static float value = 1.0f;
+	hpBar->SetValue(value);
+	ImGui::SliderFloat("HP", &value, 0.0f, 1.0f);
+}
+
+void Groot::PostRender()
+{
+	Debug();
+	hpBar->Render();
 }
 
 void Groot::UpdateRightHand()
@@ -156,12 +141,5 @@ void Groot::Attack()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		SetClip(ATTACK);
-
-		auto bulletiter = std::find_if(bullets.begin(), bullets.end(), [](const Bullet* obj)->bool {return !obj->isActive; });
-
-		if (bulletiter == bullets.end())
-			return;
-		(*bulletiter)->Shoot(translation + Vector3(0.0f, 10.0f, 0.0f));
 	}
-
 }

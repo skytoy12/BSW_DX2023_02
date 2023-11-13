@@ -70,6 +70,9 @@ using namespace DirectX;
 #define MAX_BONE 256
 #define MAX_FRAME_KEY 512
 
+#define MAX_INSTANCE 128
+#define MAX_LIGHT    10
+
 //#define LERP(start, end, t) (start * (1 - t) + end * t)
 #define LERP(start, end, t) (start + (end - start) * t)
 
@@ -114,7 +117,15 @@ using namespace MyMath;
 
 #include "Render/State/SamplerState.h"
 #include "Render/State/RasterizerState.h"
+#include "Render/State/BlendState.h"
+#include "Render/State/DepthStencilState.h"
+
 #include "Render/State/StateManager.h"
+
+#include "Render/View/DepthStencil.h"
+#include "Render/View/RenderTarget.h"
+
+#include "Render/Buffer/GeometryBuffer.h"
 
 #include "Collider/Collider.h"
 #include "Collider/ColliderBox.h"
@@ -133,6 +144,10 @@ using namespace MyMath;
 
 #include "Object/LandScape/Terrain.h"
 #include "Object/LandScape/TerrainEditor.h"
+#include "Object/LandScape/Sky.h"
+#include "Object/LandScape/SkyBox.h"
+
+#include "Object/UI/ProgressBar.h"
 
 #include "ModelExport/ModelType.h"
 #include "ModelExport/ModelExporter.h"
@@ -142,10 +157,10 @@ using namespace MyMath;
 #include "Model/Model.h"
 #include "Model/ModelClip.h"
 #include "Model/ModelAnimator.h"
+#include "Model/ModelInstancing.h"
+#include "Model/ModelAnimatorInstancing.h"
 
-#include "Object/Model/bullet.h"
 #include "Object/Model/Groot.h"
-#include "Object/Model/Zombie.h"
 
 
 #include "Scene/Scene.h"
@@ -157,8 +172,11 @@ using namespace MyMath;
 #include "Scene/ModelExportScene.h"
 #include "Scene/ModelAnimationScene.h"
 #include "Scene/CollisionScene.h"
-#include "Scene/ZombieScene.h"
+#include "Scene/InstanceScene.h"
+#include "Scene/ModelInstancingScene.h"
+#include "Scene/LightScene.h"
 #include "Scene/GridScene.h"
+#include "Scene/DeferredRenderScene.h"
 
 #include "Scene/SceneManager.h"
 

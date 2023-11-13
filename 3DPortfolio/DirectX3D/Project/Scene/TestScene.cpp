@@ -9,8 +9,8 @@ TestScene::TestScene()
 
 	terrain->SetLabel("terrain1");
 
-	terrain->translation.x = -50;
-	terrain->translation.z = -50;
+	//terrain->translation.x = -50;
+	//terrain->translation.z = -50;
 
 	Camera::GetInstance()->SetTarget(soldier);
 	
@@ -52,7 +52,7 @@ void TestScene::Update()
 
 
 	if(KEY_PRESS(VK_RBUTTON))
-		terrain->EditPicking(&pos);
+		terrain->Picking(&pos);
 
 	soldier->SetDestination(pos);
 	//model->Update();

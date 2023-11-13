@@ -50,66 +50,25 @@ struct VertexOutput
 Texture2D alphaMap : register(t10);
 Texture2D secondMap : register(t11);
 
-float4 main(VertexOutput input) : SV_TARGET
+float4 main(LightVertexOutput input) : SV_TARGET
 {
-    float3 L = normalize(lightDirection);
-    
-    float4 albedo = float4(1, 1, 1, 1);
-    
-    if (hasDiffuseMap)
-        albedo = diffusemap.Sample(samp, input.uv);
+    LightMaterial material = GetLightMaterial(input);
+
+    float4 ambient = CalculateAmbient(material);
     
     float4  alpha =  alphaMap.Sample(samp, input.uv);
     float4 second = secondMap.Sample(samp, input.uv);
     
+    float4 albedo = material.diffuseColor;
+    
     if (hasAlphaMap)
         albedo = lerp(albedo, second, alpha.r);
-    else
-        albedo = lerp(albedo, second, input.alpha.r);
+    //else
+    //    albedo = lerp(albedo, second, input.alpha.r);
     
-    //Normal Mapping
-    
-    float3 T = normalize(input.tangent);
-    float3 B = normalize(input.binormal);
-    float3 N = normalize(input.normal);
-    
-    float3 normal = N;
-    
-    if (hasNormalMap)
-    {
-        float4 normalSample = normalmap.Sample(samp, input.uv);
-        
-        normal = normalSample * 2.0f - 1.0f;
-        
-        float3x3 TBN = float3x3(T, B, N);
-        
-        normal = normalize(mul(normal, TBN));
-    }
-    
-    /////////////////////////////////////////
-
-    float diffuseIntensity = saturate(dot(normal, -L)); // N dot L
-    
-    ////////SPECULAR/////////////////////////
-    
-    float specularIntensity = 0;
-    
-    float3 reflection = normalize(reflect(L, normal));
-    
-    specularIntensity = saturate(dot(-reflection, input.viewDir));
-    
-    float4 specularSample = float4(1, 1, 1, 1);
-    
-    if (hasSpecularMap)
-        specularSample = specularmap.Sample(samp, input.uv);
-    
-    float4 specular = pow(specularIntensity, shininess) * specularSample * mSpecular;
-    
-    float4 diffuse = albedo * diffuseIntensity * mDiffuse;
-    
-    float4 ambient = albedo * ambientLight * mAmbeint;
+  
     
     float4 brushColor = float4(SetBrushColor(input.worldPos), 1.0f);
     
-    return diffuse + specular + ambient + brushColor;
+    return albedo + brushColor;
 }

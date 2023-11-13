@@ -85,7 +85,18 @@ void Soldier::SetAngle()
 
 	float angle = atan2(dir.x, dir.z) - XM_PI;
 
-	this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
+	float isLeft = abs(angle) + abs(this->rotation.y);
+
+	if (isLeft < XM_PI)
+	{
+		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
+	}
+	else if (isLeft > XM_PI)
+	{
+		angle = angle - XM_2PI;
+		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
+	}
+
 }
 
 void Soldier::Move()

@@ -9,6 +9,8 @@ public:
 
 	void ChangeState(D3D11_FILL_MODE mode);
 
+	void FrontCounterClockWise(bool value);
+
 private:
 	ID3D11RasterizerState* rasterizerState = nullptr;
 

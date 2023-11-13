@@ -42,6 +42,8 @@ void Camera::Debug()
 		ImGui::Text("Camera Pos : %.3f, %.3f, %.3f", pos.x, pos.y, pos.z);
 		ImGui::Text("Camera Rot : %.3f, %.3f, %.3f", rot.x, rot.y, rot.z);
 
+		transform->Debug();
+
 		ImGui::SliderFloat("Height", &height, -10.0f, 100.0f);
 		ImGui::SliderFloat("Distance", &distance, -10.0f, 100.0f);
 
@@ -81,7 +83,7 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 
 	///////////////////InvProjection////////////////////
 
-	Matrix projection = Environment::GetInstance()->GetProjMatrix();
+	Matrix projection = Environment::GetInstance()->GetPersMatrix();
 
 	XMFLOAT4X4 proj;
 	XMStoreFloat4x4(&proj, projection);
@@ -97,6 +99,21 @@ Ray Camera::ScreenPointToRay(Vector3 screenPos)
 	ray.direction.Normalize();
 
 	return ray;
+}
+
+Vector3 Camera::WorldToScreenPoint(Vector3 worldPos)
+{
+	Vector3 screenPos;
+
+	screenPos = XMVector3TransformCoord(worldPos, viewMatrix);
+	screenPos = XMVector3TransformCoord(screenPos, Environment::GetInstance()->GetPersMatrix());
+
+	screenPos = (screenPos + Vector3(1.0f, 1.0f, 1.0f)) * 0.5f;
+
+	screenPos.x *= WIN_WIDTH;
+	screenPos.y *= WIN_HEIGHT;
+
+	return screenPos;
 }
 
 void Camera::FreeMode()

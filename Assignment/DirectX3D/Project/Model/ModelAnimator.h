@@ -7,6 +7,7 @@ public:
 
 	void Update();
 	void Render();
+	void RenderInstanced(UINT instanceCount);
 	void Debug();
 
 	void ReadClip(string file, UINT clipIndex = 0);
@@ -20,6 +21,7 @@ public:
 
 	Matrix GetTransformByBone(UINT boneIndex);
 	Matrix GetTransformByNode(UINT nodeIndex);
+	ModelReader* GetReader() { return reader; }
 
 private:
 	void CreateClipTransform(UINT index);

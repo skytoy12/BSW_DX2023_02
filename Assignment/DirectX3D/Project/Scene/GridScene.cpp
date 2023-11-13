@@ -4,7 +4,7 @@ GridScene::GridScene()
 {
 	material = new Material(L"Tutorial");
 
-	worldBuffer = new MatrixBuffer;
+	worldBuffer = new WorldBuffer;
 
 	CreateMesh();
 }

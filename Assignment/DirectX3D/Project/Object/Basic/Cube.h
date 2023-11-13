@@ -19,9 +19,6 @@ private:
     Mesh*     mesh;
 
 
-    MatrixBuffer* worldBuffer;
-
-
     vector<VertexType> vertices;
     vector<UINT>         indices;
 

@@ -29,12 +29,22 @@ void ModelAnimator::Update()
 
 void ModelAnimator::Render()
 {
-	Transform::SetWorld();
+	Transform::SetWorld(true);
 
 	frameBuffer->SetVSBuffer(3);
 	DC->VSSetShaderResources(0, 1, &srv);
 
 	reader->Render();
+}
+
+void ModelAnimator::RenderInstanced(UINT instanceCount)
+{
+	Transform::SetWorld(true);
+
+	frameBuffer->SetVSBuffer(3);
+	DC->VSSetShaderResources(0, 1, &srv);
+
+	reader->RenderInstanced(instanceCount);
 }
 
 void ModelAnimator::Debug()
@@ -82,9 +92,10 @@ void ModelAnimator::ReadClip(string file, UINT clipIndex)
 
 void ModelAnimator::PlayClip(UINT clipIndex, float speed, float takeTime)
 {
-	frameBuffer->data.next.clip  = clipIndex;
-	frameBuffer->data.next.speed = speed;
-	frameBuffer->data.takeTime   = takeTime;
+	frameBuffer->data.next.clip   = clipIndex;
+	frameBuffer->data.next.speed  = speed;
+	frameBuffer->data.takeTime    = takeTime;
+	frameBuffer->data.runningTime = 0.0f;
 }
 
 void ModelAnimator::CreateTexture()

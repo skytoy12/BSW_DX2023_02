@@ -1,23 +1,4 @@
-cbuffer World : register(b0)
-{
-    matrix world;
-};
-
-cbuffer View : register(b1)
-{
-    matrix view;
-};
-
-cbuffer Proj : register(b2)
-{
-    matrix proj;
-};
-
-struct VertexInput
-{
-    float4 pos : POSITION;
-    float2 uv  : UV;
-};
+#include "Header.hlsli"
 
 struct VertexOutput
 {
@@ -25,7 +6,7 @@ struct VertexOutput
     float2 uv : UV;
 };
 
-VertexOutput main(VertexInput input)
+VertexOutput main(VertexTexture input)
 {
     VertexOutput output;
     

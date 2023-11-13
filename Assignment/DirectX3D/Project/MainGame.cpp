@@ -3,6 +3,8 @@
 
 MainGame::MainGame()
 {
+	srand(time(NULL));
+
 	Initialize();
 
 	//scene = new TutorialScene();
@@ -15,15 +17,20 @@ MainGame::MainGame()
 	//scene = new ModelAnimationScene();
 	//scene = new CollisionScene();
 
-	//SCENE->Create("Grid", new GridScene());
+	SCENE->Create("Grid", new GridScene());
 	//SCENE->Create("Collision", new CollisionScene());
-	//SCENE->Create("Export", new ModelExportScene());
-	SCENE->Create("Zombie", new ZombieScene());
+	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
+	//SCENE->Create("Start", new InstanceScene());
+	//SCENE->Create("Start", new ModelInstancingScene());
+	//SCENE->Create("Start", new LightScene());
+	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
+	//SCENE->Create("DeferredRender", new DeferredRenderScene());
+	SCENE->Create("Start", new DeferredRenderScene());
 
-	//SCENE->Add("Grid");
+	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
-	//SCENE->Add("Export");
-	SCENE->Add("Zombie");
+	//SCENE->Add("ModelAnimation");
+	SCENE->Add("Start");
 }
 
 MainGame::~MainGame()
@@ -65,6 +72,8 @@ void MainGame::Render()
 
 	              SCENE->Render();
 	Time::GetInstance()->Render();
+
+	Environment::GetInstance()->PostSet();
 
 	                SCENE->PostRender();
 	     Camera::GetInstance()->Debug();

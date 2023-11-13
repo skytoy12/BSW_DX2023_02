@@ -4,32 +4,13 @@
 Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile, wstring heightFile)
 {
 	material = new Material();
-	material->SetShader(L"NormalMapping");
+	material->SetShader(L"09Light");
 	material->SetDiffuseMap(diffuseFile);
 	material->SetSpecularMap(specularFile);
 	material->SetNormalMap(NormalFile);
 
-	worldBuffer = new MatrixBuffer();
 
 	heightMap = Texture::Get(heightFile);
-
-	CreateMesh();
-	CreateNormal();
-	CreateTangent();
-
-	mesh = new Mesh(vertices, indices);
-}
-
-Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile)
-{
-	material = new Material();
-	material->SetShader(L"NormalMapping");
-	material->SetDiffuseMap(diffuseFile);
-	material->SetSpecularMap(specularFile);
-	material->SetNormalMap(NormalFile);
-
-	worldBuffer = new MatrixBuffer();
-
 
 	CreateMesh();
 	CreateNormal();
@@ -41,11 +22,9 @@ Terrain::Terrain(wstring diffuseFile, wstring specularFile, wstring NormalFile)
 Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 {
 	material = new Material();
-	material->SetShader(L"NormalMapping");
+	material->SetShader(L"09Light");
 	material->SetDiffuseMap(diffuseFile);
 
-
-	worldBuffer = new MatrixBuffer();
 
 	heightMap = Texture::Get(heightFile);
 
@@ -59,14 +38,13 @@ Terrain::Terrain(wstring diffuseFile, wstring heightFile)
 Terrain::~Terrain()
 {
 	delete mesh;
-	delete worldBuffer;
 	delete material;
 }
 
 void Terrain::Render()
 {
-	worldBuffer->SetData(world);
-	worldBuffer->SetVSBuffer(0);
+
+	Transform::SetWorld();
 
 	mesh->SetMesh();
 	material->SetMaterial();
@@ -123,10 +101,10 @@ float Terrain::GetHeight(Vector3 position)
 	int x = (int)position.x;
 	int z = (int)position.z;
 
-	if (x < 0 || x > width - 1)
+	if (x < 0 || x >= width - 1)
 		return 0.0f;
 
-	if (z < 0 || z > height - 1)
+	if (z < 0 || z >= height - 1)
 		return 0.0f;
 
 	UINT index[4];
@@ -174,7 +152,7 @@ void Terrain::CreateMesh()
 	{
 		for (float x = 0; x < width; x++)
 		{
-			VertexTextureNormalTangent vertex;
+			VertexType vertex;
 			vertex.pos = Vector3(x, 0, z);
 
 			vertex.uv.x = x / (width - 1);
@@ -262,7 +240,7 @@ void Terrain::CreateTangent()
 		vertices[index2].tangent += tangent;
 	}
 
-	for (VertexTextureNormalTangent& vertex : vertices)
+	for (VertexType& vertex : vertices)
 	{
 		Vector3 T = vertex.tangent;
 		Vector3 N = vertex.normal;

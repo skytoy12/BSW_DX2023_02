@@ -1,6 +1,6 @@
 #pragma once
 
-class MatrixBuffer;
+class WorldBuffer;
 
 class Transform
 {
@@ -28,7 +28,10 @@ public:
 	void Debug();
 	void SetLabel(string label) { this->label = label; }
 
-	void SetWorld();
+	void SetWorld(int hasAnimation = 0);
+
+	bool& IsActive() { return isActive; }
+
 public:
 	Vector3 scale       = { 1.0f, 1.0f, 1.0f };
 	Vector3 rotation    = { 0.0f, 0.0f, 0.0f };
@@ -49,7 +52,9 @@ protected :
 
 	string label = "NULL";
 
-	MatrixBuffer* worldBuffer;
+	WorldBuffer* worldBuffer;
+
+	bool isActive = true;
 };
 
 

@@ -237,13 +237,46 @@
     <ClInclude Include="Scene\GridScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Model\Zombie.h">
+    <ClInclude Include="Render\State\BlendState.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\ZombieScene.h">
+    <ClInclude Include="Object\UI\ProgressBar.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Object\Model\bullet.h">
+    <ClInclude Include="Render\State\DepthStencilState.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LandScape\Sky.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Object\LandScape\SkyBox.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\InstanceScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\ModelInstancingScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelInstancing.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Model\ModelAnimatorInstancing.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\LightScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\View\DepthStencil.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\View\RenderTarget.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene\DeferredRenderScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Buffer\GeometryBuffer.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -425,13 +458,46 @@
     <ClCompile Include="Scene\GridScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Model\Zombie.cpp">
+    <ClCompile Include="Render\State\BlendState.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\ZombieScene.cpp">
+    <ClCompile Include="Object\UI\ProgressBar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Object\Model\bullet.cpp">
+    <ClCompile Include="Render\State\DepthStencilState.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LandScape\Sky.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Object\LandScape\SkyBox.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\InstanceScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\ModelInstancingScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ModelInstancing.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Model\ModelAnimatorInstancing.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\LightScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\View\DepthStencil.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\View\RenderTarget.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene\DeferredRenderScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Buffer\GeometryBuffer.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -526,24 +592,36 @@
     <FxCompile Include="_Shader\PixelTutorial.hlsl" />
     <FxCompile Include="_Shader\VertexTexture.hlsl" />
     <FxCompile Include="_Shader\PixelTexture.hlsl" />
-    <FxCompile Include="_Shader\VertexDiffuse.hlsl" />
-    <FxCompile Include="_Shader\PixelDiffuse.hlsl" />
     <FxCompile Include="_Shader\VertexColor.hlsl" />
     <FxCompile Include="_Shader\PixelColor.hlsl" />
-    <FxCompile Include="_Shader\VertexSpecular.hlsl" />
-    <FxCompile Include="_Shader\PixelSpecular.hlsl" />
-    <FxCompile Include="_Shader\VertexNormalMapping.hlsl" />
-    <FxCompile Include="_Shader\PixelNormalMapping.hlsl" />
     <FxCompile Include="_Shader\ByteAddress.hlsl" />
     <FxCompile Include="_Shader\ComputePicking.hlsl" />
     <FxCompile Include="_Shader\VertexTerrainBrush.hlsl" />
     <FxCompile Include="_Shader\PixelTerrainBrush.hlsl" />
     <FxCompile Include="_Shader\Vertex01TextureSplatting.hlsl" />
     <FxCompile Include="_Shader\Pixel01TextureSplatting.hlsl" />
-    <FxCompile Include="_Shader\Vertex02ModelAnimation.hlsl" />
-    <FxCompile Include="_Shader\Pixel02ModelAnimation.hlsl" />
     <FxCompile Include="_Shader\Vertex03Collider.hlsl" />
     <FxCompile Include="_Shader\Pixel03Collider.hlsl" />
+    <FxCompile Include="_Shader\Vertex04ProgressBar.hlsl" />
+    <FxCompile Include="_Shader\Pixel04ProgressBar.hlsl" />
+    <FxCompile Include="_Shader\Vertex05Sky.hlsl" />
+    <FxCompile Include="_Shader\Pixel05Sky.hlsl" />
+    <FxCompile Include="_Shader\Vertex06TextureInstancing.hlsl" />
+    <FxCompile Include="_Shader\Pixel06TextureInstancing.hlsl" />
+    <FxCompile Include="_Shader\Vertex07ModelInstancing.hlsl" />
+    <FxCompile Include="_Shader\Pixel07ModelInstancing.hlsl" />
+    <FxCompile Include="_Shader\Vertex08ModelAnimatorInstancing.hlsl" />
+    <FxCompile Include="_Shader\Pixel08ModelAnimatorInstancing.hlsl" />
+    <FxCompile Include="_Shader\Vertex09Light.hlsl" />
+    <FxCompile Include="_Shader\Pixel09Light.hlsl" />
+    <FxCompile Include="_Shader\Vertex10GrayScale.hlsl" />
+    <FxCompile Include="_Shader\Pixel10GrayScale.hlsl" />
+    <FxCompile Include="_Shader\Pixel11PostEffect.hlsl" />
+    <FxCompile Include="_Shader\Vertex11PostEffect.hlsl" />
+    <FxCompile Include="_Shader\Vertex12GeometryBuffer.hlsl" />
+    <FxCompile Include="_Shader\Pixel12GeometryBuffer.hlsl" />
+    <FxCompile Include="_Shader\Vertex12DeferredRender.hlsl" />
+    <FxCompile Include="_Shader\Pixel12DeferredRender.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="_Library\ImGui.idb" />

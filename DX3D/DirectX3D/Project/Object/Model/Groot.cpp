@@ -24,7 +24,7 @@ Groot::Groot()
 
 	weapon->translation = { -50.630f, 68.640f, -20.580f };
 
-	clips[ATTACK]->SetEndEvent(bind(&Groot::SetClip, this, IDLE), 0.7f);
+	clips[ATTACK]->SetEndEvent(0.7f, bind(&Groot::SetClip, this, IDLE));
 
 	hpBar = new ProgressBar(L"UI/hp_bar.png", L"UI/hp_bar_BG.png");
 	hpBar->SetLabel("HP Bar");

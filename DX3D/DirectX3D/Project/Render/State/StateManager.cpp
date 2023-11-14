@@ -39,17 +39,21 @@ void StateManager::CreateBlendState()
 	blendStates.push_back(new BlendState());
 	blendStates.push_back(new BlendState());
 	blendStates.push_back(new BlendState());
+	blendStates.push_back(new BlendState());
 
 	blendStates[1]->Alpha(true);
 	blendStates[2]->Additive();
+	blendStates[3]->AlphaToCoverage(true);
 }
 
 void StateManager::CreateDepthStencilState()
 {
 	depthStencilStates.push_back(new DepthStencilState());
 	depthStencilStates.push_back(new DepthStencilState());
+	depthStencilStates.push_back(new DepthStencilState());
 
 	depthStencilStates[1]->DepthEnable(false);
+	depthStencilStates[2]->DepthWriteMask(D3D11_DEPTH_WRITE_MASK_ZERO);
 }
 
 void StateManager::AlphaBegin()
@@ -62,6 +66,11 @@ void StateManager::AlphaEnd()
 	blendStates[0]->SetState();
 }
 
+void StateManager::AlphaToCoverageEnable()
+{
+	blendStates[3]->SetState();
+}
+
 void StateManager::DepthEnable()
 {
 	depthStencilStates[0]->SetState();
@@ -70,6 +79,11 @@ void StateManager::DepthEnable()
 void StateManager::DepthDisable()
 {
 	depthStencilStates[1]->SetState();
+}
+
+void StateManager::DepthWriteMaskZero()
+{
+	depthStencilStates[2]->SetState();
 }
 
 void StateManager::Set()

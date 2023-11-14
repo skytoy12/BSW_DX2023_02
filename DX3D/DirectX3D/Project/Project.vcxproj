@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Scene\BillboardScene.h" />
     <ClInclude Include="Scene\FrustumCullingScene.h" />
     <ClInclude Include="Render\Buffer\GeometryBuffer.h" />
     <ClInclude Include="Scene\DeferredRenderScene.h" />
@@ -225,6 +226,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Scene\BillboardScene.cpp" />
     <ClCompile Include="Scene\FrustumCullingScene.cpp" />
     <ClCompile Include="Render\Buffer\GeometryBuffer.cpp" />
     <ClCompile Include="Scene\DeferredRenderScene.cpp" />

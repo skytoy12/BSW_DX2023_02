@@ -40,7 +40,7 @@ private:
 	float moveSpeed = 10.0f;
 	Vector3 destination = { 0, 0, 0 };
 
-	float rotDamping = 10.0f;
+	float rotDamping = 5.0f;
 };
 
 

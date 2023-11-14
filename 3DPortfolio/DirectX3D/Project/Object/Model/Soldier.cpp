@@ -87,13 +87,17 @@ void Soldier::SetAngle()
 
 	float isLeft = abs(angle - this->rotation.y);
 
-	if (isLeft <= XM_PI || isLeft >= -XM_PI)
+	if (isLeft <= XM_PI)
 	{
 		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
 	}
-	else if (isLeft > XM_PI || isLeft < -XM_PI)
+	else if (isLeft > XM_PI)
 	{
-		angle = angle - XM_2PI;
+		if (angle > 0)
+			angle = angle - XM_2PI;
+		else if (angle < 0)
+			angle = angle + XM_2PI;
+		
 		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
 	}
 

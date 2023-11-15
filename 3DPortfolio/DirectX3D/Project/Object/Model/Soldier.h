@@ -17,9 +17,7 @@ public:
 	void Debug();
 	void PostRender();
 
-
 	void SetAngle();
-	void TestAngle();
 	void Move();
 	void SetDestination(Vector3 pos) { destination = pos; }
 	Vector3 GetDestination() { return destination; }
@@ -40,6 +38,8 @@ private:
 	float moveSpeed = 10.0f;
 	Vector3 destination = { 0, 0, 0 };
 
+	float test;
+	float test2;
 	float rotDamping = 5.0f;
 };
 

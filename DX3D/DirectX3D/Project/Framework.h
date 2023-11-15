@@ -100,6 +100,7 @@ using namespace MyMath;
 #include "Render/Shader/VertexShader.h"
 #include "Render/Shader/PixelShader.h"
 #include "Render/Shader/ComputeShader.h"
+#include "Render/Shader/GeometryShader.h"
 
 
 

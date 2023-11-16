@@ -153,6 +153,7 @@ using namespace MyMath;
 #include "Model/ModelAnimatorInstancing.h"
 
 #include "Object/Model/Groot.h"
+#include "Object/Model/Weapon/Gun.h"
 #include "Object/Model/Soldier.h"
 
 

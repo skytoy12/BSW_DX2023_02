@@ -32,15 +32,20 @@ private:
 	Vector3 curPos;
 	Vector3 oldPos;
 
+	Ray bullet;
+
 	float animSpeed = 1.0f;
 	float takeTime = 0.2f;
 
 	float moveSpeed = 10.0f;
 	Vector3 destination = { 0, 0, 0 };
+	Vector3 riflePos = { 0, 0, 0 };
 
 	float test;
 	float test2;
 	float rotDamping = 5.0f;
+
+	Gun* gun;
 };
 
 

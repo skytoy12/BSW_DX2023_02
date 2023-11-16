@@ -14,17 +14,20 @@ Soldier::Soldier()
 
 	CreateTexture();
 	reader->GetMaterials()[0]->SetDiffuseMap(L"Model/EliteFederationSoldier/elite_pmc_lowerbody_a_col.png");
+	gun = new Gun();
 
 }
 
 Soldier::~Soldier()
 {
+	delete gun;
 }
 
 void Soldier::Update()
 {
 	ModelAnimator::Update();
 	Transform::Update();
+	gun->Update();
 
 	if (KEY_DOWN('1'))
 		PlayClip(0, animSpeed, takeTime);
@@ -63,6 +66,7 @@ void Soldier::Update()
 void Soldier::Render()
 {
 	ModelAnimator::Render();
+	gun->Render();
 }
 
 void Soldier::Debug()

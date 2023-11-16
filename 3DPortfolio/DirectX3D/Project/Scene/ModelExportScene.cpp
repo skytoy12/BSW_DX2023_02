@@ -9,22 +9,23 @@ ModelExportScene::ModelExportScene()
 	string name3 = "Dwarven_Axe";
 	string name4 = "EliteFederationSoldier";
 	string name5 = "PoliceZombie";
+	string name6 = "shot gun triangulated";
 
 
-	exporter = new ModelExporter(name5);
+	exporter = new ModelExporter(name6);
 	exporter->ExportModel();
 	//exporter->ExportClip("Rifle/Rifle Idle");
 	//exporter->ExportClip("Rifle/Rifle Run");
 	//exporter->ExportClip("Rifle/Rifle Walk");
 	//exporter->ExportClip("Idle/Breathing Idle");
-	exporter->ExportClip("Zombie Attack");
+	//exporter->ExportClip("Zombie Attack");
 	//exporter->ExportClip("Idle/Walking");
 	//exporter->ExportClip("Sad Idle");
 	//exporter->ExportClip("Standing Melee Attack 360 High");
 
 
 
-	model = new Model(name5);
+	model = new Model(name6);
 }
 
 ModelExportScene::~ModelExportScene()

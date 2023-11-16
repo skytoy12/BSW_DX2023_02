@@ -27,7 +27,8 @@ MainGame::MainGame()
 	//SCENE->Create("DeferredRender", new DeferredRenderScene());
 	//SCENE->Create("FrustumCulling", new FrustumCullingScene());
 	//SCENE->Create("Billboard", new BillboardScene());
-	SCENE->Create("Start", new BillboardScene());
+	//SCENE->Create("Particle", new ParticleScene());
+	SCENE->Create("Start", new ParticleScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");

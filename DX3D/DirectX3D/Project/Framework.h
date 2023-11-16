@@ -65,6 +65,8 @@ using namespace DirectX;
 
 #define RS StateManager::GetInstance()->GetRS()
 
+#define STATE StateManager::GetInstance()
+
 #define Dialog ImGuiFileDialog::Instance()
 
 #define MAX_BONE 256
@@ -150,6 +152,10 @@ using namespace MyMath;
 
 #include "Object/UI/ProgressBar.h"
 
+#include "Object/Effect/Particle.h"
+#include "Object/Effect/Sprite.h"
+#include "Object/Effect/Spark.h"
+
 #include "ModelExport/ModelType.h"
 #include "ModelExport/ModelExporter.h"
 
@@ -180,6 +186,7 @@ using namespace MyMath;
 #include "Scene/DeferredRenderScene.h"
 #include "Scene/FrustumCullingScene.h"
 #include "Scene/BillboardScene.h"
+#include "Scene/ParticleScene.h"
 
 #include "Scene/SceneManager.h"
 

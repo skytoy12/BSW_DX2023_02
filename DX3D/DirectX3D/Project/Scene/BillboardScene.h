@@ -17,12 +17,12 @@ private:
 
 	Terrain* terrain;
 
+	vector<VertexTexture> vertices;
+	vector<VertexTexture> drawVertices;
+
 	Material*     material;
 	VertexBuffer* vertexBuffer;
 	GeometryShader* geometryShader;
-
-	vector<VertexTexture> vertices;
-	vector<VertexTexture> drawVertices;
 
 	const UINT COUNT = 1000;
 

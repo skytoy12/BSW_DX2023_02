@@ -71,6 +71,11 @@ void StateManager::AlphaToCoverageEnable()
 	blendStates[3]->SetState();
 }
 
+void StateManager::AdditiveBegin()
+{
+	blendStates[2]->SetState();
+}
+
 void StateManager::DepthEnable()
 {
 	depthStencilStates[0]->SetState();

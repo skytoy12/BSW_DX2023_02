@@ -17,8 +17,9 @@ public :
 
 	void AlphaBegin();
 	void AlphaEnd();
-
 	void AlphaToCoverageEnable();
+
+	void AdditiveBegin();
 
 	void DepthEnable();
 	void DepthDisable();

@@ -68,6 +68,8 @@ Staging = GPU가 CPU에게 데이터전송을 가능하게 한다(CPU가 읽고 
 // Roll : 앞을 기준으로 회전 / Yaw : 세로를 기준으로 회전 / Pitch : 가로를 기준으로 회전
     // DX 기준 z축                DX 기준 y축                 DX 기준 x축
 
+quaternion : 오일러각의 두 축이 겹치는 문제를 해결하기위해 만들어진 각도
+
 DC->DrawIndexed
 // Rendering pipeLine 시작하는 지점 , 따라서 이 이후부터는 Rendering pipeLine의 순서에 맞춰 코드를 적어야함
 

@@ -92,6 +92,8 @@ void VertexShader::CreateInputLayout()
 
         string semantic = paramDesc.SemanticName;
 
+        assert(semantic != "POSITIONT");
+
         if (semantic == "POSITION")
             elementDesc.Format = DXGI_FORMAT_R32G32B32_FLOAT;
 

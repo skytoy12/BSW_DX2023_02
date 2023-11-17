@@ -2,7 +2,7 @@
 
 struct VertexOutPut // Geometry Input
 {
-    float3 pos     : POSITION0;
+    float4 pos     : POSITION0;
     float2 size    : SIZE;
     matrix invView : INVVIEW;
     matrix view    : VIEW;

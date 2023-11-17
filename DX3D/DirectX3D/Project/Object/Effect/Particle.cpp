@@ -20,7 +20,7 @@ void Particle::Render()
 	if (isAdditive)
 		STATE->AdditiveBegin();
 	else
-		STATE->AlphaToCoverageEnable();
+		STATE->AlphaBegin();
 
 	STATE->DepthWriteMaskZero();
 

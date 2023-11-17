@@ -47,6 +47,8 @@ void Spark::Render()
 	      valueBuffer->SetVSBuffer(10);
 	 startColorBuffer->SetPSBuffer(11);
 	   endColorBuffer->SetPSBuffer(12);
+
+	   Particle::Render();
 }
 
 void Spark::Debug()

@@ -7,7 +7,7 @@ ParticleScene::ParticleScene()
 
 	//particle = new Sprite(L"Effect/greenCore_4x4.png",Vector2(30.0f, 30.0f), 4, 4, true);
 	//particle = new Spark(L"Effect/star.png", true);
-	particle = new Rain(L"Effect/Rain.png");
+	particle = new Snow(L"Effect/Snow.png");
 	particle->Play({0, 0, 0});
 }
 

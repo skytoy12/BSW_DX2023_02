@@ -28,7 +28,8 @@ MainGame::MainGame()
 	//SCENE->Create("FrustumCulling", new FrustumCullingScene());
 	//SCENE->Create("Billboard", new BillboardScene());
 	//SCENE->Create("Particle", new ParticleScene());
-	SCENE->Create("Start", new ParticleScene());
+	//SCENE->Create("ParticleEditor", new ParticleEditorScene());
+	SCENE->Create("Start", new ParticleEditorScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");

@@ -189,6 +189,7 @@ using namespace MyMath;
 #include "Scene/FrustumCullingScene.h"
 #include "Scene/BillboardScene.h"
 #include "Scene/ParticleScene.h"
+#include "Scene/ParticleEditorScene.h"
 
 #include "Scene/SceneManager.h"
 

@@ -1,8 +1,6 @@
 #pragma once
-class ParticleEditorScene : public Scene
+class ParticleSystem
 {
-	const UINT MAX_COUNT = 1000;
-
 	struct ParticleData
 	{
 		bool isLoop = false;
@@ -60,34 +58,31 @@ class ParticleEditorScene : public Scene
 		Matrix transfrom;
 		Vector4 color = { 1, 1, 1, 1 };
 	};
+
 public:
-	ParticleEditorScene();
-	~ParticleEditorScene();
+	ParticleSystem(string file);
+	~ParticleSystem();
 
-	void Update() override;
-	void PreRender() override;
-	void Render() override;
-	void PostRender() override;
+	void Update();
+	void Render();
+	void Play(Vector3 pos, Vector3 rot = Vector3());
+	void Stop();
 
-private :
+	bool IsActive() { return quad->IsActive(); }
+private:
 	void UpdatePhysics();
 	void UpdateColor();
 
 	void Init();
 
 	void Load(string file);
-	void Save(string file);
 
-	void SaveDialog();
-	void LoadDialog();
-
-	void EditTexture();
 private:
 	Quad* quad;
 
 	vector<InstanceData> instanceData;
 	vector<ParticleInfo> particleInfos;
-	
+
 	VertexBuffer* instanceBuffer;
 
 	ParticleData particleData;
@@ -96,5 +91,4 @@ private:
 	UINT     drawCount = 0;
 	UINT particleCount = 100;
 };
-
 

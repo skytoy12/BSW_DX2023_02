@@ -29,7 +29,7 @@ MainGame::MainGame()
 	//SCENE->Create("Billboard", new BillboardScene());
 	//SCENE->Create("Particle", new ParticleScene());
 	//SCENE->Create("ParticleEditor", new ParticleEditorScene());
-	SCENE->Create("Start", new ParticleEditorScene());
+	SCENE->Create("Start", new ParticleScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");

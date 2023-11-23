@@ -18,6 +18,8 @@ public:
 private:
 	Soldier* soldier;
 
+	Bullet* bullet;
+
 	TerrainEditor* terrain;
 
 	ModelAnimatorInstancing* model;

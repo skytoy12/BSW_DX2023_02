@@ -8,6 +8,8 @@ TestScene::TestScene()
 	//terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"LandScape/Fieldstone_NM.tga", L"HeightMap/flat.png");
 	terrain = new TerrainEditor();
 
+	bullet = new Bullet();
+
 	terrain->SetLabel("terrain1");
 
 	terrain->translation.x = -50;
@@ -34,6 +36,7 @@ TestScene::TestScene()
 TestScene::~TestScene()
 {
 	delete soldier;
+	delete bullet;
 	delete terrain;
 	delete model;
 }
@@ -42,6 +45,9 @@ void TestScene::Update()
 {
 	soldier->Update();
 	terrain->Update();
+	bullet->Update();
+
+
 	if (KEY_DOWN('L'))
 	{
 		isFree = !isFree;
@@ -68,6 +74,7 @@ void TestScene::Render()
 	soldier->Render();
 	terrain->Render();
 	//model->Render();
+	bullet->Render();
 }
 
 void TestScene::PostRender()

@@ -134,6 +134,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Object\Model\Weapon\Bullet.h" />
     <ClInclude Include="Object\Model\Weapon\Gun.h" />
     <ClInclude Include="Model\ModelAnimatorInstancing.h" />
     <ClInclude Include="Model\ModelInstancing.h" />
@@ -221,6 +222,7 @@
     <ClInclude Include="__Others\targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Object\Model\Weapon\Bullet.cpp" />
     <ClCompile Include="Object\Model\Weapon\Gun.cpp" />
     <ClCompile Include="Model\ModelAnimatorInstancing.cpp" />
     <ClCompile Include="Model\ModelInstancing.cpp" />

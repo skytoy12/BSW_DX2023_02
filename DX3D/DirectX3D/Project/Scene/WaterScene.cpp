@@ -5,11 +5,14 @@ WaterScene::WaterScene()
 {
 	CreateObjects();
 
-	reflection = new Reflection(floor);
+	//reflection = new Reflection(floor);
+	//refraction = new Refraction(L"Landscape/Wave.dds");
 
 	sky = new SkyBox(L"LandScape/Snow_ENV.dds");
 
-	floor->GetMaterial()->SetShader(L"19Reflection");
+	//floor->GetMaterial()->SetShader(L"20Refraction");
+
+	water = new Water(L"Landscape/Wave.dds");
 }
 
 WaterScene::~WaterScene()
@@ -20,6 +23,10 @@ WaterScene::~WaterScene()
 	delete sphere;
 
 	delete sky;
+
+	delete water;
+	//delete reflection;
+	//delete refraction;
 }
 
 void WaterScene::Update()
@@ -29,16 +36,26 @@ void WaterScene::Update()
 	bunny->Update();
 	sphere->Update();
 
-	reflection->Update();
+	water->Update();
+
+	//reflection->Update();
+	//refraction->Update();
 }
 
 void WaterScene::PreRender()
 {
-	reflection->SetPreRender();
+	//reflection->SetPreRender();
+	//refraction->SetPreRender();
+	water->SetReflection();
 
 	sky->Render();
+	groot->Render();
+	bunny->Render();
+	sphere->Render();
 
-	//floor->Render();
+	water->SetRefraction();
+
+	sky->Render();
 	groot->Render();
 	bunny->Render();
 	sphere->Render();
@@ -48,9 +65,11 @@ void WaterScene::Render()
 {
 	sky->Render();
 
-	reflection->SetRender();
+	//reflection->SetRender();
+	//refraction->SetRender();
+	water->Render();
 
-	floor->Render();
+	//floor->Render();
 	groot->Render();
 	bunny->Render();
 	sphere->Render();
@@ -58,7 +77,12 @@ void WaterScene::Render()
 
 void WaterScene::PostRender()
 {
-	reflection->PostRender();
+	//reflection->PostRender();
+	//refraction->PostRender();
+	//refraction->Debug();
+	water->Debug();
+
+	//floor->Debug();
 }
 
 void WaterScene::CreateObjects()

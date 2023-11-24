@@ -146,11 +146,13 @@ using namespace MyMath;
 #include "Object/Basic/Sphere.h"
 
 #include "System/Reflection.h"
+#include "System/Refraction.h"
 
 #include "Object/LandScape/Terrain.h"
 #include "Object/LandScape/TerrainEditor.h"
 #include "Object/LandScape/Sky.h"
 #include "Object/LandScape/SkyBox.h"
+#include "Object/LandScape/Water.h"
 
 #include "Object/UI/ProgressBar.h"
 

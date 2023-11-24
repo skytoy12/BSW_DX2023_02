@@ -9,6 +9,7 @@ TestScene::TestScene()
 	terrain = new TerrainEditor();
 
 	bullet = new Bullet();
+	bullet->SetTarget(soldier);
 
 	terrain->SetLabel("terrain1");
 

@@ -17,6 +17,7 @@ public:
 
 	void SetDestination(Vector3 pos) { bullet.direction = pos; }
 
+	void SetTarget(Transform* target) { this->target = target; }
 
 	void SetColor(float r, float g, float b) { material->GetBuffer()->data.diffuse = { r, g, b, 1.0f }; }
 
@@ -28,6 +29,8 @@ private:
 
 	vector<VertexType> vertices;
 	vector<UINT>        indices;
+
+	Transform* target = nullptr;
 
 	float range = 50.0f;
 };

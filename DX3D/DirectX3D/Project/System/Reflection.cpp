@@ -6,10 +6,10 @@ UINT Reflection::index = 0;
 Reflection::Reflection(Transform* target)
 	:target(target)
 {
+	camera = new Camera();
+
 	renderTarget = new RenderTarget(1280, 720);
 	depthStencil = new DepthStencil(1280, 720);
-
-	camera = new Camera();
 
 	//Debug
 	quad = new Quad(Vector2(200, 200));

@@ -20,7 +20,10 @@ private:
 
 	SkyBox* sky;
 
-	Reflection* reflection;
+	//Reflection* reflection;
+	//Refraction* refraction;
+
+	Water* water;
 };
 
 

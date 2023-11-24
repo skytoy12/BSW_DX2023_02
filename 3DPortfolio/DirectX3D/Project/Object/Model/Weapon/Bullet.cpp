@@ -37,7 +37,19 @@ void Bullet::CreateMesh()
 
 void Bullet::Update()
 {
+	if (target != nullptr)
+	{
+		bullet.origin = target->translation;
+		bullet.direction = target->Forward();
+		Vector3 destination;
+		destination = bullet.origin + (bullet.direction * range);
 
+		vertices[0] = { bullet.origin.x, bullet.origin.y, bullet.origin.z };
+		vertices[1] = { destination.x, destination.y, destination.z };
+	}
+
+
+	mesh->UpdateVertex(vertices.data(), vertices.size());
 }
 
 void Bullet::Render()

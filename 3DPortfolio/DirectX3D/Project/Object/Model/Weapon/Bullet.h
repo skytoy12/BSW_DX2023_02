@@ -21,6 +21,8 @@ public:
 
 	void SetColor(float r, float g, float b) { material->GetBuffer()->data.diffuse = { r, g, b, 1.0f }; }
 
+	Vector3 GetOrigin() { return bullet.origin; }
+
 private:
 	Material* material;
 	Mesh* mesh;

@@ -2,7 +2,7 @@
 #include "Water.h"
 
 Water::Water(wstring normalFile, float width, float height)
- :size(width, height)
+	:size(width, height)
 {
 	label = "Water_" + to_string(index);
 
@@ -28,19 +28,24 @@ Water::~Water()
 void Water::Update()
 {
 	Transform::Update();
+
+	reflection->Update();
+	refraction->Update();
 }
 
 void Water::Render()
 {
 	Transform::SetWorld();
 
-	    mesh->SetMesh();
+	mesh->SetMesh();
 	material->SetMaterial();
 
 	reflection->SetRender();
 	refraction->SetRender();
 
+	STATE->AlphaBegin();
 	DC->DrawIndexed(indices.size(), 0, 0);
+	STATE->AlphaEnd();
 }
 
 void Water::Debug()
@@ -68,10 +73,10 @@ void Water::CreateMesh()
 
 	vertices =
 	{
-		{ Vector3(L, 0, T), Vector2 (0, 0) },
-		{ Vector3(R, 0, T), Vector2 (1, 0) },
-		{ Vector3(L, 0, B), Vector2 (0, 1) },
-		{ Vector3(R, 0, B), Vector2 (1, 1) }
+		{ Vector3(L, 0, T), Vector2(0, 0) },
+		{ Vector3(R, 0, T), Vector2(1, 0) },
+		{ Vector3(L, 0, B), Vector2(0, 1) },
+		{ Vector3(R, 0, B), Vector2(1, 1) },
 	};
 
 	indices =

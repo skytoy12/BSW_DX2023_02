@@ -2,11 +2,11 @@
 
 struct VertexOutput
 {
-    float4 pos           : SV_POSITION;
-    float2 uv            : UV;
-    float4 reflectPos    : POSITION0;
-    float4 refractPos    : POSITION1;
-    float4 worldPos      : POSITION2;
+    float4 pos : SV_POSITION;
+    float2 uv : UV;
+    float4 reflectPos : POSITION0;
+    float4 refractPos : POSITION1;
+    float4 worldPos : POSITION2;
 };
 
 Texture2D reflectionMap : register(t10);
@@ -16,6 +16,7 @@ Texture2D refractionNormalMap : register(t12);
 cbuffer WaterBuffer : register(b10)
 {
     float4 waveColor;
+    
     float waveTime;
     float waveSpeed;
     float waveScale;
@@ -24,10 +25,10 @@ cbuffer WaterBuffer : register(b10)
     float fresnel;
 }
 
-
 float4 main(VertexOutput input) : SV_TARGET
 {
     //Refraction
+    
     float2 uv;
     
     uv.x = +input.refractPos.x / input.refractPos.w * 0.5f + 0.5f;
@@ -40,7 +41,7 @@ float4 main(VertexOutput input) : SV_TARGET
     
     float4 refractionColor = refractionMap.Sample(samp, uv) * waveColor;
     
-    //Reflection
+    //Reflection 
     uv.x = +input.reflectPos.x / input.reflectPos.w * 0.5f + 0.5f;
     uv.y = -input.reflectPos.y / input.reflectPos.w * 0.5f + 0.5f;
     uv += normal.xy * waveScale;
@@ -57,6 +58,7 @@ float4 main(VertexOutput input) : SV_TARGET
     
     float3 halfWay = normalize(viewDir + light);
     float specularIntensity = saturate(dot(halfWay, normal.xyz));
+    
     specularIntensity = pow(specularIntensity, waveShininess);
     
     albedo = saturate(albedo + specularIntensity);

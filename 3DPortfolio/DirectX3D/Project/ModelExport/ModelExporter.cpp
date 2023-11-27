@@ -10,6 +10,7 @@ ModelExporter::ModelExporter(string name)
 	importer->SetPropertyInteger(AI_CONFIG_PP_RVC_FLAGS, aiComponent_TANGENTS_AND_BITANGENTS);
 
 	scene = importer->ReadFile("_modelData/FBX/" + name + ".fbx", aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_MaxQuality);
+	//scene = importer->ReadFile("_modelData/FBX/" + name + ".dae", aiProcess_ConvertToLeftHanded | aiProcessPreset_TargetRealtime_MaxQuality);
 
 	assert(scene != nullptr);
 }

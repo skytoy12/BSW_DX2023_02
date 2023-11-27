@@ -22,6 +22,10 @@ public:
 	void SetDestination(Vector3 pos) { destination = pos; }
 	Vector3 GetDestination() { return destination; }
 
+	void UpdateGunPos();
+	void SetGunIdle();
+	void SetGunRun();
+
 	void SetClip(SoliderState type);
 
 	bool isMove();
@@ -32,20 +36,18 @@ private:
 	Vector3 curPos;
 	Vector3 oldPos;
 
-	Ray bullet;
-
 	float animSpeed = 1.0f;
 	float takeTime = 0.2f;
 
 	float moveSpeed = 10.0f;
 	Vector3 destination = { 0, 0, 0 };
-	Vector3 riflePos = { 0, 0, 0 };
 
-	float test;
-	float test2;
+	Transform* gunPos;
+	Collider* firePoint;
+	ShotGun* gun;
+
 	float rotDamping = 5.0f;
 
-	Gun* gun;
 };
 
 

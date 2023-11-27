@@ -164,6 +164,7 @@
     <ClInclude Include="Object\LandScape\SkyBox.h" />
     <ClInclude Include="Object\Model\Soldier.h" />
     <ClInclude Include="Scene\TestScene.h" />
+    <ClInclude Include="Object\Model\Weapon\ShotGun.h" />
     <ClInclude Include="Utility\MyMath.h" />
     <ClInclude Include="Utility\BinaryReader.h" />
     <ClInclude Include="Utility\BinaryWriter.h" />
@@ -251,6 +252,7 @@
     <ClCompile Include="Object\LandScape\SkyBox.cpp" />
     <ClCompile Include="Object\Model\Soldier.cpp" />
     <ClCompile Include="Scene\TestScene.cpp" />
+    <ClCompile Include="Object\Model\Weapon\ShotGun.cpp" />
     <ClCompile Include="Utility\MyMath.cpp" />
     <ClCompile Include="Utility\BinaryReader.cpp" />
     <ClCompile Include="Utility\BinaryWriter.cpp" />

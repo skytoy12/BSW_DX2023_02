@@ -30,6 +30,7 @@ public:
 	bool ContainSphere(Vector3 center, float radius);
 
 	void SetView();
+	void Set();
 
 private:
 	void   FreeMode();

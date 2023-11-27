@@ -8,8 +8,8 @@ Reflection::Reflection(Transform* target)
 {
 	camera = new Camera();
 
-	renderTarget = new RenderTarget(1280, 720);
-	depthStencil = new DepthStencil(1280, 720);
+	renderTarget = new RenderTarget(2048, 2048);
+	depthStencil = new DepthStencil(2048, 2048);
 
 	//Debug
 	quad = new Quad(Vector2(200, 200));
@@ -40,7 +40,7 @@ void Reflection::Update()
 	camera->translation = pos;
 	camera->rotation = rot;
 
-	camera->Update();
+	camera->UpdateWorld();
 }
 
 void Reflection::SetPreRender()

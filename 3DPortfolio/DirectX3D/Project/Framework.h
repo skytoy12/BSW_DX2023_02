@@ -154,6 +154,7 @@ using namespace MyMath;
 
 #include "Object/Model/Groot.h"
 #include "Object/Model/Weapon/Gun.h"
+#include "Object/Model/Weapon/ShotGun.h"
 #include "Object/Model/Weapon/Bullet.h"
 #include "Object/Model/Soldier.h"
 

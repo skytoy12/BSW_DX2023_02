@@ -1,9 +1,11 @@
 #include "Framework.h"
 #include "Gun.h"
 
-Gun::Gun()
-	: Model("shot gun triangulated")
+
+Gun::Gun(string file)
+	: Model(file)
 {
+	Model::SetLabel(file);
 }
 
 Gun::~Gun()
@@ -22,4 +24,6 @@ void Gun::Render()
 
 void Gun::Debug()
 {
+	Model::Debug();
+	Model::GetReader()->GetMaterials()[0]->Debug();
 }

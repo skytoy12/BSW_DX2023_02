@@ -2,7 +2,7 @@
 class Gun : public Model
 {
 public:
-	Gun();
+	Gun(string file);
 	~Gun();
 
 

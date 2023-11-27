@@ -14,13 +14,22 @@ Soldier::Soldier()
 
 	CreateTexture();
 	reader->GetMaterials()[0]->SetDiffuseMap(L"Model/EliteFederationSoldier/elite_pmc_lowerbody_a_col.png");
-	gun = new Gun();
 
+	///////// gun /////////
+	gunPos = new Transform();
+	gun = new ShotGun("ShotGun");
+	firePoint = new ColliderSphere();
+	gun->SetParent(gunPos);
+	gun->scale *= 2.0f;
+	SetGunIdle();
+	//////////////////////
 }
 
 Soldier::~Soldier()
 {
 	delete gun;
+	delete gunPos;
+	delete firePoint;
 }
 
 void Soldier::Update()
@@ -28,7 +37,9 @@ void Soldier::Update()
 	ModelAnimator::Update();
 	Transform::Update();
 	gun->Update();
-
+	gunPos->Update();
+	firePoint->Update();
+	firePoint->translation = gun->GetGlobalPosition();
 	if (KEY_DOWN('1'))
 		PlayClip(0, animSpeed, takeTime);
 
@@ -49,10 +60,10 @@ void Soldier::Update()
 	
 	Move();
 
-	if (isnan(this->GetGlobalPosition().x))
-	{
-		int a = 20;
-	}
+	//if (isnan(this->GetGlobalPosition().x))
+	//{
+	//	int a = 20;
+	//}
 
 	if (isMove() == true)
 	{
@@ -60,19 +71,28 @@ void Soldier::Update()
 		SetClip(RUN);
 	}
 	else
+	{
 		SetClip(IDLE);
+	}
+
+	
+
+	UpdateGunPos();
 }
 
 void Soldier::Render()
 {
 	ModelAnimator::Render();
 	gun->Render();
+	firePoint->Render();
 }
 
 void Soldier::Debug()
 {
 	ModelAnimator::reader->Debug();
 	ModelAnimator::Debug();
+
+	ImGui::Text("gunPos = %f, %f, %f", gun->GetGlobalPosition().x, gun->GetGlobalPosition().y, gun->GetGlobalPosition().z);
 
 	ImGui::Text("curPos = %f, %f, %f", curPos.x, curPos.y, curPos.z);
 	ImGui::Text("oldPos = %f, %f, %f", oldPos.x, oldPos.y, oldPos.z);
@@ -83,6 +103,7 @@ void Soldier::Debug()
 void Soldier::PostRender()
 {
 	Debug();
+	gun->Debug();
 }
 
 void Soldier::SetAngle()
@@ -106,7 +127,6 @@ void Soldier::SetAngle()
 
 	if (length != 0.0f)
 	{
-		test = AdotB / length;
 		 thepta = acos(AdotB / length);
 
 	}
@@ -117,13 +137,13 @@ void Soldier::SetAngle()
 	if (isLeft.y >= 0.0f)
 	{
 		float angle = this->rotation.y + thepta - XM_PI;
-		test = angle;
+
 		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
 	}
 	if (isLeft.y < 0.0f)
 	{
 		float angle = this->rotation.y - thepta + XM_PI;
-		test = angle;
+
 		this->rotation.y = LERP(this->rotation.y, angle, rotDamping * Time::Delta());
 	}
 
@@ -150,6 +170,41 @@ void Soldier::Move()
 	translation += dir * moveSpeed * Time::Delta();
 }
 
+
+void Soldier::UpdateGunPos()
+{
+	UINT nodeIndex = reader->GetNodeIndex("mixamorig:RightHand");
+
+	gunPos->GetWorld() = GetTransformByNode(nodeIndex) * world;
+
+	if (curState == RUN)
+		SetGunRun();
+	else if (curState == IDLE)
+		SetGunIdle();
+}
+
+void Soldier::SetGunIdle()
+{
+	if (gun->rotation.x == XMConvertToRadians(-68))
+		return;
+	gun->rotation.x = XMConvertToRadians(-68);
+	gun->rotation.y = XMConvertToRadians(4);
+	gun->rotation.z = XMConvertToRadians(-93);
+
+	gun->translation = { 0.130f, 0.090f, -0.150f };
+}
+
+void Soldier::SetGunRun()
+{
+	if (gun->rotation.x == XMConvertToRadians(-78))
+		return;
+
+	gun->rotation.x = XMConvertToRadians(-78);
+	gun->rotation.y = XMConvertToRadians(0);
+	gun->rotation.z = XMConvertToRadians(-104);
+
+	gun->translation = { -0.070f, 0.280f, -0.090f };
+}
 
 void Soldier::SetClip(SoliderState type)
 {

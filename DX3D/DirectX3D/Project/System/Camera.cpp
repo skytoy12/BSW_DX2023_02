@@ -337,8 +337,15 @@ void Camera::SetView()
 
 	//viewMatrix = XMMatrixLookAtLH(eyePos, focusPos, upVector);
 
+	viewMatrix = XMMatrixInverse(nullptr, world);
 	viewBuffer->SetData(viewMatrix, Transform::GetWorld());
 	viewBuffer->SetVSBuffer(1);
+}
+
+void Camera::Set()
+{
+	viewMatrix = XMMatrixInverse(nullptr, world);
+	viewBuffer->SetData(viewMatrix, Transform::GetWorld());
 }
 
 void Camera::Save()

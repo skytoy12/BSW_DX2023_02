@@ -10,6 +10,7 @@ ModelExportScene::ModelExportScene()
 	string name4 = "EliteFederationSoldier";
 	string name5 = "PoliceZombie";
 	string name6 = "shot gun triangulated";
+	string name7 = "ShotGun";
 
 
 	exporter = new ModelExporter(name6);

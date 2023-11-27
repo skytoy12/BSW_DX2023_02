@@ -8,13 +8,13 @@ TestScene::TestScene()
 	//terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"LandScape/Fieldstone_NM.tga", L"HeightMap/flat.png");
 	terrain = new TerrainEditor();
 
-	for (int i = 0; i < 20; i++)
-	{
-		Bullet* bullet = new Bullet();
-		bullet->SetTarget(soldier);
+	//for (int i = 0; i < 20; i++)
+	//{
+	//	Bullet* bullet = new Bullet();
+	//	bullet->SetTarget(soldier);
 
-		bullets.push_back(bullet);
-	}
+	//	bullets.push_back(bullet);
+	//}
 
 
 	terrain->SetLabel("terrain1");
@@ -43,10 +43,11 @@ TestScene::TestScene()
 TestScene::~TestScene()
 {
 	delete soldier;
+	delete groot;
 
-	for (Bullet* bullet : bullets)
-		delete bullet;
-	bullets.clear();
+	//for (Bullet* bullet : bullets)
+	//	delete bullet;
+	//bullets.clear();
 
 	delete terrain;
 	delete model;
@@ -55,22 +56,23 @@ TestScene::~TestScene()
 void TestScene::Update()
 {
 	soldier->Update();
+
 	terrain->Update();
-	for (Bullet* bullet : bullets)
-		bullet->Update();
+	//for (Bullet* bullet : bullets)
+	//	bullet->Update();
 
-	for (Bullet* bullet : bullets)
-	{
-		Vector3 dir = pos;
-		dir.y = 5.0f;
-		dir.x = dir.x + Random(0.1f, 0.3f);
-		dir.y = dir.y + Random(0.1f, 0.3f);
-		dir.z = dir.z + Random(0.1f, 0.3f);
+	//for (Bullet* bullet : bullets)
+	//{
+	//	Vector3 dir = pos;
+	//	dir.y = 5.0f;
+	//	dir.x = dir.x + Random(0.1f, 0.3f);
+	//	dir.y = dir.y + Random(0.1f, 0.3f);
+	//	dir.z = dir.z + Random(0.1f, 0.3f);
 
-		dir = dir - bullet->GetOrigin();
-		dir.Normalize();
-		bullet->SetDestination(dir);
-	}
+	//	dir = dir - bullet->GetOrigin();
+	//	dir.Normalize();
+	//	bullet->SetDestination(dir);
+	//}
 
 	if (KEY_DOWN('L'))
 	{
@@ -96,15 +98,17 @@ void TestScene::PreRender()
 void TestScene::Render()
 {
 	soldier->Render();
+
 	terrain->Render();
 	//model->Render();
-	for (Bullet* bullet : bullets)
-		bullet->Render();
+	//for (Bullet* bullet : bullets)
+	//	bullet->Render();
 }
 
 void TestScene::PostRender()
 {
 	soldier->PostRender();
+
 	terrain->Debug();
 	ImGui::Text("MousePos : %f, %f, %f", mousePos.x, mousePos.y, mousePos.z);
 	//ImGui::SliderInt("InstanceIndex", &instanceIndex, 0, 100);

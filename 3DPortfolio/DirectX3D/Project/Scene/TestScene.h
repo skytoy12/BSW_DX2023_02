@@ -17,8 +17,9 @@ public:
 
 private:
 	Soldier* soldier;
+	Groot* groot;
 
-	vector<Bullet*> bullets;
+	//vector<Bullet*> bullets;
 
 	TerrainEditor* terrain;
 

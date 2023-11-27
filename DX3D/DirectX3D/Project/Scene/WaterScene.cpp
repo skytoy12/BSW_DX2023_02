@@ -13,6 +13,7 @@ WaterScene::WaterScene()
 	//floor->GetMaterial()->SetShader(L"20Refraction");
 
 	water = new Water(L"Landscape/Wave.dds");
+	//water->translation.y += 10.0f;
 }
 
 WaterScene::~WaterScene()

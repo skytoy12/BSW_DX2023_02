@@ -40,8 +40,6 @@ void Bullet::Update()
 	if (target != nullptr)
 	{
 		bullet.origin = target->translation;
-		bullet.origin.y = 5.0f;
-		//bullet.direction = target->Forward() * -1.0f;
 
 		Vector3 destination;
 		destination = bullet.origin + (bullet.direction * range);

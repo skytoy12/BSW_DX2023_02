@@ -8,13 +8,6 @@ TestScene::TestScene()
 	//terrain = new Terrain(L"LandScape/Fieldstone_DM.tga", L"LandScape/Fieldstone_SM.tga", L"LandScape/Fieldstone_NM.tga", L"HeightMap/flat.png");
 	terrain = new TerrainEditor();
 
-	//for (int i = 0; i < 20; i++)
-	//{
-	//	Bullet* bullet = new Bullet();
-	//	bullet->SetTarget(soldier);
-
-	//	bullets.push_back(bullet);
-	//}
 
 
 	terrain->SetLabel("terrain1");
@@ -45,9 +38,6 @@ TestScene::~TestScene()
 	delete soldier;
 	delete groot;
 
-	//for (Bullet* bullet : bullets)
-	//	delete bullet;
-	//bullets.clear();
 
 	delete terrain;
 	delete model;
@@ -58,21 +48,7 @@ void TestScene::Update()
 	soldier->Update();
 
 	terrain->Update();
-	//for (Bullet* bullet : bullets)
-	//	bullet->Update();
 
-	//for (Bullet* bullet : bullets)
-	//{
-	//	Vector3 dir = pos;
-	//	dir.y = 5.0f;
-	//	dir.x = dir.x + Random(0.1f, 0.3f);
-	//	dir.y = dir.y + Random(0.1f, 0.3f);
-	//	dir.z = dir.z + Random(0.1f, 0.3f);
-
-	//	dir = dir - bullet->GetOrigin();
-	//	dir.Normalize();
-	//	bullet->SetDestination(dir);
-	//}
 
 	if (KEY_DOWN('L'))
 	{

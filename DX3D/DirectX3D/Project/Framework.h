@@ -147,6 +147,7 @@ using namespace MyMath;
 
 #include "System/Reflection.h"
 #include "System/Refraction.h"
+#include "System/Shadow.h"
 
 #include "Object/LandScape/Terrain.h"
 #include "Object/LandScape/TerrainEditor.h"

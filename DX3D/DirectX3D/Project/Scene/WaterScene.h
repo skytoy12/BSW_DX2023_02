@@ -24,6 +24,7 @@ private:
 	//Refraction* refraction;
 
 	Water* water;
+	Shadow* shadow;
 };
 
 

@@ -17,14 +17,19 @@ public:
 	void Debug();
 	void PostRender();
 
-	void SetAngle();
+	void SetAngle(Vector3 dir);
 	void Move();
 	void SetDestination(Vector3 pos) { destination = pos; }
+	void SetBulletDestination(Vector3 pos) { bulletDestination = pos; }
 	Vector3 GetDestination() { return destination; }
+	
+	void SetMoveSpeed(float value) { moveSpeed = value; }
 
 	void UpdateGunPos();
 	void SetGunIdle();
 	void SetGunRun();
+
+	void GunFire();
 
 	void SetClip(SoliderState type);
 
@@ -41,6 +46,7 @@ private:
 
 	float moveSpeed = 10.0f;
 	Vector3 destination = { 0, 0, 0 };
+	Vector3 bulletDestination = { 0, 0, 0 };
 
 	Transform* gunPos;
 	Collider* firePoint;

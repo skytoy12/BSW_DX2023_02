@@ -60,10 +60,23 @@ void TestScene::Update()
 		Camera::GetInstance()->SetTarget(soldier);
 
 
-	if(KEY_PRESS(VK_RBUTTON))
-		terrain->Picking(&pos);
+	if (KEY_PRESS(VK_RBUTTON))
+	{
+		terrain->Picking(&movePos);
+		soldier->SetDestination(movePos);
+		soldier->SetMoveSpeed(10.0f);
+	}
 
-	soldier->SetDestination(pos);
+	if (KEY_DOWN(VK_LBUTTON))
+	{
+		terrain->Picking(&gunPos);
+		gunPos.y += 5.0f;
+		soldier->SetBulletDestination(gunPos);
+		soldier->GunFire();
+	}
+
+
+
 	//model->Update();
 }
 

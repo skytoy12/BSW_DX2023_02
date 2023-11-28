@@ -18,7 +18,7 @@ Soldier::Soldier()
 	///////// gun /////////
 	gunPos = new Transform();
 	gun = new ShotGun("ShotGun");
-	firePoint = new ColliderSphere();
+	firePoint = new ColliderSphere(0.5f);
 	gun->SetParent(gunPos);
 	gun->scale *= 2.0f;
 	SetGunIdle();
@@ -39,7 +39,7 @@ void Soldier::Update()
 	gun->Update();
 	gunPos->Update();
 	firePoint->Update();
-	firePoint->translation = gun->GetGlobalPosition();
+	firePoint->translation = gun->GetGlobalPosition() + gun->Forward() * 4.5f + gun->Up() * 0.5f;
 	if (KEY_DOWN('1'))
 		PlayClip(0, animSpeed, takeTime);
 
@@ -58,7 +58,10 @@ void Soldier::Update()
 	if (KEY_DOWN('6'))
 		PlayClip(5, animSpeed, takeTime);
 	
-	Move();
+	if (gun->GetIsAttack() == false)
+		Move();
+
+	gun->SetOrigin(firePoint->GetGlobalPosition());
 
 	//if (isnan(this->GetGlobalPosition().x))
 	//{
@@ -67,7 +70,8 @@ void Soldier::Update()
 
 	if (isMove() == true)
 	{
-		SetAngle();
+		rotDamping = 5.0f;
+		SetAngle(destination);
 		SetClip(RUN);
 	}
 	else
@@ -75,7 +79,15 @@ void Soldier::Update()
 		SetClip(IDLE);
 	}
 
-	
+	if (gun->GetIsAttack() == true)
+	{
+		moveSpeed = 0.0f;
+		rotDamping = 20.0f;
+		SetAngle(bulletDestination);
+		SetClip(RUN);
+	}
+
+		
 
 	UpdateGunPos();
 }
@@ -106,14 +118,14 @@ void Soldier::PostRender()
 	gun->Debug();
 }
 
-void Soldier::SetAngle()
+void Soldier::SetAngle(Vector3 dir)
 {
 	Vector3 temp = this->Forward();
 	temp.y = 0;
-	Vector3 dir1 = destination;
+
 	Vector3 dir2 = this->GetGlobalPosition();
 	//Vector3 dir3 = (dir1 - dir2).GetNormalized();
-	Vector3 dir3 = dir1 - dir2;
+	Vector3 dir3 = dir - dir2;
 	dir3.y = 0;
 
 	Vector3 a = temp;
@@ -204,6 +216,15 @@ void Soldier::SetGunRun()
 	gun->rotation.z = XMConvertToRadians(-104);
 
 	gun->translation = { -0.070f, 0.280f, -0.090f };
+}
+
+void Soldier::GunFire()
+{
+	gun->SetIsAttackTime(0.0f);
+	gun->SetIsAttack(true);
+	Vector3 dir = bulletDestination - firePoint->translation;
+	gun->SetDir(dir);
+	gun->Fire();
 }
 
 void Soldier::SetClip(SoliderState type)

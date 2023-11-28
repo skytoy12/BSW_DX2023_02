@@ -30,7 +30,8 @@ private:
 
 	bool isFree = false;
 
-	Vector3 pos;
+	Vector3 movePos;
+	Vector3 gunPos;
 };
 
 

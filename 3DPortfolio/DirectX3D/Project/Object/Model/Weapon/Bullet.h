@@ -13,8 +13,6 @@ public:
 	void Render();
 	void Debug();
 
-	void SetRay(Vector3 origin, Vector3 direction);
-	void SetRay(Ray ray) { bullet = ray; }
 
 	void SetDirection(Vector3 pos) { bullet.direction = pos; }
 	void SetDestination(Vector3 pos) { destination = pos; }

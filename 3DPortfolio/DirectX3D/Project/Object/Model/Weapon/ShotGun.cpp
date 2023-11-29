@@ -4,7 +4,7 @@
 ShotGun::ShotGun(string file)
 	:Gun(file)
 {
-	for (int i = 0; i < 20; i++)
+	for (int i = 0; i < 16; i++)
 	{
 		Bullet* bullet = new Bullet();
 		bullet->SetTarget(this);
@@ -29,14 +29,12 @@ void ShotGun::Update()
 	for (Bullet* bullet : bullets)
 		bullet->Update();
 
-	for (Bullet* bullet : bullets)
-		bullet->SetDestination(dir);
 
 	for (Bullet* bullet : bullets)
 		bullet->SetOrigin(origin);
 
 	attackTime += Time::Delta();
-	if (attackTime > 0.5f)
+	if (attackTime > 0.3f)
 	{
 		isAttack = false;
 		for (Bullet* bullet : bullets)
@@ -78,64 +76,35 @@ void ShotGun::Debug()
 
 void ShotGun::Fire()
 {
-	for (Bullet* bullet : bullets)
-	{
-		dir.x = dir.x + Random(-0.3f, 0.3f);
-		dir.y = dir.y + Random(-0.3f, 0.3f);
-		dir.z = dir.z + Random(-0.3f, 0.3f);
+	//for (Bullet* bullet : bullets)
+	//{
+	//	dir.x = dir.x + Random(-0.1f, 0.1f);
+	//	dir.y = dir.y + Random(-0.1f, 0.1f);
+	//	dir.z = dir.z + Random(-0.1f, 0.1f);
 
-		dir.Normalize();
-		bullet->SetDestination(dir);
-		Vector3 destination = bullet->GetOrigin() + (dir * bullet->GetRange());
-		bullet->SetDestination(destination);
+	//	dir.Normalize();
+	//	bullet->SetDestination(dir);
+	//	Vector3 destination = bullet->GetOrigin() + (dir * bullet->GetRange());
+	//	bullet->SetDestination(destination);
+	//}
+	for (int x = 0; x < 4; x++)
+	{
+		for (int y = 0; y < 4; y++)
+		{
+			int a = (x * 4) + y;
+			Vector3 tempx = (x - 2) * Right() * 0.04f;
+			Vector3 tempy = (y - 2) * Up() * 0.04f;
+			dir += tempx;
+			dir += tempy;
+			dir.Normalize();
+			bullets[a]->SetDestination(dir);
+			Vector3 destination = bullets[a]->GetOrigin() + (dir * bullets[a]->GetRange());
+			bullets[a]->SetDestination(destination);
+		}
 	}
 
 	for (Bullet* bullet : bullets)
 		bullet->Update();
-
-
-	//dir.x = dir.x + Random(0.1f, 0.3f);
-	//dir.y = dir.y + Random(0.1f, 0.3f);
-	//dir.z = dir.z + Random(0.1f, 0.3f);
-	//dir.Normalize();
-
-	//bullets[0]->SetDestination(dir);
-
-	//dir.x = dir.x + Random(0.1f, 0.3f);
-	//dir.y = dir.y + Random(0.1f, 0.3f);
-	//dir.z = dir.z + Random(0.1f, 0.3f);
-	//dir.Normalize();
-
-	//bullets[1]->SetDestination(dir);
-
-	//dir.x = dir.x + Random(0.1f, 0.3f);
-	//dir.y = dir.y + Random(0.1f, 0.3f);
-	//dir.z = dir.z + Random(0.1f, 0.3f);
-	//dir.Normalize();
-
-	//bullets[2]->SetDestination(dir);
-
-	//dir.x = dir.x + Random(0.1f, 0.3f);
-	//dir.y = dir.y + Random(0.1f, 0.3f);
-	//dir.z = dir.z + Random(0.1f, 0.3f);
-	//dir.Normalize();
-
-	//bullets[3]->SetDestination(dir);
-
-	//dir.x = dir.x + Random(0.1f, 0.3f);
-	//dir.y = dir.y + Random(0.1f, 0.3f);
-	//dir.z = dir.z + Random(0.1f, 0.3f);
-	//dir.Normalize();
-
-	//bullets[4]->SetDestination(dir);
-
-	//dir.x = dir.x + Random(0.1f, 0.3f);
-	//dir.y = dir.y + Random(0.1f, 0.3f);
-	//dir.z = dir.z + Random(0.1f, 0.3f);
-	//dir.Normalize();
-
-	//bullets[5]->SetDestination(dir);
-
 }
 
 void ShotGun::SetBulletActive(bool value)

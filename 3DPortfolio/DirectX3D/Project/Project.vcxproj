@@ -138,6 +138,7 @@
     <ClInclude Include="Object\Model\Weapon\Gun.h" />
     <ClInclude Include="Model\ModelAnimatorInstancing.h" />
     <ClInclude Include="Model\ModelInstancing.h" />
+    <ClInclude Include="Object\Model\Weapon\Rifle.h" />
     <ClInclude Include="Scene\ModelInstancingScene.h" />
     <ClInclude Include="Scene\InstanceScene.h" />
     <ClInclude Include="Render\State\DepthStencilState.h" />
@@ -227,6 +228,7 @@
     <ClCompile Include="Object\Model\Weapon\Gun.cpp" />
     <ClCompile Include="Model\ModelAnimatorInstancing.cpp" />
     <ClCompile Include="Model\ModelInstancing.cpp" />
+    <ClCompile Include="Object\Model\Weapon\Rifle.cpp" />
     <ClCompile Include="Scene\ModelInstancingScene.cpp" />
     <ClCompile Include="Scene\InstanceScene.cpp" />
     <ClCompile Include="Render\State\DepthStencilState.cpp" />

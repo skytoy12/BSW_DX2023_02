@@ -80,6 +80,42 @@ GeometryShader* Shader::GetGS(wstring file)
 	return (GeometryShader*)shaders[file];
 }
 
+HullShader* Shader::GetHS(wstring file)
+{
+	wstring key = file;
+
+	file = L"_Shader/Hull" + file + L".hlsl";
+
+	assert(PathFileExists(file.c_str()));
+
+	if (shaders.count(file) > 0)
+		return (HullShader*)shaders[file];
+
+	shaders[file] = new HullShader(file);
+
+	shaders[file]->path = key;
+
+	return (HullShader*)shaders[file];
+}
+
+DomainShader* Shader::GetDS(wstring file)
+{
+	wstring key = file;
+
+	file = L"_Shader/Domain" + file + L".hlsl";
+
+	assert(PathFileExists(file.c_str()));
+
+	if (shaders.count(file) > 0)
+		return (DomainShader*)shaders[file];
+
+	shaders[file] = new DomainShader(file);
+
+	shaders[file]->path = key;
+
+	return (DomainShader*)shaders[file];
+}
+
 void Shader::Delete()
 {
 	for (pair<wstring, Shader*> shader : shaders)

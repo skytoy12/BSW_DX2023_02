@@ -7,6 +7,8 @@ Soldier::Soldier()
 	ReadClip("Rifle/Rifle Idle");
 	ReadClip("Rifle/Rifle Run");
 	ReadClip("Rifle/Rifle Walk");
+	ReadClip("Rifle/RifleFire");
+	ReadClip("Rifle/ShotGunFire");
 
 	ReadClip("Idle/Breathing Idle");
 	ReadClip("Idle/Running");
@@ -15,19 +17,23 @@ Soldier::Soldier()
 	CreateTexture();
 	reader->GetMaterials()[0]->SetDiffuseMap(L"Model/EliteFederationSoldier/elite_pmc_lowerbody_a_col.png");
 
-	///////// gun /////////
+	///////// shot gun /////////
 	gunPos = new Transform();
-	gun = new ShotGun("ShotGun");
+	shotGun = new ShotGun("ShotGun");
 	firePoint = new ColliderSphere(0.5f);
-	gun->SetParent(gunPos);
-	gun->scale *= 2.0f;
+	shotGun->SetParent(gunPos);
+	shotGun->scale *= 2.0f;
 	SetGunIdle();
-	//////////////////////
+	///////////////////////////
+	///////// rifle /////////
+	rifle = new Rifle("M4");
+	/////////////////////////
 }
 
 Soldier::~Soldier()
 {
-	delete gun;
+	delete shotGun;
+	delete rifle;
 	delete gunPos;
 	delete firePoint;
 }
@@ -36,10 +42,11 @@ void Soldier::Update()
 {
 	ModelAnimator::Update();
 	Transform::Update();
-	gun->Update();
+	shotGun->Update();
+	  rifle->Update();
 	gunPos->Update();
 	firePoint->Update();
-	firePoint->translation = gun->GetGlobalPosition() + gun->Forward() * 4.5f + gun->Up() * 0.5f;
+	firePoint->translation = shotGun->GetGlobalPosition() + shotGun->Forward() * 4.5f + shotGun->Up() * 0.5f;
 	if (KEY_DOWN('1'))
 		PlayClip(0, animSpeed, takeTime);
 
@@ -58,10 +65,10 @@ void Soldier::Update()
 	if (KEY_DOWN('6'))
 		PlayClip(5, animSpeed, takeTime);
 	
-	if (gun->GetIsAttack() == false)
+	if (shotGun->GetIsAttack() == false)
 		Move();
 
-	gun->SetOrigin(firePoint->GetGlobalPosition());
+	shotGun->SetOrigin(firePoint->GetGlobalPosition());
 
 	//if (isnan(this->GetGlobalPosition().x))
 	//{
@@ -79,12 +86,12 @@ void Soldier::Update()
 		SetClip(IDLE);
 	}
 
-	if (gun->GetIsAttack() == true)
+	if (shotGun->GetIsAttack() == true)
 	{
 		moveSpeed = 0.0f;
 		rotDamping = 20.0f;
 		SetAngle(bulletDestination);
-		SetClip(RUN);
+		SetClip(SHOTGUN);
 	}
 
 		
@@ -95,7 +102,8 @@ void Soldier::Update()
 void Soldier::Render()
 {
 	ModelAnimator::Render();
-	gun->Render();
+	shotGun->Render();
+	  rifle->Render();
 	firePoint->Render();
 }
 
@@ -104,7 +112,7 @@ void Soldier::Debug()
 	ModelAnimator::reader->Debug();
 	ModelAnimator::Debug();
 
-	ImGui::Text("gunPos = %f, %f, %f", gun->GetGlobalPosition().x, gun->GetGlobalPosition().y, gun->GetGlobalPosition().z);
+	ImGui::Text("gunPos = %f, %f, %f", shotGun->GetGlobalPosition().x, shotGun->GetGlobalPosition().y, shotGun->GetGlobalPosition().z);
 
 	ImGui::Text("curPos = %f, %f, %f", curPos.x, curPos.y, curPos.z);
 	ImGui::Text("oldPos = %f, %f, %f", oldPos.x, oldPos.y, oldPos.z);
@@ -115,7 +123,7 @@ void Soldier::Debug()
 void Soldier::PostRender()
 {
 	Debug();
-	gun->Debug();
+	shotGun->Debug();
 }
 
 void Soldier::SetAngle(Vector3 dir)
@@ -197,35 +205,35 @@ void Soldier::UpdateGunPos()
 
 void Soldier::SetGunIdle()
 {
-	if (gun->rotation.x == XMConvertToRadians(-68))
+	if (shotGun->rotation.x == XMConvertToRadians(-68))
 		return;
-	gun->rotation.x = XMConvertToRadians(-68);
-	gun->rotation.y = XMConvertToRadians(4);
-	gun->rotation.z = XMConvertToRadians(-93);
+	shotGun->rotation.x = XMConvertToRadians(-68);
+	shotGun->rotation.y = XMConvertToRadians(4);
+	shotGun->rotation.z = XMConvertToRadians(-93);
 
-	gun->translation = { 0.130f, 0.090f, -0.150f };
+	shotGun->translation = { 0.130f, 0.090f, -0.150f };
 }
 
 void Soldier::SetGunRun()
 {
-	if (gun->rotation.x == XMConvertToRadians(-78))
+	if (shotGun->rotation.x == XMConvertToRadians(-78))
 		return;
 
-	gun->rotation.x = XMConvertToRadians(-78);
-	gun->rotation.y = XMConvertToRadians(0);
-	gun->rotation.z = XMConvertToRadians(-104);
+	shotGun->rotation.x = XMConvertToRadians(-78);
+	shotGun->rotation.y = XMConvertToRadians(0);
+	shotGun->rotation.z = XMConvertToRadians(-104);
 
-	gun->translation = { -0.070f, 0.280f, -0.090f };
+	shotGun->translation = { -0.070f, 0.280f, -0.090f };
 }
 
 void Soldier::GunFire()
 {
-	gun->SetIsAttackTime(0.0f);
-	gun->SetBulletActive(true);
+	shotGun->SetIsAttackTime(0.0f);
+	shotGun->SetBulletActive(true);
 	Vector3 dir = bulletDestination - firePoint->translation;
-	gun->SetDir(dir);
-	gun->Fire();
-	gun->SetIsAttack(true);
+	shotGun->SetDir(dir);
+	shotGun->Fire();
+	shotGun->SetIsAttack(true);
 }
 
 void Soldier::SetClip(SoliderState type)

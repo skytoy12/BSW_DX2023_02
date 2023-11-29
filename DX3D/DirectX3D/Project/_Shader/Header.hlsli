@@ -63,6 +63,11 @@ cbuffer FrameInstancingBuffer : register(b4)
 
 Texture2DArray transformMap : register(t0);
 
+struct Vertex
+{
+    float4 pos : POSITION;
+};
+
 struct VertexColor
 {
     float4 pos   : POSITION;

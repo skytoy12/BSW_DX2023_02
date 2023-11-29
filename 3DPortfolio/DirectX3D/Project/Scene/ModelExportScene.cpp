@@ -11,12 +11,14 @@ ModelExportScene::ModelExportScene()
 	string name5 = "PoliceZombie";
 	string name6 = "shot gun triangulated";
 	string name7 = "ShotGun";
+	string name8 = "M4";
+	string name9 = "HK-416";
 
 
-	exporter = new ModelExporter(name6);
+	exporter = new ModelExporter(name4);
 	exporter->ExportModel();
-	//exporter->ExportClip("Rifle/Rifle Idle");
-	//exporter->ExportClip("Rifle/Rifle Run");
+	exporter->ExportClip("Rifle/ShotGunFire");
+	exporter->ExportClip("Rifle/RifleFire");
 	//exporter->ExportClip("Rifle/Rifle Walk");
 	//exporter->ExportClip("Idle/Breathing Idle");
 	//exporter->ExportClip("Zombie Attack");
@@ -26,7 +28,7 @@ ModelExportScene::ModelExportScene()
 
 
 
-	model = new Model(name6);
+	model = new Model(name4);
 }
 
 ModelExportScene::~ModelExportScene()

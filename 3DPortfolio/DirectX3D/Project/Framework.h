@@ -156,6 +156,7 @@ using namespace MyMath;
 #include "Object/Model/Weapon/Gun.h"
 #include "Object/Model/Weapon/Bullet.h"
 #include "Object/Model/Weapon/ShotGun.h"
+#include "Object/Model/Weapon/Rifle.h"
 #include "Object/Model/Soldier.h"
 
 

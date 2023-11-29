@@ -17,7 +17,7 @@ MainGame::MainGame()
 	//scene = new ModelAnimationScene();
 	//scene = new CollisionScene();
 
-	SCENE->Create("Grid", new GridScene());
+	//SCENE->Create("Grid", new GridScene());
 	//SCENE->Create("Collision", new CollisionScene());
 	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
 	//SCENE->Create("Start", new InstanceScene());
@@ -30,9 +30,10 @@ MainGame::MainGame()
 	//SCENE->Create("Particle", new ParticleScene());
 	//SCENE->Create("ParticleEditor", new ParticleEditorScene());
 	//SCENE->Create("Water", new WaterScene());
-	SCENE->Create("Start", new WaterScene());
+	//SCENE->Create("Tessellation", new TessellationScene());
+	SCENE->Create("Start", new TessellationScene());
 
-	SCENE->Add("Grid");
+	//SCENE->Add("Grid");
 	//SCENE->Add("Collision");
 	//SCENE->Add("ModelAnimation");
 	SCENE->Add("Start");

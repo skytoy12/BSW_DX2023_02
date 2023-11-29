@@ -6,7 +6,9 @@ public:
 	{
 		IDLE,
 		RUN,
-		WALK
+		WALK,
+		RIFLE,
+		SHOTGUN
 	};
 
 	Soldier();
@@ -50,7 +52,8 @@ private:
 
 	Transform* gunPos;
 	Collider* firePoint;
-	ShotGun* gun;
+	ShotGun* shotGun;
+	Rifle* rifle;
 
 	float rotDamping = 5.0f;
 

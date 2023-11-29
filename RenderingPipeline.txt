@@ -21,13 +21,13 @@ inputLayout -> IA에게 전달할 input(정보)의 형식을 적어놓은것
 
 ^HS(Hull Shader)^
 
-*TS(Tesselation Stage)*
+*TS(Tessellation Stage)* : 폴리곤을 조정해서 거리가 멀면 단순한 폴리곤 거리가 가까우면 복잡한 폴리곤 이런식으로 디테일을 조정하ㅣㄹ 수 있음 보통 LOD(level of detail)에 사용됨
 
 ^DS(Domain Shader)^
 
 
 
-^GS(Geometry Shader)^
+^GS(Geometry Shader)^ : 정점을 늘리거나 줄일 수 있는 셰이더
 
 ---------------------------------------------------------------------------------------------------------------------------
 

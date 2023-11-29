@@ -14,7 +14,8 @@ public:
 
 	void SetOrigin(Vector3 pos) { origin = pos; }
 	void SetDir(Vector3 pos) { dir = pos; }
-	void SetIsAttack(bool temp) { isAttack = temp; }
+	void SetIsAttack(bool value) { isAttack = value; }
+	void SetBulletActive(bool value);
 	void SetIsAttackTime(float value) { attackTime = value; }
 
 	bool GetIsAttack() { return isAttack; }

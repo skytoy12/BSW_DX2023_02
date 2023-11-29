@@ -70,7 +70,7 @@ void TestScene::Update()
 	if (KEY_DOWN(VK_LBUTTON))
 	{
 		terrain->Picking(&gunPos);
-		gunPos.y += 5.0f;
+		gunPos.y = 5.0f;
 		soldier->SetBulletDestination(gunPos);
 		soldier->GunFire();
 	}

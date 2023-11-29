@@ -221,10 +221,11 @@ void Soldier::SetGunRun()
 void Soldier::GunFire()
 {
 	gun->SetIsAttackTime(0.0f);
-	gun->SetIsAttack(true);
+	gun->SetBulletActive(true);
 	Vector3 dir = bulletDestination - firePoint->translation;
 	gun->SetDir(dir);
 	gun->Fire();
+	gun->SetIsAttack(true);
 }
 
 void Soldier::SetClip(SoliderState type)

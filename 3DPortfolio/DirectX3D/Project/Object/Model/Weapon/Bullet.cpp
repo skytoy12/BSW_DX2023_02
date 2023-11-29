@@ -18,7 +18,6 @@ Bullet::~Bullet()
 
 void Bullet::CreateMesh()
 {
-	Vector3 destination;
 	destination = bullet.origin + (bullet.direction * range);
 
 	vertices =
@@ -37,12 +36,11 @@ void Bullet::CreateMesh()
 
 void Bullet::Update()
 {
+	if (isActive == false)
+		return;
+
 	if (target != nullptr)
 	{
-		
-		Vector3 destination;
-		destination = bullet.origin + (bullet.direction * range);
-
 		vertices[0] = { bullet.origin.x, bullet.origin.y, bullet.origin.z };
 		vertices[1] = { destination.x, destination.y, destination.z };
 	}
@@ -59,6 +57,11 @@ void Bullet::Render()
 	material->SetMaterial();
 
 	DC->DrawIndexed(indices.size(), 0, 0);
+}
+
+void Bullet::Debug()
+{
+
 }
 
 void Bullet::SetRay(Vector3 origin, Vector3 direction)

@@ -11,11 +11,13 @@ public:
 
 	void Update();
 	void Render();
+	void Debug();
 
 	void SetRay(Vector3 origin, Vector3 direction);
 	void SetRay(Ray ray) { bullet = ray; }
 
-	void SetDestination(Vector3 pos) { bullet.direction = pos; }
+	void SetDirection(Vector3 pos) { bullet.direction = pos; }
+	void SetDestination(Vector3 pos) { destination = pos; }
 	void SetOrigin(Vector3 pos) { bullet.origin = pos; }
 
 	void SetTarget(Transform* target) { this->target = target; }
@@ -23,9 +25,12 @@ public:
 	void SetColor(float r, float g, float b) { material->GetBuffer()->data.diffuse = { r, g, b, 1.0f }; }
 
 	void SetRange(float value) { range = value; }
+	void SetIsActive(bool value) { isActive = value; }
 
 	Vector3 GetOrigin() { return bullet.origin; }
-
+	Vector3 GetDestination() { return destination; }
+	float GetRange() { return range; }
+	bool GetIsActive() { return isActive; }
 private:
 	Material* material;
 	Mesh* mesh;
@@ -38,7 +43,10 @@ private:
 
 	Transform* target = nullptr;
 
+	Vector3 destination;
+
 	float range = 50.0f;
+	bool isActive = false;
 };
 
 

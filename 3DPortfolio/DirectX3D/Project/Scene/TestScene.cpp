@@ -72,7 +72,7 @@ void TestScene::Update()
 		terrain->Picking(&gunPos);
 		gunPos.y = 5.0f;
 		soldier->SetBulletDestination(gunPos);
-		soldier->GunFire();
+		soldier->ShotGunFire();
 	}
 
 

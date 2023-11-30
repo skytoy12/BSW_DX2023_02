@@ -76,17 +76,7 @@ void ShotGun::Debug()
 
 void ShotGun::Fire()
 {
-	//for (Bullet* bullet : bullets)
-	//{
-	//	dir.x = dir.x + Random(-0.1f, 0.1f);
-	//	dir.y = dir.y + Random(-0.1f, 0.1f);
-	//	dir.z = dir.z + Random(-0.1f, 0.1f);
 
-	//	dir.Normalize();
-	//	bullet->SetDestination(dir);
-	//	Vector3 destination = bullet->GetOrigin() + (dir * bullet->GetRange());
-	//	bullet->SetDestination(destination);
-	//}
 	for (int x = 0; x < 4; x++)
 	{
 		for (int y = 0; y < 4; y++)

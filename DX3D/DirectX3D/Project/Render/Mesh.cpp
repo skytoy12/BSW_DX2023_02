@@ -4,13 +4,17 @@
 Mesh::~Mesh()
 {
 	delete vertexBuffer;
-	delete indexBuffer;
+
+	if(indexBuffer)
+		delete indexBuffer;	
 }
 
 void Mesh::SetMesh(D3D11_PRIMITIVE_TOPOLOGY type)
 {
 	vertexBuffer->IASetBuffer(type);
-	indexBuffer->IASetBuffer();
+
+	if(indexBuffer)
+		indexBuffer->IASetBuffer();	
 }
 
 

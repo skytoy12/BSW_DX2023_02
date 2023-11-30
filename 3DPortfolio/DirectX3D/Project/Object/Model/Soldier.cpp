@@ -23,11 +23,14 @@ Soldier::Soldier()
 	firePoint = new ColliderSphere(0.5f);
 	shotGun->SetParent(gunPos);
 	shotGun->scale *= 2.0f;
-	SetGunIdle();
+	SetShotGunIdle();
 	///////////////////////////
 	///////// rifle /////////
 	rifle = new Rifle("M4");
+	rifle->SetParent(gunPos);
+	rifle->scale *= 0.3f;
 	/////////////////////////
+
 }
 
 Soldier::~Soldier()
@@ -42,38 +45,26 @@ void Soldier::Update()
 {
 	ModelAnimator::Update();
 	Transform::Update();
-	shotGun->Update();
-	  rifle->Update();
+	ShotGunUpdate();
+	RifleUpdate();
 	gunPos->Update();
 	firePoint->Update();
 	firePoint->translation = shotGun->GetGlobalPosition() + shotGun->Forward() * 4.5f + shotGun->Up() * 0.5f;
+
+
+	//if (KEY_DOWN('1'))
+	//	PlayClip(0, animSpeed, takeTime);
+
 	if (KEY_DOWN('1'))
-		PlayClip(0, animSpeed, takeTime);
+		curWeapon = SHOTGUN;
 
 	if (KEY_DOWN('2'))
-		PlayClip(1, animSpeed, takeTime);
+		curWeapon = RIFLE;
 
-	if (KEY_DOWN('3'))
-		PlayClip(2, animSpeed, takeTime);
-
-	if (KEY_DOWN('4'))
-		PlayClip(3, animSpeed, takeTime);
-
-	if (KEY_DOWN('5'))
-		PlayClip(4, animSpeed, takeTime);
-
-	if (KEY_DOWN('6'))
-		PlayClip(5, animSpeed, takeTime);
 	
 	if (shotGun->GetIsAttack() == false)
 		Move();
 
-	shotGun->SetOrigin(firePoint->GetGlobalPosition());
-
-	//if (isnan(this->GetGlobalPosition().x))
-	//{
-	//	int a = 20;
-	//}
 
 	if (isMove() == true)
 	{
@@ -83,18 +74,8 @@ void Soldier::Update()
 	}
 	else
 	{
-		SetClip(IDLE);
+		SetClip(RUN);
 	}
-
-	if (shotGun->GetIsAttack() == true)
-	{
-		moveSpeed = 0.0f;
-		rotDamping = 20.0f;
-		SetAngle(bulletDestination);
-		SetClip(SHOTGUN);
-	}
-
-		
 
 	UpdateGunPos();
 }
@@ -102,9 +83,15 @@ void Soldier::Update()
 void Soldier::Render()
 {
 	ModelAnimator::Render();
-	shotGun->Render();
-	  rifle->Render();
+	if (curWeapon == SHOTGUN)
+		shotGun->Render();
+
+	else if (curWeapon == RIFLE)
+		rifle->Render();
+
 	firePoint->Render();
+
+
 }
 
 void Soldier::Debug()
@@ -124,6 +111,32 @@ void Soldier::PostRender()
 {
 	Debug();
 	shotGun->Debug();
+	rifle->Debug();
+}
+
+void Soldier::ShotGunUpdate()
+{
+	if (curWeapon != SHOTGUN)
+		return;
+
+	shotGun->Update();
+	shotGun->SetOrigin(firePoint->GetGlobalPosition());
+
+	if (shotGun->GetIsAttack() == true)
+	{
+		moveSpeed = 0.0f;
+		rotDamping = 20.0f;
+		SetAngle(bulletDestination);
+		SetClip(SHOTGUNFIRE);
+	}
+}
+
+void Soldier::RifleUpdate()
+{
+	if (curWeapon != RIFLE)
+		return;
+
+	rifle->Update();
 }
 
 void Soldier::SetAngle(Vector3 dir)
@@ -191,6 +204,7 @@ void Soldier::Move()
 }
 
 
+
 void Soldier::UpdateGunPos()
 {
 	UINT nodeIndex = reader->GetNodeIndex("mixamorig:RightHand");
@@ -198,14 +212,16 @@ void Soldier::UpdateGunPos()
 	gunPos->GetWorld() = GetTransformByNode(nodeIndex) * world;
 
 	if (curState == RUN)
-		SetGunRun();
+		SetShotGunRun();
 	else if (curState == IDLE)
-		SetGunIdle();
+		SetShotGunIdle();
 }
 
-void Soldier::SetGunIdle()
+void Soldier::SetShotGunIdle()
 {
 	if (shotGun->rotation.x == XMConvertToRadians(-68))
+		return;
+	if (curWeapon != SHOTGUN)
 		return;
 	shotGun->rotation.x = XMConvertToRadians(-68);
 	shotGun->rotation.y = XMConvertToRadians(4);
@@ -214,9 +230,11 @@ void Soldier::SetGunIdle()
 	shotGun->translation = { 0.130f, 0.090f, -0.150f };
 }
 
-void Soldier::SetGunRun()
+void Soldier::SetShotGunRun()
 {
 	if (shotGun->rotation.x == XMConvertToRadians(-78))
+		return;
+	if (curWeapon != SHOTGUN)
 		return;
 
 	shotGun->rotation.x = XMConvertToRadians(-78);
@@ -226,8 +244,10 @@ void Soldier::SetGunRun()
 	shotGun->translation = { -0.070f, 0.280f, -0.090f };
 }
 
-void Soldier::GunFire()
+void Soldier::ShotGunFire()
 {
+	if (curWeapon != SHOTGUN)
+		return;
 	shotGun->SetIsAttackTime(0.0f);
 	shotGun->SetBulletActive(true);
 	Vector3 dir = bulletDestination - firePoint->translation;

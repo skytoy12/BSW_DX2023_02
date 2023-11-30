@@ -153,6 +153,7 @@ using namespace MyMath;
 
 #include "Object/LandScape/Terrain.h"
 #include "Object/LandScape/TerrainEditor.h"
+#include "Object/LandScape/TerrainLOD.h"
 #include "Object/LandScape/Sky.h"
 #include "Object/LandScape/SkyBox.h"
 #include "Object/LandScape/Water.h"
@@ -200,6 +201,7 @@ using namespace MyMath;
 #include "Scene/ParticleEditorScene.h"
 #include "Scene/WaterScene.h"
 #include "Scene/TessellationScene.h"
+#include "Scene/TerrainLODScene.h"
 
 #include "Scene/SceneManager.h"
 

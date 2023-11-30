@@ -4,6 +4,8 @@ class Mesh
 public:
 	template <typename T>
 	Mesh(vector<T>& vertices, vector<UINT>& indices);
+	template <typename T>
+	Mesh(vector<T>& vertices);
 	~Mesh();
 
 	void SetMesh(D3D11_PRIMITIVE_TOPOLOGY type = D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
@@ -19,5 +21,11 @@ template<typename T>
 inline Mesh::Mesh(vector<T>& vertices, vector<UINT>& indices)
 {
 	vertexBuffer = new VertexBuffer(vertices);
-	 indexBuffer = new IndexBuffer( indices);
+	 indexBuffer = new IndexBuffer(indices);	 
+}
+
+template<typename T>
+inline Mesh::Mesh(vector<T>& vertices)
+{
+	vertexBuffer = new VertexBuffer(vertices);
 }

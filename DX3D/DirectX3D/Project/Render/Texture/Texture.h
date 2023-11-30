@@ -15,6 +15,7 @@ public:
 	static void Delete();
 
 	void PSSetShaderResources(UINT slot);
+	void DSSetShaderResources(UINT slot);
 	
 	vector<Vector4> ReadPixels();
 	Vector2 GetSize()

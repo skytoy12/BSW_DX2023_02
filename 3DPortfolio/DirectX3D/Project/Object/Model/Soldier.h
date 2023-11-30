@@ -7,8 +7,14 @@ public:
 		IDLE,
 		RUN,
 		WALK,
-		RIFLE,
-		SHOTGUN
+		RIFLEFIRE,
+		SHOTGUNFIRE
+	};
+
+	enum GunType
+	{
+		SHOTGUN,
+		RIFLE
 	};
 
 	Soldier();
@@ -18,6 +24,9 @@ public:
 	void Render();
 	void Debug();
 	void PostRender();
+	void ShotGunUpdate();
+	void RifleUpdate();
+
 
 	void SetAngle(Vector3 dir);
 	void Move();
@@ -27,11 +36,12 @@ public:
 	
 	void SetMoveSpeed(float value) { moveSpeed = value; }
 
-	void UpdateGunPos();
-	void SetGunIdle();
-	void SetGunRun();
 
-	void GunFire();
+	void UpdateGunPos();
+	void SetShotGunIdle();
+	void SetShotGunRun();
+
+	void ShotGunFire();
 
 	void SetClip(SoliderState type);
 
@@ -39,6 +49,9 @@ public:
 private:
 	SoliderState curState;
 	SoliderState oldState;
+	Groot* groot;
+
+	GunType curWeapon = RIFLE;
 
 	Vector3 curPos;
 	Vector3 oldPos;

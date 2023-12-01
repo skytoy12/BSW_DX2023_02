@@ -67,13 +67,28 @@ void TestScene::Update()
 		soldier->SetMoveSpeed(10.0f);
 	}
 
-	if (KEY_DOWN(VK_LBUTTON))
+	if (soldier->GetGunType() == Soldier::GunType::SHOTGUN)
 	{
-		terrain->Picking(&gunPos);
-		gunPos.y = 5.0f;
-		soldier->SetBulletDestination(gunPos);
-		soldier->ShotGunFire();
+		if (KEY_DOWN(VK_LBUTTON))
+		{
+			terrain->Picking(&gunPos);
+			gunPos.y = 5.0f;
+			soldier->SetBulletDestination(gunPos);
+			soldier->ShotGunFire();
+		}
 	}
+
+	else if (soldier->GetGunType() == Soldier::GunType::RIFLE)
+	{
+		if (KEY_PRESS(VK_LBUTTON))
+		{
+			terrain->Picking(&gunPos);
+			gunPos.y = 5.0f;
+			soldier->SetBulletDestination(gunPos);
+			soldier->RifleFire();
+		}
+	}
+	
 
 
 

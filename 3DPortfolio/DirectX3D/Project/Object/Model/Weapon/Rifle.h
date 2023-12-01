@@ -19,6 +19,7 @@ public:
 	void SetIsAttackTime(float value) { attackTime = value; }
 
 	bool GetIsAttack() { return isAttack; }
+	void BulletNumPlus();
 
 private:
 	vector<class Bullet*> bullets;
@@ -26,6 +27,8 @@ private:
 	float attackTime = 0.0f;
 	Vector3 origin = Vector3(0, 0, 0);
 	Vector3 dir = Vector3(0, 0, 0);
+	UINT curBulletNum = 0;
+	UINT bulletNum = 0;
 };
 
 

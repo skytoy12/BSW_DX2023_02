@@ -35,7 +35,7 @@ void Environment::CreatePerspective()
 {
     persBuffer = new MatrixBuffer();
 
-    persMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 1000.0f);
+    persMatrix = XMMatrixPerspectiveFovLH(XM_PIDIV4, WIN_WIDTH / WIN_HEIGHT, 0.1f, 10000.0f);
 
     persBuffer->SetData(persMatrix);
 }
@@ -87,6 +87,7 @@ void Environment::SetEnvironment()
 
     lightBuffer->SetPSBuffer(0);
     persBuffer->SetVSBuffer(2);
+    persBuffer->SetDSBuffer(2);
 
     StateManager::GetInstance()->Set();
 }

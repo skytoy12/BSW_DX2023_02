@@ -301,9 +301,15 @@ void Camera::TargetMode(Mode mode)
 
 		Transform::translation = LERP(Transform::translation, destination, moveDamping * Time::Delta());
 
-		viewMatrix = XMMatrixLookAtLH(Transform::translation, target->translation, V_UP);
+		Vector3 eyePos = Transform::translation;
+		Vector3 targetPos = target->translation;
 
-		viewMatrix *= XMMatrixTranslation(0, -height, 0);
+		   eyePos.y += height;
+		targetPos.y += height;
+
+		viewMatrix = XMMatrixLookAtLH(eyePos, targetPos, V_UP);
+
+		//viewMatrix *= XMMatrixTranslation(0, -height, 0);
 	}
 	    break;
 	default:
@@ -340,6 +346,8 @@ void Camera::SetView()
 	viewMatrix = XMMatrixInverse(nullptr, world);
 	viewBuffer->SetData(viewMatrix, Transform::GetWorld());
 	viewBuffer->SetVSBuffer(1);
+	viewBuffer->SetHSBuffer(1);
+	viewBuffer->SetDSBuffer(1);
 }
 
 void Camera::Set()

@@ -17,26 +17,32 @@ SceneManager::~SceneManager()
 
 void SceneManager::Update()
 {
-	for (pair<string, Scene*> pair : scenes)
-		pair.second->Update();
+	for (Scene* scene : curScenes)
+		scene->Update();
+
+	if (addScenes.size() > 0)
+		AddScene();
+
+	if (removeScenes.size() > 0)
+		RemoveScene();
 }
 
 void SceneManager::PreRender()
 {
-	for (pair<string, Scene*> pair : scenes)
-		pair.second->PreRender();
+	for (Scene* scene : curScenes)
+		scene->PreRender();
 }
 
 void SceneManager::Render()
 {
-	for (pair<string, Scene*> pair : scenes)
-		pair.second->Render();
+	for (Scene* scene : curScenes)
+		scene->Render();
 }
 
 void SceneManager::PostRender()
 {
-	for (pair<string, Scene*> pair : scenes)
-		pair.second->PostRender();
+	for (Scene* scene : curScenes)
+		scene->PostRender();
 }
 
 void SceneManager::Create(string key, Scene* scene)
@@ -89,7 +95,7 @@ void SceneManager::RemoveScene()
 		list<Scene*>::iterator findScene =
 			find(curScenes.begin(), curScenes.end(), scenes[scene]);
 
-		if (findScene != curScenes.end())
+		if (findScene == curScenes.end())
 			continue;
 
 		scenes[scene]->Release();

@@ -18,26 +18,27 @@ MainGame::MainGame()
 	//scene = new CollisionScene();
 
 	SCENE->Create("Grid", new GridScene());
-	//SCENE->Create("Collision", new CollisionScene());
-	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
-	//SCENE->Create("Start", new InstanceScene());
-	//SCENE->Create("Start", new ModelInstancingScene());
-	//SCENE->Create("Start", new LightScene());
-	//SCENE->Create("ModelAnimation", new ModelAnimationScene());
-	//SCENE->Create("DeferredRender", new DeferredRenderScene());
-	//SCENE->Create("FrustumCulling", new FrustumCullingScene());
-	//SCENE->Create("Billboard", new BillboardScene());
-	//SCENE->Create("Particle", new ParticleScene());
-	//SCENE->Create("ParticleEditor", new ParticleEditorScene());
-	//SCENE->Create("Water", new WaterScene());
-	//SCENE->Create("Tessellation", new TessellationScene());
-	//SCENE->Create("TerrainLOD", new TerrainLODScene());
+	SCENE->Create("Collision", new CollisionScene());
+	SCENE->Create("ModelAnimation", new ModelAnimationScene());
+	SCENE->Create("Instance", new InstanceScene());
+	SCENE->Create("ModelInstancing", new ModelInstancingScene());
+	SCENE->Create("Light", new LightScene());
+	SCENE->Create("ModelAnimation", new ModelAnimationScene());
+	SCENE->Create("DeferredRender", new DeferredRenderScene());
+	SCENE->Create("FrustumCulling", new FrustumCullingScene());
+	SCENE->Create("Billboard", new BillboardScene());
+	SCENE->Create("Particle", new ParticleScene());
+	SCENE->Create("ParticleEditor", new ParticleEditorScene());
+	SCENE->Create("Water", new WaterScene());
+	SCENE->Create("Tessellation", new TessellationScene());
+	SCENE->Create("TerrainLOD", new TerrainLODScene());
 	SCENE->Create("Start", new TerrainLODScene());
 
 	SCENE->Add("Grid");
 	//SCENE->Add("Collision");
 	//SCENE->Add("ModelAnimation");
 	SCENE->Add("Start");
+	SCENE->Remove("Grid");
 }
 
 MainGame::~MainGame()

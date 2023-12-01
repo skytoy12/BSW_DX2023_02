@@ -55,6 +55,9 @@ void Bullet::Render()
 {
 	Transform::SetWorld();
 
+	if (isActive == false)
+		return;
+
 	mesh->SetMesh(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
 	material->SetMaterial();
 

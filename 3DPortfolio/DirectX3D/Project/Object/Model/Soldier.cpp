@@ -49,7 +49,11 @@ void Soldier::Update()
 	RifleUpdate();
 	gunPos->Update();
 	firePoint->Update();
-	firePoint->translation = shotGun->GetGlobalPosition() + shotGun->Forward() * 4.5f + shotGun->Up() * 0.5f;
+	if(curWeapon == SHOTGUN)
+		firePoint->translation = shotGun->GetGlobalPosition() + shotGun->Forward() * 4.5f + shotGun->Up() * 0.5f;
+	else if(curWeapon == RIFLE)
+		firePoint->translation = rifle->GetGlobalPosition() + rifle->Backward() * 3.0f + rifle->Up() * 1.2f;
+	
 
 
 	//if (KEY_DOWN('1'))
@@ -62,20 +66,13 @@ void Soldier::Update()
 		curWeapon = RIFLE;
 
 	
-	if (shotGun->GetIsAttack() == false)
+	if (shotGun->GetIsAttack() == false && rifle->GetIsAttack() == false);
 		Move();
 
+	SetAnim();
+	SetGunAnim();
 
-	if (isMove() == true)
-	{
-		rotDamping = 5.0f;
-		SetAngle(destination);
-		SetClip(RUN);
-	}
-	else
-	{
-		SetClip(RUN);
-	}
+
 
 	UpdateGunPos();
 }
@@ -90,8 +87,6 @@ void Soldier::Render()
 		rifle->Render();
 
 	firePoint->Render();
-
-
 }
 
 void Soldier::Debug()
@@ -137,6 +132,15 @@ void Soldier::RifleUpdate()
 		return;
 
 	rifle->Update();
+	rifle->SetOrigin(firePoint->GetGlobalPosition());
+
+	if (rifle->GetIsAttack() == true)
+	{
+		moveSpeed = 0.0f;
+		rotDamping = 20.0f;
+		SetAngle(bulletDestination);
+		SetClip(SHOTGUNFIRE);
+	}
 }
 
 void Soldier::SetAngle(Vector3 dir)
@@ -212,9 +216,23 @@ void Soldier::UpdateGunPos()
 	gunPos->GetWorld() = GetTransformByNode(nodeIndex) * world;
 
 	if (curState == RUN)
-		SetShotGunRun();
+	{
+		if (curWeapon == SHOTGUN)
+			SetShotGunRun();
+		else if (curWeapon == RIFLE)
+			SetRifleRun();
+	}
 	else if (curState == IDLE)
-		SetShotGunIdle();
+	{
+		if (curWeapon == SHOTGUN)
+			SetShotGunIdle();
+		else if (curWeapon == RIFLE)
+			SetRifleIdle();
+	}
+	else if (curState == SHOTGUNFIRE)
+		SetShotGunFire();
+	else if (curState == RIFLEFIRE)
+		SetRifleFire();
 }
 
 void Soldier::SetShotGunIdle()
@@ -244,6 +262,77 @@ void Soldier::SetShotGunRun()
 	shotGun->translation = { -0.070f, 0.280f, -0.090f };
 }
 
+void Soldier::SetShotGunFire()
+{
+}
+
+void Soldier::SetRifleIdle()
+{
+	if (shotGun->rotation.x == XMConvertToRadians(116))
+		return;
+	if (curWeapon != RIFLE)
+		return;
+
+	rifle->rotation.x = XMConvertToRadians(116);
+	rifle->rotation.y = XMConvertToRadians(46);
+	rifle->rotation.z = XMConvertToRadians(-41);
+
+	rifle->translation = { -0.430f, 1.660f, 0.330f };
+}
+
+void Soldier::SetRifleRun()
+{
+	if (shotGun->rotation.x == XMConvertToRadians(86))
+		return;
+	if (curWeapon != RIFLE)
+		return;
+
+	rifle->rotation.x = XMConvertToRadians(86);
+	rifle->rotation.y = XMConvertToRadians(-45);
+	rifle->rotation.z = XMConvertToRadians(-116);
+	
+	rifle->translation = { -1.160f, 1.370f, -0.240f };
+}
+
+void Soldier::SetRifleFire()
+{
+	if (shotGun->rotation.x == XMConvertToRadians(94))
+		return;
+	if (curWeapon != RIFLE)
+		return;
+
+	rifle->rotation.x = XMConvertToRadians(94);
+	rifle->rotation.y = XMConvertToRadians(41);
+	rifle->rotation.z = XMConvertToRadians(-41);
+
+	rifle->translation = { -0.940f, 1.560f, 0.230f };
+}
+
+void Soldier::SetAnim()
+{
+	if (isMove() == true && shotGun->GetIsAttack() == false)
+	{
+		rotDamping = 5.0f;
+		SetAngle(destination);
+		SetClip(RUN);
+	}
+	else
+	{
+		if (shotGun->GetIsAttack() == true || rifle->GetIsAttack() == true)
+			return;
+		SetClip(IDLE);
+	}
+}
+
+void Soldier::SetGunAnim()
+{
+	if (shotGun->GetIsAttack() == true)
+		SetClip(SHOTGUNFIRE);
+
+	if (rifle->GetIsAttack() == true)
+		SetClip(RIFLEFIRE);
+}
+
 void Soldier::ShotGunFire()
 {
 	if (curWeapon != SHOTGUN)
@@ -251,9 +340,23 @@ void Soldier::ShotGunFire()
 	shotGun->SetIsAttackTime(0.0f);
 	shotGun->SetBulletActive(true);
 	Vector3 dir = bulletDestination - firePoint->translation;
+	dir.y = firePoint->translation.y;
 	shotGun->SetDir(dir);
 	shotGun->Fire();
 	shotGun->SetIsAttack(true);
+}
+
+void Soldier::RifleFire()
+{
+	if (curWeapon != RIFLE)
+		return;
+	rifle->SetIsAttackTime(0.0f);
+	rifle->SetBulletActive(true);
+	Vector3 dir = bulletDestination - firePoint->translation;
+	dir.y = firePoint->translation.y;
+	rifle->SetDir(dir);
+	rifle->Fire();
+	rifle->SetIsAttack(true);
 }
 
 void Soldier::SetClip(SoliderState type)

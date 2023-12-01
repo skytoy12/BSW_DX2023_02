@@ -38,14 +38,28 @@ public:
 
 
 	void UpdateGunPos();
-	void SetShotGunIdle();
-	void SetShotGunRun();
+
+	void SetShotGunIdle(); // 샷건 평소 위치 조정
+	void SetShotGunRun();  // 샷건 들고 뛸때 위치 조정
+	void SetShotGunFire(); // 샷건 쏠때 위치 조정
+
+	void SetRifleIdle();   // 라이플 평소 위치 조정
+	void SetRifleRun();	   // 라이플 들고 뛸때 위치 조정
+	void SetRifleFire();   // 라이플 쏠때 위치 조정
+
+	void SetAnim(); // 모델의 동작을 조정
+	void SetGunAnim(); // 모델의 총쏘는 동작을 조정
+
+	
 
 	void ShotGunFire();
+	void RifleFire();
 
 	void SetClip(SoliderState type);
 
 	bool isMove();
+
+	GunType GetGunType() { return curWeapon; }
 private:
 	SoliderState curState;
 	SoliderState oldState;

@@ -5,7 +5,7 @@ Rifle::Rifle(string file)
 	:Gun(file)
 {
 	Transform::SetLabel("Rifle");
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < bulletNum + 1; i++)
 	{
 		Bullet* bullet = new Bullet();
 		bullets.push_back(bullet);
@@ -57,25 +57,30 @@ void Rifle::PostRender()
 void Rifle::Debug()
 {
 	Transform::Debug();
+	ImGui::Text("Rifle isAttack : %d", isAttack);
 }
 
 void Rifle::Fire()
-{
-	for (Bullet* bullet : bullets)
 {
 	dir.x = dir.x + Random(-0.01f, 0.01f);
 	dir.y = dir.y + Random(-0.01f, 0.01f);
 	dir.z = dir.z + Random(-0.01f, 0.01f);
 
 	dir.Normalize();
-	bullet->SetDestination(dir);
-	Vector3 destination = bullet->GetOrigin() + (dir * bullet->GetRange());
-	bullet->SetDestination(destination);
-}
+	bullets[curBulletNum]->SetDestination(dir);
+	Vector3 destination = bullets[curBulletNum]->GetOrigin() + (dir * bullets[curBulletNum]->GetRange());
+	bullets[curBulletNum]->SetDestination(destination);
 }
 
 void Rifle::SetBulletActive(bool value)
 {
-	for (Bullet* bullet : bullets)
-		bullet->SetIsActive(value);
+	bullets[curBulletNum]->SetIsActive(value);
+}
+
+void Rifle::BulletNumPlus()
+{
+	curBulletNum += 1;
+
+	if (curBulletNum > bulletNum)
+		curBulletNum = 0;
 }

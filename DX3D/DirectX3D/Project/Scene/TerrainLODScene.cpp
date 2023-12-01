@@ -27,4 +27,5 @@ void TerrainLODScene::Render()
 
 void TerrainLODScene::PostRender()
 {
+	terrain->Debug();
 }

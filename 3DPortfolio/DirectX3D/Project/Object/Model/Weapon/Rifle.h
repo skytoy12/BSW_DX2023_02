@@ -28,7 +28,7 @@ private:
 	Vector3 origin = Vector3(0, 0, 0);
 	Vector3 dir = Vector3(0, 0, 0);
 	UINT curBulletNum = 0;
-	UINT bulletNum = 0;
+	UINT bulletNum = 3;
 };
 
 

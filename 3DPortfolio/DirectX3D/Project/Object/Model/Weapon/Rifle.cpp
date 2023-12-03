@@ -8,8 +8,10 @@ Rifle::Rifle(string file)
 	for (int i = 0; i < bulletNum + 1; i++)
 	{
 		Bullet* bullet = new Bullet();
+		bullet->SetTarget(this);
+		bullet->SetRange(50.0f);
+
 		bullets.push_back(bullet);
-		bullet->SetRange(20.0f);
 	}
 }
 
@@ -58,6 +60,11 @@ void Rifle::Debug()
 {
 	Transform::Debug();
 	ImGui::Text("Rifle isAttack : %d", isAttack);
+	ImGui::Text("Rifle Bullet1 : %d", bullets[0]->GetIsActive());
+	//ImGui::Text("Rifle Bullet2 : %d", bullets[1]->GetIsActive());
+	//ImGui::Text("Rifle Bullet3 : %d", bullets[2]->GetIsActive());
+	ImGui::Text("Rifle Bullet1 destination : %f, %f, %f", bullets[0]->GetDestination().x, bullets[0]->GetDestination().y, bullets[0]->GetDestination().z);
+	ImGui::Text("Rifle Bullet1 origin : %f, %f, %f", bullets[0]->GetOrigin().x, bullets[0]->GetOrigin().y, bullets[0]->GetOrigin().z);
 }
 
 void Rifle::Fire()
@@ -81,6 +88,6 @@ void Rifle::BulletNumPlus()
 {
 	curBulletNum += 1;
 
-	if (curBulletNum > bulletNum)
+	if (curBulletNum >= bulletNum)
 		curBulletNum = 0;
 }

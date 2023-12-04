@@ -2,7 +2,7 @@
 class Soldier : public ModelAnimator
 {
 public:
-	enum SoliderState
+	enum SoldierState
 	{
 		IDLE,
 		RUN,
@@ -50,19 +50,21 @@ public:
 	void SetAnim(); // ¸ðµ¨ÀÇ µ¿ÀÛÀ» Á¶Á¤
 	void SetGunAnim(); // ¸ðµ¨ÀÇ ÃÑ½î´Â µ¿ÀÛÀ» Á¶Á¤
 
-	
+	void AttackTimeZero();
 
 	void ShotGunFire();
 	void RifleFire();
+	void Delay();
 
-	void SetClip(SoliderState type);
+	void SetClip(SoldierState type);
 
 	bool isMove();
 
 	GunType GetGunType() { return curWeapon; }
+	SoldierState GetCurState() { return curState; }
 private:
-	SoliderState curState;
-	SoliderState oldState;
+	SoldierState curState;
+	SoldierState oldState;
 	Groot* groot;
 
 	GunType curWeapon = RIFLE;
@@ -83,7 +85,7 @@ private:
 	Rifle* rifle;
 
 	float rotDamping = 5.0f;
-
+	float attackDelay = 0.0f;
 };
 
 

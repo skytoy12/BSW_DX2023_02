@@ -36,8 +36,6 @@ void Bullet::CreateMesh()
 
 void Bullet::Update()
 {
-	if (isActive == false)
-		return;
 
 	if (target != nullptr)
 	{
@@ -45,15 +43,28 @@ void Bullet::Update()
 		vertices[1] = { destination.x, destination.y, destination.z };
 	}
 
+	if (bulletActive == false)
+	{
+		mesh->UpdateVertex(vertices.data(), vertices.size());
+	}
 
-	mesh->UpdateVertex(vertices.data(), vertices.size());
+	if (bulletActive == true)
+	{
+		activeTime += Time::Delta();
+		if (activeTime > 0.3f)
+		{
+			bulletActive = false;
+			activeTime = 0.0f;
+		}
+	}
+
 }
 
 void Bullet::Render()
 {
 	Transform::SetWorld();
 
-	if (isActive == false)
+	if (bulletActive == false)
 		return;
 
 	mesh->SetMesh(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);

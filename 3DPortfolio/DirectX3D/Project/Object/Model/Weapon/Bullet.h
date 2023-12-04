@@ -23,12 +23,12 @@ public:
 	void SetColor(float r, float g, float b) { material->GetBuffer()->data.diffuse = { r, g, b, 1.0f }; }
 
 	void SetRange(float value) { range = value; }
-	void SetIsActive(bool value) { isActive = value; }
+	void SetIsActive(bool value) { bulletActive = value; }
 
 	Vector3 GetOrigin() { return bullet.origin; }
 	Vector3 GetDestination() { return destination; }
 	float GetRange() { return range; }
-	bool GetIsActive() { return isActive; }
+	bool GetIsActive() { return bulletActive; }
 private:
 	Material* material;
 	Mesh* mesh;
@@ -44,7 +44,8 @@ private:
 	Vector3 destination;
 
 	float range = 50.0f;
-	bool isActive = false;
+	float activeTime = 0.0f;
+	bool bulletActive = false;
 };
 
 

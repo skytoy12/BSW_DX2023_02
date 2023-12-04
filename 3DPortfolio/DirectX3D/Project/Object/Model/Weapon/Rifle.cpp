@@ -61,6 +61,7 @@ void Rifle::Debug()
 	Transform::Debug();
 	ImGui::Text("Rifle isAttack : %d", isAttack);
 	ImGui::Text("Rifle Bullet1 : %d", bullets[0]->GetIsActive());
+	ImGui::Text("Rifle curBulletNum : %d", curBulletNum);
 	//ImGui::Text("Rifle Bullet2 : %d", bullets[1]->GetIsActive());
 	//ImGui::Text("Rifle Bullet3 : %d", bullets[2]->GetIsActive());
 	ImGui::Text("Rifle Bullet1 destination : %f, %f, %f", bullets[0]->GetDestination().x, bullets[0]->GetDestination().y, bullets[0]->GetDestination().z);

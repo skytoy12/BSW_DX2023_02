@@ -30,6 +30,9 @@ Soldier::Soldier()
 	rifle->SetParent(gunPos);
 	rifle->scale *= 0.3f;
 	/////////////////////////
+	////////SetEvent////////
+	clips[RIFLEFIRE]->SetEndEvent(bind(&Soldier::RifleFire, this), 0.7f);
+	////////////////////////
 
 }
 
@@ -71,7 +74,7 @@ void Soldier::Update()
 
 	SetAnim();
 	SetGunAnim();
-
+	Delay();
 
 
 	UpdateGunPos();
@@ -333,6 +336,12 @@ void Soldier::SetGunAnim()
 		SetClip(RIFLEFIRE);
 }
 
+void Soldier::AttackTimeZero()
+{
+	rifle->SetIsAttackTime(0.0f);
+	shotGun->SetIsAttackTime(0.0f);
+}
+
 void Soldier::ShotGunFire()
 {
 	if (curWeapon != SHOTGUN)
@@ -350,16 +359,29 @@ void Soldier::RifleFire()
 {
 	if (curWeapon != RIFLE)
 		return;
-	rifle->SetIsAttackTime(0.0f);
-	rifle->SetBulletActive(true);
+
 	Vector3 dir = bulletDestination - firePoint->translation;
 	dir.y = firePoint->translation.y;
 	rifle->SetDir(dir);
 	rifle->Fire();
+	if (attackDelay > 0.1f)
+	{
+		rifle->SetBulletActive(true);
+		rifle->BulletNumPlus();
+	}
 	rifle->SetIsAttack(true);
+	attackDelay = 0.0f;
 }
 
-void Soldier::SetClip(SoliderState type)
+void Soldier::Delay()
+{
+	if (shotGun->GetIsAttack() == true || rifle->GetIsAttack() == true)
+	{
+		attackDelay += Time::Delta();
+	}
+}
+
+void Soldier::SetClip(SoldierState type)
 {
 	if (type == curState)
 		return;

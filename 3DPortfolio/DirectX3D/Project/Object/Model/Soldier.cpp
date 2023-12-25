@@ -109,7 +109,7 @@ void Soldier::PostRender()
 {
 	Debug();
 	shotGun->Debug();
-	rifle->Debug();
+	//rifle->Debug();
 }
 
 void Soldier::ShotGunUpdate()
@@ -323,7 +323,7 @@ void Soldier::SetAnim()
 	{
 		if (shotGun->GetIsAttack() == true || rifle->GetIsAttack() == true)
 			return;
-		SetClip(IDLE);
+		SetClip(SHOTGUNFIRE);
 	}
 }
 
@@ -348,9 +348,11 @@ void Soldier::ShotGunFire()
 		return;
 	shotGun->SetIsAttackTime(0.0f);
 	shotGun->SetBulletActive(true);
-	Vector3 dir = bulletDestination - firePoint->translation;
-	dir.y = firePoint->translation.y;
+	//Vector3 dir = bulletDestination - firePoint->translation;
+	//dir.y = firePoint->translation.y;
+	Vector3 dir = shotGun->Forward();
 	shotGun->SetDir(dir);
+	shotGun->Update();
 	shotGun->Fire();
 	shotGun->SetIsAttack(true);
 }
@@ -360,9 +362,11 @@ void Soldier::RifleFire()
 	if (curWeapon != RIFLE)
 		return;
 
-	Vector3 dir = bulletDestination - firePoint->translation;
-	dir.y = firePoint->translation.y;
+	//Vector3 dir = bulletDestination - firePoint->translation;
+	//dir.y = firePoint->translation.y;
+	Vector3 dir = rifle->Forward() * -1;
 	rifle->SetDir(dir);
+	rifle->Update();
 	rifle->Fire();
 	if (attackDelay > 0.1f)
 	{

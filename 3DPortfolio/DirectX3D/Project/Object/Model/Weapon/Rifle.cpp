@@ -32,6 +32,9 @@ void Rifle::Update()
 	for (Bullet* bullet : bullets)
 		bullet->SetOrigin(origin);
 
+	for (Bullet* bullet : bullets)
+		bullet->SetDirection(dir);
+
 	attackTime += Time::Delta();
 	if (attackTime > 0.3f)
 	{

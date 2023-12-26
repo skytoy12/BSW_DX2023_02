@@ -47,6 +47,8 @@ public:
 	void SetRifleRun();	   // 라이플 들고 뛸때 위치 조정
 	void SetRifleFire();   // 라이플 쏠때 위치 조정
 
+	void SetGunAttack(bool value); 
+
 	void SetAnim(); // 모델의 동작을 조정
 	void SetGunAnim(); // 모델의 총쏘는 동작을 조정
 

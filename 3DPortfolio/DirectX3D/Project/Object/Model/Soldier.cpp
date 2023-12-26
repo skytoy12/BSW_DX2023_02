@@ -32,6 +32,7 @@ Soldier::Soldier()
 	/////////////////////////
 	////////SetEvent////////
 	clips[RIFLEFIRE]->SetEndEvent(bind(&Soldier::RifleFire, this), 0.7f);
+	clips[SHOTGUNFIRE]->SetEndEvent(bind(&Soldier::ShotGunFire, this), 0.7f);
 	////////////////////////
 
 }
@@ -96,6 +97,8 @@ void Soldier::Debug()
 {
 	ModelAnimator::reader->Debug();
 	ModelAnimator::Debug();
+
+	ImGui::Text("SGAttack : %d", shotGun->GetIsAttack());
 
 	ImGui::Text("gunPos = %f, %f, %f", shotGun->GetGlobalPosition().x, shotGun->GetGlobalPosition().y, shotGun->GetGlobalPosition().z);
 
@@ -267,6 +270,16 @@ void Soldier::SetShotGunRun()
 
 void Soldier::SetShotGunFire()
 {
+	if (shotGun->rotation.x == XMConvertToRadians(-100))
+		return;
+	if (curWeapon != SHOTGUN)
+		return;
+
+	shotGun->rotation.x = XMConvertToRadians(-100);
+	shotGun->rotation.y = XMConvertToRadians(-22);
+	shotGun->rotation.z = XMConvertToRadians(308);
+
+	shotGun->translation = { 0.160f, 0.450f, -0.010f };
 }
 
 void Soldier::SetRifleIdle()
@@ -311,6 +324,16 @@ void Soldier::SetRifleFire()
 	rifle->translation = { -0.940f, 1.560f, 0.230f };
 }
 
+void Soldier::SetGunAttack(bool value)
+{
+	if (curWeapon == RIFLE)
+		rifle->SetIsAttack(value);
+
+	if (curWeapon == SHOTGUN)
+		shotGun->SetIsAttack(value);
+
+}
+
 void Soldier::SetAnim()
 {
 	if (isMove() == true && shotGun->GetIsAttack() == false)
@@ -321,9 +344,9 @@ void Soldier::SetAnim()
 	}
 	else
 	{
-		if (shotGun->GetIsAttack() == true || rifle->GetIsAttack() == true)
+		if (shotGun->GetIsAttack() == true || rifle->GetIsAttack() == true || shotGun->GetIsAttack() == true)
 			return;
-		SetClip(SHOTGUNFIRE);
+		SetClip(IDLE);
 	}
 }
 

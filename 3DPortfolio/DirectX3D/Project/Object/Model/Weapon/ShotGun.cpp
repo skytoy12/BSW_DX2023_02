@@ -66,6 +66,8 @@ void ShotGun::PostRender()
 
 void ShotGun::Debug()
 {
+	Transform::Debug();
+
 	ImGui::Text("origin : %f, %f, %f", origin.x, origin.y, origin.z);
 	ImGui::Text("isAttack : %d", isAttack);
 	ImGui::Text("dir : %f, %f, %f", dir.x, dir.y, dir.z);

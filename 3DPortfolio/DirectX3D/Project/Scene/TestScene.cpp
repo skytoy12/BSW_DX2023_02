@@ -74,7 +74,12 @@ void TestScene::Update()
 			terrain->Picking(&gunPos);
 			gunPos.y = 5.0f;
 			soldier->SetBulletDestination(gunPos);
-			soldier->ShotGunFire();
+			if (soldier->GetCurState() != Soldier::SoldierState::SHOTGUNFIRE)
+			{
+				soldier->SetGunAttack(true);
+				soldier->SetClip(Soldier::SoldierState::SHOTGUNFIRE);
+			}
+	
 		}
 	}
 
@@ -86,7 +91,6 @@ void TestScene::Update()
 			gunPos.y = 5.0f;
 			soldier->SetBulletDestination(gunPos);
 			soldier->AttackTimeZero();
-			//soldier->RifleFire();
 			if (soldier->GetCurState() != Soldier::SoldierState::RIFLEFIRE)
 				soldier->SetClip(Soldier::SoldierState::RIFLEFIRE);
 		
